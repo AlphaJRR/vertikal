@@ -4,74 +4,14 @@ src/
     shows.json
     profile_pictures.json
 [
-  {
-    "id": "pfp_001",
-    "creator_id": "creator_001",
-    "url": "https://cdn.vertikalapp.com/profiles/creator_001.jpg",
-    "aspect_ratio": "1:1",
-    "status": "active"
-  },
-  {
-    "id": "pfp_002",
-    "creator_id": "creator_002",
-    "url": "https://cdn.vertikalapp.com/profiles/creator_002.jpg",
-    "aspect_ratio": "1:1",
-    "status": "active"
-  },
-  {
-    "id": "pfp_003",
-    "creator_id": "creator_003",
-    "url": "https://cdn.vertikalapp.com/profiles/creator_003.jpg",
-    "aspect_ratio": "1:1",
-    "status": "active"
-  },
-  {
-    "id": "pfp_004",
-    "creator_id": "creator_004",
-    "url": "https://cdn.vertikalapp.com/profiles/creator_004.jpg",
-    "aspect_ratio": "1:1",
-    "status": "active"
-  },
-  {
-    "id": "pfp_005",
-    "creator_id": "creator_005",
-    "url": "https://cdn.vertikalapp.com/profiles/creator_005.jpg",
-    "aspect_ratio": "1:1",
-    "status": "active"
-  },
-  {
-    "id": "pfp_006",
-    "creator_id": "creator_006",
-    "url": "https://cdn.vertikalapp.com/profiles/creator_006.jpg",
-    "aspect_ratio": "1:1",
-    "status": "active"
-  },
-  {
-    "id": "pfp_007",
-    "creator_id": "creator_007",
-    "url": "https://cdn.vertikalapp.com/profiles/creator_007.jpg",
-    "aspect_ratio": "1:1",
-    "status": "active"
-  },
-  {
-    "id": "pfp_008",
-    "creator_id": "creator_008",
-    "url": "https://cdn.vertikalapp.com/profiles/creator_008.jpg",
-    "aspect_ratio": "1:1",
-    "status": "active"
-  },
-  {
-    "id": "pfp_009",
-    "creator_id": "creator_009",
-    "url": "https://cdn.vertikalapp.com/profiles/creator_009.jpg",
-    "aspect_ratio": "1:1",
-    "status": "active"
-  },
-  {
-    "id": "pfp_010",
-    "creator_id": "creator_010",
-    "url": "https://cdn.vertikalapp.com/profiles/creator_010.jpg",
-    "aspect_ratio": "1:1",
-    "status": "active"
-  }
+  { "id": "creator_001", "url": "/images/profiles/creator_001.jpg" },
+  { "id": "creator_002", "url": "/images/profiles/creator_002.jpg" },
+  { "id": "creator_003", "url": "/images/profiles/creator_003.jpg" },
+  { "id": "creator_004", "url": "/images/profiles/creator_004.jpg" },
+  { "id": "creator_005", "url": "/images/profiles/creator_005.jpg" },
+  { "id": "creator_006", "url": "/images/profiles/creator_006.jpg" },
+  { "id": "creator_007", "url": "/images/profiles/creator_007.jpg" },
+  { "id": "creator_008", "url": "/images/profiles/creator_008.jpg" },
+  { "id": "creator_009", "url": "/images/profiles/creator_009.jpg" },
+  { "id": "creator_010", "url": "/images/profiles/creator_010.jpg" }
 ]
