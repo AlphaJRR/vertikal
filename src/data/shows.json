@@ -1,6 +1,148 @@
 {
   "shows": []
-}
+}# UX Flows
+
+## Overview
+This document defines the primary user journeys for Vertikal V1: Creator Onboarding, KYC & Payout Setup, Content Publishing, Feed Consumption, and Basic Account Management. Each flow includes wireframe text, success metrics, error states, and acceptance criteria.
+
+---
+
+## Creator Onboarding
+**Goal:** Convert interested creators into verified, publishing-ready accounts with payout capability.
+
+**Steps**
+1. Landing → Click "Become a Creator"
+2. Signup (email/SSO) → Basic profile (name, handle, short bio)
+3. Connect profile picture and sample content
+4. Start KYC flow (collect legal name, DOB, SSN/Tax ID, address)
+5. Link payout account (Stripe Connect onboarding)
+6. Onboarding complete → Guided tour of Creator Dashboard
+
+**Wireframe text**
+- CTA: "Create your Creator account"
+- Form labels: Full name; Public handle; Short bio (140 chars)
+- KYC modal: "We need a few details to pay you securely"
+
+**Success metrics**
+- Conversion rate: signup → KYC start ≥ 60%
+- Completion rate: KYC started → KYC verified ≥ 85%
+- Time to publish first show ≤ 48 hours
+
+**Error states**
+- KYC rejected: show clear reason + retry path
+- Payout link failure: show retry + support contact
+
+**Acceptance criteria**
+- All form fields validated client-side and server-side
+- KYC flow calls Stripe (or chosen provider) and stores status
+- Payout account token saved securely; UI shows masked account id
+
+---
+
+## KYC & Payout Setup
+**Goal:** Securely verify creators and enable payouts.
+
+**Steps**
+1. Trigger KYC from onboarding or dashboard
+2. Collect required fields; upload ID if needed
+3. Submit to provider; show pending/verified/rejected states
+4. If verified, prompt to link bank (Stripe Connect)
+5. Confirm payout schedule and minimum payout threshold
+
+**Wireframe text**
+- Status badges: Pending / Verified / Action Required
+- Bank link CTA: "Link bank to receive payouts"
+
+**Success metrics**
+- KYC verification time median < 24 hours
+- Payout failures < 1% of payouts
+
+**Acceptance criteria**
+- Webhook handler verifies provider signatures
+- KYC status stored and surfaced in dashboard
+- Payouts cannot be initiated for unverified creators
+
+---
+
+## Content Publishing
+**Goal:** Allow creators to publish shows quickly with metadata and scheduling.
+
+**Steps**
+1. Creator Dashboard → New Show
+2. Upload media (or link external), add title, description, tags, thumbnail
+3. Choose publish now or schedule
+4. Confirm and publish → show appears in feed
+
+**Wireframe text**
+- Form fields: Title; Description; Tags; Thumbnail; Publish now / Schedule
+- Validation: Title required; media size limits; tag suggestions
+
+**Success metrics**
+- Time from upload → published < 5 minutes (processing excluded)
+- Publish success rate ≥ 99%
+
+**Error states**
+- Upload failure: retry + resumable upload
+- Metadata validation errors: inline messages
+
+**Acceptance criteria**
+- Media upload supports resumable uploads
+- Metadata saved atomically with media reference
+- Scheduled shows appear at correct publish time
+
+---
+
+## Feed Consumption
+**Goal:** Deliver a performant, personalized feed with infinite scroll and reliable pagination.
+
+**Steps**
+1. Home feed loads initial page (20 items)
+2. User scrolls → fetch next page at 80% scroll
+3. Items show title, creator, thumbnail, duration, tags
+4. Tap item → open show detail; track analytics
+
+**Wireframe text**
+- Feed item: Thumbnail; Title; Creator handle; Duration; Views
+- Empty state: "No shows yet — follow creators to populate your feed"
+
+**Success metrics**
+- Time to first paint (feed) < 1s on 3G simulated
+- 95th percentile feed fetch < 300ms (cached)
+- Scroll-to-next latency < 500ms
+
+**Error states**
+- Feed fetch failure: show retry button and cached fallback
+- Duplicate items: dedupe client-side
+
+**Acceptance criteria**
+- Cursor-based pagination implemented with `nextCursor`
+- Client dedupes by `id`
+- Feed supports simple filters (tags, following)
+
+---
+
+## Account Management (Basic)
+**Goal:** Let users manage profile, preferences, and connected accounts.
+
+**Steps**
+1. Profile settings: edit name, bio, handle, picture
+2. Security: change password, enable 2FA
+3. Connected accounts: view/remove Stripe, social links
+4. Notifications: toggle email/push preferences
+
+**Wireframe text**
+- Settings sections: Profile; Security; Payments; Notifications
+
+**Success metrics**
+- Profile update success rate ≥ 99%
+- 2FA adoption target 20% in first 30 days
+
+**Acceptance criteria**
+- Profile updates are validated and persisted
+- Connected account removal revokes tokens and updates UI
+
+---
+
 [
   {
     "id": "creator_001",
