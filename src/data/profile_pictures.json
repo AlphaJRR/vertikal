@@ -1,8 +1,3 @@
-src/
-  data/
-    creators.json
-    shows.json
-    profile_pictures.json
 [
   { "id": "creator_001", "url": "/images/profiles/creator_001.jpg" },
   { "id": "creator_002", "url": "/images/profiles/creator_002.jpg" },
