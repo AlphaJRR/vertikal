@@ -1,92 +1,362 @@
 [
   {
-    "id": "creator_001",
-    "name": "Kel Mitchell",
-    "bio": "Actor, director, comedy creator building faith-driven digital stories.",
-    "tags": ["actor", "director", "faith", "comedy"],
+    "id": "creator_011",
+    "name": "Jordan Elise",
+    "bio": "Director blending fashion aesthetics with short-form cinematic storytelling.",
+    "tags": ["fashion", "cinematic", "drama"],
     "kyc_status": "verified",
-    "payout_account_id": "acct_001",
-    "profile_picture": "/images/profiles/creator_001.jpg"
+    "payout_account_id": "acct_011",
+    "profile_picture": "/images/profiles/creator_011.jpg"
   },
   {
-    "id": "creator_002",
-    "name": "Aaliyah Brooks",
-    "bio": "Lifestyle and micro-series filmmaker based in Atlanta.",
-    "tags": ["lifestyle", "film", "drama"],
+    "id": "creator_012",
+    "name": "Marcus DeLane",
+    "bio": "Action-forward filmmaker producing gritty micro-series rooted in street legend and redemption arcs.",
+    "tags": ["action", "crime", "urban"],
     "kyc_status": "verified",
-    "payout_account_id": "acct_002",
-    "profile_picture": "/images/profiles/creator_002.jpg"
+    "payout_account_id": "acct_012",
+    "profile_picture": "/images/profiles/creator_012.jpg"
   },
   {
-    "id": "creator_003",
-    "name": "Jordan Miles",
-    "bio": "Chicago filmmaker focusing on sports documentaries and youth storytelling.",
-    "tags": ["sports", "documentary", "youth"],
-    "kyc_status": "pending",
-    "payout_account_id": null,
-    "profile_picture": "/images/profiles/creator_003.jpg"
-  },
-  {
-    "id": "creator_004",
-    "name": "Renee Carter",
-    "bio": "Creator of short-form romantic dramas and lifestyle stories.",
-    "tags": ["romance", "drama", "lifestyle"],
+    "id": "creator_013",
+    "name": "Imani Rivers",
+    "bio": "Writer-director specializing in poetic dramas about womanhood, resilience, and identity.",
+    "tags": ["drama", "poetic", "female-led"],
     "kyc_status": "verified",
-    "payout_account_id": "acct_004",
-    "profile_picture": "/images/profiles/creator_004.jpg"
+    "payout_account_id": "acct_013",
+    "profile_picture": "/images/profiles/creator_013.jpg"
   },
   {
-    "id": "creator_005",
-    "name": "Malik Thompson",
-    "bio": "Writer-director building gritty Chicago-inspired micro-series.",
-    "tags": ["gritty", "crime", "urban"],
+    "id": "creator_014",
+    "name": "Trevor Holt",
+    "bio": "Cinematographer turned creator producing travel-based docu-shorts with premium visual standards.",
+    "tags": ["travel", "documentary", "visuals"],
     "kyc_status": "verified",
-    "payout_account_id": "acct_005",
-    "profile_picture": "/images/profiles/creator_005.jpg"
+    "payout_account_id": "acct_014",
+    "profile_picture": "/images/profiles/creator_014.jpg"
   },
   {
-    "id": "creator_006",
-    "name": "Briana Scott",
-    "bio": "Motherhood and wellness storyteller focused on authentic Black family life.",
-    "tags": ["family", "wellness", "lifestyle"],
-    "kyc_status": "pending",
-    "payout_account_id": null,
-    "profile_picture": "/images/profiles/creator_006.jpg"
-  },
-  {
-    "id": "creator_007",
-    "name": "Tyrese Lane",
-    "bio": "Indie director known for sci-fi short films with practical effects.",
-    "tags": ["sci-fi", "indie", "fx"],
+    "id": "creator_015",
+    "name": "Aaliyah Monroe",
+    "bio": "Suspense-driven storyteller developing intense psycho-thriller mini-series.",
+    "tags": ["thriller", "horror", "suspense"],
     "kyc_status": "verified",
-    "payout_account_id": "acct_007",
-    "profile_picture": "/images/profiles/creator_007.jpg"
+    "payout_account_id": "acct_015",
+    "profile_picture": "/images/profiles/creator_015.jpg"
   },
   {
-    "id": "creator_008",
-    "name": "Nia Richardson",
-    "bio": "Beauty creator expanding into scripted series centered on sisterhood.",
-    "tags": ["beauty", "drama", "community"],
+    "id": "creator_016",
+    "name": "Noah Kincaid",
+    "bio": "Comedy creator transitioning into narrative micro-sitcoms with sharp social commentary.",
+    "tags": ["comedy", "sitcom", "social"],
     "kyc_status": "verified",
-    "payout_account_id": "acct_008",
-    "profile_picture": "/images/profiles/creator_008.jpg"
+    "payout_account_id": "acct_016",
+    "profile_picture": "/images/profiles/creator_016.jpg"
   },
   {
-    "id": "creator_009",
-    "name": "DeShawn Harris",
-    "bio": "Street photographer and docu-creator building episodic visual stories.",
-    "tags": ["photography", "documentary", "culture"],
+    "id": "creator_017",
+    "name": "Sierra Vaughn",
+    "bio": "Black female documentarian exploring culture, family lineage, and modern community stories.",
+    "tags": ["documentary", "culture", "family"],
     "kyc_status": "verified",
-    "payout_account_id": "acct_009",
-    "profile_picture": "/images/profiles/creator_009.jpg"
+    "payout_account_id": "acct_017",
+    "profile_picture": "/images/profiles/creator_017.jpg"
   },
   {
-    "id": "creator_010",
-    "name": "Tasha Monroe",
-    "bio": "Creator of short-form thrillers with a focus on psychological suspense.",
-    "tags": ["thriller", "suspense", "horror"],
+    "id": "creator_018",
+    "name": "Quinton Marsh",
+    "bio": "Urban fantasy creator merging magic realism with authentic neighborhood experiences.",
+    "tags": ["fantasy", "urban", "magic-realism"],
     "kyc_status": "verified",
-    "payout_account_id": "acct_010",
-    "profile_picture": "/images/profiles/creator_010.jpg"
+    "payout_account_id": "acct_018",
+    "profile_picture": "/images/profiles/creator_018.jpg"
+  },
+  {
+    "id": "creator_019",
+    "name": "Rhea Sullivan",
+    "bio": "Lifestyle DP producing warm, intimate visual diaries centered around real relationships.",
+    "tags": ["lifestyle", "romance", "intimate"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_019",
+    "profile_picture": "/images/profiles/creator_019.jpg"
+  },
+  {
+    "id": "creator_020",
+    "name": "Kendrick Boyd",
+    "bio": "High-energy action creator with a focus on stunt coordination and dynamic fight choreography.",
+    "tags": ["action", "fighting", "stunts"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_020",
+    "profile_picture": "/images/profiles/creator_020.jpg"
+  },
+  {
+    "id": "creator_021",
+    "name": "Mika Harrison",
+    "bio": "Short-form mystery writer building immersive mini-series with twist endings.",
+    "tags": ["mystery", "thriller", "crime"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_021",
+    "profile_picture": "/images/profiles/creator_021.jpg"
+  },
+  {
+    "id": "creator_022",
+    "name": "Eli Parker",
+    "bio": "Visual effects-heavy creator crafting futuristic sci-fi concepts on micro-budgets.",
+    "tags": ["sci-fi", "vfx", "future"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_022",
+    "profile_picture": "/images/profiles/creator_022.jpg"
+  },
+  {
+    "id": "creator_023",
+    "name": "Nyla Brooks",
+    "bio": "Romance-focused creator specializing in cozy, binge-able love stories.",
+    "tags": ["romance", "drama", "warm"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_023",
+    "profile_picture": "/images/profiles/creator_023.jpg"
+  },
+  {
+    "id": "creator_024",
+    "name": "Chris Tatum",
+    "bio": "Action-sports filmmaker capturing movement, motion, and street athletics.",
+    "tags": ["sports", "movement", "action"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_024",
+    "profile_picture": "/images/profiles/creator_024.jpg"
+  },
+  {
+    "id": "creator_025",
+    "name": "Zara Lang",
+    "bio": "Drama creator developing emotionally heavy micro-series about healing and change.",
+    "tags": ["drama", "healing", "emotional"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_025",
+    "profile_picture": "/images/profiles/creator_025.jpg"
+  },
+  {
+    "id": "creator_026",
+    "name": "Trey Maddox",
+    "bio": "Cinematic storyteller blending noir aesthetics with modern social conflicts.",
+    "tags": ["noir", "social", "crime"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_026",
+    "profile_picture": "/images/profiles/creator_026.jpg"
+  },
+  {
+    "id": "creator_027",
+    "name": "Olivia Pierce",
+    "bio": "Family-friendly creator turning real childhood moments into wholesome visual stories.",
+    "tags": ["family", "wholesome", "kids"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_027",
+    "profile_picture": "/images/profiles/creator_027.jpg"
+  },
+  {
+    "id": "creator_028",
+    "name": "Jamal Winters",
+    "bio": "Black creator specializing in high-drama episodics inspired by real community struggles.",
+    "tags": ["drama", "urban", "true-story"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_028",
+    "profile_picture": "/images/profiles/creator_028.jpg"
+  },
+  {
+    "id": "creator_029",
+    "name": "Elena Cruz",
+    "bio": "Latina filmmaker blending magical realism with cultural heritage narratives.",
+    "tags": ["magic-realism", "culture", "drama"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_029",
+    "profile_picture": "/images/profiles/creator_029.jpg"
+  },
+  {
+    "id": "creator_030",
+    "name": "Reese Donovan",
+    "bio": "Comedy-thriller hybrid creator producing chaotic, unpredictable mini-series.",
+    "tags": ["comedy", "chaos", "thriller"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_030",
+    "profile_picture": "/images/profiles/creator_030.jpg"
+  },
+  {
+    "id": "creator_031",
+    "name": "Brielle Young",
+    "bio": "Black female action creator developing dynamic, fast-paced short films.",
+    "tags": ["action", "female-led", "fight"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_031",
+    "profile_picture": "/images/profiles/creator_031.jpg"
+  },
+  {
+    "id": "creator_032",
+    "name": "Darius Cole",
+    "bio": "True-crime docu-creator specializing in neighborhood legends and unsolved stories.",
+    "tags": ["true-crime", "urban", "documentary"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_032",
+    "profile_picture": "/images/profiles/creator_032.jpg"
+  },
+  {
+    "id": "creator_033",
+    "name": "Harper Lane",
+    "bio": "Visual poet transforming everyday moments into abstract cinematic shorts.",
+    "tags": ["art", "visual", "poetic"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_033",
+    "profile_picture": "/images/profiles/creator_033.jpg"
+  },
+  {
+    "id": "creator_034",
+    "name": "Devon Carter",
+    "bio": "Creator building narrative sci-fi universes through minimalist worldbuilding.",
+    "tags": ["sci-fi", "minimal", "worldbuilding"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_034",
+    "profile_picture": "/images/profiles/creator_034.jpg"
+  },
+  {
+    "id": "creator_035",
+    "name": "Jada Wells",
+    "bio": "Lifestyle micro-series creator showing young Black professionals navigating love & ambition.",
+    "tags": ["lifestyle", "romance", "drama"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_035",
+    "profile_picture": "/images/profiles/creator_035.jpg"
+  },
+  {
+    "id": "creator_036",
+    "name": "Christian Hyde",
+    "bio": "Action-mystery creator inspired by noir detectives and modern vigilante stories.",
+    "tags": ["mystery", "action", "crime"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_036",
+    "profile_picture": "/images/profiles/creator_036.jpg"
+  },
+  {
+    "id": "creator_037",
+    "name": "Talia Bennett",
+    "bio": "Romantic drama creator crafting emotional arcs with strong character development.",
+    "tags": ["romance", "drama", "character"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_037",
+    "profile_picture": "/images/profiles/creator_037.jpg"
+  },
+  {
+    "id": "creator_038",
+    "name": "Omari Fields",
+    "bio": "Black sci-fi creator imagining alternate histories and futuristic Black worlds.",
+    "tags": ["sci-fi", "afrofuturism", "fantasy"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_038",
+    "profile_picture": "/images/profiles/creator_038.jpg"
+  },
+  {
+    "id": "creator_039",
+    "name": "Selena Rhodes",
+    "bio": "Creator blending dance, movement, and cinematic storytelling.",
+    "tags": ["dance", "movement", "art"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_039",
+    "profile_picture": "/images/profiles/creator_039.jpg"
+  },
+  {
+    "id": "creator_040",
+    "name": "Hakeem Porter",
+    "bio": "Black filmmaker producing gritty, high-emotion dramas based on real-life conflicts.",
+    "tags": ["urban", "drama", "true-story"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_040",
+    "profile_picture": "/images/profiles/creator_040.jpg"
+  },
+  {
+    "id": "creator_041",
+    "name": "Grace Moreno",
+    "bio": "Latina creator producing bilingual micro-series centered on cultural duality.",
+    "tags": ["bilingual", "culture", "drama"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_041",
+    "profile_picture": "/images/profiles/creator_041.jpg"
+  },
+  {
+    "id": "creator_042",
+    "name": "Andre Livingston",
+    "bio": "Cinematic creator merging spirituality, surrealism, and visual metaphor.",
+    "tags": ["surreal", "art", "spiritual"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_042",
+    "profile_picture": "/images/profiles/creator_042.jpg"
+  },
+  {
+    "id": "creator_043",
+    "name": "Lexi King",
+    "bio": "High-energy comedy creator who writes chaotic, fast-paced skit-series.",
+    "tags": ["comedy", "skits", "high-energy"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_043",
+    "profile_picture": "/images/profiles/creator_043.jpg"
+  },
+  {
+    "id": "creator_044",
+    "name": "Dominic Hale",
+    "bio": "Cultural docu-creator capturing everyday people with cinematic framing.",
+    "tags": ["documentary", "culture", "visual"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_044",
+    "profile_picture": "/images/profiles/creator_044.jpg"
+  },
+  {
+    "id": "creator_045",
+    "name": "Naomi Clarke",
+    "bio": "Creator building inspiring, wellness-focused mini-series around self-growth.",
+    "tags": ["wellness", "motivation", "lifestyle"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_045",
+    "profile_picture": "/images/profiles/creator_045.jpg"
+  },
+  {
+    "id": "creator_046",
+    "name": "Terrence Lowe",
+    "bio": "Black comedy-drama creator focusing on relationships, conflict, and humor.",
+    "tags": ["dramedy", "relationships", "urban"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_046",
+    "profile_picture": "/images/profiles/creator_046.jpg"
+  },
+  {
+    "id": "creator_047",
+    "name": "Riley Owens",
+    "bio": "Young thriller creator blending TikTok pacing with cinematic tension.",
+    "tags": ["thriller", "modern", "fast-paced"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_047",
+    "profile_picture": "/images/profiles/creator_047.jpg"
+  },
+  {
+    "id": "creator_048",
+    "name": "Zion Matthews",
+    "bio": "Black male filmmaker specializing in comedic micro-series about adulthood struggles.",
+    "tags": ["comedy", "lifestyle", "relatable"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_048",
+    "profile_picture": "/images/profiles/creator_048.jpg"
+  },
+  {
+    "id": "creator_049",
+    "name": "Camila Rojas",
+    "bio": "Latina creator developing emotional, music-driven narrative shorts.",
+    "tags": ["music", "romance", "art"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_049",
+    "profile_picture": "/images/profiles/creator_049.jpg"
+  },
+  {
+    "id": "creator_050",
+    "name": "Dre Fox",
+    "bio": "Black filmmaker blending docu-style realism with stylized dramatic storytelling.",
+    "tags": ["drama", "urban", "docu-style"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_050",
+    "profile_picture": "/images/profiles/creator_050.jpg"
   }
 ]
