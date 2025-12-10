@@ -1,1 +1,92 @@
-
+[
+  {
+    "id": "creator_001",
+    "name": "Kel Mitchell",
+    "bio": "Actor, director, comedy creator building faith-driven digital stories.",
+    "tags": ["actor", "director", "faith", "comedy"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_001",
+    "profile_picture": "/images/profiles/creator_001.jpg"
+  },
+  {
+    "id": "creator_002",
+    "name": "Aaliyah Brooks",
+    "bio": "Lifestyle and micro-series filmmaker based in Atlanta.",
+    "tags": ["lifestyle", "film", "drama"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_002",
+    "profile_picture": "/images/profiles/creator_002.jpg"
+  },
+  {
+    "id": "creator_003",
+    "name": "Jordan Miles",
+    "bio": "Chicago filmmaker focusing on sports documentaries and youth storytelling.",
+    "tags": ["sports", "documentary", "youth"],
+    "kyc_status": "pending",
+    "payout_account_id": null,
+    "profile_picture": "/images/profiles/creator_003.jpg"
+  },
+  {
+    "id": "creator_004",
+    "name": "Renee Carter",
+    "bio": "Creator of short-form romantic dramas and lifestyle stories.",
+    "tags": ["romance", "drama", "lifestyle"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_004",
+    "profile_picture": "/images/profiles/creator_004.jpg"
+  },
+  {
+    "id": "creator_005",
+    "name": "Malik Thompson",
+    "bio": "Writer-director building gritty Chicago-inspired micro-series.",
+    "tags": ["gritty", "crime", "urban"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_005",
+    "profile_picture": "/images/profiles/creator_005.jpg"
+  },
+  {
+    "id": "creator_006",
+    "name": "Briana Scott",
+    "bio": "Motherhood and wellness storyteller focused on authentic Black family life.",
+    "tags": ["family", "wellness", "lifestyle"],
+    "kyc_status": "pending",
+    "payout_account_id": null,
+    "profile_picture": "/images/profiles/creator_006.jpg"
+  },
+  {
+    "id": "creator_007",
+    "name": "Tyrese Lane",
+    "bio": "Indie director known for sci-fi short films with practical effects.",
+    "tags": ["sci-fi", "indie", "fx"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_007",
+    "profile_picture": "/images/profiles/creator_007.jpg"
+  },
+  {
+    "id": "creator_008",
+    "name": "Nia Richardson",
+    "bio": "Beauty creator expanding into scripted series centered on sisterhood.",
+    "tags": ["beauty", "drama", "community"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_008",
+    "profile_picture": "/images/profiles/creator_008.jpg"
+  },
+  {
+    "id": "creator_009",
+    "name": "DeShawn Harris",
+    "bio": "Street photographer and docu-creator building episodic visual stories.",
+    "tags": ["photography", "documentary", "culture"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_009",
+    "profile_picture": "/images/profiles/creator_009.jpg"
+  },
+  {
+    "id": "creator_010",
+    "name": "Tasha Monroe",
+    "bio": "Creator of short-form thrillers with a focus on psychological suspense.",
+    "tags": ["thriller", "suspense", "horror"],
+    "kyc_status": "verified",
+    "payout_account_id": "acct_010",
+    "profile_picture": "/images/profiles/creator_010.jpg"
+  }
+]
