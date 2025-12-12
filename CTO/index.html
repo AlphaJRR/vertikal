@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VERTIKAL - CTO Brief</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0C0F18; color: white; overflow: hidden; margin: 0; }
+        .slide { height: 100vh; width: 100vw; display: none; flex-direction: column; justify-content: center; align-items: center; padding: 4rem; position: absolute; inset: 0; animation: fadeIn 0.5s ease-in-out; box-sizing: border-box; }
+        .slide.active { display: flex; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .glass { background: rgba(255,255,255,0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 1rem; }
+        .code-panel { font-family: 'JetBrains Mono', monospace; background: #0f172a; border: 1px solid #334155; color: #94a3b8; }
+        .brand-gradient { background: linear-gradient(135deg, #3B82F6, #9333EA); }
+        .text-gradient { background: linear-gradient(to right, #3B82F6, #9333EA); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    </style>
+</head>
+<body>
+
+    <div class="fixed top-8 left-8 z-50 flex items-center gap-3 opacity-50">
+        <span class="font-bold tracking-widest text-xs font-mono text-purple-500">VERTIKAL // ENGINEERING_BRIEF_V2</span>
+    </div>
+
+    <!-- SLIDE 1: INTRO -->
+    <div class="slide active" id="slide-1">
+        <div class="mb-8 p-4 rounded-2xl bg-gradient-to-br from-blue-900/20 to-purple-900/20 border border-white/5">
+            <svg width="80" height="80" viewBox="0 0 100 100" fill="none" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M25 40 L50 65 L75 25" /><path d="M75 25 L 55 25" /><path d="M75 25 L 75 45" />
+            </svg>
+        </div>
+        <h1 class="text-6xl font-black tracking-tighter mb-4 text-center">SCALING <span class="text-gradient">TRUST</span></h1>
+        <p class="text-xl text-gray-400 mb-12 text-center font-mono">Backend Architecture & Engineering Roadmap</p>
+    </div>
+
+    <!-- SLIDE 2: THE PROBLEM -->
+    <div class="slide" id="slide-2">
+        <h2 class="text-blue-500 font-bold tracking-widest mb-12 font-mono">01_THE_BOTTLENECK</h2>
+        <div class="grid grid-cols-2 gap-12 w-full max-w-6xl">
+            <div class="space-y-6">
+                <h3 class="text-3xl font-bold">Current State (MVP)</h3>
+                <p class="text-gray-400">Our prototype runs on client-side Firebase logic. This works for 100 users but breaks at 10,000.</p>
+                <div class="glass p-6 border-l-4 border-red-500">
+                    <strong class="block text-white mb-1">Risk: Payment Logic</strong>
+                    <span class="text-sm text-gray-400">Client-side revenue splits are insecure.</span>
+                </div>
+                <div class="glass p-6 border-l-4 border-red-500">
+                    <strong class="block text-white mb-1">Risk: Video Encoding</strong>
+                    <span class="text-sm text-gray-400">Direct-to-storage uploads lack bitrate optimization.</span>
+                </div>
+            </div>
+            <div class="glass p-8 flex items-center justify-center border border-red-500/20">
+                <div class="text-center">
+                    <div class="text-6xl font-black text-red-500 mb-2">FAIL</div>
+                    <div class="text-sm mono text-gray-500">PROJECTED CONCURRENCY LIMIT: 5,000</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 3: ARCHITECTURE -->
+    <div class="slide" id="slide-3">
+        <h2 class="text-blue-500 font-bold tracking-widest mb-12 font-mono">02_TARGET_ARCHITECTURE</h2>
+        <div class="w-full max-w-6xl grid grid-cols-3 gap-6 text-sm">
+            <div class="glass p-6 border-t-4 border-blue-500">
+                <h3 class="font-bold mb-4 text-blue-400">VIDEO ENGINE</h3>
+                <ul class="space-y-2 text-gray-400"><li>Cloudflare Stream</li><li>Signed Tokens</li><li>Tus Resumable Uploads</li></ul>
+            </div>
+            <div class="glass p-6 border-t-4 border-green-500">
+                <h3 class="font-bold mb-4 text-green-400">FINANCIAL ENGINE</h3>
+                <ul class="space-y-2 text-gray-400"><li>Stripe Connect Custom</li><li>Escrow Microservice</li><li>Split Logic Engine</li></ul>
+            </div>
+            <div class="glass p-6 border-t-4 border-purple-500">
+                <h3 class="font-bold mb-4 text-purple-400">VIBE ENGINE</h3>
+                <ul class="space-y-2 text-gray-400"><li>WebSocket Server</li><li>Real-time Danmaku</li><li>Watch Party Sync</li></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 4: FINANCIALS -->
+    <div class="slide" id="slide-4">
+        <h2 class="text-blue-500 font-bold tracking-widest mb-8 font-mono">03_ESCROW_LOGIC</h2>
+        <h1 class="text-4xl font-black mb-8">SECURE <span class="text-white">PAYMENTS</span></h1>
+        <div class="w-full max-w-5xl flex items-center justify-between relative">
+            <div class="glass p-6 w-64 text-center z-10"><div class="text-4xl mb-2">💰</div><h3 class="font-bold">1. Hold</h3><p class="text-xs text-gray-400">Client funds held in Platform Escrow.</p></div>
+            <div class="h-1 bg-gray-700 flex-1 mx-2"></div>
+            <div class="glass p-6 w-64 text-center z-10 border-2 border-blue-500"><div class="text-4xl mb-2">✅</div><h3 class="font-bold">2. Verify</h3><p class="text-xs text-gray-400">Dual-signoff required.</p></div>
+            <div class="h-1 bg-gray-700 flex-1 mx-2"></div>
+            <div class="glass p-6 w-64 text-center z-10"><div class="text-4xl mb-2">💸</div><h3 class="font-bold">3. Split</h3><p class="text-xs text-gray-400">90% Creator / 10% Platform.</p></div>
+        </div>
+    </div>
+
+    <!-- SLIDE 5: ROADMAP -->
+    <div class="slide" id="slide-5">
+        <h2 class="text-blue-500 font-bold tracking-widest mb-12 font-mono">04_EXECUTION_TIMELINE</h2>
+        <div class="space-y-4 w-full max-w-4xl">
+            <div class="glass p-6 border-l-4 border-white flex gap-6"><div class="font-black text-2xl w-32 text-gray-500">MONTH 1</div><div><h3 class="font-bold text-lg">Production Hardening</h3><p class="text-sm text-gray-400">Deploy Security Rules • CI/CD Pipelines • Secret Manager</p></div></div>
+            <div class="glass p-6 border-l-4 border-blue-500 flex gap-6"><div class="font-black text-2xl w-32 text-blue-500">MONTH 2</div><div><h3 class="font-bold text-lg">Escrow 2.0</h3><p class="text-sm text-gray-400">Stripe Connect Custom • Milestone Logic • Auto-Release Scheduler</p></div></div>
+            <div class="glass p-6 border-l-4 border-purple-500 flex gap-6"><div class="font-black text-2xl w-32 text-purple-500">MONTH 3</div><div><h3 class="font-bold text-lg">Advanced Scale</h3><p class="text-sm text-gray-400">Cloudflare Watermarking • V.E.T. v2 • IP Theft Checksum</p></div></div>
+        </div>
+    </div>
+
+    <!-- SLIDE 6: THE ROLE -->
+    <div class="slide" id="slide-6">
+        <h2 class="text-blue-500 font-bold tracking-widest mb-8 font-mono">05_THE_MANDATE</h2>
+        <div class="flex gap-12 w-full max-w-5xl items-center">
+            <div class="w-1/3 flex justify-center">
+                 <div class="w-64 h-64 rounded-full bg-gray-800 border-4 border-blue-500 flex items-center justify-center relative shadow-[0_0_50px_rgba(59,130,246,0.3)]">
+                    <svg width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2" /><rect x="9" y="9" width="6" height="6" /><line x1="9" y1="1" x2="9" y2="4" /><line x1="15" y1="1" x2="15" y2="4" /><line x1="9" y1="20" x2="9" y2="23" /><line x1="15" y1="20" x2="15" y2="23" /><line x1="20" y1="9" x2="23" y2="9" /><line x1="20" y1="14" x2="23" y2="14" /><line x1="1" y1="9" x2="4" y2="9" /><line x1="1" y1="14" x2="4" y2="14" /></svg>
+                    <div class="absolute bottom-6 bg-blue-600 text-white px-6 py-2 rounded-full font-bold text-sm tracking-widest">CTO</div>
+                </div>
+            </div>
+            <div class="w-2/3 text-left">
+                <h1 class="text-5xl font-black mb-6">FOUNDING CTO</h1>
+                <p class="text-xl text-gray-300 mb-8">You aren't just writing code. You are defining the standard for the next generation of Black Cinema.</p>
+                <div class="text-sm font-mono text-blue-400">Equity: Founder Level<br>Stack: React / Node / Go<br>Mission: Critical</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTROLS -->
+    <div class="fixed bottom-8 right-8 flex gap-4 z-50">
+        <button class="bg-white/10 p-2 rounded hover:bg-white/20" onclick="changeSlide(-1)">PREV</button>
+        <button class="bg-white/10 p-2 rounded hover:bg-white/20" onclick="changeSlide(1)">NEXT</button>
+    </div>
+    <script>
+        let current = 1;
+        const total = 6; 
+        function changeSlide(dir) {
+            document.getElementById(`slide-${current}`).classList.remove('active');
+            current += dir;
+            if (current < 1) current = 1; if (current > total) current = total;
+            document.getElementById(`slide-${current}`).classList.add('active');
+        }
+    </script>
+</body>
+</html>
