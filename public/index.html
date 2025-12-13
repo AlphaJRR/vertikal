@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VERTIKAL — The Anti-Algorithm</title>
+    <meta name="description" content="Signal over noise. The new standard for vertical cinema.">
+    <style>
+        :root { --bg: #000000; --text: #ffffff; --accent: #007AFF; }
+        body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; display: flex; flex-direction: column; min-height: 100vh; }
+        .container { max-width: 600px; margin: 0 auto; padding: 2rem; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        h1 { font-size: 3.5rem; letter-spacing: -0.05em; line-height: 1; margin-bottom: 1rem; }
+        p.sub { font-size: 1.25rem; color: #888; margin-bottom: 2.5rem; line-height: 1.5; }
+        .form-group { position: relative; margin-bottom: 2rem; }
+        input[type="email"] { width: 100%; padding: 1.25rem; background: #111; border: 1px solid #333; color: #fff; font-size: 1rem; border-radius: 12px; outline: none; transition: border 0.2s; box-sizing: border-box; }
+        input[type="email"]:focus { border-color: var(--accent); }
+        button { position: absolute; right: 8px; top: 8px; bottom: 8px; background: var(--accent); color: white; border: none; padding: 0 1.5rem; border-radius: 8px; font-weight: 600; cursor: pointer; }
+        .legal-footer { margin-top: auto; padding: 2rem; text-align: center; border-top: 1px solid #111; }
+        .legal-footer a { color: #444; text-decoration: none; font-size: 0.85rem; margin: 0 1rem; }
+        .legal-footer a:hover { color: #fff; }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <h1>SIGNAL<br>OVER<br>NOISE.</h1>
+        <p class="sub">VERTIKAL is the new standard for cinematic creator culture. No trends. No filler. Just the work.</p>
+        
+        <form name="waitlist" method="POST" data-netlify="true" class="form-group">
+            <input type="hidden" name="form-name" value="waitlist" />
+            <input type="email" name="email" placeholder="Enter your email for access..." required />
+            <button type="submit">JOIN</button>
+        </form>
+    </main>
+
+    <footer class="legal-footer">
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Service</a>
+        <br><br>
+        <span style="color:#222; font-size: 0.75rem;">© 2025 VERTIKAL AI INC.</span>
+    </footer>
+</body>
+</html>
