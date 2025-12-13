@@ -21,12 +21,13 @@ export function initSentry(): void {
       environment: __DEV__ ? 'development' : 'production',
       // Removed enableInExpoDevelopment - not a valid option in Sentry v7+
       tracesSampleRate: __DEV__ ? 1.0 : 0.2,
-      enableAutoSessionTracking: true,
-      sessionTrackingIntervalMillis: 30000,
+      // Removed enableAutoSessionTracking - may cause type issues in some Sentry versions
+      // Session tracking is enabled by default in Sentry v7+
       // Additional options
       beforeSend(event, hint) {
         // Filter out development errors if needed
-        if (__DEV__ && event.level === 'info') {
+        // ✅ FIXED: Explicit boolean check to prevent type errors
+        if (__DEV__ === true && event.level === 'info') {
           return null;
         }
         return event;

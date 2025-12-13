@@ -39,8 +39,11 @@ ios/.xcode.env.local
 *.pem
 
 # local env files
+.env
 .env*.local
 env.local/
+# Keep .env.example in repo
+!.env.example
 
 # typescript
 *.tsbuildinfo

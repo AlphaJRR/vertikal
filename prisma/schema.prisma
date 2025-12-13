@@ -1,0 +1,250 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql" // PostgreSQL required for enum support
+  url      = env("DATABASE_URL")
+}
+
+// --- ENUMS ---
+
+enum Role {
+  USER
+  CREATOR
+  PRODUCTION  // Can DM (Production team members)
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum ProfileType {
+  VIEWER
+  CREATOR
+  NETWORK // For "Founding 50" Networks (Gold Borders)
+}
+
+enum TransactionType {
+  COIN_PURCHASE
+  TIP
+  SUBSCRIPTION
+  CONTENT_UNLOCK
+}
+
+enum InteractionType {
+  LIKE
+  SHARE
+  VIEW
+  BOOKMARK
+}
+
+// --- CORE IDENTITY ---
+
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  username      String    @unique
+  passwordHash  String
+  role          Role      @default(USER)
+  coinBalance   Int       @default(0) // Virtual currency ($150 = 15000 coins logic)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  profile       Profile?
+  comments      Comment[]
+  sentTips      Transaction[] @relation("Sender")
+  receivedTips  Transaction[] @relation("Receiver")
+  subscriptions Subscription[]
+  interactions  Interaction[]
+  devices       Device[]
+  sentMessages  Message[] @relation("SentMessages")
+  receivedMessages Message[] @relation("ReceivedMessages")
+}
+
+model Profile {
+  id            String      @id @default(uuid())
+  userId        String      @unique
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  displayName   String
+  bio           String?     @db.Text
+  avatarUrl     String?
+  coverUrl      String?
+  
+  type          ProfileType @default(VIEWER)
+  isVerified    Boolean     @default(false)
+  isFounding50  Boolean     @default(false) // Triggers the "Founding 50" Badge
+  
+  // Stats (Denormalized for performance)
+  followerCount Int         @default(0)
+  totalViews    Int         @default(0)
+
+  // Relations
+  shows         Show[]
+  subscribers   Subscription[]
+}
+
+model Device {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  pushToken String?  // For Expo Push Notifications
+  platform  String   // "ios" | "android"
+  lastActive DateTime @default(now())
+}
+
+// --- CONTENT ENGINE (The Cinema) ---
+
+model Show {
+  id            String    @id @default(uuid())
+  creatorId     String
+  creator       Profile   @relation(fields: [creatorId], references: [id])
+  
+  title         String
+  description   String    @db.Text
+  coverImage    String
+  trailerUrl    String?
+  
+  genre         String    // "Drama", "Docu", "Sci-Fi"
+  tags          String[]
+  releaseDate   DateTime  @default(now())
+  isPremium     Boolean   @default(false) // Requires Subscription?
+
+  // Relations
+  seasons       Season[]
+  interactions  Interaction[]
+}
+
+model Season {
+  id        String    @id @default(uuid())
+  showId    String
+  show      Show      @relation(fields: [showId], references: [id], onDelete: Cascade)
+  
+  number    Int
+  title     String?
+  
+  episodes  Episode[]
+}
+
+model Episode {
+  id            String    @id @default(uuid())
+  seasonId      String
+  season        Season    @relation(fields: [seasonId], references: [id], onDelete: Cascade)
+  
+  title         String
+  description   String?
+  episodeNumber Int
+  
+  videoUrl      String    // M3U8 or MP4 URL
+  thumbnailUrl  String
+  duration      Int       // In seconds
+  
+  // Stats
+  views         Int       @default(0)
+  
+  createdAt     DateTime  @default(now())
+  
+  // Relations
+  comments      Comment[]
+  interactions  Interaction[]
+}
+
+// --- SOCIAL & VIBE MODE ---
+
+model Comment {
+  id          String   @id @default(uuid())
+  content     String
+  
+  // Vibe Mode Logic
+  timestamp   Int?     // Time in seconds (video timestamp) for Danmaku overlay
+  isDanmaku   Boolean  @default(false)
+  
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  
+  episodeId   String
+  episode     Episode  @relation(fields: [episodeId], references: [id])
+  
+  createdAt   DateTime @default(now())
+}
+
+model Interaction {
+  id        String          @id @default(uuid())
+  type      InteractionType
+  
+  userId    String
+  user      User            @relation(fields: [userId], references: [id])
+  
+  // Polymorphic-like relations (can link to Show or Episode)
+  showId    String?
+  show      Show?           @relation(fields: [showId], references: [id])
+  
+  episodeId String?
+  episode   Episode?        @relation(fields: [episodeId], references: [id])
+  
+  createdAt DateTime        @default(now())
+
+  @@index([userId, type])
+}
+
+// --- MONETIZATION (The Bank) ---
+
+model Transaction {
+  id          String          @id @default(uuid())
+  amount      Int             // Stored in CENTS or COINS
+  type        TransactionType
+  status      String          // "PENDING", "COMPLETED", "FAILED"
+  stripeId    String?         // External Payment ID
+  
+  senderId    String
+  sender      User            @relation("Sender", fields: [senderId], references: [id])
+  
+  receiverId  String?         // Nullable for Coin Purchases (Platform receives)
+  receiver    User?           @relation("Receiver", fields: [receiverId], references: [id])
+  
+  createdAt   DateTime        @default(now())
+}
+
+model Subscription {
+  id          String    @id @default(uuid())
+  userId      String    // The Subscriber
+  user        User      @relation(fields: [userId], references: [id])
+  
+  creatorId   String    // The Network/Creator being subscribed to
+  creator     Profile   @relation(fields: [creatorId], references: [id])
+  
+  status      String    // "ACTIVE", "CANCELED", "EXPIRED"
+  startDate   DateTime  @default(now())
+  expiresAt   DateTime? // Null = Lifetime or auto-renew logic handled externally
+  
+  stripeSubId String?   // Stripe Subscription ID
+}
+
+// --- MESSAGING (DM System) ---
+
+model Message {
+  id          String   @id @default(uuid())
+  senderId    String
+  sender      User     @relation("SentMessages", fields: [senderId], references: [id], onDelete: Cascade)
+  receiverId  String
+  receiver    User     @relation("ReceivedMessages", fields: [receiverId], references: [id], onDelete: Cascade)
+  content     String   @db.Text
+  isRead      Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  
+  @@index([senderId, receiverId])
+  @@index([receiverId, createdAt])
+}
+
+// --- ANALYTICS ---
+
+model AnalyticsLog {
+  id          String   @id @default(uuid())
+  event       String   // "VIDEO_PLAY", "PROFILE_VIEW"
+  metadata    Json?    // Flexible payload
+  createdAt   DateTime @default(now())
+}
+

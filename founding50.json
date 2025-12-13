@@ -1,0 +1,75 @@
+{
+  "creators": [
+    {
+      "id": "BAF",
+      "name": "Black Awesomeness",
+      "type": "network",
+      "avatar": "https://www.dropbox.com/scl/fi/7deqzj0fkqr4my6cgi9ik/Image-2.jpg?rlkey=szrgy5uqh14m7k8k3lvvu5fic&st=a6f8yfx0&raw=1",
+      "role": "Production Network",
+      "isFounding50": true,
+      "bio": "Premier production network for vertical cinema excellence.",
+      "stats": {
+        "fans": "2.5M",
+        "series": "12",
+        "views": "150M"
+      }
+    },
+    {
+      "id": "Alpha",
+      "name": "Alpha Visuals",
+      "type": "network",
+      "avatar": "https://www.dropbox.com/scl/fi/4edlkaew0pq5xwjgc63p1/IMG_2737.JPG?rlkey=edr0wep6sp31g7k10dwoub76s&st=yhl5i0lp&raw=1",
+      "role": "Production Network",
+      "isFounding50": true,
+      "bio": "Cutting-edge visual storytelling for the vertical generation.",
+      "stats": {
+        "fans": "1.8M",
+        "series": "8",
+        "views": "95M"
+      }
+    },
+    {
+      "id": "joshuaargue",
+      "name": "Joshua Argue",
+      "type": "creator",
+      "avatar": "https://www.dropbox.com/scl/fi/vaudy76mhaqtcukpkzeve/JoshuaArgue.JPG?rlkey=is2eixyxhseij6jft5k91zm9k&st=0mp4lgv9&raw=1",
+      "role": "Showrunner",
+      "isFounding50": true,
+      "bio": "Award-winning showrunner pushing vertical cinema boundaries.",
+      "stats": {
+        "fans": "850K",
+        "series": "5",
+        "views": "42M"
+      }
+    },
+    {
+      "id": "joshuaroberts",
+      "name": "J.R.R. Roberts",
+      "type": "creator",
+      "avatar": "https://www.dropbox.com/scl/fi/v77iz4i895pqmlmzvqhsk/JoshuaRoberts.JPG?rlkey=4bag3kp7ud5y8w8ibi8s3lfa2&st=04hrxb2c&raw=1",
+      "role": "Founder",
+      "isFounding50": true,
+      "bio": "Visionary founder of VERTIKAL. Pioneering vertical storytelling.",
+      "stats": {
+        "fans": "1.2M",
+        "series": "7",
+        "views": "68M"
+      }
+    },
+    {
+      "id": "kelmitchell",
+      "name": "Kel Mitchell",
+      "type": "creator",
+      "avatar": "https://www.dropbox.com/scl/fi/ipg6ev6ku0ylgr2jnjg46/Image.jpg?rlkey=lcebirpcgnbtlduq2zncxotfq&st=zm8l3hfq&raw=1",
+      "role": "Founding Ambassador",
+      "isFounding50": true,
+      "bio": "Iconic entertainer bringing vertical cinema to new audiences.",
+      "stats": {
+        "fans": "3.5M",
+        "series": "4",
+        "views": "200M"
+      }
+    }
+  ]
+}
+

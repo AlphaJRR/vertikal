@@ -1,0 +1,322 @@
+// App.tsx - API Integrated Version
+import React, { useEffect } from 'react';
+import { 
+  View, Text, ActivityIndicator, StyleSheet, 
+  TouchableOpacity, FlatList, Image 
+} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import * as Sentry from '@sentry/react-native';
+import { Home, Tv, Smartphone, User } from 'lucide-react-native';
+
+// Components
+import { ErrorBoundary } from './components/ui/ErrorBoundary';
+
+// Utils
+import { initSentry } from './utils/sentry';
+
+// Hooks
+import { useCreators, useProjects } from './hooks/useApi';
+
+// Types (keep these from data.ts)
+import { Creator, Project } from './data';
+
+// Initialize Sentry
+initSentry();
+
+// Create React Query client
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 3,
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      gcTime: 10 * 60 * 1000, // 10 minutes (formerly cacheTime)
+    },
+  },
+});
+
+// Bottom Tab Navigator
+const Tab = createBottomTabNavigator();
+
+// ============================================
+// LOADING SCREEN COMPONENT
+// ============================================
+const LoadingScreen: React.FC<{ message?: string }> = ({ message }) => (
+  <View style={styles.centerContainer}>
+    <ActivityIndicator size="large" color="#FFD700" />
+    <Text style={styles.loadingText}>{message || 'Loading VERTIKAL...'}</Text>
+  </View>
+);
+
+// ============================================
+// ERROR SCREEN COMPONENT
+// ============================================
+const ErrorScreen: React.FC<{ 
+  error: Error; 
+  retry: () => void;
+}> = ({ error, retry }) => (
+  <View style={styles.centerContainer}>
+    <Text style={styles.errorTitle}>Connection Lost</Text>
+    <Text style={styles.errorMessage}>{error.message}</Text>
+    <TouchableOpacity style={styles.retryButton} onPress={retry}>
+      <Text style={styles.retryText}>RETRY</Text>
+    </TouchableOpacity>
+  </View>
+);
+
+// ============================================
+// HOME TAB (With API Data)
+// ============================================
+const HomeTab: React.FC = () => {
+  const { data: creators, isLoading, error, refetch } = useCreators();
+  const { data: projects } = useProjects();
+
+  // Track screen view in Sentry
+  useEffect(() => {
+    Sentry.addBreadcrumb({
+      category: 'navigation',
+      message: 'Navigated to Home tab',
+      level: 'info',
+    });
+  }, []);
+
+  if (isLoading) {
+    return <LoadingScreen message="Loading creators..." />;
+  }
+
+  if (error) {
+    return <ErrorScreen error={error as Error} retry={refetch} />;
+  }
+
+  if (!creators || creators.length === 0) {
+    return (
+      <View style={styles.centerContainer}>
+        <Text style={styles.emptyText}>No creators found</Text>
+      </View>
+    );
+  }
+
+  // Render your home screen with real data
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>VERTIKAL</Text>
+      <Text style={styles.subtitle}>
+        {creators.length} Creators • {projects?.length || 0} Shows
+      </Text>
+      
+      {/* TODO: Replace with your actual HomeTab UI */}
+      <FlatList
+        data={creators}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View style={styles.creatorCard}>
+            <Image source={{ uri: item.avatar }} style={styles.avatar} />
+            <Text style={styles.creatorName}>{item.name}</Text>
+          </View>
+        )}
+      />
+    </View>
+  );
+};
+
+// ============================================
+// OTHER TABS (Placeholder)
+// ============================================
+const SeriesTab: React.FC = () => {
+  const { data: projects, isLoading, error, refetch } = useProjects();
+
+  useEffect(() => {
+    Sentry.addBreadcrumb({
+      category: 'navigation',
+      message: 'Navigated to Series tab',
+      level: 'info',
+    });
+  }, []);
+
+  if (isLoading) return <LoadingScreen message="Loading series..." />;
+  if (error) return <ErrorScreen error={error as Error} retry={refetch} />;
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>SERIES</Text>
+      {/* TODO: Implement Series UI */}
+    </View>
+  );
+};
+
+const ShortsTab: React.FC = () => (
+  <View style={styles.container}>
+    <Text style={styles.title}>SHORTS</Text>
+  </View>
+);
+
+const ProfileTab: React.FC = () => (
+  <View style={styles.container}>
+    <Text style={styles.title}>PROFILE</Text>
+  </View>
+);
+
+// ============================================
+// MAIN APP COMPONENT
+// ============================================
+const AppNavigator: React.FC = () => {
+  return (
+    <NavigationContainer
+      onReady={() => {
+        // Initialize Sentry navigation tracking
+        Sentry.addBreadcrumb({
+          category: 'app',
+          message: 'App navigation ready',
+          level: 'info',
+        });
+      }}
+    >
+      <Tab.Navigator
+        screenOptions={{
+          headerShown: false,
+          tabBarStyle: {
+            backgroundColor: '#000000',
+            borderTopColor: '#1A1A1A',
+          },
+          tabBarActiveTintColor: '#3B82F6',
+          tabBarInactiveTintColor: '#666666',
+        }}
+      >
+        <Tab.Screen
+          name="Home"
+          component={HomeTab}
+          options={{
+            tabBarIcon: ({ color, size }) => <Home color={color} size={size} />,
+          }}
+        />
+        <Tab.Screen
+          name="Series"
+          component={SeriesTab}
+          options={{
+            tabBarIcon: ({ color, size }) => <Tv color={color} size={size} />,
+          }}
+        />
+        <Tab.Screen
+          name="Shorts"
+          component={ShortsTab}
+          options={{
+            tabBarIcon: ({ color, size }) => <Smartphone color={color} size={size} />,
+          }}
+        />
+        <Tab.Screen
+          name="Profile"
+          component={ProfileTab}
+          options={{
+            tabBarIcon: ({ color, size }) => <User color={color} size={size} />,
+          }}
+        />
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
+};
+
+// ============================================
+// ROOT APP (With Providers)
+// ============================================
+const App: React.FC = () => {
+  useEffect(() => {
+    // Set Sentry user context (example)
+    // In real app, this would come from auth state
+    if (!__DEV__) {
+      Sentry.setUser({ id: 'anonymous' });
+    }
+  }, []);
+
+  return (
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <AppNavigator />
+      </QueryClientProvider>
+    </ErrorBoundary>
+  );
+};
+
+// Wrap with Sentry for performance monitoring
+export default Sentry.wrap(App);
+
+// ============================================
+// STYLES
+// ============================================
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#000000',
+    padding: 16,
+  },
+  centerContainer: {
+    flex: 1,
+    backgroundColor: '#000000',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  title: {
+    color: '#FFFFFF',
+    fontSize: 24,
+    fontWeight: '900',
+    letterSpacing: 2,
+    marginBottom: 8,
+  },
+  subtitle: {
+    color: '#999999',
+    fontSize: 14,
+    marginBottom: 20,
+  },
+  loadingText: {
+    color: '#999999',
+    marginTop: 16,
+    fontSize: 14,
+  },
+  errorTitle: {
+    color: '#FFFFFF',
+    fontSize: 24,
+    fontWeight: '900',
+    marginBottom: 10,
+  },
+  errorMessage: {
+    color: '#999999',
+    textAlign: 'center',
+    marginBottom: 30,
+    fontSize: 14,
+  },
+  retryButton: {
+    backgroundColor: '#FFD700',
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 30,
+  },
+  retryText: {
+    color: '#000000',
+    fontWeight: '900',
+    fontSize: 14,
+  },
+  emptyText: {
+    color: '#666666',
+    fontSize: 16,
+  },
+  creatorCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#1A1A1A',
+  },
+  avatar: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    marginRight: 12,
+  },
+  creatorName: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+});
+
