@@ -3,6 +3,8 @@
 # This script handles the full build process including credential setup
 
 set -e
+# Disable zsh globbing if running in zsh
+[ -n "$ZSH_VERSION" ] && setopt +o nomatch 2>/dev/null || true
 
 echo "🚀 VERTIKAL EAS Build Execution"
 echo "================================"
