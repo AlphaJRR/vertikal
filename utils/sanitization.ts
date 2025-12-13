@@ -49,15 +49,15 @@ export function sanitizeObject<T extends Record<string, any>>(obj: T): T {
     return obj;
   }
 
-  const sanitized = { ...obj };
+  const sanitized = { ...obj } as T;
 
   for (const key in sanitized) {
     if (typeof sanitized[key] === 'string') {
       // Sanitize string values
-      sanitized[key] = sanitizeHTML(sanitized[key]);
+      (sanitized as any)[key] = sanitizeHTML(sanitized[key] as string);
     } else if (typeof sanitized[key] === 'object' && sanitized[key] !== null) {
       // Recursively sanitize nested objects
-      sanitized[key] = sanitizeObject(sanitized[key]);
+      (sanitized as any)[key] = sanitizeObject(sanitized[key] as any);
     }
   }
 

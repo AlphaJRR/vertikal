@@ -24,11 +24,17 @@ app.use('/api/auth', authRouter);
 import usersRouter from './routes/users';
 import showsRouter from './routes/shows';
 import messagesRouter from './routes/messages';
+import commentsRouter from './routes/comments';
+import subscriptionsRouter from './routes/subscriptions';
+import transactionsRouter from './routes/transactions';
 
 // Register route handlers
 app.use('/api/users', usersRouter);
 app.use('/api/shows', showsRouter);
 app.use('/api/messages', messagesRouter);
+app.use('/api/comments', commentsRouter);
+app.use('/api/subscriptions', subscriptionsRouter);
+app.use('/api/transactions', transactionsRouter);
 
 // Start server
 const port = typeof PORT === 'string' ? parseInt(PORT, 10) : PORT;

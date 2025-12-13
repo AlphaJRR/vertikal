@@ -7,6 +7,7 @@
 export enum Role {
   USER = 'USER',
   CREATOR = 'CREATOR',
+  PRODUCTION = 'PRODUCTION',
   ADMIN = 'ADMIN',
   SUPER_ADMIN = 'SUPER_ADMIN',
 }
@@ -90,7 +91,7 @@ export interface Creator {
   id: string;
   name: string;            // Transformed from username
   avatar: string;
-  role: 'USER' | 'CREATOR' | 'NETWORK';
+  role: 'USER' | 'CREATOR' | 'PRODUCTION' | 'ADMIN' | 'SUPER_ADMIN';
   company?: string;        // Derived from role
   isFounding50: boolean;
   bio: string;
@@ -128,11 +129,15 @@ export const transformUserProfile = (user: UserProfile): Creator => {
   const displayName = user.profile?.displayName || user.username;
   const profileType = user.profile?.type || 'VIEWER';
   
+  // Map ProfileType to Role (default to CREATOR for CREATOR/NETWORK profiles)
+  const role: 'USER' | 'CREATOR' | 'PRODUCTION' | 'ADMIN' | 'SUPER_ADMIN' = 
+    profileType === 'VIEWER' ? 'USER' : 'CREATOR';
+  
   return {
     id: user.id,
     name: displayName,    // ✅ displayName or username → name
     avatar: user.profile?.avatarUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + user.username,
-    role: profileType as 'USER' | 'CREATOR' | 'NETWORK',
+    role: role,
     company: profileType === 'NETWORK' ? displayName : undefined,
     isFounding50: user.profile?.isFounding50 || false,
     bio: user.profile?.bio || '',
@@ -154,24 +159,25 @@ export const transformUserProfile = (user: UserProfile): Creator => {
 export const transformUserDTO = (dto: UserDTO): Creator => {
   // Calculate followerCount from projects (if available) or use coins as fallback
   // In a real app, followerCount would come from the profile relation
-  const followerCount = dto.projects?.length * 10 || dto.coins * 10; // Mock calculation
+  const projectsLength = dto.projects?.length || 0;
+  const followerCount = projectsLength * 10 || dto.coins * 10; // Mock calculation
   
   return {
     id: dto.id,
     name: dto.username,    // username → name
     avatar: dto.avatar || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + dto.username,
-    role: dto.role as 'USER' | 'CREATOR' | 'NETWORK',
-    company: dto.role === Role.NETWORK ? dto.username : undefined,
+    role: dto.role as 'USER' | 'CREATOR' | 'PRODUCTION' | 'ADMIN' | 'SUPER_ADMIN',
+    company: undefined, // Company is not in Role enum, use ProfileType if needed
     isFounding50: dto.isFounding50,
     bio: dto.bio || '',
     coins: dto.coins,
     stats: {
       fans: formatNumber(followerCount), // ✅ Use calculated followerCount
-      series: dto.projects?.length.toString() || '0',
+      series: projectsLength.toString(),
       views: dto.projects ? formatViews(dto.projects) : undefined,
     },
     projects: dto.projects?.map(transformProjectDTO) || [],
-    type: dto.role === Role.NETWORK ? 'network' : 'creator',
+    type: 'creator', // Default to creator, check ProfileType if needed
   };
 };
 

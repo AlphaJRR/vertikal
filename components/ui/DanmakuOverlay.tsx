@@ -7,7 +7,7 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, Dimensions, Animated } from 'react-native';
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 export interface DanmakuComment {
   id: string;
@@ -45,13 +45,20 @@ const FlyingComment: React.FC<FlyingCommentProps> = ({ text, delay, topPosition,
     };
   }, [position, delay]);
 
+  // Convert percentage string to number for Animated.View
+  const topValue = typeof topPosition === 'string' && topPosition.endsWith('%')
+    ? parseFloat(topPosition) / 100 * height
+    : typeof topPosition === 'number' 
+      ? topPosition 
+      : 0;
+
   return (
     <Animated.View 
       style={[
         styles.flyer, 
         { 
           transform: [{ translateX: position }], 
-          top: topPosition,
+          top: topValue,
         }
       ]}
     >

@@ -21,6 +21,10 @@ declare module '@env' {
   // Development (optional)
   export const EXPO_PUBLIC_DEBUG_API: string;
   
+  // Supabase Storage
+  export const EXPO_PUBLIC_SUPABASE_URL: string;
+  export const EXPO_PUBLIC_SUPABASE_ANON_KEY: string;
+  
   // Environment
   export const NODE_ENV: 'development' | 'production' | 'test';
 }

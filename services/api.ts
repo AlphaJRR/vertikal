@@ -152,6 +152,12 @@ export const apiClient = {
     
     return { token, user };
   },
+
+  // User Profile Management
+  updateUserProfile: async (data: { username: string; displayName: string; avatarUrl?: string | null }) => {
+    const response = await api.put('/api/users/profile', data);
+    return response.data.user;
+  },
 };
 
 export default api;
