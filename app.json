@@ -3,9 +3,6 @@
     "name": "VERTIKAL",
     "slug": "vertikal-mobile",
     "version": "1.0.0",
-    "extra": {
-      "apiUrl": process.env.EXPO_PUBLIC_API_URL || "https://api.vertikal.com"
-    },
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "dark",
@@ -26,7 +23,11 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#000000"
       },
-      "package": "com.vertikal.app"
+      "package": "com.vertikal.app",
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.MODIFY_AUDIO_SETTINGS"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -34,6 +35,12 @@
     "plugins": [
       "expo-av",
       "expo-secure-store"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "de55a2bd-e36f-4ebd-b775-07527d498c21"
+      }
+    },
+    "owner": "vertikalapp"
   }
 }
