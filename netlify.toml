@@ -1,0 +1,20 @@
+# Netlify Configuration
+# For video embed URL injection via build-time replacement
+
+[build]
+  command = "echo 'Static site - no build needed'"
+  publish = "public"
+
+# Environment variable injection for build
+# Netlify will replace %ABOUT_VIDEO_EMBED_URL% and %FOUNDING50_VIDEO_EMBED_URL%
+# in the HTML files during build
+
+[[plugins]]
+  package = "@netlify/plugin-build-env"
+
+# Redirects (if needed)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+

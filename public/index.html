@@ -3,34 +3,518 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VERTIKAL — The Anti-Algorithm</title>
-    <meta name="description" content="Signal over noise. The new standard for vertical cinema.">
+    <title>VERTIKAL — The Home for Series, Docs, & Reality</title>
+    <meta name="description" content="The algorithm hates your series. We love it. Join the Founding 50 creators getting paid from Day 1.">
     <style>
-        :root { --bg: #000000; --text: #ffffff; --accent: #007AFF; }
-        body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; display: flex; flex-direction: column; min-height: 100vh; }
-        .container { max-width: 600px; margin: 0 auto; padding: 2rem; flex: 1; display: flex; flex-direction: column; justify-content: center; }
-        h1 { font-size: 3.5rem; letter-spacing: -0.05em; line-height: 1; margin-bottom: 1rem; }
-        p.sub { font-size: 1.25rem; color: #888; margin-bottom: 2.5rem; line-height: 1.5; }
-        .form-group { position: relative; margin-bottom: 2rem; }
-        input[type="email"] { width: 100%; padding: 1.25rem; background: #111; border: 1px solid #333; color: #fff; font-size: 1rem; border-radius: 12px; outline: none; transition: border 0.2s; box-sizing: border-box; }
-        input[type="email"]:focus { border-color: var(--accent); }
-        button { position: absolute; right: 8px; top: 8px; bottom: 8px; background: var(--accent); color: white; border: none; padding: 0 1.5rem; border-radius: 8px; font-weight: 600; cursor: pointer; }
-        .legal-footer { margin-top: auto; padding: 2rem; text-align: center; border-top: 1px solid #111; }
-        .legal-footer a { color: #444; text-decoration: none; font-size: 0.85rem; margin: 0 1rem; }
-        .legal-footer a:hover { color: #fff; }
+        :root { 
+            --bg: #000000; 
+            --text: #ffffff; 
+            --accent: #FFD700;
+            --purple: #9333EA;
+            --pink: #EC4899;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            width: 100%;
+            height: 100%;
+        }
+        
+        body { 
+            margin: 0; 
+            padding: 0; 
+            background: #000000; 
+            color: #ffffff; 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh;
+            overflow-x: hidden;
+            width: 100%;
+            height: 100%;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+        }
+        
+        /* Fix scroll issues */
+        section {
+            position: relative;
+            width: 100%;
+            overflow-x: hidden;
+        }
+        
+        /* Ensure video containers don't break layout */
+        iframe {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        /* Hero Section with Video Background */
+        .hero {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 { 
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            letter-spacing: -0.05em; 
+            line-height: 1.1; 
+            margin-bottom: 1.5rem;
+            font-weight: 900;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(to right, var(--purple), var(--pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        p.sub { 
+            font-size: clamp(1rem, 3vw, 1.25rem); 
+            color: #cccccc; 
+            margin-bottom: 2.5rem; 
+            line-height: 1.6;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+            margin-top: 2rem;
+        }
+        
+        @media (min-width: 640px) {
+            .cta-buttons {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+        
+        .btn-primary {
+            background: #ffffff;
+            color: #000000;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+        }
+        
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: #ffffff;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: background 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: inline-block;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Apply Section */
+        #apply {
+            padding: 4rem 2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .form-group { 
+            position: relative; 
+            margin-bottom: 2rem; 
+        }
+        
+        input[type="email"] { 
+            width: 100%; 
+            padding: 1.25rem; 
+            background: #111; 
+            border: 1px solid #333; 
+            color: #fff; 
+            font-size: 1rem; 
+            border-radius: 12px; 
+            outline: none; 
+            transition: border 0.2s; 
+        }
+        
+        input[type="email"]:focus { 
+            border-color: var(--accent); 
+        }
+        
+        button[type="submit"] { 
+            position: absolute; 
+            right: 8px; 
+            top: 8px; 
+            bottom: 8px; 
+            background: var(--accent); 
+            color: #000; 
+            border: none; 
+            padding: 0 1.5rem; 
+            border-radius: 8px; 
+            font-weight: 700; 
+            cursor: pointer; 
+            transition: background 0.2s;
+        }
+        
+        button[type="submit"]:hover {
+            background: #ffed4e;
+        }
+        
+        .legal-footer { 
+            margin-top: auto; 
+            padding: 2rem; 
+            text-align: center; 
+            border-top: 1px solid #111; 
+        }
+        
+        .legal-footer a { 
+            color: #666; 
+            text-decoration: none; 
+            font-size: 0.85rem; 
+            margin: 0 1rem; 
+        }
+        
+        .legal-footer a:hover { 
+            color: #fff; 
+        }
+        
+        /* Hide scrollbar for clean aesthetic */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #000;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        
+        /* Manifesto Section */
+        #manifesto {
+            padding: 4rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        #manifesto h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 1.5rem;
+            font-weight: 900;
+        }
+        
+        #manifesto p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #cccccc;
+            margin-bottom: 1rem;
+        }
+        
+        /* Featured Section */
+        @media (min-width: 768px) {
+            #featured-grid {
+                grid-template-columns: repeat(3, 1fr) !important;
+            }
+            
+            #featured p[style*="display: none"] {
+                display: block !important;
+            }
+        }
+        
+        .featured-card:hover .featured-image-wrapper {
+            border-color: rgba(147, 51, 234, 0.5) !important;
+        }
+        
+        .featured-card:hover .featured-image {
+            transform: scale(1.1);
+            opacity: 1 !important;
+        }
+        
+        .featured-card:hover h3 {
+            color: #c084fc !important;
+        }
     </style>
 </head>
 <body>
-    <main class="container">
-        <h1>SIGNAL<br>OVER<br>NOISE.</h1>
-        <p class="sub">VERTIKAL is the new standard for cinematic creator culture. No trends. No filler. Just the work.</p>
+    <!-- Hero Section with Video Background -->
+    <section class="hero">
+        <!-- Video Background (Replace with your hero-loop.mp4) -->
+        <video 
+            class="hero-video" 
+            autoplay 
+            loop 
+            muted 
+            playsinline
+        >
+            <source src="/assets/hero-loop.mp4" type="video/mp4">
+            <!-- Fallback if video doesn't load -->
+        </video>
         
-        <form name="waitlist" method="POST" data-netlify="true" class="form-group">
-            <input type="hidden" name="form-name" value="waitlist" />
-            <input type="email" name="email" placeholder="Enter your email for access..." required />
-            <button type="submit">JOIN</button>
+        <!-- Dark Overlay for Text Readability -->
+        <div class="hero-overlay"></div>
+        
+        <!-- Hero Content -->
+        <div class="hero-content">
+            <h1>
+                The Home for <br />
+                <span class="gradient-text">Series, Docs, & Reality.</span>
+            </h1>
+            
+            <p class="sub">
+                The algorithm hates your series. We love it. 
+                Join the <strong>Founding 50</strong> creators getting paid from Day 1.
+            </p>
+            
+            <div class="cta-buttons">
+                <a href="#apply" class="btn-primary">Apply for Founding 50</a>
+                <a href="#manifesto" class="btn-secondary">Watch the Manifesto</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Manifesto Section -->
+    <section id="manifesto">
+        <h2>The Mission</h2>
+        <p>
+            Social apps want 15-second loops. Streaming giants want million-dollar pilots.
+        </p>
+        <p>
+            <strong>The Gap:</strong> Vertikal is the home for the premium "middle"—Series, Docs, Reality.
+        </p>
+        <p>
+            <strong>The Promise:</strong> Founding 50 creators get monetization, badges, and ownership from Day 1.
+        </p>
+    </section>
+    
+    <!-- About Video Section -->
+    <section id="about-video" style="padding: 4rem 1.5rem; background: #000000; color: #ffffff; border-top: 1px solid rgba(255,255,255,0.1);">
+        <div style="max-width: 900px; margin: 0 auto;">
+            <h2 style="text-align: center; font-size: 2.5rem; font-weight: 900; margin-bottom: 2rem; letter-spacing: -0.02em;">
+                The Story
+            </h2>
+            <div id="about-video-container" style="position: relative; width: 100%; border-radius: 16px; overflow: hidden; border: 1px solid #333;">
+                <iframe
+                    id="about-video-embed"
+                    width="100%"
+                    style="aspect-ratio: 16/9; border: 0; display: block;"
+                    data-src="https://www.youtube.com/embed/Bz_ibyq0ATs"
+                    src=""
+                    title="Vertikal - The Story"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                ></iframe>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Featured Section -->
+    <section id="featured" style="padding: 6rem 1.5rem; background: #000000; color: #ffffff; border-top: 1px solid rgba(255,255,255,0.1);">
+        <div style="max-width: 1280px; margin: 0 auto;">
+            <div style="display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 3rem;">
+                <h2 style="font-size: 2.5rem; font-weight: 900; letter-spacing: -0.02em;">
+                    Streaming <span style="color: #9333EA;">Jan 1</span>
+                </h2>
+                <p style="display: none; color: #666; font-family: monospace; font-size: 0.875rem;">
+                    /// CURATED_SELECTION
+                </p>
+            </div>
+            
+            <div id="featured-grid" style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
+                <!-- Cover 1 -->
+                <div class="featured-card" style="cursor: pointer;">
+                    <div class="featured-image-wrapper" style="position: relative; aspect-ratio: 2/3; overflow: hidden; border-radius: 12px; border: 1px solid #333; transition: all 0.3s;">
+                        <img 
+                            src="/assets/covers/cover1.jpg" 
+                            alt="THE PILOT"
+                            class="featured-image"
+                            loading="lazy"
+                            style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s; opacity: 0.9;"
+                            onerror="this.onerror=null; this.src='https://via.placeholder.com/400x600/1a1a1a/9333EA?text=THE+PILOT'"
+                        />
+                        <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); opacity: 0.6;"></div>
+                    </div>
+                    <div style="margin-top: 1rem;">
+                        <p style="font-size: 0.75rem; font-weight: 700; color: #9333EA; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.25rem;">
+                            DRAMA SERIES
+                        </p>
+                        <h3 style="font-size: 1.25rem; font-weight: 700; color: #ffffff; margin-bottom: 0.25rem;">
+                            THE PILOT
+                        </h3>
+                        <p style="font-size: 0.875rem; color: #666;">Director: J.R.</p>
+                    </div>
+                </div>
+                
+                <!-- Cover 2 -->
+                <div class="featured-card" style="cursor: pointer;">
+                    <div class="featured-image-wrapper" style="position: relative; aspect-ratio: 2/3; overflow: hidden; border-radius: 12px; border: 1px solid #333; transition: all 0.3s;">
+                        <img 
+                            src="/assets/covers/cover2.jpg" 
+                            alt="CHICAGO SOUL"
+                            class="featured-image"
+                            loading="lazy"
+                            style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s; opacity: 0.9;"
+                            onerror="this.onerror=null; this.src='https://via.placeholder.com/400x600/1a1a1a/9333EA?text=CHICAGO+SOUL'"
+                        />
+                        <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); opacity: 0.6;"></div>
+                    </div>
+                    <div style="margin-top: 1rem;">
+                        <p style="font-size: 0.75rem; font-weight: 700; color: #9333EA; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.25rem;">
+                            DOCUMENTARY
+                        </p>
+                        <h3 style="font-size: 1.25rem; font-weight: 700; color: #ffffff; margin-bottom: 0.25rem;">
+                            CHICAGO SOUL
+                        </h3>
+                        <p style="font-size: 0.875rem; color: #666;">A Vertikal Original</p>
+                    </div>
+                </div>
+                
+                <!-- Cover 3 -->
+                <div class="featured-card" style="cursor: pointer;">
+                    <div class="featured-image-wrapper" style="position: relative; aspect-ratio: 2/3; overflow: hidden; border-radius: 12px; border: 1px solid #333; transition: all 0.3s;">
+                        <img 
+                            src="/assets/covers/cover3.jpg" 
+                            alt="THE GRIND"
+                            class="featured-image"
+                            loading="lazy"
+                            style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s; opacity: 0.9;"
+                            onerror="this.onerror=null; this.src='https://via.placeholder.com/400x600/1a1a1a/9333EA?text=THE+GRIND'"
+                        />
+                        <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); opacity: 0.6;"></div>
+                    </div>
+                    <div style="margin-top: 1rem;">
+                        <p style="font-size: 0.75rem; font-weight: 700; color: #9333EA; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.25rem;">
+                            REALITY
+                        </p>
+                        <h3 style="font-size: 1.25rem; font-weight: 700; color: #ffffff; margin-bottom: 0.25rem;">
+                            THE GRIND
+                        </h3>
+                        <p style="font-size: 0.875rem; color: #666;">Season 1 Coming</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Founding 50 Video Section -->
+    <section id="founding50-video" style="padding: 4rem 1.5rem; background: #000000; color: #ffffff; border-top: 1px solid rgba(255,255,255,0.1);">
+        <div style="max-width: 900px; margin: 0 auto;">
+            <h2 style="text-align: center; font-size: 2.5rem; font-weight: 900; margin-bottom: 2rem; letter-spacing: -0.02em;">
+                Join the <span style="color: #FFD700;">Founding 50</span>
+            </h2>
+            <div id="founding50-video-container" style="position: relative; width: 100%; border-radius: 16px; overflow: hidden; border: 1px solid #333;">
+                <iframe
+                    id="founding50-video-embed"
+                    width="100%"
+                    style="aspect-ratio: 16/9; border: 0; display: block;"
+                    data-src="https://www.youtube.com/embed/_koZVzaT34A"
+                    src=""
+                    title="Vertikal - Founding 50"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                ></iframe>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Apply Section -->
+    <section id="apply">
+        <h2 style="text-align: center; margin-bottom: 2rem; font-size: 2rem;">Join the Founding 50</h2>
+        
+        <!-- Creator Signup Form -->
+        <div id="creator-signup" style="max-width: 500px; margin: 0 auto; padding: 2rem;">
+            <h3 style="text-align: center; margin-bottom: 1.5rem; font-size: 1.5rem; color: var(--accent);">Creator Application</h3>
+            <form id="creator-form" class="signup-form">
+                <input type="text" id="creator-name" placeholder="Full Name" required style="width: 100%; padding: 1rem; margin-bottom: 1rem; background: #111; border: 1px solid #333; color: #fff; border-radius: 8px; font-size: 1rem;" />
+                <input type="email" id="creator-email" placeholder="Email" required style="width: 100%; padding: 1rem; margin-bottom: 1rem; background: #111; border: 1px solid #333; color: #fff; border-radius: 8px; font-size: 1rem;" />
+                <input type="text" id="creator-city" placeholder="City (optional)" style="width: 100%; padding: 1rem; margin-bottom: 1rem; background: #111; border: 1px solid #333; color: #fff; border-radius: 8px; font-size: 1rem;" />
+                <input type="text" id="creator-handle" placeholder="Social Handle (optional)" style="width: 100%; padding: 1rem; margin-bottom: 1rem; background: #111; border: 1px solid #333; color: #fff; border-radius: 8px; font-size: 1rem;" />
+                <button type="submit" id="creator-submit" style="width: 100%; padding: 1rem; background: var(--accent); color: #000; border: none; border-radius: 50px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 0.2s;">
+                    Apply for Founding 50
+                </button>
+                <div id="creator-status" style="margin-top: 1rem; text-align: center; min-height: 24px;"></div>
         </form>
-    </main>
+        </div>
+        
+        <!-- User Waitlist Form -->
+        <div id="user-signup" style="max-width: 500px; margin: 0 auto; padding: 2rem; border-top: 1px solid #222; margin-top: 3rem;">
+            <h3 style="text-align: center; margin-bottom: 1.5rem; font-size: 1.5rem;">Join the Waitlist</h3>
+            <form id="user-form" class="signup-form">
+                <input type="text" id="user-name" placeholder="Name" required style="width: 100%; padding: 1rem; margin-bottom: 1rem; background: #111; border: 1px solid #333; color: #fff; border-radius: 8px; font-size: 1rem;" />
+                <input type="email" id="user-email" placeholder="Email" required style="width: 100%; padding: 1rem; margin-bottom: 1rem; background: #111; border: 1px solid #333; color: #fff; border-radius: 8px; font-size: 1rem;" />
+                <input type="text" id="user-city" placeholder="City (optional)" style="width: 100%; padding: 1rem; margin-bottom: 1rem; background: #111; border: 1px solid #333; color: #fff; border-radius: 8px; font-size: 1rem;" />
+                <button type="submit" id="user-submit" style="width: 100%; padding: 1rem; background: rgba(255, 255, 255, 0.1); color: #fff; border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 50px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: background 0.2s;">
+                    Join Waitlist
+                </button>
+                <div id="user-status" style="margin-top: 1rem; text-align: center; min-height: 24px;"></div>
+            </form>
+        </div>
+    </section>
 
     <footer class="legal-footer">
         <a href="/privacy.html">Privacy Policy</a>
@@ -38,5 +522,385 @@
         <br><br>
         <span style="color:#222; font-size: 0.75rem;">© 2025 VERTIKAL AI INC.</span>
     </footer>
+    
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    
+    <script>
+        // ============================================
+        // ANALYTICS LAYER (GEMI Schema v1.0)
+        // ============================================
+        function logEvent(eventName, params) {
+            // 1. Log to Console (Dev Mode - Always Visible)
+            console.log(`📊 EVENT: ${eventName}`, params || {});
+            
+            // 2. Log to Google Analytics (if window.gtag exists)
+            if (typeof window !== 'undefined' && window.gtag) {
+                window.gtag('event', eventName, params);
+            }
+            
+            // 3. Log to Posthog (optional, if added later)
+            if (typeof window !== 'undefined' && window.posthog) {
+                window.posthog.capture(eventName, params);
+            }
+            
+            // 4. Track CTA clicks (High Value vs Low Value)
+            if (eventName.includes('cta_')) {
+                const value = eventName.includes('creator') ? 'HIGH' : 'LOW';
+                console.log(`💰 CONVERSION VALUE: ${value}`, params);
+            }
+        }
+        
+        // Track page view on load
+        function trackPageView() {
+            const referrer = document.referrer || 'direct';
+            const referrerSource = referrer.includes('tiktok') ? 'tiktok' : 
+                                  referrer.includes('linkedin') ? 'linkedin' : 
+                                  referrer.includes('instagram') ? 'instagram' : 'direct';
+            
+            // Get UTM params from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const utmCampaign = urlParams.get('utm_campaign') || 'founding_50_blitz';
+            
+            logEvent('page_view', {
+                path: '/landing',
+                referrer: referrerSource,
+                utm_campaign: utmCampaign,
+                timestamp: new Date().toISOString()
+            });
+        }
+        
+        // Track CTA clicks
+        function trackCTAClick(label, location) {
+            logEvent('click_cta_primary', {
+                label: label,
+                location: location,
+                timestamp: new Date().toISOString()
+            });
+        }
+        
+        // Track funnel start
+        function trackFunnelStart(funnelType) {
+            logEvent('funnel_start', {
+                funnel_type: funnelType,
+                timestamp: new Date().toISOString()
+            });
+        }
+        
+        // Track form interactions
+        function trackFormInteraction(fieldName, status) {
+            logEvent('form_interaction', {
+                field_name: fieldName,
+                status: status,
+                timestamp: new Date().toISOString()
+            });
+        }
+        
+        // Track application submission (CRITICAL CONVERSION EVENT)
+        function trackApplicationSubmitted(formData, isFounding50) {
+            // Determine primary platform from handle
+            const handle = formData.handle || '';
+            const platformPrimary = handle.includes('@') ? 
+                (handle.includes('instagram') || handle.includes('ig')) ? 'instagram' :
+                (handle.includes('tiktok') || handle.includes('tt')) ? 'tiktok' :
+                (handle.includes('youtube') || handle.includes('yt')) ? 'youtube' : 'other' : 'none';
+            
+            logEvent('application_submitted', {
+                is_founding_50_candidate: isFounding50,
+                platform_primary: platformPrimary,
+                handle_provided: !!handle,
+                user_email: formData.email,
+                funnel_type: isFounding50 ? 'creator' : 'user',
+                timestamp: new Date().toISOString()
+            });
+        }
+        
+        // ============================================
+        // VIDEO EMBED CONFIGURATION (Netlify Env Vars)
+        // ============================================
+        // Default fallback URLs
+        const DEFAULT_ABOUT_VIDEO = 'https://www.youtube.com/embed/Bz_ibyq0ATs';
+        const DEFAULT_FOUNDING50_VIDEO = 'https://www.youtube.com/embed/_koZVzaT34A';
+        
+        // Function to set video embed URLs
+        function initializeVideoEmbeds() {
+            const aboutVideoEmbed = document.getElementById('about-video-embed');
+            const founding50VideoEmbed = document.getElementById('founding50-video-embed');
+            
+            if (aboutVideoEmbed) {
+                // Get URL from data-src attribute or use default
+                const aboutUrl = aboutVideoEmbed.getAttribute('data-src') || DEFAULT_ABOUT_VIDEO;
+                aboutVideoEmbed.src = aboutUrl;
+            }
+            
+            if (founding50VideoEmbed) {
+                const founding50Url = founding50VideoEmbed.getAttribute('data-src') || DEFAULT_FOUNDING50_VIDEO;
+                founding50VideoEmbed.src = founding50Url;
+            }
+        }
+        
+        // Track CTA button clicks and page view
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize video embeds first
+            initializeVideoEmbeds();
+            
+            // Track page view on load
+            trackPageView();
+            
+            // Track "Apply for Founding 50" clicks
+            const creatorCTA = document.querySelector('a[href="#apply"]');
+            if (creatorCTA) {
+                creatorCTA.addEventListener('click', function() {
+                    trackCTAClick('apply_as_creator', 'hero_section');
+                    trackFunnelStart('creator_application');
+                });
+            }
+            
+            // Track "Watch the Manifesto" clicks
+            const manifestoCTA = document.querySelector('a[href="#manifesto"]');
+            if (manifestoCTA) {
+                manifestoCTA.addEventListener('click', function() {
+                    trackCTAClick('watch_manifesto', 'hero_section');
+                });
+            }
+            
+            // Track form field interactions
+            const formFields = document.querySelectorAll('input[type="email"], input[type="text"]');
+            formFields.forEach(field => {
+                field.addEventListener('focus', function() {
+                    trackFormInteraction(this.id || this.name, 'focused');
+                });
+                
+                field.addEventListener('blur', function() {
+                    if (this.value) {
+                        trackFormInteraction(this.id || this.name, 'completed');
+                    }
+                });
+            });
+        });
+        
+        // ============================================
+        // SUPABASE CONFIGURATION
+        // ============================================
+        // TODO: Replace with your actual Supabase credentials
+        const SUPABASE_URL = 'YOUR_SUPABASE_URL_HERE';
+        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY_HERE';
+        
+        let supabaseClient = null;
+        
+        // Initialize Supabase
+        function initSupabase() {
+            if (typeof supabase !== 'undefined') {
+                supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                console.log('✅ Supabase client initialized');
+            } else {
+                console.error('❌ Supabase CDN failed to load');
+            }
+        }
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Form Submission Handlers
+        function showStatus(formId, message, isError = false) {
+            const statusEl = document.getElementById(formId + '-status');
+            if (statusEl) {
+                statusEl.innerHTML = `<p style="color: ${isError ? '#ff4444' : '#00ff94'}; font-size: 0.9rem;">${message}</p>`;
+                setTimeout(() => {
+                    statusEl.innerHTML = '';
+                }, 5000);
+            }
+        }
+        
+        function setLoading(formId, isLoading) {
+            const submitBtn = document.getElementById(formId + '-submit');
+            if (submitBtn) {
+                submitBtn.disabled = isLoading;
+                submitBtn.textContent = isLoading ? 'Submitting...' : (formId === 'creator' ? 'Apply for Founding 50' : 'Join Waitlist');
+            }
+        }
+        
+        // Creator Form Handler
+        document.getElementById('creator-form')?.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            if (!supabaseClient) {
+                showStatus('creator', '❌ Database connection not ready. Please refresh.', true);
+                return;
+            }
+            
+            setLoading('creator', true);
+            
+            const name = document.getElementById('creator-name').value;
+            const email = document.getElementById('creator-email').value;
+            const city = document.getElementById('creator-city').value || null;
+            const handle = document.getElementById('creator-handle').value || null;
+            
+            // Track funnel start (if not already tracked)
+            trackFunnelStart('creator_application');
+            
+            // Track signup attempt
+            logEvent('signup_attempt', { 
+                type: 'creator',
+                source: 'landing_page'
+            });
+            
+            try {
+                // Insert into waitlist table
+                const { data, error } = await supabaseClient
+                    .from('waitlist')
+                    .insert([
+                        {
+                            name: name,
+                            email: email,
+                            city: city,
+                            handle: handle,
+                            type: 'creator',
+                            referral_source: 'landing_page',
+                            timestamp: new Date().toISOString(),
+                        }
+                    ]);
+                
+                if (error) {
+                    console.error('Supabase error:', error);
+                    showStatus('creator', '❌ Something went wrong. Please try again.', true);
+                    // Track error
+                    logEvent('signup_error', { 
+                        type: 'creator',
+                        error: error.message 
+                    });
+                } else {
+                    showStatus('creator', '✅ Application submitted! We\'ll be in touch soon.');
+                    
+                    // Track application submission (CRITICAL CONVERSION EVENT)
+                    trackApplicationSubmitted({
+                        email: email,
+                        name: name,
+                        city: city,
+                        handle: handle
+                    }, true);
+                    
+                    // Reset form
+                    document.getElementById('creator-form').reset();
+                    
+                    // Track success (HIGH VALUE CONVERSION 💰)
+                    logEvent('signup_success', { 
+                        type: 'creator',
+                        city: city,
+                        has_handle: !!handle,
+                        conversion_value: 'HIGH'
+                    });
+                }
+            } catch (err) {
+                console.error('Form submission error:', err);
+                showStatus('creator', '❌ Network error. Please check your connection.', true);
+                // Track error
+                logEvent('signup_error', { 
+                    type: 'creator',
+                    error: err.message 
+                });
+            } finally {
+                setLoading('creator', false);
+            }
+        });
+        
+        // User Form Handler
+        document.getElementById('user-form')?.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            if (!supabaseClient) {
+                showStatus('user', '❌ Database connection not ready. Please refresh.', true);
+                return;
+            }
+            
+            setLoading('user', true);
+            
+            const name = document.getElementById('user-name').value;
+            const email = document.getElementById('user-email').value;
+            const city = document.getElementById('user-city').value || null;
+            
+            // Track funnel start (if not already tracked)
+            trackFunnelStart('user_waitlist');
+            
+            // Track signup attempt
+            logEvent('signup_attempt', { 
+                type: 'user',
+                source: 'landing_page'
+            });
+            
+            try {
+                const { data, error } = await supabaseClient
+                    .from('waitlist')
+                    .insert([
+                        {
+                            name: name,
+                            email: email,
+                            city: city,
+                            type: 'user',
+                            referral_source: 'landing_page',
+                            timestamp: new Date().toISOString(),
+                        }
+                    ]);
+                
+                if (error) {
+                    console.error('Supabase error:', error);
+                    showStatus('user', '❌ Something went wrong. Please try again.', true);
+                    // Track error
+                    logEvent('signup_error', { 
+                        type: 'user',
+                        error: error.message 
+                    });
+                } else {
+                    showStatus('user', '✅ You\'re on the waitlist! We\'ll notify you when we launch.');
+                    
+                    // Track application submission (CRITICAL CONVERSION EVENT)
+                    trackApplicationSubmitted({
+                        email: email,
+                        name: name,
+                        city: city,
+                        handle: null
+                    }, false);
+                    
+                    // Reset form
+                    document.getElementById('user-form').reset();
+                    
+                    // Track success (LOW VALUE CONVERSION)
+                    logEvent('signup_success', { 
+                        type: 'user',
+                        city: city,
+                        conversion_value: 'LOW'
+                    });
+                }
+            } catch (err) {
+                console.error('Form submission error:', err);
+                showStatus('user', '❌ Network error. Please check your connection.', true);
+                // Track error
+                logEvent('signup_error', { 
+                    type: 'user',
+                    error: err.message 
+                });
+            } finally {
+                setLoading('user', false);
+            }
+        });
+        
+        // Prevent horizontal scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            document.body.style.overflowX = 'hidden';
+            // Initialize Supabase after DOM loads
+            initSupabase();
+        });
+    </script>
 </body>
 </html>
