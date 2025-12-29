@@ -81,17 +81,13 @@ jobs:
         if: steps.should_deploy.outputs.deploy == 'true'
         id: project_name
         run: |
-          MODE="${{ inputs.mode }}"
+          # Always use production project names (Cloudflare Pages projects)
+          # Mode is used for tagging/notifications, not project naming
           SUFFIX="${{ matrix.project_suffix }}"
-          
-          if [ "$MODE" = "production" ]; then
-            PROJECT_NAME="$SUFFIX"
-          else
-            PROJECT_NAME="${SUFFIX}-${MODE}"
-          fi
+          PROJECT_NAME="$SUFFIX"
           
           echo "name=$PROJECT_NAME" >> $GITHUB_OUTPUT
-          echo "Project name: $PROJECT_NAME"
+          echo "Project name: $PROJECT_NAME (mode: ${{ inputs.mode }})"
 
       - name: Verify directory exists
         if: steps.should_deploy.outputs.deploy == 'true'
