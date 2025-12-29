@@ -1,5 +1,0 @@
-mkdir -p .github/workflows
-nano .github/workflows/cloudflare-pages-deploy.yml
-git add .github/workflows/cloudflare-pages-deploy.yml
-git commit -m "Add Cloudflare Pages deploy workflow"
-git push
