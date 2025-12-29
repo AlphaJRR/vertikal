@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Invest in VERTIKAL — The Vertical Film Network</title>
+    <meta name="description" content="VERTIKAL Investor Portal — Join the pre-seed round building the infrastructure for vertical cinema.">
+    
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --vertikal-black: #0A0A0F;
+            --vertikal-purple: #7B68EE;
+            --vertikal-blue: #4A90D9;
+            --vertikal-gold: #D4AF37;
+            --vertikal-green: #2ECC71;
+            --vertikal-white: #FFFFFF;
+            --vertikal-gray: #1A1A1A;
+            --vertikal-gray-light: #2A2A2A;
+            --vertikal-text-muted: #888888;
+            --font-display: 'Bebas Neue', sans-serif;
+            --font-body: 'Space Grotesk', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--vertikal-black);
+            color: var(--vertikal-white);
+            min-height: 100vh;
+        }
+
+        /* Background */
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0a12 0%, #0f0f1a 50%, #0a0a12 100%);
+            z-index: -2;
+        }
+
+        .bg-gradient::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 30% 30%, rgba(46, 204, 113, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 70%, rgba(123, 104, 238, 0.06) 0%, transparent 50%);
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: linear-gradient(to bottom, rgba(10,10,15,0.95) 0%, transparent 100%);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo-text {
+            font-family: var(--font-display);
+            font-size: 24px;
+            letter-spacing: 4px;
+            color: var(--vertikal-white);
+        }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .nav-link {
+            color: var(--vertikal-text-muted);
+            text-decoration: none;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover { color: var(--vertikal-white); }
+
+        /* Hero */
+        .hero {
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 140px 40px 60px;
+        }
+
+        .badge-container {
+            margin-bottom: 32px;
+        }
+
+        .badge-container img {
+            height: 100px;
+            width: auto;
+        }
+
+        .hero-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(46, 204, 113, 0.1);
+            border: 1px solid rgba(46, 204, 113, 0.3);
+            padding: 8px 20px;
+            margin-bottom: 24px;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--vertikal-green);
+            border-radius: 100px;
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(48px, 8vw, 80px);
+            line-height: 0.95;
+            margin-bottom: 24px;
+            letter-spacing: 2px;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: var(--vertikal-text-muted);
+            max-width: 600px;
+            margin: 0 auto 32px;
+            line-height: 1.7;
+        }
+
+        /* Tiers Section */
+        .tiers-section {
+            padding: 60px 40px 100px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 11px;
+            color: var(--vertikal-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(28px, 4vw, 40px);
+            margin-bottom: 48px;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        .tiers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .tier-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 40px 32px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tier-card:hover {
+            border-color: rgba(46, 204, 113, 0.3);
+            transform: translateY(-4px);
+        }
+
+        .tier-card.featured {
+            border-color: var(--vertikal-green);
+            background: rgba(46, 204, 113, 0.05);
+        }
+
+        .tier-card.featured::before {
+            content: 'MOST POPULAR';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--vertikal-green);
+            color: var(--vertikal-black);
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            padding: 4px 16px;
+        }
+
+        .tier-name {
+            font-family: var(--font-display);
+            font-size: 24px;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            color: var(--vertikal-green);
+        }
+
+        .tier-range {
+            font-size: 14px;
+            color: var(--vertikal-text-muted);
+            margin-bottom: 24px;
+        }
+
+        .tier-benefits {
+            list-style: none;
+            margin-bottom: 32px;
+        }
+
+        .tier-benefits li {
+            padding: 8px 0;
+            font-size: 14px;
+            color: var(--vertikal-text-muted);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .tier-benefits li::before {
+            content: '✓';
+            color: var(--vertikal-green);
+            font-weight: bold;
+        }
+
+        .tier-btn {
+            width: 100%;
+            background: transparent;
+            border: 2px solid var(--vertikal-green);
+            color: var(--vertikal-green);
+            padding: 14px 24px;
+            font-family: var(--font-display);
+            font-size: 16px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tier-btn:hover {
+            background: var(--vertikal-green);
+            color: var(--vertikal-black);
+        }
+
+        .tier-card.featured .tier-btn {
+            background: var(--vertikal-green);
+            color: var(--vertikal-black);
+        }
+
+        .tier-card.featured .tier-btn:hover {
+            background: #27ae60;
+        }
+
+        /* Application Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.9);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal {
+            background: var(--vertikal-gray);
+            border: 1px solid var(--vertikal-gray-light);
+            max-width: 480px;
+            width: 100%;
+            padding: 40px;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: none;
+            color: var(--vertikal-text-muted);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .modal-close:hover { color: white; }
+
+        .modal-title {
+            font-family: var(--font-display);
+            font-size: 28px;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            color: var(--vertikal-green);
+        }
+
+        .modal-subtitle {
+            color: var(--vertikal-text-muted);
+            font-size: 14px;
+            margin-bottom: 32px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--vertikal-text-muted);
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            background: var(--vertikal-black);
+            border: 1px solid var(--vertikal-gray-light);
+            padding: 14px 16px;
+            font-size: 16px;
+            color: var(--vertikal-white);
+            font-family: var(--font-body);
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-input:focus {
+            border-color: var(--vertikal-green);
+        }
+
+        .form-input::placeholder {
+            color: var(--vertikal-text-muted);
+        }
+
+        .selected-tier {
+            background: rgba(46, 204, 113, 0.1);
+            border: 1px solid rgba(46, 204, 113, 0.3);
+            padding: 16px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .selected-tier-label {
+            font-size: 11px;
+            color: var(--vertikal-text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 4px;
+        }
+
+        .selected-tier-name {
+            font-family: var(--font-display);
+            font-size: 20px;
+            color: var(--vertikal-green);
+            letter-spacing: 2px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: var(--vertikal-green);
+            color: var(--vertikal-black);
+            border: none;
+            padding: 16px 32px;
+            font-family: var(--font-display);
+            font-size: 18px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 700;
+        }
+
+        .submit-btn:hover {
+            background: #27ae60;
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--vertikal-green);
+            cursor: pointer;
+            margin-top: 2px;
+        }
+
+        .checkbox-label {
+            font-size: 12px;
+            color: var(--vertikal-text-muted);
+            line-height: 1.4;
+        }
+
+        .checkbox-label a {
+            color: var(--vertikal-green);
+            text-decoration: none;
+        }
+
+        /* Success State */
+        .success-state {
+            display: none;
+            text-align: center;
+        }
+
+        .success-state.active { display: block; }
+
+        .success-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--vertikal-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+        }
+
+        .success-icon svg {
+            width: 32px;
+            height: 32px;
+            stroke: var(--vertikal-black);
+        }
+
+        /* Why Section */
+        .why-section {
+            padding: 80px 40px;
+            background: rgba(46, 204, 113, 0.03);
+        }
+
+        .why-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+        }
+
+        .why-card {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.06);
+            padding: 32px;
+        }
+
+        .why-card h3 {
+            font-family: var(--font-display);
+            font-size: 20px;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+            color: var(--vertikal-green);
+        }
+
+        .why-card p {
+            color: var(--vertikal-text-muted);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .contact-email {
+            font-family: var(--font-display);
+            font-size: 24px;
+            color: var(--vertikal-green);
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .contact-email:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 40px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 16px;
+        }
+
+        .footer-links a {
+            color: var(--vertikal-text-muted);
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .footer-links a:hover { color: var(--vertikal-white); }
+
+        .footer-copy {
+            color: var(--vertikal-text-muted);
+            font-size: 12px;
+        }
+
+        /* Toast */
+        .toast-container {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 9999;
+        }
+
+        .toast {
+            background: var(--vertikal-gray);
+            border: 1px solid var(--vertikal-gray-light);
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 280px;
+            animation: slideIn 0.3s ease;
+            margin-bottom: 12px;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .toast.success { border-left: 3px solid #4CAF50; }
+        .toast.error { border-left: 3px solid #f44336; }
+        .toast-message { flex: 1; font-size: 14px; }
+        .toast-close {
+            background: none;
+            border: none;
+            color: var(--vertikal-text-muted);
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        /* Loading */
+        .loading { display: inline-flex; align-items: center; gap: 8px; }
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid currentColor;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .header { padding: 16px 20px; }
+            .header-nav { display: none; }
+            .hero { padding: 100px 20px 40px; }
+            .tiers-section { padding: 40px 20px 60px; }
+            .tiers-grid { grid-template-columns: 1fr; }
+            .why-grid { grid-template-columns: 1fr; }
+            .why-section { padding: 60px 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-gradient"></div>
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <a href="https://vertikalapp.com" class="logo">
+            <img src="assets/Vertikal_Logo_Master.png" alt="VERTIKAL">
+            <span class="logo-text">VERTIKAL</span>
+        </a>
+        <nav class="header-nav">
+            <a href="https://vertikalapp.com" class="nav-link">Home</a>
+            <a href="https://creators.vertikalapp.com" class="nav-link">Creators</a>
+            <a href="https://demo.vertikalapp.com" class="nav-link">Demo</a>
+        </nav>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="badge-container">
+            <img src="assets/investor-badge.png" alt="Founding Investor Badge" style="max-height: 100px;">
+        </div>
+        
+        <div class="hero-label">Pre-Seed • $500K Target</div>
+        
+        <h1 class="hero-title">THE VERTICAL HOLLYWOOD.</h1>
+        
+        <p class="hero-subtitle">
+            Infrastructure for the short-form series economy. We're building the platform where vertical filmmaking becomes a career — not just content.
+        </p>
+    </section>
+
+    <!-- Tiers Section -->
+    <section class="tiers-section">
+        <p class="section-label">Investment Tiers</p>
+        <h2 class="section-title">JOIN THE PRE-SEED ROUND</h2>
+        
+        <div class="tiers-grid">
+            <div class="tier-card">
+                <h3 class="tier-name">FOUNDING PARTICIPANT</h3>
+                <p class="tier-range">$1,000 – $4,999</p>
+                <ul class="tier-benefits">
+                    <li>Quarterly investor updates</li>
+                    <li>Early access to product</li>
+                    <li>Founding Investor badge</li>
+                    <li>Name in credits (optional)</li>
+                    <li>Invite to launch event</li>
+                </ul>
+                <button class="tier-btn" onclick="openModal('Founding Participant', '$1,000 – $4,999')">EXPRESS INTEREST</button>
+            </div>
+
+            <div class="tier-card featured">
+                <h3 class="tier-name">STRATEGIC PARTICIPANT</h3>
+                <p class="tier-range">$5,000 – $24,999</p>
+                <ul class="tier-benefits">
+                    <li>All Founding benefits</li>
+                    <li>Monthly investor calls</li>
+                    <li>Input on product roadmap</li>
+                    <li>"Produced by" credit in app</li>
+                    <li>VIP launch event access</li>
+                </ul>
+                <button class="tier-btn" onclick="openModal('Strategic Participant', '$5,000 – $24,999')">EXPRESS INTEREST</button>
+            </div>
+
+            <div class="tier-card">
+                <h3 class="tier-name">LEAD PARTICIPANT</h3>
+                <p class="tier-range">$25,000+</p>
+                <ul class="tier-benefits">
+                    <li>All Strategic benefits</li>
+                    <li>Advisory access</li>
+                    <li>Board observer rights</li>
+                    <li>Strategic partnership options</li>
+                    <li>Direct founder access</li>
+                </ul>
+                <button class="tier-btn" onclick="openModal('Lead Participant', '$25,000+')">EXPRESS INTEREST</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Section -->
+    <section class="why-section">
+        <div class="why-container">
+            <p class="section-label">The Opportunity</p>
+            <h2 class="section-title">WHY VERTIKAL. WHY NOW.</h2>
+            
+            <div class="why-grid">
+                <div class="why-card">
+                    <h3>THE FORMAT SHIFT</h3>
+                    <p>Gen Z watches 3+ hours of vertical video daily. But there's no premium destination — just UGC and trends. VERTIKAL fills the gap between TikTok and Netflix.</p>
+                </div>
+                <div class="why-card">
+                    <h3>THE CULTURAL MOAT</h3>
+                    <p>Black creators drive 80% of internet culture, yet own 5% of platform value. VERTIKAL is built BY the culture, FOR the culture — with ownership, not extraction.</p>
+                </div>
+                <div class="why-card">
+                    <h3>THE TRACTION</h3>
+                    <p>17/50 Founding Creator slots secured. Ambassador talent confirmed (Kel Mitchell). Live prototype functional. Real signups happening now.</p>
+                </div>
+                <div class="why-card">
+                    <h3>THE EXIT PATH</h3>
+                    <p>Acquisition target for major platforms seeking cultural dominance and Gen Z reach — Netflix, Warner, Spotify, Meta all seeking new format IP.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <p class="section-label">Questions?</p>
+        <a href="mailto:joshua@vertikalapp.com" class="contact-email">JOSHUA@VERTIKALAPP.COM</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="https://vertikalapp.com">Home</a>
+            <a href="https://creators.vertikalapp.com">Creators</a>
+            <a href="https://networks.vertikalapp.com">Networks</a>
+            <a href="/terms">Terms</a>
+            <a href="/privacy">Privacy</a>
+        </div>
+        <p class="footer-copy">© 2025 Vertikal Inc. For Directors. Not Influencers.</p>
+    </footer>
+
+    <!-- Application Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            
+            <div id="formState">
+                <h2 class="modal-title">EXPRESS INTEREST</h2>
+                <p class="modal-subtitle">We'll send you a magic link to complete your application.</p>
+                
+                <div class="selected-tier">
+                    <div class="selected-tier-label">Selected Tier</div>
+                    <div class="selected-tier-name" id="selectedTierName">—</div>
+                </div>
+
+                <form id="investorForm" onsubmit="handleSubmit(event)">
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-input" name="fullName" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-input" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Company / Fund (Optional)</label>
+                        <input type="text" class="form-input" name="company">
+                    </div>
+                    <input type="hidden" name="tier" id="tierInput">
+                    
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="accredited" name="accredited" required>
+                        <label class="checkbox-label" for="accredited">
+                            I confirm I am an accredited investor or will invest through a compliant vehicle.
+                        </label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="terms" name="terms" required>
+                        <label class="checkbox-label" for="terms">
+                            I agree to the <a href="/terms">Terms</a> and <a href="/privacy">Privacy Policy</a>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn" id="submitBtn">SEND MAGIC LINK</button>
+                </form>
+            </div>
+
+            <div class="success-state" id="successState">
+                <div class="success-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <h2 class="modal-title">CHECK YOUR EMAIL</h2>
+                <p class="modal-subtitle">We've sent a magic link to complete your investor application. Check your inbox (and spam folder).</p>
+                <button class="submit-btn" onclick="closeModal()" style="margin-top: 24px;">CLOSE</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Supabase Client
+        const SUPABASE_URL = 'https://vuwawtzhhcarckybdgbd.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ1d2F3dHpoaGNhcmNreWJkZ2JkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU1OTU5NDQsImV4cCI6MjA4MTE3MTk0NH0.FQS6GYae1iw-rbYgo4P5BCuG8dkY_XZpbo0XIcxk62g';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // ===== ZAPIER WEBHOOK INTEGRATION (PRODUCTION) =====
+        const ZAPIER_WEBHOOK_URL = 'PASTE_YOUR_ZAPIER_WEBHOOK_URL_HERE';
+
+        async function logSignupToZapier(payload) {
+            if (!ZAPIER_WEBHOOK_URL || ZAPIER_WEBHOOK_URL === 'PASTE_YOUR_ZAPIER_WEBHOOK_URL_HERE') return;
+
+            const params = new URLSearchParams(window.location.search);
+            const body = {
+                email: payload.email,
+                user_id: payload.userId || 'magic-link-pending',
+                role: payload.role,
+                investor_tier: payload.tier || '',
+                signed_up_at: new Date().toISOString(),
+                source: payload.source || window.location.hostname,
+                utm_source: params.get('utm_source') || '',
+                utm_campaign: params.get('utm_campaign') || ''
+            };
+
+            try {
+                await fetch(ZAPIER_WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+            } catch (e) {
+                // Intentionally silent
+            }
+        }
+
+        let selectedTier = '';
+
+        function openModal(tierName, tierRange) {
+            selectedTier = tierName;
+            document.getElementById('selectedTierName').textContent = `${tierName} (${tierRange})`;
+            document.getElementById('tierInput').value = tierName;
+            document.getElementById('modalOverlay').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('modalOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+            // Reset form
+            document.getElementById('formState').style.display = 'block';
+            document.getElementById('successState').classList.remove('active');
+            document.getElementById('investorForm').reset();
+        }
+
+        document.getElementById('modalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        // Toast
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `<span class="toast-message">${message}</span><button class="toast-close" onclick="this.parentElement.remove()">×</button>`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 5000);
+        }
+
+        // Handle Submit
+        async function handleSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const btn = document.getElementById('submitBtn');
+            const formData = new FormData(form);
+
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loading"><span class="spinner"></span>SENDING...</span>';
+
+            try {
+                // Send magic link
+                const { error } = await supabase.auth.signInWithOtp({
+                    email: formData.get('email'),
+                    options: {
+                        data: {
+                            full_name: formData.get('fullName'),
+                            company: formData.get('company') || null,
+                            investor_tier: formData.get('tier'),
+                            role: 'investor',
+                            user_type: 'investor'
+                        },
+                        emailRedirectTo: 'https://investors.vertikalapp.com/dashboard'
+                    }
+                });
+
+                if (error) throw error;
+
+                // Log to Zapier
+                logSignupToZapier({
+                    email: formData.get('email'),
+                    role: 'investor',
+                    tier: formData.get('tier'),
+                    source: 'investors.vertikalapp.com'
+                });
+
+                // Show success
+                document.getElementById('formState').style.display = 'none';
+                document.getElementById('successState').classList.add('active');
+                
+                showToast('Magic link sent! Check your email.', 'success');
+            } catch (error) {
+                showToast(error.message || 'Failed to send magic link', 'error');
+                btn.disabled = false;
+                btn.textContent = 'SEND MAGIC LINK';
+            }
+        }
+    </script>
+
+    <!-- VERTIKAL AUTH SIMULATION -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            // Select all forms on the page
+            const forms = document.querySelectorAll("form");
+
+            forms.forEach(form => {
+                form.addEventListener("submit", (e) => {
+                    e.preventDefault(); // Stop page reload
+
+                    // 1. Get the Button
+                    const btn = form.querySelector("button[type='submit']");
+                    const originalText = btn.innerText;
+
+                    // 2. Change Button to "Loading" State
+                    btn.disabled = true;
+                    btn.innerText = "VERIFYING CREDENTIALS...";
+                    btn.style.opacity = "0.7";
+                    btn.style.cursor = "wait";
+
+                    // 3. Simulate Server Delay (2 Seconds)
+                    setTimeout(() => {
+                        
+                        // 4. Success State
+                        btn.style.backgroundColor = "#22c55e"; // Success Green
+                        btn.style.color = "black";
+                        btn.innerText = "ACCESS GRANTED";
+
+                        // 5. Show a "Toast" Notification
+                        showToast("Application Submitted Successfully.");
+
+                        // 6. Reset Form after 2 seconds
+                        setTimeout(() => {
+                            form.reset();
+                            btn.disabled = false;
+                            btn.innerText = originalText;
+                            btn.style.backgroundColor = ""; // Revert to CSS default
+                            btn.style.color = "";
+                            btn.style.opacity = "1";
+                            btn.style.cursor = "pointer";
+                        }, 2000);
+
+                    }, 2000);
+                });
+            });
+        });
+
+        // Helper Function: Create a temporary popup
+        function showToast(message) {
+            const toast = document.createElement("div");
+            toast.innerText = message;
+            toast.style.position = "fixed";
+            toast.style.bottom = "20px";
+            toast.style.right = "20px";
+            toast.style.background = "#fff";
+            toast.style.color = "#000";
+            toast.style.padding = "15px 25px";
+            toast.style.borderRadius = "8px";
+            toast.style.boxShadow = "0 10px 30px rgba(0,0,0,0.5)";
+            toast.style.fontWeight = "bold";
+            toast.style.fontFamily = "'Space Grotesk', sans-serif";
+            toast.style.zIndex = "9999";
+            toast.style.animation = "slideIn 0.3s ease";
+
+            document.body.appendChild(toast);
+
+            // Remove after 4 seconds
+            setTimeout(() => {
+                toast.style.opacity = "0";
+                setTimeout(() => toast.remove(), 500);
+            }, 4000);
+        }
+
+        // Add CSS animation for toast
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
