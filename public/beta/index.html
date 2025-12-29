@@ -5,165 +5,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VERTIKAL | Beta</title>
     <style>
-/* --- GLOBAL CINEMATIC ENGINE --- */
-:root {
-    --bg-deep: #050505;
-    --bg-card: #0a0a0a;
-    --text-white: #ffffff;
-    --text-muted: #888888;
-    --border: #222222;
-    /* BADGE COLORS */
-    --gold: linear-gradient(135deg, #FFD700 0%, #B8860B 100%);
-    --green: linear-gradient(135deg, #00C853 0%, #004D40 100%);
-    --blue: linear-gradient(135deg, #2962FF 0%, #0D47A1 100%);
-    --titanium: linear-gradient(135deg, #ECEFF1 0%, #607D8B 100%);
-    --shadow-gold: 0 0 20px rgba(255, 215, 0, 0.2);
-    --shadow-green: 0 0 20px rgba(0, 200, 83, 0.2);
-    --shadow-blue: 0 0 20px rgba(41, 98, 255, 0.2);
-    --shadow-titanium: 0 0 20px rgba(120, 144, 156, 0.2);
-}
+    /* VERTIKAL CINEMATIC ENGINE */
+    :root {
+        --bg: #050505; --card: #0a0a0a; --text: #ffffff; --muted: #888; --border: #222;
+        --gold: linear-gradient(135deg, #FFD700 0%, #B8860B 100%);
+        --green: linear-gradient(135deg, #00C853 0%, #004D40 100%);
+        --blue: linear-gradient(135deg, #2962FF 0%, #0D47A1 100%);
+        --titanium: linear-gradient(135deg, #ECEFF1 0%, #455A64 100%);
+        --font-main: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-main); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    
+    /* TYPOGRAPHY */
+    h1, h2, h3 { text-transform: uppercase; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+    h1 { font-size: clamp(3rem, 8vw, 6rem); margin-bottom: 1.5rem; }
+    h2 { font-size: 2rem; border-left: 4px solid #fff; padding-left: 1rem; margin-bottom: 2rem; }
+    h3 { font-size: 1.25rem; margin-bottom: 0.5rem; color: #fff; }
+    p { color: var(--muted); font-size: 1.1rem; max-width: 650px; margin-bottom: 1.5rem; }
+    .hero-text span { background: linear-gradient(180deg, #fff 0%, #666 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    
+    /* LAYOUT */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+    section { padding: 6rem 0; border-bottom: 1px solid var(--border); }
+    .grid { display: grid; gap: 2rem; }
+    .grid-2 { grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    
+    /* COMPONENTS */
+    .btn { display: inline-block; padding: 1rem 2.5rem; border: 1px solid #fff; color: #fff; text-decoration: none; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; transition: 0.3s; }
+    .btn:hover { background: #fff; color: #000; }
+    
+    /* BADGES */
+    .badge-card { background: var(--card); border: 1px solid var(--border); padding: 2rem; transition: transform 0.3s; }
+    .badge-card:hover { border-color: #555; transform: translateY(-5px); }
+    .badge-icon { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; color: #000; margin-bottom: 1rem; font-size: 0.9rem; }
+    .b-gold { background: var(--gold); box-shadow: 0 0 15px rgba(255, 215, 0, 0.2); }
+    .b-green { background: var(--green); box-shadow: 0 0 15px rgba(0, 200, 83, 0.2); }
+    .b-blue { background: var(--blue); box-shadow: 0 0 15px rgba(41, 98, 255, 0.2); }
+    .b-titanium { background: var(--titanium); box-shadow: 0 0 15px rgba(120, 144, 156, 0.2); }
 
-* { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
-
-body {
-    background-color: var(--bg-deep);
-    color: var(--text-white);
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-}
-
-/* TYPOGRAPHY */
-h1, h2, h3, h4 { text-transform: uppercase; letter-spacing: -0.02em; font-weight: 800; }
-h1 { font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1; margin-bottom: 1.5rem; }
-h2 { font-size: 2rem; border-left: 4px solid #fff; padding-left: 1rem; margin-bottom: 2rem; }
-p { color: var(--text-muted); font-size: 1.1rem; max-width: 650px; margin-bottom: 1.5rem; }
-.hero-text { background: linear-gradient(180deg, #fff 0%, #777 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-/* LAYOUT */
-.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-section { padding: 6rem 0; border-bottom: 1px solid var(--border); }
-.grid { display: grid; gap: 2rem; }
-.grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-.grid-4 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-
-/* COMPONENTS */
-.btn {
-    display: inline-block; padding: 1rem 2.5rem; text-transform: uppercase;
-    font-weight: 700; border: 1px solid #fff; color: #fff; text-decoration: none;
-    transition: all 0.3s ease; font-size: 0.9rem; letter-spacing: 0.1em;
-}
-.btn:hover { background: #fff; color: #000; }
-.btn-primary { background: #fff; color: #000; border-color: #fff; }
-.btn-primary:hover { opacity: 0.9; }
-
-/* BADGE SYSTEM UI */
-.badge-card {
-    background: var(--bg-card); border: 1px solid var(--border); padding: 2rem;
-    position: relative; overflow: hidden; transition: transform 0.3s;
-}
-.badge-card:hover { transform: translateY(-5px); border-color: #444; }
-.badge-icon {
-    width: 50px; height: 50px; border-radius: 50%; display: flex;
-    align-items: center; justify-content: center; font-weight: 900; color: #000;
-    margin-bottom: 1rem; font-size: 1.2rem;
-}
-.b-gold { background: var(--gold); box-shadow: var(--shadow-gold); }
-.b-green { background: var(--green); box-shadow: var(--shadow-green); }
-.b-blue { background: var(--blue); box-shadow: var(--shadow-blue); }
-.b-titanium { background: var(--titanium); box-shadow: var(--shadow-titanium); }
-
-/* TABLES */
-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-th, td { text-align: left; padding: 1rem; border-bottom: 1px solid var(--border); }
-th { color: var(--text-muted); text-transform: uppercase; font-size: 0.85rem; }
-.money { color: #00C853; font-weight: 700; font-family: monospace; font-size: 1.1rem; }
-
-/* NAV */
-nav {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 1.5rem 2rem; border-bottom: 1px solid var(--border);
-    position: sticky; top: 0; background: rgba(5,5,5,0.95); z-index: 999;
-}
-.logo { font-weight: 900; letter-spacing: 0.1em; font-size: 1.2rem; }
-.nav-links a { margin-left: 2rem; color: var(--text-muted); text-decoration: none; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.05em; }
-.nav-links a:hover, .nav-links a.active { color: #fff; }
+    /* NAV */
+    nav { display: flex; justify-content: space-between; padding: 2rem; background: rgba(5,5,5,0.95); position: sticky; top: 0; border-bottom: 1px solid var(--border); z-index: 1000; }
+    .logo { font-weight: 900; letter-spacing: 0.1em; }
+    .nav-links a { margin-left: 2rem; color: var(--muted); text-decoration: none; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em; }
+    .nav-links a:hover { color: #fff; }
     </style>
 </head>
 <body>
+    <nav>
+        <div class="logo">VERTIKAL <span style="color:#FFD700">// BETA</span></div>
+        <div class="nav-links">
+            <a href="../index.html">Main</a>
+        </div>
+    </nav>
 
-<nav>
-    <div class="logo">VERTIKAL <span style="color:#FFD700">// BETA</span></div>
-    <div class="nav-links">
-        <a href="../index.html">Main</a>
-    </div>
-</nav>
+    <section class="container" style="text-align: center; padding-top: 8rem;">
+        <h1 class="hero-text">INSIDE THE ENGINE.</h1>
+        <p style="margin: 0 auto 2rem auto;">You are standing on the ground floor. This is a preview of the operating system for Black ownership.</p>
+        <a href="#" class="btn" style="background: #fff; color: #000;">Download Demo (TestFlight)</a>
+    </section>
 
-<section class="container" style="text-align: center; padding-top: 8rem;">
-    <div class="badge-icon b-gold" style="margin: 0 auto 2rem auto; width: 80px; height: 80px; font-size: 2rem;">V</div>
-    <h1 class="hero-text">INSIDE THE ENGINE.</h1>
-    <p style="margin: 0 auto 2rem auto;">You are standing on the ground floor. This is not just a test; this is a preview of the operating system for Black ownership.</p>
-    <div>
-        <a href="#" class="btn btn-primary">Download Demo (TestFlight)</a>
-        <a href="#" class="btn" style="border-color: #333;">Join Waitlist</a>
-    </div>
-</section>
-
-<section>
-    <div class="container">
-        <h2>THE FOUNDING CLASS</h2>
-        <p>The V Badge recognizes real contribution, not clout. <strong>These are the architects.</strong></p>
-        
-        <div class="grid grid-4">
-            <div class="badge-card">
-                <div class="badge-icon b-gold">V</div>
-                <h3>The Founding 50</h3>
-                <p style="font-size: 0.8rem;">Visionaries & Strategy. Capped at 50.</p>
-            </div>
-            <div class="badge-card">
-                <div class="badge-icon b-green">V</div>
-                <h3>The Investors</h3>
-                <p style="font-size: 0.8rem;">Capital Partners powering the ecosystem.</p>
-            </div>
-            <div class="badge-card">
-                <div class="badge-icon b-blue">V</div>
-                <h3>The Builders</h3>
-                <p style="font-size: 0.8rem;">Engineers, Ops & Infrastructure Leads.</p>
-            </div>
-            <div class="badge-card">
-                <div class="badge-icon b-titanium">V</div>
-                <h3>The Networks</h3>
-                <p style="font-size: 0.8rem;">Studios & Production Partners.</p>
+    <section>
+        <div class="container">
+            <h2>THE FOUNDING CLASS</h2>
+            <p>The V Badge recognizes real contribution. These are the architects.</p>
+            <div class="grid grid-4">
+                <div class="badge-card">
+                    <div class="badge-icon b-gold">V</div>
+                    <h3>Founding 50</h3>
+                    <p style="font-size: 0.85rem;">The Visionaries. Capped at 50.</p>
+                </div>
+                <div class="badge-card">
+                    <div class="badge-icon b-green">V</div>
+                    <h3>Investors</h3>
+                    <p style="font-size: 0.85rem;">Capital Partners.</p>
+                </div>
+                <div class="badge-card">
+                    <div class="badge-icon b-blue">V</div>
+                    <h3>Builders</h3>
+                    <p style="font-size: 0.85rem;">Engineers & Ops.</p>
+                </div>
+                <div class="badge-card">
+                    <div class="badge-icon b-titanium">V</div>
+                    <h3>Networks</h3>
+                    <p style="font-size: 0.85rem;">Studios & Infrastructure.</p>
+                </div>
             </div>
         </div>
-        
-        <p style="margin-top: 2rem; text-align: center; font-size: 0.8rem; opacity: 0.7;">
-            <em>These badges are permanent. As we scale, they remain the symbol of those who were here before the hype.</em>
-        </p>
-    </div>
-</section>
-
-<section style="background: #080808;">
-    <div class="container">
-        <h2>WHAT'S LIVE NOW</h2>
-        <ul style="list-style: none;">
-            <li style="margin-bottom: 1.5rem; display: flex; align-items: center;">
-                <span style="color: #00C853; margin-right: 1rem;">●</span> 
-                <strong>The Cinematic Feed:</strong> High-fidelity, full-screen storytelling.
-            </li>
-            <li style="margin-bottom: 1.5rem; display: flex; align-items: center;">
-                <span style="color: #00C853; margin-right: 1rem;">●</span> 
-                <strong>V Badge Verification:</strong> The filter for premium quality.
-            </li>
-            <li style="margin-bottom: 1.5rem; display: flex; align-items: center;">
-                <span style="color: #FFD700; margin-right: 1rem;">●</span> 
-                <strong>Studio Tools (Coming Soon):</strong> In-app editing for episodic series.
-            </li>
-        </ul>
-    </div>
-</section>
-
+    </section>
 </body>
 </html>
-
-

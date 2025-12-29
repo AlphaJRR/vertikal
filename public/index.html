@@ -3,235 +3,95 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VERTIKAL | Cultural Ownership</title>
+    <title>VERTIKAL | The Rotation</title>
     <style>
-/* --- GLOBAL CINEMATIC ENGINE --- */
-:root {
-    --bg-deep: #050505;
-    --bg-card: #0a0a0a;
-    --text-white: #ffffff;
-    --text-muted: #888888;
-    --border: #222222;
-    --gold: #FFD700;
-    --green: #00C853;
-}
+    /* VERTIKAL CINEMATIC ENGINE */
+    :root {
+        --bg: #050505; --card: #0a0a0a; --text: #ffffff; --muted: #888; --border: #222;
+        --gold: linear-gradient(135deg, #FFD700 0%, #B8860B 100%);
+        --green: linear-gradient(135deg, #00C853 0%, #004D40 100%);
+        --blue: linear-gradient(135deg, #2962FF 0%, #0D47A1 100%);
+        --titanium: linear-gradient(135deg, #ECEFF1 0%, #455A64 100%);
+        --font-main: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-main); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    
+    /* TYPOGRAPHY */
+    h1, h2, h3 { text-transform: uppercase; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+    h1 { font-size: clamp(3rem, 8vw, 6rem); margin-bottom: 1.5rem; }
+    h2 { font-size: 2rem; border-left: 4px solid #fff; padding-left: 1rem; margin-bottom: 2rem; }
+    h3 { font-size: 1.25rem; margin-bottom: 0.5rem; color: #fff; }
+    p { color: var(--muted); font-size: 1.1rem; max-width: 650px; margin-bottom: 1.5rem; }
+    .hero-text span { background: linear-gradient(180deg, #fff 0%, #666 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    
+    /* LAYOUT */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+    section { padding: 6rem 0; border-bottom: 1px solid var(--border); }
+    .grid { display: grid; gap: 2rem; }
+    .grid-2 { grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    
+    /* COMPONENTS */
+    .btn { display: inline-block; padding: 1rem 2.5rem; border: 1px solid #fff; color: #fff; text-decoration: none; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; transition: 0.3s; }
+    .btn:hover { background: #fff; color: #000; }
+    
+    /* BADGES */
+    .badge-card { background: var(--card); border: 1px solid var(--border); padding: 2rem; transition: transform 0.3s; }
+    .badge-card:hover { border-color: #555; transform: translateY(-5px); }
+    .badge-icon { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; color: #000; margin-bottom: 1rem; font-size: 0.9rem; }
+    .b-gold { background: var(--gold); box-shadow: 0 0 15px rgba(255, 215, 0, 0.2); }
+    .b-green { background: var(--green); box-shadow: 0 0 15px rgba(0, 200, 83, 0.2); }
+    .b-blue { background: var(--blue); box-shadow: 0 0 15px rgba(41, 98, 255, 0.2); }
+    .b-titanium { background: var(--titanium); box-shadow: 0 0 15px rgba(120, 144, 156, 0.2); }
 
-* { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
-
-body {
-    background-color: var(--bg-deep);
-    color: var(--text-white);
-    font-family: 'Helvetica Neue', Arial, sans-serif;
-    line-height: 1.5;
-    -webkit-font-smoothing: antialiased;
-}
-
-h1, h2, h3 { text-transform: uppercase; letter-spacing: -0.02em; font-weight: 800; }
-h1 { font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1; margin-bottom: 1.5rem; }
-h2 { font-size: 2rem; border-left: 4px solid #fff; padding-left: 1rem; margin-bottom: 2rem; }
-p { color: var(--text-muted); font-size: 1.1rem; max-width: 650px; margin-bottom: 1.5rem; }
-
-.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-section { padding: 6rem 0; border-bottom: 1px solid var(--border); }
-
-.btn {
-    display: inline-block; padding: 1rem 2.5rem; text-transform: uppercase;
-    font-weight: 700; border: 1px solid #fff; color: #fff; text-decoration: none;
-    transition: all 0.3s ease; font-size: 0.9rem; letter-spacing: 0.1em;
-    cursor: pointer;
-}
-.btn:hover { background: #fff; color: #000; }
-.btn-primary { background: #fff; color: #000; border-color: #fff; }
-
-nav {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 1.5rem 2rem; border-bottom: 1px solid var(--border);
-    position: sticky; top: 0; background: rgba(5,5,5,0.95); z-index: 999;
-}
-.logo { font-weight: 900; letter-spacing: 0.1em; font-size: 1.2rem; }
-.nav-links a { margin-left: 2rem; color: var(--text-muted); text-decoration: none; text-transform: uppercase; font-size: 0.8rem; }
-.nav-links a:hover { color: #fff; }
-
-.hero-text { 
-    background: linear-gradient(180deg, #fff 0%, #777 100%); 
-    -webkit-background-clip: text; 
-    -webkit-text-fill-color: transparent; 
-}
-
-.poster-card {
-    aspect-ratio: 9/16; background: var(--bg-card); border: 1px solid var(--border);
-    position: relative; overflow: hidden; cursor: pointer;
-}
-.poster-card:hover { border-color: #444; }
-
-.modal {
-    display: none; position: fixed; z-index: 1000; left: 0; top: 0;
-    width: 100%; height: 100%; background: rgba(0,0,0,0.9);
-    align-items: center; justify-content: center;
-}
-.modal.active { display: flex; }
-.modal-content {
-    background: var(--bg-card); border: 1px solid var(--border);
-    padding: 3rem; max-width: 500px; width: 90%;
-}
-.close { float: right; font-size: 2rem; cursor: pointer; }
-input, textarea {
-    width: 100%; padding: 1rem; margin-bottom: 1rem;
-    background: var(--bg-deep); border: 1px solid var(--border);
-    color: #fff; font-size: 1rem;
-}
+    /* NAV */
+    nav { display: flex; justify-content: space-between; padding: 2rem; background: rgba(5,5,5,0.95); position: sticky; top: 0; border-bottom: 1px solid var(--border); z-index: 1000; }
+    .logo { font-weight: 900; letter-spacing: 0.1em; }
+    .nav-links a { margin-left: 2rem; color: var(--muted); text-decoration: none; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em; }
+    .nav-links a:hover { color: #fff; }
     </style>
 </head>
 <body>
-
-<nav>
-    <div class="logo">VERTIKAL</div>
-    <div class="nav-links">
-        <a href="creators/index.html">Creators</a>
-        <a href="networks/index.html">Networks</a>
-        <a href="investors/index.html">Investors</a>
-        <a href="beta/index.html" style="color:#FFD700;">Beta Live</a>
-    </div>
-</nav>
-
-<!-- HERO: STOP ROTATING YOUR PHONE -->
-<header class="container" style="height: 85vh; display: flex; flex-direction: column; justify-content: center;">
-    <p style="text-transform: uppercase; letter-spacing: 0.2em; color: #FFD700; font-size: 0.9rem;">The New Standard</p>
-    <h1 class="hero-text">STOP ROTATING<br>YOUR PHONE.</h1>
-    <p style="color: #fff; font-size: 1.2rem; max-width: 700px;">Vertikal is the vertical-first cinematic ecosystem. We are ending the era of disposable content. Built for retention, franchise IP, and Black cultural ownership.</p>
-    <div style="margin-top: 2rem;">
-        <a href="#" class="btn btn-primary" onclick="event.preventDefault(); document.getElementById('signupModal').classList.add('active');">Join The Movement</a>
-        <a href="investors/index.html" class="btn">View The Thesis</a>
-    </div>
-</header>
-
-<!-- ECOSYSTEM: THE CLOSED-LOOP ECOSYSTEM -->
-<section>
-    <div class="container">
-        <h2>THE CLOSED-LOOP ECOSYSTEM</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-            <div>
-                <h3 style="color: #fff; margin-bottom: 1rem;">Content Creation</h3>
-                <p>Vertikal Studios produces flagship originals. Alpha Visual Artists pushes boundaries. Creators build franchises.</p>
-            </div>
-            <div>
-                <h3 style="color: #fff; margin-bottom: 1rem;">Distribution</h3>
-                <p>Vertikal Networks manages syndication to FAST channels and SVOD licensing while retaining IP ownership.</p>
-            </div>
-            <div>
-                <h3 style="color: #fff; margin-bottom: 1rem;">Monetization</h3>
-                <p>The V Badge system creates a defensible layer of quality. Advertisers pay premium for verified cultural content.</p>
-            </div>
-            <div>
-                <h3 style="color: #fff; margin-bottom: 1rem;">Reinforcement</h3>
-                <p>Revenue flows back to creators. IP stays owned. Culture is preserved and amplified.</p>
-            </div>
+    <nav>
+        <div class="logo">VERTIKAL</div>
+        <div class="nav-links">
+            <a href="creators/index.html">Creators</a>
+            <a href="networks/index.html">Networks</a>
+            <a href="investors/index.html">Investors</a>
+            <a href="beta/index.html" style="color: #FFD700;">Beta Live</a>
         </div>
-    </div>
-</section>
+    </nav>
 
-<!-- VIBE ENGINE: PASS THE CULTURE CHECK -->
-<section>
-    <div class="container">
-        <h2>PASS THE CULTURE CHECK</h2>
-        <p style="color: #fff; font-size: 1.3rem; margin-bottom: 2rem;"><strong>The Vibe Engine</strong> is our content moderation system. It's not about censorship—it's about maintaining the cultural integrity that makes Vertikal valuable.</p>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
-            <div style="border-left: 4px solid var(--gold); padding-left: 1.5rem;">
-                <h3 style="color: var(--gold); margin-bottom: 0.5rem;">Gold Badge</h3>
-                <p style="font-size: 0.9rem;">Flagship originals. Highest CPM. Exclusive access.</p>
-            </div>
-            <div style="border-left: 4px solid var(--green); padding-left: 1.5rem;">
-                <h3 style="color: var(--green); margin-bottom: 0.5rem;">Green Badge</h3>
-                <p style="font-size: 0.9rem;">Verified creators. Brand sponsorship eligible.</p>
-            </div>
-            <div style="border-left: 4px solid #2962FF; padding-left: 1.5rem;">
-                <h3 style="color: #2962FF; margin-bottom: 0.5rem;">Blue Badge</h3>
-                <p style="font-size: 0.9rem;">Emerging talent. Programmatic ads enabled.</p>
-            </div>
+    <header class="container" style="min-height: 85vh; display: flex; flex-direction: column; justify-content: center;">
+        <p style="color: #FFD700; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700;">The Thesis</p>
+        <h1 class="hero-text">CINEMA ISN'T DYING.<br><span>IT'S ROTATING.</span></h1>
+        <p>The screen turned 90 degrees. Storytelling didn't keep up. Vertikal is the ecosystem designed to own the <strong>Short-Series Takeover</strong> and retain Black cultural ownership.</p>
+        <div style="margin-top: 2rem;">
+            <a href="beta/index.html" class="btn" style="background: #fff; color: #000;">Enter The Engine</a>
+            <a href="investors/index.html" class="btn" style="border: none; padding-left: 0; margin-left: 1rem;">View The Economics &rarr;</a>
         </div>
-    </div>
-</section>
+    </header>
 
-<!-- FEATURED ORIGINALS: 3 VERTICAL POSTER CARDS -->
-<section>
-    <div class="container">
-        <h2>FEATURED ORIGINALS</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
-            <div class="poster-card">
-                <div style="padding: 1rem; height: 100%; display: flex; flex-direction: column; justify-content: flex-end;">
-                    <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;">Series Title 1</h3>
-                    <p style="font-size: 0.9rem; color: var(--text-muted);">Director Name</p>
+    <section>
+        <div class="container">
+            <h2>OWNERSHIP. NOT CHARITY.</h2>
+            <div class="grid grid-2">
+                <div>
+                    <p>Black culture drives the algorithm, but we don't own the platforms. Vertikal is a market opportunity designed to <strong>retain IP, retain revenue, and retain leverage.</strong></p>
                 </div>
-            </div>
-            <div class="poster-card">
-                <div style="padding: 1rem; height: 100%; display: flex; flex-direction: column; justify-content: flex-end;">
-                    <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;">Series Title 2</h3>
-                    <p style="font-size: 0.9rem; color: var(--text-muted);">Director Name</p>
-                </div>
-            </div>
-            <div class="poster-card">
-                <div style="padding: 1rem; height: 100%; display: flex; flex-direction: column; justify-content: flex-end;">
-                    <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;">Series Title 3</h3>
-                    <p style="font-size: 0.9rem; color: var(--text-muted);">Director Name</p>
+                <div style="border-left: 1px solid #333; padding-left: 2rem;">
+                    <h3>The V Badge Standard</h3>
+                    <p style="font-size: 0.9rem;">A monetization gate and cultural credential. The Titanium "V" is not decoration; it is authority.</p>
+                    <div style="display: flex; gap: 0.8rem; margin-top: 1rem;">
+                        <div class="badge-icon b-gold">V</div>
+                        <div class="badge-icon b-green">V</div>
+                        <div class="badge-icon b-blue">V</div>
+                        <div class="badge-icon b-titanium">V</div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-
-<!-- FINAL CTA -->
-<section>
-    <div class="container" style="text-align: center;">
-        <h2>OWNERSHIP. NOT CHARITY.</h2>
-        <p style="color: #fff; font-size: 1.2rem; margin-bottom: 2rem;">Black culture drives the algorithm, but we don't own the platform. Vertikal is a market opportunity designed to <strong>retain IP, retain revenue, and retain leverage.</strong></p>
-        <a href="#" class="btn btn-primary" onclick="event.preventDefault(); document.getElementById('signupModal').classList.add('active');">Join The Founding 50</a>
-    </div>
-</section>
-
-<!-- FOOTER -->
-<footer style="padding: 4rem 2rem; border-top: 1px solid var(--border); text-align: center;">
-    <div class="container">
-        <p style="color: var(--text-muted); margin-bottom: 1rem;">© 2024 VERTIKAL. All rights reserved.</p>
-        <div style="display: flex; justify-content: center; gap: 2rem;">
-            <a href="terms.html" style="color: var(--text-muted); text-decoration: none;">Terms</a>
-            <a href="privacy.html" style="color: var(--text-muted); text-decoration: none;">Privacy</a>
-        </div>
-    </div>
-</footer>
-
-<!-- MODAL SIGNUP -->
-<div id="signupModal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="document.getElementById('signupModal').classList.remove('active');">&times;</span>
-        <h2 style="margin-bottom: 1.5rem;">Join The Movement</h2>
-        <form id="signupForm">
-            <input type="email" placeholder="Email" required>
-            <input type="text" placeholder="First Name" required>
-            <input type="text" placeholder="Last Name" required>
-            <input type="text" placeholder="Username" required>
-            <input type="password" placeholder="Password" required>
-            <label style="display: flex; align-items: center; margin-bottom: 1rem;">
-                <input type="checkbox" required style="width: auto; margin-right: 0.5rem;">
-                <span style="font-size: 0.9rem;">I agree to the Terms and Privacy Policy</span>
-            </label>
-            <button type="submit" class="btn btn-primary" style="width: 100%;">Sign Up</button>
-        </form>
-    </div>
-</div>
-
-<script>
-document.getElementById('signupForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    alert('Signup form submitted. This will connect to Supabase Edge Function.');
-    document.getElementById('signupModal').classList.remove('active');
-});
-
-document.getElementById('signupModal').addEventListener('click', function(e) {
-    if (e.target === this) {
-        this.classList.remove('active');
-    }
-});
-</script>
-
+    </section>
 </body>
 </html>
