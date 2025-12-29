@@ -27,26 +27,45 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build (or prepare static files)
+      - name: Determine source directory
+        id: source_dir
         run: |
-          # For static sites, copy public/ to dist/ to enforce contract
-          if [ -d "public" ] && [ ! -d "dist" ]; then
-            echo "📁 Copying public/ to dist/ (static site)"
-            mkdir -p dist
-            cp -r public/* dist/
-          elif command -v npm &> /dev/null && npm run build 2>/dev/null; then
-            echo "🔨 Running npm build"
-            npm run build
-          else
-            echo "⚠️  No build command found, using public/ as-is"
-            if [ -d "public" ]; then
-              mkdir -p dist
-              cp -r public/* dist/
-            fi
+          SITE="${{ github.event.inputs.site }}"
+          case "$SITE" in
+            vertikalapp)
+              echo "dir=public" >> $GITHUB_OUTPUT
+              ;;
+            investors)
+              echo "dir=public/investors" >> $GITHUB_OUTPUT
+              ;;
+            creators)
+              echo "dir=public/creators" >> $GITHUB_OUTPUT
+              ;;
+            networks)
+              echo "dir=public/networks" >> $GITHUB_OUTPUT
+              ;;
+            demo)
+              echo "dir=public/demo" >> $GITHUB_OUTPUT
+              ;;
+            *)
+              echo "❌ Unknown site: $SITE"
+              exit 1
+              ;;
+          esac
+          echo "Source directory: $(cat $GITHUB_OUTPUT | grep dir= | cut -d= -f2)"
+
+      - name: Prepare dist/ (enforce contract)
+        run: |
+          SOURCE_DIR="${{ steps.source_dir.outputs.dir }}"
+          if [ ! -d "$SOURCE_DIR" ]; then
+            echo "❌ Source directory not found: $SOURCE_DIR"
+            exit 1
           fi
+          echo "📁 Copying $SOURCE_DIR/ to dist/ (enforcing contract)"
+          rm -rf dist
+          mkdir -p dist
+          cp -r "$SOURCE_DIR"/* dist/
+          echo "✅ dist/ prepared ($(find dist -type f | wc -l) files)"
 
       - name: Verify build output
         run: |
