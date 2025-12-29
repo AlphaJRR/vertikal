@@ -61,6 +61,8 @@
 ```bash
 cd /Users/alphavisualartists/Vertikal-App
 git push https://AlphaJRR:YOUR_PAT_TOKEN@github.com/AlphaJRR/vertikal.git main
+push
+
 ```
 
 Replace `YOUR_PAT_TOKEN` with your token.
