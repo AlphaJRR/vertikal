@@ -5,22 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VERTIKAL | Investors</title>
     <style>
-/* --- GLOBAL CINEMATIC ENGINE --- */
 :root {
     --bg-deep: #050505;
     --bg-card: #0a0a0a;
     --text-white: #ffffff;
     --text-muted: #888888;
     --border: #222222;
-    /* BADGE COLORS */
-    --gold: linear-gradient(135deg, #FFD700 0%, #B8860B 100%);
-    --green: linear-gradient(135deg, #00C853 0%, #004D40 100%);
-    --blue: linear-gradient(135deg, #2962FF 0%, #0D47A1 100%);
-    --titanium: linear-gradient(135deg, #ECEFF1 0%, #607D8B 100%);
-    --shadow-gold: 0 0 20px rgba(255, 215, 0, 0.2);
-    --shadow-green: 0 0 20px rgba(0, 200, 83, 0.2);
-    --shadow-blue: 0 0 20px rgba(41, 98, 255, 0.2);
-    --shadow-titanium: 0 0 20px rgba(120, 144, 156, 0.2);
+    --green: #00C853;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
@@ -33,121 +24,160 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* TYPOGRAPHY */
-h1, h2, h3, h4 { text-transform: uppercase; letter-spacing: -0.02em; font-weight: 800; }
+h1, h2, h3 { text-transform: uppercase; letter-spacing: -0.02em; font-weight: 800; }
 h1 { font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1; margin-bottom: 1.5rem; }
-h2 { font-size: 2rem; border-left: 4px solid #fff; padding-left: 1rem; margin-bottom: 2rem; }
+h2 { font-size: 2rem; margin-bottom: 2rem; }
 p { color: var(--text-muted); font-size: 1.1rem; max-width: 650px; margin-bottom: 1.5rem; }
-.hero-text { background: linear-gradient(180deg, #fff 0%, #777 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-/* LAYOUT */
 .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
 section { padding: 6rem 0; border-bottom: 1px solid var(--border); }
-.grid { display: grid; gap: 2rem; }
-.grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-.grid-4 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
 
-/* COMPONENTS */
-.btn {
-    display: inline-block; padding: 1rem 2.5rem; text-transform: uppercase;
-    font-weight: 700; border: 1px solid #fff; color: #fff; text-decoration: none;
-    transition: all 0.3s ease; font-size: 0.9rem; letter-spacing: 0.1em;
-}
-.btn:hover { background: #fff; color: #000; }
-.btn-primary { background: #fff; color: #000; border-color: #fff; }
-.btn-primary:hover { opacity: 0.9; }
-
-/* BADGE SYSTEM UI */
-.badge-card {
-    background: var(--bg-card); border: 1px solid var(--border); padding: 2rem;
-    position: relative; overflow: hidden; transition: transform 0.3s;
-}
-.badge-card:hover { transform: translateY(-5px); border-color: #444; }
-.badge-icon {
-    width: 50px; height: 50px; border-radius: 50%; display: flex;
-    align-items: center; justify-content: center; font-weight: 900; color: #000;
-    margin-bottom: 1rem; font-size: 1.2rem;
-}
-.b-gold { background: var(--gold); box-shadow: var(--shadow-gold); }
-.b-green { background: var(--green); box-shadow: var(--shadow-green); }
-.b-blue { background: var(--blue); box-shadow: var(--shadow-blue); }
-.b-titanium { background: var(--titanium); box-shadow: var(--shadow-titanium); }
-
-/* TABLES */
-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-th, td { text-align: left; padding: 1rem; border-bottom: 1px solid var(--border); }
-th { color: var(--text-muted); text-transform: uppercase; font-size: 0.85rem; }
-.money { color: #00C853; font-weight: 700; font-family: monospace; font-size: 1.1rem; }
-
-/* NAV */
 nav {
     display: flex; justify-content: space-between; align-items: center;
     padding: 1.5rem 2rem; border-bottom: 1px solid var(--border);
     position: sticky; top: 0; background: rgba(5,5,5,0.95); z-index: 999;
 }
 .logo { font-weight: 900; letter-spacing: 0.1em; font-size: 1.2rem; }
-.nav-links a { margin-left: 2rem; color: var(--text-muted); text-decoration: none; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.05em; }
-.nav-links a:hover, .nav-links a.active { color: #fff; }
+.nav-links a { margin-left: 2rem; color: var(--text-muted); text-decoration: none; text-transform: uppercase; font-size: 0.8rem; }
+.nav-links a:hover { color: #fff; }
+
+.hero-text { 
+    background: linear-gradient(180deg, #fff 0%, #777 100%); 
+    -webkit-background-clip: text; 
+    -webkit-text-fill-color: transparent; 
+}
+
+.tier-card {
+    background: var(--bg-card); border: 1px solid var(--border); padding: 2.5rem;
+    transition: transform 0.3s; position: relative;
+}
+.tier-card:hover { transform: translateY(-5px); border-color: var(--green); }
+.tier-title { color: var(--green); font-size: 1.5rem; margin-bottom: 0.5rem; }
+.tier-amount { color: #fff; font-size: 2rem; font-weight: 900; margin: 1rem 0; }
+.tier-range { color: var(--text-muted); font-size: 0.9rem; }
+
+.btn {
+    display: inline-block; padding: 1rem 2.5rem; text-transform: uppercase;
+    font-weight: 700; border: 1px solid #fff; color: #fff; text-decoration: none;
+    transition: all 0.3s ease; font-size: 0.9rem; letter-spacing: 0.1em;
+    cursor: pointer; background: transparent;
+}
+.btn:hover { background: #fff; color: #000; }
+.btn-primary { background: #fff; color: #000; border-color: #fff; }
+
+input {
+    width: 100%; padding: 1rem; margin-bottom: 1rem;
+    background: var(--bg-deep); border: 1px solid var(--border);
+    color: #fff; font-size: 1rem;
+}
+
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
     </style>
 </head>
 <body>
 
 <nav>
-    <div class="logo">VERTIKAL <span style="color:#00C853">// CAPITAL</span></div>
+    <div class="logo">VERTIKAL</div>
     <div class="nav-links">
         <a href="../index.html">Main</a>
-        <a href="#" style="color:#00C853;">Request Deck</a>
+        <a href="../creators/index.html">Creators</a>
+        <a href="../networks/index.html">Networks</a>
     </div>
 </nav>
 
 <section class="container" style="padding-top: 8rem;">
-    <div style="color: #00C853; letter-spacing: 0.2em; margin-bottom: 1rem; font-weight: 700;">INVESTMENT THESIS</div>
-    <h1 class="hero-text">CAPITALIZING ON<br>THE CULTURE.</h1>
-    <p><strong>The Core Problem:</strong> Major platforms extract value from Black creators without offering ownership. Creators drive trends; platforms keep equity.</p>
-    <p><strong>The Vertikal Solution:</strong> A closed-loop media economy where IP is retained, monetization is transparent, and the platform is the cultural asset.</p>
+    <div style="color: var(--green); letter-spacing: 0.2em; margin-bottom: 1rem; font-weight: 700; text-transform: uppercase;">PRE-SEED • $500K TARGET</div>
+    <h1 class="hero-text">THE VERTICAL<br>HOLLYWOOD.</h1>
+    <p style="color: #fff; font-size: 1.2rem;">We are building the "Netflix of Mobile" with a focus on Black cultural ownership, IP retention, and vertical-first cinematic content.</p>
 </section>
 
 <section>
     <div class="container">
-        <h2>MARKET OPPORTUNITY</h2>
-        <div class="grid grid-2">
-            <div>
-                <h3>Timing</h3>
-                <p>"Clip Fatigue" is real. Audiences want stories. We own the <strong>2–10 minute cinematic window.</strong></p>
+        <h2 style="text-align: center; margin-bottom: 3rem;">INVESTMENT TIERS</h2>
+        <div class="grid-3">
+            <!-- FOUNDING PARTICIPANT -->
+            <div class="tier-card">
+                <div class="tier-title">FOUNDING PARTICIPANT</div>
+                <div class="tier-amount">$1,000</div>
+                <div class="tier-range">– $4,999</div>
+                <ul style="list-style: none; margin-top: 2rem; color: var(--text-muted);">
+                    <li style="margin-bottom: 0.5rem;">✓ Early access to Beta</li>
+                    <li style="margin-bottom: 0.5rem;">✓ Quarterly investor updates</li>
+                    <li style="margin-bottom: 0.5rem;">✓ Founder Q&A sessions</li>
+                </ul>
             </div>
-            <div>
-                <h3>Leverage</h3>
-                <p>Black culture is the #1 export of the internet. Vertikal financializes this influence.</p>
+
+            <!-- STRATEGIC PARTICIPANT -->
+            <div class="tier-card" style="border-color: var(--green); border-width: 2px;">
+                <div class="tier-title">STRATEGIC PARTICIPANT</div>
+                <div class="tier-amount">$5,000</div>
+                <div class="tier-range">– $24,999</div>
+                <ul style="list-style: none; margin-top: 2rem; color: var(--text-muted);">
+                    <li style="margin-bottom: 0.5rem;">✓ All Founding benefits</li>
+                    <li style="margin-bottom: 0.5rem;">✓ Monthly strategy calls</li>
+                    <li style="margin-bottom: 0.5rem;">✓ Advisory board access</li>
+                    <li style="margin-bottom: 0.5rem;">✓ Content licensing rights</li>
+                </ul>
             </div>
-            <div>
-                <h3>Moat</h3>
-                <p>The <strong>V Badge</strong> system creates a defensible layer of quality advertisers cannot find elsewhere.</p>
+
+            <!-- LEAD PARTICIPANT -->
+            <div class="tier-card">
+                <div class="tier-title">LEAD PARTICIPANT</div>
+                <div class="tier-amount">$25,000+</div>
+                <div class="tier-range">Custom Terms</div>
+                <ul style="list-style: none; margin-top: 2rem; color: var(--text-muted);">
+                    <li style="margin-bottom: 0.5rem;">✓ All Strategic benefits</li>
+                    <li style="margin-bottom: 0.5rem;">✓ Board observer seat</li>
+                    <li style="margin-bottom: 0.5rem;">✓ Co-production opportunities</li>
+                    <li style="margin-bottom: 0.5rem;">✓ Equity stake negotiation</li>
+                </ul>
             </div>
         </div>
     </div>
 </section>
 
 <section>
-    <div class="container">
-        <h2>3-PHASE ROADMAP</h2>
-        <ul style="list-style: none; border-left: 2px solid #333; padding-left: 2rem;">
-            <li style="margin-bottom: 2rem;">
-                <strong style="color: #fff; display: block; margin-bottom: 0.5rem;">PHASE 1: FOUNDATION (CURRENT)</strong>
-                Launch Beta. Seed V Badge creators. Establish Alpha Visual Artists.
-            </li>
-            <li style="margin-bottom: 2rem;">
-                <strong style="color: #fff; display: block; margin-bottom: 0.5rem;">PHASE 2: EXPANSION</strong>
-                Roll out Vertikal Studios Originals. Activate Brand Sponsorship tier.
-            </li>
-            <li>
-                <strong style="color: #fff; display: block; margin-bottom: 0.5rem;">PHASE 3: SCALE</strong>
-                Licensing deals for top IP. Global expansion. Series A institutional round.
-            </li>
-        </ul>
-        <br><br>
-        <a href="#" class="btn btn-primary">Contact Investor Relations</a>
+    <div class="container" style="max-width: 600px;">
+        <h2 style="text-align: center;">REQUEST INVESTOR DECK</h2>
+        <p style="text-align: center; margin-bottom: 2rem;">Enter your email to receive the full investment thesis and deck.</p>
+        <form id="investorForm">
+            <input type="email" placeholder="Email Address" required>
+            <input type="text" placeholder="Full Name" required>
+            <input type="text" placeholder="Organization (Optional)">
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Request Deck</button>
+        </form>
+        <p style="text-align: center; margin-top: 1rem; font-size: 0.9rem; color: var(--text-muted);">
+            We'll send you a magic link to access the full investor materials.
+        </p>
     </div>
 </section>
+
+<script>
+document.getElementById('investorForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+    
+    // This will connect to Supabase Edge Function for OTP magic link
+    try {
+        const response = await fetch('/functions/v1/investor-signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        
+        if (response.ok) {
+            alert('Check your email for the magic link to access the investor deck.');
+            e.target.reset();
+        } else {
+            alert('Error submitting request. Please try again.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error submitting request. Please try again.');
+    }
+});
+</script>
 
 </body>
 </html>

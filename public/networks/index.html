@@ -5,22 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VERTIKAL | Networks</title>
     <style>
-/* --- GLOBAL CINEMATIC ENGINE --- */
 :root {
     --bg-deep: #050505;
     --bg-card: #0a0a0a;
     --text-white: #ffffff;
     --text-muted: #888888;
     --border: #222222;
-    /* BADGE COLORS */
-    --gold: linear-gradient(135deg, #FFD700 0%, #B8860B 100%);
-    --green: linear-gradient(135deg, #00C853 0%, #004D40 100%);
-    --blue: linear-gradient(135deg, #2962FF 0%, #0D47A1 100%);
-    --titanium: linear-gradient(135deg, #ECEFF1 0%, #607D8B 100%);
-    --shadow-gold: 0 0 20px rgba(255, 215, 0, 0.2);
-    --shadow-green: 0 0 20px rgba(0, 200, 83, 0.2);
-    --shadow-blue: 0 0 20px rgba(41, 98, 255, 0.2);
-    --shadow-titanium: 0 0 20px rgba(120, 144, 156, 0.2);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; outline: none; }
@@ -33,111 +23,115 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* TYPOGRAPHY */
-h1, h2, h3, h4 { text-transform: uppercase; letter-spacing: -0.02em; font-weight: 800; }
+h1, h2, h3 { text-transform: uppercase; letter-spacing: -0.02em; font-weight: 800; }
 h1 { font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1; margin-bottom: 1.5rem; }
-h2 { font-size: 2rem; border-left: 4px solid #fff; padding-left: 1rem; margin-bottom: 2rem; }
+h2 { font-size: 2rem; margin-bottom: 2rem; }
 p { color: var(--text-muted); font-size: 1.1rem; max-width: 650px; margin-bottom: 1.5rem; }
-.hero-text { background: linear-gradient(180deg, #fff 0%, #777 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-/* LAYOUT */
 .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
 section { padding: 6rem 0; border-bottom: 1px solid var(--border); }
-.grid { display: grid; gap: 2rem; }
-.grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-.grid-4 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
 
-/* COMPONENTS */
-.btn {
-    display: inline-block; padding: 1rem 2.5rem; text-transform: uppercase;
-    font-weight: 700; border: 1px solid #fff; color: #fff; text-decoration: none;
-    transition: all 0.3s ease; font-size: 0.9rem; letter-spacing: 0.1em;
-}
-.btn:hover { background: #fff; color: #000; }
-.btn-primary { background: #fff; color: #000; border-color: #fff; }
-.btn-primary:hover { opacity: 0.9; }
-
-/* BADGE SYSTEM UI */
-.badge-card {
-    background: var(--bg-card); border: 1px solid var(--border); padding: 2rem;
-    position: relative; overflow: hidden; transition: transform 0.3s;
-}
-.badge-card:hover { transform: translateY(-5px); border-color: #444; }
-.badge-icon {
-    width: 50px; height: 50px; border-radius: 50%; display: flex;
-    align-items: center; justify-content: center; font-weight: 900; color: #000;
-    margin-bottom: 1rem; font-size: 1.2rem;
-}
-.b-gold { background: var(--gold); box-shadow: var(--shadow-gold); }
-.b-green { background: var(--green); box-shadow: var(--shadow-green); }
-.b-blue { background: var(--blue); box-shadow: var(--shadow-blue); }
-.b-titanium { background: var(--titanium); box-shadow: var(--shadow-titanium); }
-
-/* TABLES */
-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-th, td { text-align: left; padding: 1rem; border-bottom: 1px solid var(--border); }
-th { color: var(--text-muted); text-transform: uppercase; font-size: 0.85rem; }
-.money { color: #00C853; font-weight: 700; font-family: monospace; font-size: 1.1rem; }
-
-/* NAV */
 nav {
     display: flex; justify-content: space-between; align-items: center;
     padding: 1.5rem 2rem; border-bottom: 1px solid var(--border);
     position: sticky; top: 0; background: rgba(5,5,5,0.95); z-index: 999;
 }
 .logo { font-weight: 900; letter-spacing: 0.1em; font-size: 1.2rem; }
-.nav-links a { margin-left: 2rem; color: var(--text-muted); text-decoration: none; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.05em; }
-.nav-links a:hover, .nav-links a.active { color: #fff; }
+.nav-links a { margin-left: 2rem; color: var(--text-muted); text-decoration: none; text-transform: uppercase; font-size: 0.8rem; }
+.nav-links a:hover { color: #fff; }
+
+.hero-text { 
+    background: linear-gradient(180deg, #fff 0%, #777 100%); 
+    -webkit-background-clip: text; 
+    -webkit-text-fill-color: transparent; 
+}
+
+input, textarea, select {
+    width: 100%; padding: 1rem; margin-bottom: 1rem;
+    background: var(--bg-deep); border: 1px solid var(--border);
+    color: #fff; font-size: 1rem;
+}
+
+.btn {
+    display: inline-block; padding: 1rem 2.5rem; text-transform: uppercase;
+    font-weight: 700; border: 1px solid #fff; color: #fff; text-decoration: none;
+    transition: all 0.3s ease; font-size: 0.9rem; letter-spacing: 0.1em;
+    cursor: pointer; background: transparent;
+}
+.btn:hover { background: #fff; color: #000; }
+.btn-primary { background: #fff; color: #000; border-color: #fff; }
     </style>
 </head>
 <body>
 
 <nav>
-    <div class="logo">VERTIKAL <span style="color:#888">// NETWORKS</span></div>
+    <div class="logo">VERTIKAL</div>
     <div class="nav-links">
         <a href="../index.html">Main</a>
+        <a href="../creators/index.html">Creators</a>
         <a href="../investors/index.html">Investors</a>
     </div>
 </nav>
 
 <section class="container" style="padding-top: 8rem;">
-    <h1 class="hero-text">MEDIA INFRASTRUCTURE.<br>NOT JUST PLAYLISTS.</h1>
-    <p>Vertikal is a multi-divisional ecosystem designed to incubate, scale, and monetize Black IP. We are building the "Netflix of Mobile."</p>
+    <h1 class="hero-text">THE FOUNDING 50<br>NETWORKS.</h1>
+    <p style="color: #fff; font-size: 1.2rem;">Join the first 50 media networks building the vertical-first cinematic ecosystem. Distribution, syndication, and IP ownership.</p>
 </section>
 
 <section>
-    <div class="container">
-        <h2>THE DIVISIONS</h2>
-        <div class="grid grid-2">
-            <div class="badge-card" style="border-left: 4px solid #777;">
-                <h3 style="color:#fff;">Vertikal Studios</h3>
-                <p>Internal production house. Flagship originals. Exclusive docu-series that set the platform tone.</p>
-            </div>
-            <div class="badge-card" style="border-left: 4px solid #777;">
-                <h3 style="color:#fff;">Alpha Visual Artists</h3>
-                <p>The vanguard. High-art, experimental, music visualization, and boundary-pushing motion design.</p>
-            </div>
-            <div class="badge-card" style="border-left: 4px solid #777;">
-                <h3 style="color:#fff;">Vertikal Networks</h3>
-                <p>Distribution hub. Managing syndication to FAST channels and SVOD licensing while retaining ownership.</p>
-            </div>
-            <div class="badge-card" style="border-left: 4px solid #777;">
-                <h3 style="color:#fff;">Vertikal Creators</h3>
-                <p>Talent incubation. From "user" to "partner." Educational pathways and resource deployment.</p>
-            </div>
-        </div>
+    <div class="container" style="max-width: 700px;">
+        <h2>NETWORK APPLICATION</h2>
+        <p>Apply to become a Founding 50 Network partner. We're looking for media companies, production houses, and content studios ready to build vertical franchises.</p>
+        
+        <form id="networkForm">
+            <input type="text" placeholder="Network Name" required>
+            <input type="text" placeholder="Contact Name" required>
+            <input type="email" placeholder="Email Address" required>
+            <input type="tel" placeholder="Phone Number">
+            <input type="url" placeholder="Website URL">
+            <select required>
+                <option value="">Select Network Type</option>
+                <option value="production">Production House</option>
+                <option value="media">Media Company</option>
+                <option value="studio">Content Studio</option>
+                <option value="other">Other</option>
+            </select>
+            <textarea placeholder="Tell us about your network and content portfolio" rows="5" required></textarea>
+            <textarea placeholder="What vertical content do you produce? (Series, Docs, Reality, etc.)" rows="3" required></textarea>
+            <label style="display: flex; align-items: center; margin-bottom: 1rem;">
+                <input type="checkbox" required style="width: auto; margin-right: 0.5rem;">
+                <span style="font-size: 0.9rem;">I understand that Vertikal Networks retains IP ownership while providing distribution and monetization opportunities.</span>
+            </label>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Application</button>
+        </form>
     </div>
 </section>
 
-<section>
-    <div class="container">
-        <h2>WHY THIS WINS</h2>
-        <p><strong>The Flywheel:</strong> Content → Distribution → Community → Monetization → Reinforcement.</p>
-        <p>We treat Networks as incubators. We test formats cheaply. Winners get spun into larger deals. Losers get cut fast. This is operational discipline.</p>
-    </div>
-</section>
+<script>
+document.getElementById('networkForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+    
+    try {
+        const response = await fetch('/functions/v1/network-application', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+        
+        if (response.ok) {
+            alert('Application submitted successfully! We\'ll be in touch soon.');
+            e.target.reset();
+        } else {
+            alert('Error submitting application. Please try again.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error submitting application. Please try again.');
+    }
+});
+</script>
 
 </body>
 </html>
-
-
