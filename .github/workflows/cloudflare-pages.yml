@@ -1,0 +1,94 @@
+name: Cloudflare Pages Deploy (LOCKED)
+
+on:
+  workflow_dispatch:
+    inputs:
+      site:
+        description: Target site
+        required: true
+        type: choice
+        options:
+          - vertikalapp
+          - investors
+          - creators
+          - networks
+          - demo
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build (or prepare static files)
+        run: |
+          # For static sites, copy public/ to dist/ to enforce contract
+          if [ -d "public" ] && [ ! -d "dist" ]; then
+            echo "📁 Copying public/ to dist/ (static site)"
+            mkdir -p dist
+            cp -r public/* dist/
+          elif command -v npm &> /dev/null && npm run build 2>/dev/null; then
+            echo "🔨 Running npm build"
+            npm run build
+          else
+            echo "⚠️  No build command found, using public/ as-is"
+            if [ -d "public" ]; then
+              mkdir -p dist
+              cp -r public/* dist/
+            fi
+          fi
+
+      - name: Verify build output
+        run: |
+          if [ ! -d "dist" ]; then
+            echo "❌ dist/ not found. Build contract violated."
+            exit 1
+          fi
+          echo "✅ dist/ verified ($(find dist -type f | wc -l) files)"
+
+      - name: Determine project name
+        id: project_name
+        run: |
+          SITE="${{ github.event.inputs.site }}"
+          case "$SITE" in
+            vertikalapp)
+              echo "name=vertikalapp" >> $GITHUB_OUTPUT
+              ;;
+            investors)
+              echo "name=investors-vertikalapp" >> $GITHUB_OUTPUT
+              ;;
+            creators)
+              echo "name=creators-vertikalapp" >> $GITHUB_OUTPUT
+              ;;
+            networks)
+              echo "name=networks-vertikalapp" >> $GITHUB_OUTPUT
+              ;;
+            demo)
+              echo "name=demo-vertikal" >> $GITHUB_OUTPUT
+              ;;
+            *)
+              echo "❌ Unknown site: $SITE"
+              exit 1
+              ;;
+          esac
+          echo "Project name: $(cat $GITHUB_OUTPUT | grep name= | cut -d= -f2)"
+
+      - name: Deploy to Cloudflare Pages
+        run: |
+          npx wrangler pages deploy dist \
+            --project-name=${{ steps.project_name.outputs.name }} \
+            --branch=production
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
