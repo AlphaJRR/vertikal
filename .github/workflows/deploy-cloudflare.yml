@@ -21,8 +21,6 @@ jobs:
       # Step 2: Monorepo detection - deploy only if changed
       - name: Determine if this project changed
         id: changed
-        env:
-          PROJECT_DIR: public
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "changed=true" >> $GITHUB_OUTPUT
@@ -33,7 +31,8 @@ jobs:
 
           CHANGED=$(git diff --name-only HEAD^ HEAD | grep "^public/" || true)
 
-          if echo "$CHANGED" | grep -q "^public/$PROJECT_DIR\|^public/[^/]*$"; then
+          # Check if root public files changed (not in subdirectories)
+          if echo "$CHANGED" | grep -q "^public/[^/]*$"; then
             echo "changed=true" >> $GITHUB_OUTPUT
           else
             echo "changed=false" >> $GITHUB_OUTPUT
