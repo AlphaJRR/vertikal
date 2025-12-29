@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>VERTIKAL CREATORS | Founding 50</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root { --black: #050505; --gold: #D4AF37; }
+        body { background-color: var(--black); color: white; font-family: 'Space Grotesk', sans-serif; }
+        h1, h2, h3 { font-family: 'Bebas Neue', sans-serif; }
+        
+        .gold-text {
+            background: linear-gradient(to right, #FFD700, #B8860B);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .form-input {
+            width: 100%; background: #0F0F12; border: 1px solid #333; padding: 12px; color: white; margin-bottom: 12px;
+        }
+        .form-input:focus { border-color: var(--gold); outline: none; }
+    </style>
+</head>
+<body>
+
+    <nav class="p-6 flex justify-between items-center border-b border-white/10">
+        <a href="../index.html" class="text-2xl font-bold tracking-widest text-white">VERTIKAL</a>
+        <a href="../beta/index.html" class="text-xs font-bold tracking-widest text-black bg-yellow-500 px-4 py-2 rounded hover:bg-white transition">GET THE APP</a>
+    </nav>
+
+    <header class="py-20 px-6 text-center">
+        <div class="text-sm font-bold tracking-[0.3em] text-gray-500 mb-4">FOR DIRECTORS. NOT INFLUENCERS.</div>
+        <h1 class="text-7xl md:text-9xl mb-6">OWN THE <span class="gold-text">SCREEN.</span></h1>
+        
+        <div class="border-l-2 border-yellow-500 pl-6 mx-auto max-w-lg text-left italic text-2xl text-white mb-10 mt-8">
+            "Cinema isn't dying. It's rotating."
+        </div>
+
+        <p class="text-xl text-gray-400 max-w-2xl mx-auto mb-8">
+            The first cinema ecosystem built for Black ownership. We don't want your clips. We want your Series.
+        </p>
+    </header>
+
+    <section class="py-16 bg-[#0F0F12] border-y border-white/5">
+        <div class="max-w-4xl mx-auto px-6 flex flex-col md:flex-row items-center gap-12">
+            <div class="w-40 h-40 rounded-full bg-gradient-to-br from-yellow-300 to-yellow-700 flex items-center justify-center text-5xl font-black text-black shadow-[0_0_40px_rgba(212,175,55,0.4)]">
+                V
+            </div>
+            <div>
+                <h2 class="text-4xl mb-4 text-white">WEAR YOUR EQUITY.</h2>
+                <h3 class="text-xl text-yellow-500 mb-4 tracking-widest">THE GOLD FOUNDING 50 BADGE</h3>
+                <p class="text-gray-500 leading-relaxed mb-6">
+                    This isn't just a profile icon. It is visible proof of your Founding status. It signals to the algorithm, to investors, and to the community that you were here first.
+                </p>
+                <ul class="space-y-2 text-sm font-bold text-gray-300">
+                    <li class="flex items-center gap-2"><span class="text-yellow-500">✓</span> 100% IP OWNERSHIP</li>
+                    <li class="flex items-center gap-2"><span class="text-yellow-500">✓</span> PRIORITY HOME FEED PLACEMENT</li>
+                    <li class="flex items-center gap-2"><span class="text-yellow-500">✓</span> DIRECT ACCESS TO PRODUCT TEAM</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 px-6 max-w-md mx-auto" id="apply">
+        <h2 class="text-4xl text-center mb-8">CLAIM YOUR SPOT</h2>
+        <form id="creatorForm" onsubmit="event.preventDefault(); alert('Application Received! Welcome to the Founding 50.');">
+            <input type="text" class="form-input" placeholder="Full Name" required>
+            <input type="email" class="form-input" placeholder="Email Address" required>
+            <input type="text" class="form-input" placeholder="Portfolio Link (IG/Vimeo)" required>
+            <select class="form-input" required>
+                <option value="">Select Your Role...</option>
+                <option value="director">Director</option>
+                <option value="writer">Writer</option>
+                <option value="dp">Cinematographer</option>
+                <option value="producer">Producer</option>
+            </select>
+            <button type="submit" class="w-full bg-white text-black font-bold py-4 mt-4 hover:bg-gray-200 transition tracking-widest text-lg">
+                APPLY FOR ACCESS
+            </button>
+        </form>
+    </section>
+
+    <!-- VERTIKAL AUTH SIMULATION -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            // Select all forms on the page
+            const forms = document.querySelectorAll("form");
+
+            forms.forEach(form => {
+                form.addEventListener("submit", (e) => {
+                    e.preventDefault(); // Stop page reload
+
+                    // 1. Get the Button
+                    const btn = form.querySelector("button[type='submit']");
+                    const originalText = btn.innerText;
+
+                    // 2. Change Button to "Loading" State
+                    btn.disabled = true;
+                    btn.innerText = "VERIFYING CREDENTIALS...";
+                    btn.style.opacity = "0.7";
+                    btn.style.cursor = "wait";
+
+                    // 3. Simulate Server Delay (2 Seconds)
+                    setTimeout(() => {
+                        
+                        // 4. Success State
+                        btn.style.backgroundColor = "#22c55e"; // Success Green
+                        btn.style.color = "black";
+                        btn.innerText = "ACCESS GRANTED";
+
+                        // 5. Show a "Toast" Notification
+                        showToast("Application Submitted Successfully.");
+
+                        // 6. Reset Form after 2 seconds
+                        setTimeout(() => {
+                            form.reset();
+                            btn.disabled = false;
+                            btn.innerText = originalText;
+                            btn.style.backgroundColor = ""; // Revert to CSS default
+                            btn.style.color = "";
+                            btn.style.opacity = "1";
+                            btn.style.cursor = "pointer";
+                        }, 2000);
+
+                    }, 2000);
+                });
+            });
+        });
+
+        // Helper Function: Create a temporary popup
+        function showToast(message) {
+            const toast = document.createElement("div");
+            toast.innerText = message;
+            toast.style.position = "fixed";
+            toast.style.bottom = "20px";
+            toast.style.right = "20px";
+            toast.style.background = "#fff";
+            toast.style.color = "#000";
+            toast.style.padding = "15px 25px";
+            toast.style.borderRadius = "8px";
+            toast.style.boxShadow = "0 10px 30px rgba(0,0,0,0.5)";
+            toast.style.fontWeight = "bold";
+            toast.style.fontFamily = "'Space Grotesk', sans-serif";
+            toast.style.zIndex = "9999";
+            toast.style.animation = "slideIn 0.3s ease";
+
+            document.body.appendChild(toast);
+
+            // Remove after 4 seconds
+            setTimeout(() => {
+                toast.style.opacity = "0";
+                setTimeout(() => toast.remove(), 500);
+            }, 4000);
+        }
+
+        // Add CSS animation for toast
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
