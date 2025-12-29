@@ -166,3 +166,4 @@ Replace `YOUR_PAT_TOKEN` with your token.
 
 **Everything is ready. Push now to deliver all sites!**
 
+PUSH

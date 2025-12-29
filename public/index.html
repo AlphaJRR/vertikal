@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VERTIKAL | The Rotation</title>
+    <title>VERTIKAL | Cultural Ownership</title>
     <style>
     /* VERTIKAL CINEMATIC ENGINE */
     :root {
@@ -23,18 +23,20 @@
     h2 { font-size: 2rem; border-left: 4px solid #fff; padding-left: 1rem; margin-bottom: 2rem; }
     h3 { font-size: 1.25rem; margin-bottom: 0.5rem; color: #fff; }
     p { color: var(--muted); font-size: 1.1rem; max-width: 650px; margin-bottom: 1.5rem; }
-    .hero-text span { background: linear-gradient(180deg, #fff 0%, #666 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero-text { background: linear-gradient(180deg, #fff 0%, #666 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     
     /* LAYOUT */
     .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
     section { padding: 6rem 0; border-bottom: 1px solid var(--border); }
     .grid { display: grid; gap: 2rem; }
     .grid-2 { grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
     .grid-4 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
     
     /* COMPONENTS */
-    .btn { display: inline-block; padding: 1rem 2.5rem; border: 1px solid #fff; color: #fff; text-decoration: none; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; transition: 0.3s; }
+    .btn { display: inline-block; padding: 1rem 2.5rem; border: 1px solid #fff; color: #fff; text-decoration: none; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; transition: 0.3s; cursor: pointer; }
     .btn:hover { background: #fff; color: #000; }
+    .btn-primary { background: #fff; color: #000; border-color: #fff; }
     
     /* BADGES */
     .badge-card { background: var(--card); border: 1px solid var(--border); padding: 2rem; transition: transform 0.3s; }
@@ -51,6 +53,21 @@
     .nav-links a { margin-left: 2rem; color: var(--muted); text-decoration: none; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em; }
     .nav-links a:hover { color: #fff; }
     
+    /* POSTER CARDS */
+    .poster-card { aspect-ratio: 9/16; background: var(--card); border: 1px solid var(--border); position: relative; overflow: hidden; cursor: pointer; }
+    .poster-card:hover { border-color: #444; }
+    
+    /* MODAL */
+    .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); align-items: center; justify-content: center; }
+    .modal.active { display: flex; }
+    .modal-content { background: var(--card); border: 1px solid var(--border); padding: 3rem; max-width: 500px; width: 90%; position: relative; }
+    .close { position: absolute; top: 1rem; right: 1rem; font-size: 2rem; cursor: pointer; color: #fff; }
+    input, textarea { width: 100%; padding: 1rem; margin-bottom: 1rem; background: var(--bg); border: 1px solid var(--border); color: #fff; font-size: 1rem; font-family: var(--font-main); }
+    input:focus, textarea:focus { outline: 1px solid #FFD700; }
+    
+    /* FOOTER */
+    footer { padding: 4rem 2rem; border-top: 1px solid var(--border); text-align: center; }
+    
     /* SMOOTH SCROLL */
     html { scroll-behavior: smooth; }
     </style>
@@ -66,35 +83,163 @@
         </div>
     </nav>
 
+    <!-- HERO: STOP ROTATING YOUR PHONE -->
     <header class="container" style="min-height: 85vh; display: flex; flex-direction: column; justify-content: center;">
-        <p style="color: #FFD700; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700;">The Thesis</p>
-        <h1 class="hero-text">CINEMA ISN'T DYING.<br><span>IT'S ROTATING.</span></h1>
-        <p>The screen turned 90 degrees. Storytelling didn't keep up. Vertikal is the ecosystem designed to own the <strong>Short-Series Takeover</strong> and retain Black cultural ownership.</p>
+        <p style="color: #FFD700; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; margin-bottom: 1rem;">The New Standard</p>
+        <h1 class="hero-text">STOP ROTATING<br>YOUR PHONE.</h1>
+        <p style="color: #fff; font-size: 1.2rem; max-width: 700px;">Vertikal is the vertical-first cinematic ecosystem. We are ending the era of disposable content. Built for retention, franchise IP, and Black cultural ownership.</p>
         <div style="margin-top: 2rem;">
-            <a href="beta/index.html" class="btn" style="background: #fff; color: #000;">Enter The Engine</a>
-            <a href="investors/index.html" class="btn" style="border: none; padding-left: 0; margin-left: 1rem;">View The Economics &rarr;</a>
+            <a href="#" class="btn btn-primary" onclick="event.preventDefault(); document.getElementById('signupModal').classList.add('active');">Join The Movement</a>
+            <a href="investors/index.html" class="btn">View The Thesis</a>
         </div>
     </header>
 
+    <!-- ECOSYSTEM: THE CLOSED-LOOP ECOSYSTEM -->
     <section>
         <div class="container">
-            <h2>OWNERSHIP. NOT CHARITY.</h2>
+            <h2>THE CLOSED-LOOP ECOSYSTEM</h2>
             <div class="grid grid-2">
                 <div>
-                    <p>Black culture drives the algorithm, but we don't own the platforms. Vertikal is a market opportunity designed to <strong>retain IP, retain revenue, and retain leverage.</strong></p>
+                    <h3>Content Creation</h3>
+                    <p>Vertikal Studios produces flagship originals. Alpha Visual Artists pushes boundaries. Creators build franchises.</p>
                 </div>
-                <div style="border-left: 1px solid #333; padding-left: 2rem;">
-                    <h3>The V Badge Standard</h3>
-                    <p style="font-size: 0.9rem;">A monetization gate and cultural credential. The Titanium "V" is not decoration; it is authority.</p>
-                    <div style="display: flex; gap: 0.8rem; margin-top: 1rem;">
-                        <div class="badge-icon b-gold">V</div>
-                        <div class="badge-icon b-green">V</div>
-                        <div class="badge-icon b-blue">V</div>
-                        <div class="badge-icon b-titanium">V</div>
+                <div>
+                    <h3>Distribution</h3>
+                    <p>Vertikal Networks manages syndication to FAST channels and SVOD licensing while retaining IP ownership.</p>
+                </div>
+                <div>
+                    <h3>Monetization</h3>
+                    <p>The V Badge system creates a defensible layer of quality. Advertisers pay premium for verified cultural content.</p>
+                </div>
+                <div>
+                    <h3>Reinforcement</h3>
+                    <p>Revenue flows back to creators. IP stays owned. Culture is preserved and amplified.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIBE ENGINE: PASS THE CULTURE CHECK -->
+    <section>
+        <div class="container">
+            <h2>PASS THE CULTURE CHECK</h2>
+            <p style="color: #fff; font-size: 1.3rem; margin-bottom: 2rem;"><strong>The Vibe Engine</strong> is our content moderation system. It's not about censorship—it's about maintaining the cultural integrity that makes Vertikal valuable.</p>
+            <div class="grid grid-3">
+                <div style="border-left: 4px solid #FFD700; padding-left: 1.5rem;">
+                    <h3 style="color: #FFD700; margin-bottom: 0.5rem;">Gold Badge</h3>
+                    <p style="font-size: 0.9rem;">Flagship originals. Highest CPM. Exclusive access.</p>
+                </div>
+                <div style="border-left: 4px solid #00C853; padding-left: 1.5rem;">
+                    <h3 style="color: #00C853; margin-bottom: 0.5rem;">Green Badge</h3>
+                    <p style="font-size: 0.9rem;">Verified creators. Brand sponsorship eligible.</p>
+                </div>
+                <div style="border-left: 4px solid #2962FF; padding-left: 1.5rem;">
+                    <h3 style="color: #2962FF; margin-bottom: 0.5rem;">Blue Badge</h3>
+                    <p style="font-size: 0.9rem;">Emerging talent. Programmatic ads enabled.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURED ORIGINALS: 3 VERTICAL POSTER CARDS -->
+    <section>
+        <div class="container">
+            <h2>FEATURED ORIGINALS</h2>
+            <div class="grid grid-3">
+                <div class="poster-card">
+                    <div style="padding: 1rem; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.8) 100%);">
+                        <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;">Series Title 1</h3>
+                        <p style="font-size: 0.9rem; color: var(--muted);">Director Name</p>
+                    </div>
+                </div>
+                <div class="poster-card">
+                    <div style="padding: 1rem; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.8) 100%);">
+                        <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;">Series Title 2</h3>
+                        <p style="font-size: 0.9rem; color: var(--muted);">Director Name</p>
+                    </div>
+                </div>
+                <div class="poster-card">
+                    <div style="padding: 1rem; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.8) 100%);">
+                        <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem;">Series Title 3</h3>
+                        <p style="font-size: 0.9rem; color: var(--muted);">Director Name</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- FINAL CTA -->
+    <section>
+        <div class="container" style="text-align: center;">
+            <h2>OWNERSHIP. NOT CHARITY.</h2>
+            <p style="color: #fff; font-size: 1.2rem; margin-bottom: 2rem;">Black culture drives the algorithm, but we don't own the platform. Vertikal is a market opportunity designed to <strong>retain IP, retain revenue, and retain leverage.</strong></p>
+            <a href="#" class="btn btn-primary" onclick="event.preventDefault(); document.getElementById('signupModal').classList.add('active');">Join The Founding 50</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <p style="color: var(--muted); margin-bottom: 1rem;">© 2024 VERTIKAL. All rights reserved.</p>
+            <div style="display: flex; justify-content: center; gap: 2rem;">
+                <a href="terms.html" style="color: var(--muted); text-decoration: none;">Terms</a>
+                <a href="privacy.html" style="color: var(--muted); text-decoration: none;">Privacy</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL SIGNUP -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="document.getElementById('signupModal').classList.remove('active');">&times;</span>
+            <h2 style="margin-bottom: 1.5rem;">Join The Movement</h2>
+            <form id="signupForm">
+                <input type="email" placeholder="Email" required>
+                <input type="text" placeholder="First Name" required>
+                <input type="text" placeholder="Last Name" required>
+                <input type="text" placeholder="Username" required>
+                <input type="password" placeholder="Password" required>
+                <label style="display: flex; align-items: center; margin-bottom: 1rem;">
+                    <input type="checkbox" required style="width: auto; margin-right: 0.5rem;">
+                    <span style="font-size: 0.9rem;">I agree to the Terms and Privacy Policy</span>
+                </label>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+    document.getElementById('signupForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData);
+        
+        try {
+            const response = await fetch('/functions/v1/signup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            
+            if (response.ok) {
+                alert('Account created. Check your email for verification.');
+                document.getElementById('signupModal').classList.remove('active');
+                e.target.reset();
+            } else {
+                const json = await response.json();
+                alert(json.error || 'Signup failed. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error submitting form. Please try again.');
+        }
+    });
+
+    document.getElementById('signupModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            this.classList.remove('active');
+        }
+    });
+    </script>
 </body>
 </html>
