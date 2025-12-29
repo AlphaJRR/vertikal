@@ -18,15 +18,41 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Step 2: Monorepo detection - deploy only if changed
+      - name: Determine if this project changed
+        id: changed
+        env:
+          PROJECT_DIR: public
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          git fetch --depth=2 origin ${{ github.ref }}
+
+          CHANGED=$(git diff --name-only HEAD^ HEAD | grep "^public/" || true)
+
+          if echo "$CHANGED" | grep -q "^public/$PROJECT_DIR\|^public/[^/]*$"; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Skip if not changed
+        if: steps.changed.outputs.changed == 'false'
+        run: echo "No changes detected for vertikalapp. Skipping."
+
       # Step 1: Build caching foundation (no-op for pure static, ready for future builds)
       - name: Set up Node with cache (if Node project)
-        if: hashFiles('package-lock.json') != ''
+        if: steps.changed.outputs.changed == 'true' && hashFiles('package-lock.json') != ''
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
 
       - name: Verify directory exists
+        if: steps.changed.outputs.changed == 'true'
         run: |
           if [ ! -d "./public" ]; then
             echo "Directory ./public does not exist"
@@ -34,6 +60,7 @@ jobs:
           fi
 
       - name: Publish to Cloudflare Pages
+        if: steps.changed.outputs.changed == 'true'
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ env.CLOUDFLARE_API_TOKEN }}
@@ -50,14 +77,40 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Step 2: Monorepo detection - deploy only if changed
+      - name: Determine if this project changed
+        id: changed
+        env:
+          PROJECT_DIR: investors
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          git fetch --depth=2 origin ${{ github.ref }}
+
+          CHANGED=$(git diff --name-only HEAD^ HEAD | grep "^public/" || true)
+
+          if echo "$CHANGED" | grep -q "^public/$PROJECT_DIR"; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Skip if not changed
+        if: steps.changed.outputs.changed == 'false'
+        run: echo "No changes detected for investors-vertikalapp. Skipping."
+
       - name: Set up Node with cache (if Node project)
-        if: hashFiles('package-lock.json') != ''
+        if: steps.changed.outputs.changed == 'true' && hashFiles('package-lock.json') != ''
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
 
       - name: Verify directory exists
+        if: steps.changed.outputs.changed == 'true'
         run: |
           if [ ! -d "./public/investors" ]; then
             echo "Directory ./public/investors does not exist"
@@ -65,6 +118,7 @@ jobs:
           fi
 
       - name: Publish to Cloudflare Pages
+        if: steps.changed.outputs.changed == 'true'
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ env.CLOUDFLARE_API_TOKEN }}
@@ -80,15 +134,41 @@ jobs:
     needs: deploy-investors
     steps:
       - uses: actions/checkout@v4
-      
+
+      # Step 2: Monorepo detection - deploy only if changed
+      - name: Determine if this project changed
+        id: changed
+        env:
+          PROJECT_DIR: creators
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          git fetch --depth=2 origin ${{ github.ref }}
+
+          CHANGED=$(git diff --name-only HEAD^ HEAD | grep "^public/" || true)
+
+          if echo "$CHANGED" | grep -q "^public/$PROJECT_DIR"; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Skip if not changed
+        if: steps.changed.outputs.changed == 'false'
+        run: echo "No changes detected for creators-vertikalapp. Skipping."
+
       - name: Set up Node with cache (if Node project)
-        if: hashFiles('package-lock.json') != ''
+        if: steps.changed.outputs.changed == 'true' && hashFiles('package-lock.json') != ''
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
 
       - name: Verify directory exists
+        if: steps.changed.outputs.changed == 'true'
         run: |
           if [ ! -d "./public/creators" ]; then
             echo "Directory ./public/creators does not exist"
@@ -96,6 +176,7 @@ jobs:
           fi
 
       - name: Publish to Cloudflare Pages
+        if: steps.changed.outputs.changed == 'true'
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ env.CLOUDFLARE_API_TOKEN }}
@@ -112,14 +193,40 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Step 2: Monorepo detection - deploy only if changed
+      - name: Determine if this project changed
+        id: changed
+        env:
+          PROJECT_DIR: networks
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          git fetch --depth=2 origin ${{ github.ref }}
+
+          CHANGED=$(git diff --name-only HEAD^ HEAD | grep "^public/" || true)
+
+          if echo "$CHANGED" | grep -q "^public/$PROJECT_DIR"; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Skip if not changed
+        if: steps.changed.outputs.changed == 'false'
+        run: echo "No changes detected for networks-vertikalapp. Skipping."
+
       - name: Set up Node with cache (if Node project)
-        if: hashFiles('package-lock.json') != ''
+        if: steps.changed.outputs.changed == 'true' && hashFiles('package-lock.json') != ''
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
 
       - name: Verify directory exists
+        if: steps.changed.outputs.changed == 'true'
         run: |
           if [ ! -d "./public/networks" ]; then
             echo "Directory ./public/networks does not exist"
@@ -127,6 +234,7 @@ jobs:
           fi
 
       - name: Publish to Cloudflare Pages
+        if: steps.changed.outputs.changed == 'true'
         uses: cloudflare/pages-action@v1
         with:
           apiToken: ${{ env.CLOUDFLARE_API_TOKEN }}
