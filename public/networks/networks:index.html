@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>VERTIKAL NETWORKS | Institutional Partners</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root { --black: #050505; --titanium: #E1E1E6; --gold: #D4AF37; }
+        body { background-color: var(--black); color: white; font-family: 'Space Grotesk', sans-serif; }
+        h1, h2, h3 { font-family: 'Bebas Neue', sans-serif; }
+        .form-input {
+            width: 100%; background: #0F0F12; border: 1px solid #333; padding: 12px; color: white; margin-bottom: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="p-6 flex justify-between items-center border-b border-white/10">
+        <a href="../index.html" class="text-2xl font-bold tracking-widest text-white">VERTIKAL <span class="text-gray-400 text-sm align-top">NETWORKS</span></a>
+        <a href="../index.html" class="text-xs font-bold tracking-widest text-gray-500 hover:text-white">HOME</a>
+    </nav>
+
+    <div class="grid md:grid-cols-2 min-h-screen">
+        
+        <div class="p-10 md:p-20 border-r border-white/10">
+            <div class="text-gray-400 border border-gray-400 inline-block px-3 py-1 text-xs font-bold tracking-widest mb-8">FOUNDING PARTNERS</div>
+            <h1 class="text-6xl md:text-8xl mb-8">INSTITUTIONAL <span class="text-gray-300">AUTHORITY.</span></h1>
+            
+            <div class="text-xl text-white italic mb-10 border-l-4 border-gray-400 pl-4">
+                "Cinema isn't dying. It's rotating."
+            </div>
+
+            <div class="bg-[#0F0F12] p-8 rounded-xl border border-white/10 flex items-center gap-6">
+                <div class="w-24 h-24 bg-gradient-to-br from-gray-100 to-gray-700 rounded-full flex items-center justify-center text-3xl font-black text-black shadow-[0_0_30px_rgba(255,255,255,0.2)]">
+                    V
+                </div>
+                <div>
+                    <h3 class="text-2xl text-white">THE TITANIUM SEAL</h3>
+                    <p class="text-sm text-gray-400 mt-2">
+                        Separate your organization from the noise. This badge confirms your legitimacy to all creators, unlocking the ability to post verified job listings.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-10 md:p-20 bg-[#0F0F12] flex flex-col justify-center">
+            <h2 class="text-4xl mb-2">APPLY FOR VERIFICATION</h2>
+            <p class="text-gray-500 mb-8">Tell us who you are. We'll send a confirmation link.</p>
+            
+            <form onsubmit="event.preventDefault(); alert('Application Submitted. Check your email.');">
+                <select class="form-input" required>
+                    <option value="">Network Type...</option>
+                    <option value="production">Production Company</option>
+                    <option value="festival">Film Festival</option>
+                    <option value="brand">Brand / Agency</option>
+                </select>
+                <input type="text" class="form-input" placeholder="Company Name" required>
+                <input type="text" class="form-input" placeholder="Contact Name" required>
+                <input type="email" class="form-input" placeholder="Work Email" required>
+                <input type="url" class="form-input" placeholder="Website URL" required>
+                
+                <button type="submit" class="w-full bg-white text-black font-bold py-4 mt-4 hover:bg-gray-300 transition tracking-widest text-lg">
+                    SUBMIT APPLICATION
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- VERTIKAL AUTH SIMULATION -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            
+            // Select all forms on the page
+            const forms = document.querySelectorAll("form");
+
+            forms.forEach(form => {
+                form.addEventListener("submit", (e) => {
+                    e.preventDefault(); // Stop page reload
+
+                    // 1. Get the Button
+                    const btn = form.querySelector("button[type='submit']");
+                    const originalText = btn.innerText;
+
+                    // 2. Change Button to "Loading" State
+                    btn.disabled = true;
+                    btn.innerText = "VERIFYING CREDENTIALS...";
+                    btn.style.opacity = "0.7";
+                    btn.style.cursor = "wait";
+
+                    // 3. Simulate Server Delay (2 Seconds)
+                    setTimeout(() => {
+                        
+                        // 4. Success State
+                        btn.style.backgroundColor = "#22c55e"; // Success Green
+                        btn.style.color = "black";
+                        btn.innerText = "ACCESS GRANTED";
+
+                        // 5. Show a "Toast" Notification
+                        showToast("Application Submitted Successfully.");
+
+                        // 6. Reset Form after 2 seconds
+                        setTimeout(() => {
+                            form.reset();
+                            btn.disabled = false;
+                            btn.innerText = originalText;
+                            btn.style.backgroundColor = ""; // Revert to CSS default
+                            btn.style.color = "";
+                            btn.style.opacity = "1";
+                            btn.style.cursor = "pointer";
+                        }, 2000);
+
+                    }, 2000);
+                });
+            });
+        });
+
+        // Helper Function: Create a temporary popup
+        function showToast(message) {
+            const toast = document.createElement("div");
+            toast.innerText = message;
+            toast.style.position = "fixed";
+            toast.style.bottom = "20px";
+            toast.style.right = "20px";
+            toast.style.background = "#fff";
+            toast.style.color = "#000";
+            toast.style.padding = "15px 25px";
+            toast.style.borderRadius = "8px";
+            toast.style.boxShadow = "0 10px 30px rgba(0,0,0,0.5)";
+            toast.style.fontWeight = "bold";
+            toast.style.fontFamily = "'Space Grotesk', sans-serif";
+            toast.style.zIndex = "9999";
+            toast.style.animation = "slideIn 0.3s ease";
+
+            document.body.appendChild(toast);
+
+            // Remove after 4 seconds
+            setTimeout(() => {
+                toast.style.opacity = "0";
+                setTimeout(() => toast.remove(), 500);
+            }, 4000);
+        }
+
+        // Add CSS animation for toast
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
