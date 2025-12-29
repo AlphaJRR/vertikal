@@ -1,0 +1,36 @@
+# Cloudflare Load Balancer IDs Configuration Template
+# Copy this file to cloudflare-lb-ids.conf and fill in your actual IDs
+# Then run: ./generate-lb-commands.sh cloudflare-lb-ids.conf
+
+SITE: vertikalapp.com
+ZONE_ID: <zone id>
+LB_ID: <lb id>
+POOL_ID_PROD: <pool id>
+POOL_ID_CANARY: <pool id>
+POOL_ID_BLUE: <pool id>
+POOL_ID_GREEN: <pool id>
+
+SITE: investors.vertikalapp.com
+ZONE_ID: <zone id>
+LB_ID: <lb id>
+POOL_ID_PROD: <pool id>
+POOL_ID_CANARY: <pool id>
+POOL_ID_BLUE: <pool id>
+POOL_ID_GREEN: <pool id>
+
+SITE: creators.vertikalapp.com
+ZONE_ID: <zone id>
+LB_ID: <lb id>
+POOL_ID_PROD: <pool id>
+POOL_ID_CANARY: <pool id>
+POOL_ID_BLUE: <pool id>
+POOL_ID_GREEN: <pool id>
+
+SITE: networks.vertikalapp.com
+ZONE_ID: <zone id>
+LB_ID: <lb id>
+POOL_ID_PROD: <pool id>
+POOL_ID_CANARY: <pool id>
+POOL_ID_BLUE: <pool id>
+POOL_ID_GREEN: <pool id>
+
