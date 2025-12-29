@@ -19,18 +19,10 @@
     section{padding:5rem 2rem;border-bottom:1px solid var(--border);}
     .container{max-width:1100px;margin:0 auto;}
     .badge{width:48px;height:48px;border-radius:50%;background:var(--gold);display:flex;
-      align-items:center;justify-content:center;font-weight:900;color:#000;font-size:1.2rem;}
-    .btn{display:inline-block;padding:1rem 2.5rem;border:1px solid #fff;color:#fff;text-decoration:none;text-transform:uppercase;font-weight:700;letter-spacing:0.1em;transition:0.3s;background:transparent;}
-    .btn:hover{background:#fff;color:#000;}
-    .nav-links{display:flex;gap:2rem;align-items:center;}
-    .nav-links a{color:var(--muted);text-decoration:none;text-transform:uppercase;font-size:0.85rem;letter-spacing:0.05em;}
-    .nav-links a:hover{color:#fff;}
-    p{color:var(--muted);font-size:1.1rem;max-width:650px;margin-bottom:1.5rem;}
-    table{width:100%;border-collapse:collapse;margin-top:1rem;}
-    th,td{text-align:left;padding:1rem;border-bottom:1px solid var(--border);}
-    th{color:var(--muted);text-transform:uppercase;font-size:0.85rem;}
-    .grid{display:grid;gap:2rem;}
-    .grid-2{grid-template-columns:repeat(auto-fit,minmax(350px,1fr));}
+      align-items:center;justify-content:center;font-weight:900;color:#000;font-size:1.2rem;flex-shrink:0;}
+    ul{list-style:none;padding-left:0;}
+    li{margin-bottom:0.75rem;color:var(--muted);}
+    p{color:var(--muted);max-width:600px;margin-bottom:1rem;}
     html{scroll-behavior:smooth;}
   </style>
 </head>
@@ -41,75 +33,74 @@
   <div>
     <!-- 🔒 CREATORS LOGO — NOT SHARED -->
     <img src="/assets/creators-logo.svg" alt="Vertikal Creators" height="32" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
-    <span style="font-weight:900;letter-spacing:0.1em;display:none;">VERTIKAL</span>
+    <span style="font-weight:900;letter-spacing:0.1em;display:none;color:#FFD54F;">VERTIKAL CREATORS</span>
   </div>
-  <div class="nav-links">
-    <a href="../index.html">Main</a>
-    <a href="../beta/index.html" class="btn" style="padding:0.5rem 1.5rem;">Apply</a>
-  </div>
+  <div style="color:var(--muted);text-transform:uppercase;font-size:0.85rem;letter-spacing:0.1em;">CREATORS</div>
 </nav>
 
-<section class="container" style="padding-top:8rem;">
-  <p style="color:#FFD54F;letter-spacing:0.2em;font-weight:700;text-transform:uppercase;margin-bottom:1rem;">FOR DIRECTORS. NOT INFLUENCERS.</p>
+<section class="container">
   <h1>BUILD FRANCHISES.<br>NOT JUST FOLLOWERS.</h1>
-  <p style="color:#fff;font-size:1.2rem;">We are looking for Storytellers, Filmmakers, and Architects. If you can build a world in 2-10 minutes, you belong here.</p>
+  <p style="color:var(--muted);max-width:600px;">
+    Vertikal Creators are not uploading clips. They are building short-series IP
+    inside a platform designed for ownership, not virality.
+  </p>
 </section>
 
-<section>
-  <div class="container">
-    <h2>REAL ECONOMICS</h2>
-    <div class="grid grid-2">
-      <div>
-        <p>We value retention over virality. A loyal audience of 10k is worth more than a passive audience of 1M.</p>
-        <p><strong style="color:#fff;">The Model:</strong> High-CPM programmatic ads + Direct Brand Sponsorships for V Badge holders.</p>
-      </div>
-      <table>
-        <thead>
-          <tr>
-            <th>Stage</th>
-            <th>Engagement</th>
-            <th>Est. Revenue</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Emerging</td>
-            <td>10k Loyal</td>
-            <td style="color:#00C853;font-weight:700;">$2k - $5k/mo</td>
-          </tr>
-          <tr>
-            <td>Established</td>
-            <td>50k Loyal</td>
-            <td style="color:#00C853;font-weight:700;">$10k - $25k/mo</td>
-          </tr>
-          <tr>
-            <td>Franchise</td>
-            <td>100k+</td>
-            <td style="color:#00C853;font-weight:700;">$100k+/yr</td>
-          </tr>
-        </tbody>
-      </table>
+<section class="container">
+  <h2>THE V BADGE SYSTEM</h2>
+
+  <div style="display:flex;gap:2rem;align-items:flex-start;">
+    <div class="badge">V</div>
+    <div>
+      <p>
+        The V Badge is a permanent on-platform designation awarded to creators
+        who helped found, fund, or structurally contribute to Vertikal.
+      </p>
+      <p>
+        Founding creators carry <strong style="color:#fff;">distinct badge colors</strong> representing their
+        role in Vertikal's formation — creative leadership, network building,
+        early capital, or platform architecture.
+      </p>
+      <p>
+        These badges are not cosmetic. They determine:
+      </p>
+      <ul style="color:var(--muted);margin-top:1rem;">
+        <li>Algorithmic priority</li>
+        <li>Brand deal eligibility</li>
+        <li>Investor and advertiser visibility</li>
+        <li>Long-term platform status</li>
+      </ul>
     </div>
   </div>
 </section>
 
-<section>
-  <div class="container">
-    <h2>THE FOUNDING 50</h2>
-    <p>Join the first 50 creators who will define the future of vertical cinema. Limited spots available.</p>
-    <form id="signupForm" style="max-width:600px;margin-top:2rem;background:var(--card);padding:2rem;border:1px solid var(--border);">
-      <input type="email" placeholder="Email" required style="width:100%;padding:1rem;margin-bottom:1rem;background:var(--bg);border:1px solid var(--border);color:#fff;font-size:1rem;font-family:var(--font);">
-      <input type="text" placeholder="First Name" required style="width:100%;padding:1rem;margin-bottom:1rem;background:var(--bg);border:1px solid var(--border);color:#fff;font-size:1rem;font-family:var(--font);">
-      <input type="text" placeholder="Last Name" required style="width:100%;padding:1rem;margin-bottom:1rem;background:var(--bg);border:1px solid var(--border);color:#fff;font-size:1rem;font-family:var(--font);">
-      <input type="text" placeholder="Username" required style="width:100%;padding:1rem;margin-bottom:1rem;background:var(--bg);border:1px solid var(--border);color:#fff;font-size:1rem;font-family:var(--font);">
-      <input type="password" placeholder="Password" required style="width:100%;padding:1rem;margin-bottom:1rem;background:var(--bg);border:1px solid var(--border);color:#fff;font-size:1rem;font-family:var(--font);">
-      <label style="display:flex;align-items:center;margin-bottom:1rem;">
-        <input type="checkbox" required style="width:auto;margin-right:0.5rem;">
-        <span style="font-size:0.9rem;">I agree to the Terms and Privacy Policy</span>
-      </label>
-      <button type="submit" class="btn" style="width:100%;background:#fff;color:#000;border-color:#fff;">Join The Founding 50</button>
-    </form>
-  </div>
+<section class="container">
+  <h2>WHY CREATORS WIN HERE</h2>
+  <ul style="color:var(--muted);">
+    <li>Short-series outperform long-form on retention</li>
+    <li>Ownership stays with the creator</li>
+    <li>Brand deals are negotiated at the network level</li>
+    <li>No race-to-the-bottom CPMs</li>
+  </ul>
+</section>
+
+<section class="container">
+  <h2>THE FOUNDING 50</h2>
+  <p style="color:var(--muted);max-width:600px;">
+    Join the first 50 creators who will define the future of vertical cinema. Limited spots available.
+  </p>
+  <form id="signupForm" style="max-width:600px;margin-top:2rem;background:var(--card);padding:2rem;border:1px solid var(--border);">
+    <input type="email" placeholder="Email" required style="width:100%;padding:1rem;margin-bottom:1rem;background:var(--bg);border:1px solid var(--border);color:#fff;font-size:1rem;font-family:var(--font);">
+    <input type="text" placeholder="First Name" required style="width:100%;padding:1rem;margin-bottom:1rem;background:var(--bg);border:1px solid var(--border);color:#fff;font-size:1rem;font-family:var(--font);">
+    <input type="text" placeholder="Last Name" required style="width:100%;padding:1rem;margin-bottom:1rem;background:var(--bg);border:1px solid var(--border);color:#fff;font-size:1rem;font-family:var(--font);">
+    <input type="text" placeholder="Username" required style="width:100%;padding:1rem;margin-bottom:1rem;background:var(--bg);border:1px solid var(--border);color:#fff;font-size:1rem;font-family:var(--font);">
+    <input type="password" placeholder="Password" required style="width:100%;padding:1rem;margin-bottom:1rem;background:var(--bg);border:1px solid var(--border);color:#fff;font-size:1rem;font-family:var(--font);">
+    <label style="display:flex;align-items:center;margin-bottom:1rem;">
+      <input type="checkbox" required style="width:auto;margin-right:0.5rem;">
+      <span style="font-size:0.9rem;color:var(--muted);">I agree to the Terms and Privacy Policy</span>
+    </label>
+    <button type="submit" style="width:100%;padding:1rem;background:var(--gold);border:none;color:#000;font-weight:900;text-transform:uppercase;font-size:1rem;cursor:pointer;">Join The Founding 50</button>
+  </form>
 </section>
 
 <script>
