@@ -9,6 +9,7 @@ import * as Sentry from '@sentry/react-native';
 import { backendClient, LoginResponse } from '../services/backendClient';
 import { analytics } from '../services/analytics';
 import { errorTracking } from '../services/errorTracking';
+import { apiClient } from '../services/api';
 
 // Query Keys
 export const authKeys = {
@@ -117,19 +118,58 @@ export const useCurrentUser = () => {
     staleTime: 5 * 60 * 1000, // 5 minutes
     gcTime: 10 * 60 * 1000,
     retry: 1,
-    refetchOnWindowFocus: true,
+    refetchOnWindowFocus: false, // Don't refetch on focus to avoid 404 spam
+    retryOnMount: false, // Don't retry on mount if it fails
   });
 
-  // Handle errors
+  // Handle errors gracefully (404 is expected when not logged in)
   React.useEffect(() => {
     if (query.error) {
-      errorTracking.captureException(query.error as Error, {
-        action: 'useCurrentUser',
-        metadata: { hook: 'useCurrentUser' },
-      });
+      const error = query.error as any;
+      // Only log non-404 errors (404 means not logged in, which is OK)
+      if (error?.statusCode !== 404 && error?.code !== 'ERR_BAD_REQUEST') {
+        errorTracking.captureException(query.error as Error, {
+          action: 'useCurrentUser',
+          metadata: { hook: 'useCurrentUser' },
+        });
+      }
     }
   }, [query.error]);
 
   return query;
 };
 
+// Update Profile Mutation
+export const useUpdateProfile = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({
+      username,
+      displayName,
+      avatarUrl,
+    }: {
+      username: string;
+      displayName: string;
+      avatarUrl?: string | null;
+    }) => {
+      return apiClient.updateUserProfile({
+        username,
+        displayName,
+        avatarUrl,
+      });
+    },
+    onSuccess: () => {
+      // Track analytics
+      analytics.track('Profile Updated', {});
+
+      // Invalidate and refetch current user
+      queryClient.invalidateQueries({ queryKey: authKeys.currentUser() });
+    },
+    onError: (error) => {
+      Sentry.captureException(error, {
+        tags: { hook: 'useUpdateProfile' },
+      });
+    },
+  });
+};

@@ -1,0 +1,18 @@
+{
+  "name": "notion-command-center",
+  "version": "1.0.0",
+  "description": "Notion API automation for Joshua Roberts Ent. Corporate Command Center",
+  "main": "create-command-center.js",
+  "type": "module",
+  "scripts": {
+    "start": "node create-command-center.js"
+  },
+  "keywords": ["notion", "automation", "api"],
+  "author": "Joshua Roberts Ent.",
+  "license": "MIT",
+  "dependencies": {
+    "@notionhq/client": "^2.2.15",
+    "dotenv": "^16.3.1"
+  }
+}
+

@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creator Studio | VERTIKAL</title>
+    
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --vertikal-black: #000000;
+            --vertikal-gold: #D4AF37;
+            --vertikal-gold-bright: #FFD700;
+            --vertikal-white: #FFFFFF;
+            --vertikal-gray: #1A1A1A;
+            --vertikal-gray-light: #2A2A2A;
+            --vertikal-text-muted: #888888;
+            --font-display: 'Bebas Neue', sans-serif;
+            --font-body: 'Space Grotesk', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--vertikal-black);
+            color: var(--vertikal-white);
+            min-height: 100vh;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--vertikal-black);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loading-screen.hidden {
+            display: none;
+        }
+
+        .loading-logo {
+            font-family: var(--font-display);
+            font-size: 48px;
+            letter-spacing: 8px;
+            margin-bottom: 32px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--vertikal-gray-light);
+            border-top-color: var(--vertikal-gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Header */
+        .header {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--vertikal-gray-light);
+            background: var(--vertikal-black);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 24px;
+            letter-spacing: 4px;
+            color: var(--vertikal-white);
+            text-decoration: none;
+        }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-link {
+            color: var(--vertikal-text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--vertikal-gold);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            padding: 8px 16px;
+            border: 1px solid var(--vertikal-gray-light);
+            transition: all 0.3s ease;
+        }
+
+        .user-menu:hover {
+            border-color: var(--vertikal-gold);
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--vertikal-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--vertikal-black);
+        }
+
+        .user-name {
+            font-size: 14px;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            margin-bottom: 48px;
+        }
+
+        .welcome-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--vertikal-gold);
+            padding: 8px 16px;
+            margin-bottom: 16px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--vertikal-gold);
+        }
+
+        .welcome-badge svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .welcome-title {
+            font-family: var(--font-display);
+            font-size: 48px;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .welcome-subtitle {
+            color: var(--vertikal-text-muted);
+            font-size: 18px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        @media (max-width: 968px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .stat-card {
+            background: var(--vertikal-gray);
+            border: 1px solid var(--vertikal-gray-light);
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: var(--vertikal-gold);
+            transform: translateY(-2px);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--vertikal-text-muted);
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-family: var(--font-display);
+            font-size: 36px;
+            color: var(--vertikal-gold);
+        }
+
+        /* Quick Actions */
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 24px;
+            letter-spacing: 2px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: var(--vertikal-gold);
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        @media (max-width: 768px) {
+            .actions-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .action-card {
+            background: var(--vertikal-gray);
+            border: 1px solid var(--vertikal-gray-light);
+            padding: 32px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .action-card:hover {
+            border-color: var(--vertikal-gold);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px rgba(212, 175, 55, 0.1);
+        }
+
+        .action-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--vertikal-gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .action-icon svg {
+            width: 24px;
+            height: 24px;
+            color: var(--vertikal-gold);
+        }
+
+        .action-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .action-description {
+            font-size: 14px;
+            color: var(--vertikal-text-muted);
+            line-height: 1.5;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 80px 40px;
+            background: var(--vertikal-gray);
+            border: 1px dashed var(--vertikal-gray-light);
+        }
+
+        .empty-state-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 24px;
+            opacity: 0.5;
+        }
+
+        .empty-state-title {
+            font-family: var(--font-display);
+            font-size: 24px;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+
+        .empty-state-text {
+            color: var(--vertikal-text-muted);
+            margin-bottom: 24px;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--vertikal-gold);
+            color: var(--vertikal-black);
+            border: none;
+            padding: 14px 28px;
+            font-family: var(--font-display);
+            font-size: 16px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary:hover {
+            background: var(--vertikal-gold-bright);
+            transform: translateY(-2px);
+        }
+
+        /* Logout Button */
+        .logout-btn {
+            background: transparent;
+            border: 1px solid var(--vertikal-gray-light);
+            color: var(--vertikal-text-muted);
+            padding: 8px 16px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            border-color: #f44336;
+            color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-logo">VERTIKAL</div>
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <a href="/" class="logo">VERTIKAL</a>
+        <nav class="header-nav">
+            <a href="/dashboard" class="nav-link active">Studio</a>
+            <a href="/projects" class="nav-link">Projects</a>
+            <a href="/crew" class="nav-link">Crew</a>
+            <a href="/analytics" class="nav-link">Analytics</a>
+            <div class="user-menu" id="userMenu">
+                <div class="user-avatar" id="userAvatar">?</div>
+                <span class="user-name" id="userName">Loading...</span>
+            </div>
+            <button class="logout-btn" onclick="handleLogout()">Logout</button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+            <div class="welcome-badge">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                </svg>
+                FOUNDING 50 MEMBER
+            </div>
+            <h1 class="welcome-title" id="welcomeTitle">WELCOME TO YOUR STUDIO</h1>
+            <p class="welcome-subtitle">Your creative headquarters. Build your empire from here.</p>
+        </section>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Total Views</div>
+                <div class="stat-value">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Subscribers</div>
+                <div class="stat-value">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Projects</div>
+                <div class="stat-value">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Revenue</div>
+                <div class="stat-value">$0</div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <h2 class="section-title">QUICK ACTIONS</h2>
+        <div class="actions-grid">
+            <a href="/projects/new" class="action-card">
+                <div class="action-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="2" width="20" height="20" rx="2"/>
+                        <line x1="12" y1="8" x2="12" y2="16"/>
+                        <line x1="8" y1="12" x2="16" y2="12"/>
+                    </svg>
+                </div>
+                <div class="action-title">Create New Project</div>
+                <div class="action-description">Start a new series, film, or documentary. Your canvas awaits.</div>
+            </a>
+
+            <a href="/crew/post" class="action-card">
+                <div class="action-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </svg>
+                </div>
+                <div class="action-title">Post Crew Call</div>
+                <div class="action-description">Find talent for your next production. Build your squad.</div>
+            </a>
+
+            <a href="/profile/edit" class="action-card">
+                <div class="action-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                    </svg>
+                </div>
+                <div class="action-title">Complete Profile</div>
+                <div class="action-description">Add your bio, avatar, and showcase your vision.</div>
+            </a>
+        </div>
+
+        <!-- Your Projects -->
+        <h2 class="section-title">YOUR PROJECTS</h2>
+        <div class="empty-state">
+            <svg class="empty-state-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+                <rect x="2" y="2" width="20" height="20" rx="2"/>
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M2 12h4"/>
+                <path d="M18 12h4"/>
+            </svg>
+            <h3 class="empty-state-title">NO PROJECTS YET</h3>
+            <p class="empty-state-text">Create your first project to start building your catalog.</p>
+            <a href="/projects/new" class="btn-primary">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+                    <line x1="12" y1="5" x2="12" y2="19"/>
+                    <line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+                CREATE PROJECT
+            </a>
+        </div>
+    </main>
+
+    <script>
+        // ============================================
+        // SUPABASE CONFIGURATION
+        // ============================================
+        const SUPABASE_URL = 'https://vuwawtzhhcarckybdgbd.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ1d2F3dHpoaGNhcmNreWJkZ2JkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU1OTU5NDQsImV4cCI6MjA4MTE3MTk0NH0.FQS6GYae1iw-rbYgo4P5BCuG8dkY_XZpbo0XIcxk62g';
+        
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // ============================================
+        // AUTH CHECK & USER DATA
+        // ============================================
+        async function initDashboard() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            
+            try {
+                const { data: { session }, error } = await supabase.auth.getSession();
+
+                if (error || !session) {
+                    // Not logged in, redirect to signup
+                    window.location.href = '/';
+                    return;
+                }
+
+                const user = session.user;
+                const metadata = user.user_metadata || {};
+
+                // Update UI with user data
+                const firstName = metadata.first_name || metadata.full_name?.split(' ')[0] || 'Director';
+                const fullName = metadata.full_name || `${metadata.first_name || ''} ${metadata.last_name || ''}`.trim() || 'Director';
+                const initials = fullName.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+
+                document.getElementById('welcomeTitle').textContent = `WELCOME, ${firstName.toUpperCase()}`;
+                document.getElementById('userName').textContent = fullName;
+                document.getElementById('userAvatar').textContent = initials;
+
+                // Hide loading screen
+                loadingScreen.classList.add('hidden');
+
+            } catch (error) {
+                console.error('Dashboard init error:', error);
+                window.location.href = '/';
+            }
+        }
+
+        // ============================================
+        // LOGOUT HANDLER
+        // ============================================
+        async function handleLogout() {
+            try {
+                await supabase.auth.signOut();
+                window.location.href = '/';
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
+        }
+
+        // Initialize on load
+        initDashboard();
+
+        // Listen for auth changes
+        supabase.auth.onAuthStateChange((event, session) => {
+            if (event === 'SIGNED_OUT') {
+                window.location.href = '/';
+            }
+        });
+    </script>
+</body>
+</html>

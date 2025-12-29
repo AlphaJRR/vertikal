@@ -1,0 +1,6 @@
+video_id,creator_id,title,description,tags,url,thumbnail_url,founding_50,created_at
+1,user_01,Neon Rain,Cyberpunk vibes in Tokyo rain.,city,neon,art,https://videos.pexels.com/video-files/2882787/2882787-hd_720_1280_30fps.mp4,https://images.pexels.com/videos/2882787/free-video-2882787.jpg,true,2025-12-13T10:00:00Z
+2,user_02,Desert Solitude,Minimalist composition in the dunes.,nature,travel,cinema,https://videos.pexels.com/video-files/855018/855018-hd_720_1280_25fps.mp4,https://images.pexels.com/videos/855018/free-video-855018.jpg,true,2025-12-13T11:00:00Z
+3,user_03,Urban Flow,Time lapse of city traffic.,urban,timelapse,speed,https://videos.pexels.com/video-files/3205626/3205626-hd_720_1280_25fps.mp4,https://images.pexels.com/videos/3205626/free-video-3205626.jpg,true,2025-12-13T12:00:00Z
+4,user_04,Ocean Rhythm,Waves crashing in slow motion.,ocean,calm,blue,https://videos.pexels.com/video-files/4434242/4434242-hd_720_1280_24fps.mp4,https://images.pexels.com/videos/4434242/free-video-4434242.jpg,true,2025-12-13T13:00:00Z
+5,user_05,Portrait Mode,Studio lighting test.,portrait,fashion,light,https://videos.pexels.com/video-files/3209828/3209828-hd_720_1280_25fps.mp4,https://images.pexels.com/videos/3209828/free-video-3209828.jpg,true,2025-12-13T14:00:00Z

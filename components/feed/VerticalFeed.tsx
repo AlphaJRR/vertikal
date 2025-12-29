@@ -144,9 +144,10 @@ function VerticalFeed({
           data={continueWatching}
           renderItem={renderHorizontalShow}
           keyExtractor={(item) => item.id}
-          horizontal
+          horizontal={true}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.horizontalList}
+          nestedScrollEnabled={true}
           snapToInterval={336}
           decelerationRate="fast"
         />
@@ -159,9 +160,10 @@ function VerticalFeed({
           data={shows}
           renderItem={renderHorizontalShow}
           keyExtractor={(item) => item.id}
-          horizontal
+          horizontal={true}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.horizontalList}
+          nestedScrollEnabled={true}
           snapToInterval={336}
           decelerationRate="fast"
         />

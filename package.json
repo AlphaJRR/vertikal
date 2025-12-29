@@ -39,9 +39,11 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
-    "@prisma/client": "^5.19.0",
+    "@prisma/client": "^5.22.0",
     "@types/node": "^25.0.1",
     "@types/react": "~19.1.10",
+    "csv-parse": "^6.1.0",
+    "dotenv": "^17.2.3",
     "prisma": "^5.19.0",
     "ts-node": "^10.9.2",
     "typescript": "~5.9.2"

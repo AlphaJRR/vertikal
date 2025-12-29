@@ -2,13 +2,13 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { 
   View, Text, ActivityIndicator, StyleSheet, 
-  TouchableOpacity, FlatList, Image 
+  TouchableOpacity, FlatList, Image, ScrollView
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import * as Sentry from '@sentry/react-native';
-import { Home, Tv, Smartphone, User } from 'lucide-react-native';
+import { Home, Tv, Smartphone, User, Briefcase } from 'lucide-react-native';
 // Initialize react-native-screens early to prevent type errors
 import 'react-native-screens';
 
@@ -18,6 +18,10 @@ import { RouteErrorBoundary } from './components/ui/RouteErrorBoundary';
 import { VerticalFeed } from './components/feed/VerticalFeed';
 import { CreatorProfile } from './components/profile/CreatorProfile';
 import { NavigationBar } from './components/layout/NavigationBar';
+import { DevRoleSwitcher } from './components/DevRoleSwitcher';
+import { JobsScreen } from './screens/JobsScreen';
+import { ProfileScreen } from './screens/ProfileScreen';
+import { VerticalFeedScreen } from './screens/VerticalFeedScreen';
 
 // Utils
 import { initSentry } from './utils/sentry';
@@ -25,6 +29,7 @@ import { Founding50Creator, ShowData } from './utils/dataLoader';
 
 // Hooks
 import { useCreators, useProjects } from './hooks/useApi';
+import { useCurrentUser } from './hooks/useAuth';
 
 // Types - imported from hooks (they transform backend data)
 // Note: Creator and Project types are defined in hooks/useCreators.ts and data.ts
@@ -234,6 +239,8 @@ const ShortsTab: React.FC = () => {
 };
 
 const ProfileTab: React.FC = () => {
+  const { data: currentUser, isLoading, error } = useCurrentUser();
+  
   useEffect(() => {
     Sentry.addBreadcrumb({
       category: 'navigation',
@@ -243,10 +250,29 @@ const ProfileTab: React.FC = () => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container} contentContainerStyle={styles.profileContent}>
       <Text style={styles.title}>PROFILE</Text>
-      <Text style={styles.emptyText}>Profile screen coming soon</Text>
-    </View>
+      {isLoading ? (
+        <LoadingScreen message="Loading profile..." />
+      ) : error ? (
+        <View style={styles.profileInfo}>
+          <Text style={styles.emptyText}>Not logged in</Text>
+          <Text style={styles.profileEmail}>Sign in to view your profile</Text>
+        </View>
+      ) : currentUser ? (
+        <View style={styles.profileInfo}>
+          <Text style={styles.profileName}>{currentUser.profile?.displayName || currentUser.username}</Text>
+          <Text style={styles.profileEmail}>{currentUser.email}</Text>
+          <Text style={styles.profileRole}>Role: {currentUser.profile?.type || 'VIEWER'}</Text>
+        </View>
+      ) : (
+        <View style={styles.profileInfo}>
+          <Text style={styles.emptyText}>Not logged in</Text>
+          <Text style={styles.profileEmail}>Sign in to view your profile</Text>
+        </View>
+      )}
+      <DevRoleSwitcher />
+    </ScrollView>
   );
 };
 
@@ -309,15 +335,22 @@ const AppNavigator: React.FC = () => {
           }}
         />
         <Tab.Screen
+          name="Jobs"
+          component={JobsScreen}
+          options={{
+            tabBarIcon: ({ color, size }) => <Briefcase color={color} size={size} />,
+          }}
+        />
+        <Tab.Screen
           name="Shorts"
-          component={ShortsTab}
+          component={VerticalFeedScreen}
           options={{
             tabBarIcon: ({ color, size }) => <Smartphone color={color} size={size} />,
           }}
         />
         <Tab.Screen
           name="Profile"
-          component={ProfileTab}
+          component={ProfileScreen}
           options={{
             tabBarIcon: ({ color, size }) => <User color={color} size={size} />,
           }}
@@ -447,6 +480,31 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     padding: 12,
+  },
+  profileContent: {
+    padding: 20,
+    paddingTop: 60,
+  },
+  profileInfo: {
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  profileName: {
+    color: '#FFFFFF',
+    fontSize: 24,
+    fontWeight: '900',
+    marginBottom: 8,
+  },
+  profileEmail: {
+    color: '#999999',
+    fontSize: 14,
+    marginBottom: 4,
+  },
+  profileRole: {
+    color: '#FFD700',
+    fontSize: 12,
+    fontWeight: '700',
+    marginTop: 8,
   },
 });
 

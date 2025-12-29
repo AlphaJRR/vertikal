@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VERTIKAL | Vertical Cinema Platform</title>
+    <meta name="description" content="VERTIKAL - The first platform built for vertical cinema. For Directors, not influencers.">
+    
+    <!-- Supabase JS Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --vertikal-black: #000000;
+            --vertikal-purple: #7B68EE;
+            --vertikal-blue: #4A90D9;
+            --vertikal-gold: #D4AF37;
+            --vertikal-white: #FFFFFF;
+            --vertikal-gray: #1A1A1A;
+            --vertikal-gray-light: #2A2A2A;
+            --vertikal-text-muted: #888888;
+            --font-display: 'Bebas Neue', sans-serif;
+            --font-body: 'Space Grotesk', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--vertikal-black);
+            color: var(--vertikal-white);
+            min-height: 100vh;
+        }
+
+        /* Animated gradient background */
+        .bg-gradient {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a2e 0%, #0f0f1a 50%, #1a0a2e 100%);
+            z-index: -2;
+        }
+
+        .bg-gradient::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(123, 104, 238, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(74, 144, 217, 0.15) 0%, transparent 50%);
+            animation: gradientPulse 10s ease-in-out infinite;
+        }
+
+        @keyframes gradientPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Header */
+        .header {
+            padding: 24px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--vertikal-blue) 0%, var(--vertikal-purple) 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon svg {
+            width: 28px;
+            height: 28px;
+            fill: white;
+        }
+
+        .logo-text {
+            font-family: var(--font-display);
+            font-size: 28px;
+            letter-spacing: 4px;
+            color: var(--vertikal-white);
+        }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-link {
+            color: var(--vertikal-text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover { color: var(--vertikal-white); }
+
+        .btn-header {
+            background: linear-gradient(135deg, var(--vertikal-blue) 0%, var(--vertikal-purple) 100%);
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-header:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(123, 104, 238, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: calc(100vh - 100px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 60px 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(123, 104, 238, 0.1);
+            border: 1px solid var(--vertikal-purple);
+            padding: 8px 20px;
+            margin-bottom: 32px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--vertikal-purple);
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(48px, 10vw, 120px);
+            line-height: 0.9;
+            margin-bottom: 24px;
+            letter-spacing: 4px;
+        }
+
+        .hero-title .gradient-text {
+            background: linear-gradient(135deg, var(--vertikal-blue) 0%, var(--vertikal-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            color: var(--vertikal-text-muted);
+            max-width: 600px;
+            margin: 0 auto 48px;
+            line-height: 1.6;
+        }
+
+        /* User Type Selection */
+        .user-type-section {
+            margin-bottom: 48px;
+        }
+
+        .user-type-label {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--vertikal-text-muted);
+            margin-bottom: 24px;
+        }
+
+        .user-type-cards {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .user-type-card {
+            background: var(--vertikal-gray);
+            border: 2px solid var(--vertikal-gray-light);
+            padding: 40px 48px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            min-width: 280px;
+        }
+
+        .user-type-card:hover {
+            border-color: var(--vertikal-purple);
+            transform: translateY(-4px);
+        }
+
+        .user-type-card.selected {
+            border-color: var(--vertikal-purple);
+            background: rgba(123, 104, 238, 0.1);
+        }
+
+        .user-type-card.creator:hover,
+        .user-type-card.creator.selected {
+            border-color: var(--vertikal-gold);
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .user-type-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-type-icon svg {
+            width: 48px;
+            height: 48px;
+            stroke: var(--vertikal-purple);
+        }
+
+        .user-type-card.creator .user-type-icon svg {
+            stroke: var(--vertikal-gold);
+        }
+
+        .user-type-title {
+            font-family: var(--font-display);
+            font-size: 28px;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .user-type-desc {
+            font-size: 14px;
+            color: var(--vertikal-text-muted);
+        }
+
+        .user-type-card.creator .user-type-title {
+            color: var(--vertikal-gold);
+        }
+
+        /* Signup Form */
+        .signup-form-container {
+            display: none;
+            background: var(--vertikal-gray);
+            border: 1px solid var(--vertikal-gray-light);
+            padding: 40px;
+            max-width: 480px;
+            width: 100%;
+            margin: 0 auto;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .signup-form-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .form-title {
+            font-family: var(--font-display);
+            font-size: 28px;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .form-subtitle {
+            color: var(--vertikal-text-muted);
+            font-size: 14px;
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--vertikal-text-muted);
+        }
+
+        .form-input {
+            background: var(--vertikal-black);
+            border: 1px solid var(--vertikal-gray-light);
+            padding: 14px 16px;
+            font-size: 16px;
+            color: var(--vertikal-white);
+            font-family: var(--font-body);
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-input:focus {
+            border-color: var(--vertikal-purple);
+        }
+
+        .form-input.creator-form:focus {
+            border-color: var(--vertikal-gold);
+        }
+
+        .form-input::placeholder {
+            color: var(--vertikal-text-muted);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--vertikal-blue) 0%, var(--vertikal-purple) 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            font-family: var(--font-display);
+            font-size: 18px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 8px;
+        }
+
+        .submit-btn.creator-btn {
+            background: linear-gradient(135deg, var(--vertikal-gold) 0%, #B8960C 100%);
+            color: var(--vertikal-black);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(123, 104, 238, 0.3);
+        }
+
+        .submit-btn.creator-btn:hover {
+            box-shadow: 0 8px 24px rgba(212, 175, 55, 0.3);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--vertikal-purple);
+            cursor: pointer;
+            margin-top: 2px;
+        }
+
+        .checkbox-label {
+            font-size: 13px;
+            color: var(--vertikal-text-muted);
+            line-height: 1.4;
+        }
+
+        .checkbox-label a {
+            color: var(--vertikal-purple);
+            text-decoration: none;
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 24px;
+            font-size: 14px;
+            color: var(--vertikal-text-muted);
+        }
+
+        .form-footer a {
+            color: var(--vertikal-purple);
+            text-decoration: none;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            color: var(--vertikal-text-muted);
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .back-btn:hover { color: var(--vertikal-white); }
+
+        /* Toast */
+        .toast-container {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 9999;
+        }
+
+        .toast {
+            background: var(--vertikal-gray);
+            border: 1px solid var(--vertikal-gray-light);
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 300px;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            margin-bottom: 12px;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .toast.success { border-left: 3px solid #4CAF50; }
+        .toast.error { border-left: 3px solid #f44336; }
+        .toast-message { flex: 1; font-size: 14px; }
+        .toast-close {
+            background: none;
+            border: none;
+            color: var(--vertikal-text-muted);
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        /* Loading */
+        .loading { display: inline-flex; align-items: center; gap: 8px; }
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid currentColor;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Success */
+        .success-screen {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .success-screen.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--vertikal-blue) 0%, var(--vertikal-purple) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+        }
+
+        .success-icon.creator-success {
+            background: linear-gradient(135deg, var(--vertikal-gold) 0%, #B8960C 100%);
+        }
+
+        .success-icon svg {
+            width: 40px;
+            height: 40px;
+            color: white;
+        }
+
+        .success-title {
+            font-family: var(--font-display);
+            font-size: 32px;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+
+        .success-message {
+            color: var(--vertikal-text-muted);
+            font-size: 16px;
+            margin-bottom: 32px;
+        }
+
+        /* Founding 50 Banner */
+        .founding-banner {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(184, 150, 12, 0.1) 100%);
+            border: 1px solid var(--vertikal-gold);
+            padding: 16px 24px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .founding-banner svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--vertikal-gold);
+        }
+
+        .founding-banner-text {
+            flex: 1;
+        }
+
+        .founding-banner-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--vertikal-gold);
+        }
+
+        .founding-banner-desc {
+            font-size: 12px;
+            color: var(--vertikal-text-muted);
+        }
+
+        .founding-banner-link {
+            color: var(--vertikal-gold);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+        }
+
+        @media (max-width: 640px) {
+            .form-row { grid-template-columns: 1fr; }
+            .user-type-cards { flex-direction: column; align-items: center; }
+            .header { padding: 16px 20px; }
+            .header-nav { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-gradient"></div>
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <a href="/" class="logo">
+            <div class="logo-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M9 3L3 9L9 15L11 13L7 9L11 5L9 3Z"/>
+                    <path d="M15 3L13 5L17 9L13 13L15 15L21 9L15 3Z"/>
+                    <path d="M19 15L15 19L17 21L21 17L19 15Z"/>
+                </svg>
+            </div>
+            <span class="logo-text">VERTIKAL</span>
+        </a>
+        <nav class="header-nav">
+            <a href="https://creators.vertikalapp.com" class="nav-link">For Creators</a>
+            <a href="https://investors.vertikalapp.com" class="nav-link">Investors</a>
+            <a href="#" class="btn-header" onclick="showLogin()">Sign In</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-badge">Coming Spring 2026</div>
+        <h1 class="hero-title">
+            <span class="gradient-text">VERTICAL</span><br>CINEMA
+        </h1>
+        <p class="hero-subtitle">
+            The first platform built for filmmakers, not influencers. 
+            Watch premium vertical content or create your own cinematic universe.
+        </p>
+
+        <!-- User Type Selection -->
+        <div class="user-type-section" id="userTypeSection">
+            <p class="user-type-label">How do you want to join?</p>
+            <div class="user-type-cards">
+                <div class="user-type-card" onclick="selectUserType('viewer')">
+                    <div class="user-type-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/>
+                        </svg>
+                    </div>
+                    <h3 class="user-type-title">VIEWER</h3>
+                    <p class="user-type-desc">Watch premium vertical cinema content</p>
+                </div>
+
+                <div class="user-type-card creator" onclick="selectUserType('creator')">
+                    <div class="user-type-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                            <circle cx="12" cy="13" r="4"/>
+                        </svg>
+                    </div>
+                    <h3 class="user-type-title">CREATOR</h3>
+                    <p class="user-type-desc">Build your cinematic empire</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Signup Forms -->
+        <div class="signup-form-container" id="viewerForm">
+            <button class="back-btn" onclick="goBack()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Back
+            </button>
+
+            <div class="form-header">
+                <h2 class="form-title">JOIN AS VIEWER</h2>
+                <p class="form-subtitle">Get access to premium vertical cinema</p>
+            </div>
+
+            <form class="auth-form" onsubmit="handleViewerSignup(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">First Name</label>
+                        <input type="text" class="form-input" name="firstName" placeholder="John" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" class="form-input" name="lastName" placeholder="Doe" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input" name="email" placeholder="you@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" name="password" placeholder="Min. 8 characters" required minlength="8">
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="viewerTerms" name="terms" required>
+                    <label class="checkbox-label" for="viewerTerms">
+                        I agree to the <a href="/terms">Terms</a> and <a href="/privacy">Privacy Policy</a>
+                    </label>
+                </div>
+
+                <button type="submit" class="submit-btn" id="viewerSubmitBtn">
+                    CREATE ACCOUNT
+                </button>
+            </form>
+
+            <div class="form-footer">
+                Already have an account? <a href="#" onclick="showLogin()">Sign in</a>
+            </div>
+        </div>
+
+        <div class="signup-form-container" id="creatorForm">
+            <button class="back-btn" onclick="goBack()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Back
+            </button>
+
+            <!-- Founding 50 Banner -->
+            <div class="founding-banner">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                </svg>
+                <div class="founding-banner-text">
+                    <div class="founding-banner-title">Founding 50 Genesis</div>
+                    <div class="founding-banner-desc">Get exclusive benefits as a founding creator</div>
+                </div>
+                <a href="https://creators.vertikalapp.com" class="founding-banner-link">Learn More →</a>
+            </div>
+
+            <div class="form-header">
+                <h2 class="form-title" style="color: var(--vertikal-gold);">JOIN AS CREATOR</h2>
+                <p class="form-subtitle">Start building your cinematic empire</p>
+            </div>
+
+            <form class="auth-form" onsubmit="handleCreatorSignup(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">First Name</label>
+                        <input type="text" class="form-input creator-form" name="firstName" placeholder="Joshua" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" class="form-input creator-form" name="lastName" placeholder="Roberts" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-input creator-form" name="email" placeholder="you@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Username</label>
+                    <input type="text" class="form-input creator-form" name="username" placeholder="@yourdirectorname" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input creator-form" name="password" placeholder="Min. 8 characters" required minlength="8">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Referral Code (Optional)</label>
+                    <input type="text" class="form-input creator-form" name="referralCode" placeholder="Enter if referred" id="creatorRefCode">
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="creatorTerms" name="terms" required style="accent-color: var(--vertikal-gold);">
+                    <label class="checkbox-label" for="creatorTerms">
+                        I agree to the <a href="/terms" style="color: var(--vertikal-gold);">Terms</a> and <a href="/privacy" style="color: var(--vertikal-gold);">Privacy Policy</a>
+                    </label>
+                </div>
+
+                <button type="submit" class="submit-btn creator-btn" id="creatorSubmitBtn">
+                    CLAIM YOUR SPOT
+                </button>
+            </form>
+
+            <div class="form-footer">
+                Already have an account? <a href="#" onclick="showLogin()" style="color: var(--vertikal-gold);">Sign in</a>
+            </div>
+        </div>
+
+        <!-- Success Screens -->
+        <div class="signup-form-container" id="viewerSuccess">
+            <div class="success-screen active">
+                <div class="success-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                </div>
+                <h2 class="success-title">WELCOME TO VERTIKAL</h2>
+                <p class="success-message">Check your email to verify your account, then start watching.</p>
+                <button class="submit-btn" onclick="window.location.href='/'">START WATCHING</button>
+            </div>
+        </div>
+
+        <div class="signup-form-container" id="creatorSuccess">
+            <div class="success-screen active">
+                <div class="success-icon creator-success">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                        <polyline points="20 6 9 17 4 12"/>
+                    </svg>
+                </div>
+                <h2 class="success-title" style="color: var(--vertikal-gold);">WELCOME, CREATOR</h2>
+                <p class="success-message">Check your email to verify, then access your Creator Studio.</p>
+                <button class="submit-btn creator-btn" onclick="window.location.href='https://creators.vertikalapp.com/dashboard'">ENTER STUDIO</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Support Section -->
+    <section class="support-section" id="support">
+        <div class="support-container">
+            <div class="support-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                </svg>
+            </div>
+            <h2 class="support-title">SOW A SEED IN <span style="color: var(--vertikal-purple);">VERTIKAL</span></h2>
+            <p class="support-subtitle">
+                Help us build the future of vertical cinema. Every contribution helps us empower Black filmmakers and creators to tell their stories.
+            </p>
+            <div class="support-tiers">
+                <button class="support-btn" onclick="donate(25)">$25</button>
+                <button class="support-btn" onclick="donate(50)">$50</button>
+                <button class="support-btn featured" onclick="donate(100)">$100</button>
+                <button class="support-btn" onclick="donate(250)">$250</button>
+                <button class="support-btn" onclick="donate(0)">Custom</button>
+            </div>
+            <p class="support-note">Your support helps us launch Spring 2026. Watch your seed grow.</p>
+        </div>
+    </section>
+
+    <style>
+        .support-section {
+            padding: 80px 24px;
+            background: linear-gradient(180deg, var(--vertikal-gray) 0%, var(--vertikal-black) 100%);
+            text-align: center;
+        }
+        .support-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .support-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 24px;
+            background: linear-gradient(135deg, var(--vertikal-blue) 0%, var(--vertikal-purple) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .support-icon svg {
+            width: 32px;
+            height: 32px;
+            stroke: white;
+        }
+        .support-title {
+            font-family: var(--font-display);
+            font-size: 36px;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+        .support-subtitle {
+            color: var(--vertikal-text-muted);
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+        .support-tiers {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+        .support-btn {
+            background: transparent;
+            border: 2px solid var(--vertikal-purple);
+            color: var(--vertikal-purple);
+            padding: 14px 28px;
+            font-family: var(--font-display);
+            font-size: 18px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .support-btn:hover, .support-btn.featured {
+            background: var(--vertikal-purple);
+            color: white;
+        }
+        .support-btn.featured {
+            transform: scale(1.1);
+        }
+        .support-note {
+            font-size: 14px;
+            color: var(--vertikal-text-muted);
+            font-style: italic;
+        }
+    </style>
+
+    <script>
+        function donate(amount) {
+            let donationAmount = amount;
+            if (amount === 0) {
+                donationAmount = prompt('Enter your custom donation amount ($):');
+                if (!donationAmount || isNaN(donationAmount)) return;
+            }
+            
+            const subject = encodeURIComponent('VERTIKAL - Support/Donation');
+            const body = encodeURIComponent(`I would like to support VERTIKAL with a donation of $${donationAmount}.
+
+Please send me payment instructions.
+
+Thank you for building the future of vertical cinema!`);
+            window.open(`mailto:support@vertikalapp.com?subject=${subject}&body=${body}`, '_blank');
+            showToast(`Thank you for your $${donationAmount} support! Opening email...`, 'success');
+        }
+    </script>
+
+    <script>
+        const SUPABASE_URL = 'https://vuwawtzhhcarckybdgbd.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ1d2F3dHpoaGNhcmNreWJkZ2JkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU1OTU5NDQsImV4cCI6MjA4MTE3MTk0NH0.FQS6GYae1iw-rbYgo4P5BCuG8dkY_XZpbo0XIcxk62g';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Check for referral code in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const refCode = urlParams.get('ref');
+        if (refCode && document.getElementById('creatorRefCode')) {
+            document.getElementById('creatorRefCode').value = refCode;
+        }
+
+        function selectUserType(type) {
+            document.getElementById('userTypeSection').style.display = 'none';
+            
+            if (type === 'viewer') {
+                document.getElementById('viewerForm').classList.add('active');
+            } else {
+                document.getElementById('creatorForm').classList.add('active');
+            }
+        }
+
+        function goBack() {
+            document.querySelectorAll('.signup-form-container').forEach(el => el.classList.remove('active'));
+            document.getElementById('userTypeSection').style.display = 'block';
+        }
+
+        function showLogin() {
+            window.location.href = 'https://creators.vertikalapp.com';
+        }
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `<span class="toast-message">${message}</span><button class="toast-close" onclick="this.parentElement.remove()">×</button>`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 5000);
+        }
+
+        async function handleViewerSignup(event) {
+            event.preventDefault();
+            const form = event.target;
+            const btn = document.getElementById('viewerSubmitBtn');
+            const originalText = btn.textContent;
+
+            const formData = new FormData(form);
+            
+            if (!formData.get('terms')) {
+                showToast('Please accept the Terms', 'error');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loading"><span class="spinner"></span>CREATING...</span>';
+
+            try {
+                const { data, error } = await supabase.auth.signUp({
+                    email: formData.get('email'),
+                    password: formData.get('password'),
+                    options: {
+                        data: {
+                            first_name: formData.get('firstName'),
+                            last_name: formData.get('lastName'),
+                            full_name: `${formData.get('firstName')} ${formData.get('lastName')}`,
+                            role: 'viewer',
+                            user_type: 'viewer'
+                        },
+                        emailRedirectTo: `${window.location.origin}/`
+                    }
+                });
+
+                if (error) throw error;
+
+                document.getElementById('viewerForm').classList.remove('active');
+                document.getElementById('viewerSuccess').classList.add('active');
+                showToast('Account created! Check your email.', 'success');
+
+            } catch (error) {
+                showToast(error.message || 'Signup failed', 'error');
+                btn.disabled = false;
+                btn.textContent = originalText;
+            }
+        }
+
+        async function handleCreatorSignup(event) {
+            event.preventDefault();
+            const form = event.target;
+            const btn = document.getElementById('creatorSubmitBtn');
+            const originalText = btn.textContent;
+
+            const formData = new FormData(form);
+            
+            if (!formData.get('terms')) {
+                showToast('Please accept the Terms', 'error');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<span class="loading"><span class="spinner"></span>CREATING...</span>';
+
+            try {
+                const username = formData.get('username').replace('@', '');
+                const referralCode = `${username.substring(0, 3).toUpperCase()}${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
+
+                const { data, error } = await supabase.auth.signUp({
+                    email: formData.get('email'),
+                    password: formData.get('password'),
+                    options: {
+                        data: {
+                            first_name: formData.get('firstName'),
+                            last_name: formData.get('lastName'),
+                            full_name: `${formData.get('firstName')} ${formData.get('lastName')}`,
+                            username: username,
+                            role: 'creator',
+                            user_type: 'creator',
+                            referral_code: referralCode,
+                            referred_by: formData.get('referralCode') || null
+                        },
+                        emailRedirectTo: 'https://creators.vertikalapp.com/dashboard'
+                    }
+                });
+
+                if (error) throw error;
+
+                document.getElementById('creatorForm').classList.remove('active');
+                document.getElementById('creatorSuccess').classList.add('active');
+                showToast('Creator account created!', 'success');
+
+            } catch (error) {
+                showToast(error.message || 'Signup failed', 'error');
+                btn.disabled = false;
+                btn.textContent = originalText;
+            }
+        }
+
+        // Check auth on load
+        async function checkAuth() {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session) {
+                const userType = session.user.user_metadata?.user_type;
+                if (userType === 'creator') {
+                    window.location.href = 'https://creators.vertikalapp.com/dashboard';
+                } else {
+                    window.location.href = '/';
+                }
+            }
+        }
+        checkAuth();
+    </script>
+</body>
+</html>

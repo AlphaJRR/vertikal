@@ -1,0 +1,12 @@
+video_id,creator_id,title,description,tags,url,thumbnail_url,founding_50,created_at
+1,creator001,"First Light","A cinematic short capturing dawn.","cinema,art,founding50","https://storage.vertikal.app/videos/firstlight.mp4","https://storage.vertikal.app/thumbnails/firstlight.jpg",true,2025-12-13T00:00:00Z
+2,creator002,"Urban Flow","Exploring rhythm in city streets.","dance,urban,founding50","https://storage.vertikal.app/videos/urbanflow.mp4","https://storage.vertikal.app/thumbnails/urbanflow.jpg",true,2025-12-13T00:00:00Z
+3,creator003,"Silent Echo","Minimalist storytelling through silence.","minimalism,story,founding50","https://storage.vertikal.app/videos/silentecho.mp4","https://storage.vertikal.app/thumbnails/silentecho.jpg",true,2025-12-13T00:00:00Z
+4,creator004,"Golden Hour","Portraits of creators during the golden hour of creativity.","portrait,creators,founding50,golden","https://storage.vertikal.app/videos/goldenhour.mp4","https://storage.vertikal.app/thumbnails/goldenhour.jpg",true,2025-12-13T00:00:00Z
+5,creator005,"Neon Dreams","Cyberpunk aesthetics meet real-world narratives.","cyberpunk,neon,founding50,future","https://storage.vertikal.app/videos/neondreams.mp4","https://storage.vertikal.app/thumbnails/neondreams.jpg",true,2025-12-13T00:00:00Z
+6,creator006,"Concrete Poetry","Visual poetry in architectural forms.","architecture,poetry,founding50,concrete","https://storage.vertikal.app/videos/concretepoetry.mp4","https://storage.vertikal.app/thumbnails/concretepoetry.jpg",true,2025-12-13T00:00:00Z
+7,creator007,"Underground Voices","Documenting the underground music scene.","music,underground,founding50,scene","https://storage.vertikal.app/videos/undergroundvoices.mp4","https://storage.vertikal.app/thumbnails/undergroundvoices.jpg",true,2025-12-13T00:00:00Z
+8,creator008,"Black Canvas","Exploring Black identity through visual storytelling.","identity,black,founding50,canvas","https://storage.vertikal.app/videos/blackcanvas.mp4","https://storage.vertikal.app/thumbnails/blackcanvas.jpg",true,2025-12-13T00:00:00Z
+9,creator009,"Digital Nomads","The life of creators who work from anywhere.","lifestyle,nomads,founding50,digital","https://storage.vertikal.app/videos/digitalnomads.mp4","https://storage.vertikal.app/thumbnails/digitalnomads.jpg",true,2025-12-13T00:00:00Z
+10,creator010,"The Velvet Rope","Exclusive access to the Founding 50 creators.","exclusive,founding50,velvet,rope","https://storage.vertikal.app/videos/velvetrope.mp4","https://storage.vertikal.app/thumbnails/velvetrope.jpg",true,2025-12-13T00:00:00Z
+

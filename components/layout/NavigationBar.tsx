@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { Home, Tv, Smartphone, User } from 'lucide-react-native';
+import { Home, Tv, Smartphone, User, Briefcase } from 'lucide-react-native';
 
 interface NavigationBarProps {
   currentRoute: string;
@@ -37,6 +37,17 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({ currentRoute, onNa
           <Tv size={22} color={isActive('series') ? '#FFD700' : '#666666'} />
           <Text style={[styles.tabLabel, isActive('series') && styles.tabLabelActive]}>
             SERIES
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.tab, isActive('jobs') && styles.tabActive]}
+          onPress={() => onNavigate('jobs')}
+          activeOpacity={0.7}
+        >
+          <Briefcase size={22} color={isActive('jobs') ? '#FFD700' : '#666666'} />
+          <Text style={[styles.tabLabel, isActive('jobs') && styles.tabLabelActive]}>
+            JOBS
           </Text>
         </TouchableOpacity>
 

@@ -63,9 +63,10 @@ export const Founding50Rail: React.FC<Founding50RailProps> = ({
         data={creators}
         renderItem={renderCreator}
         keyExtractor={(item) => item.id}
-        horizontal
+        horizontal={true}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.list}
+        nestedScrollEnabled={true}
       />
     </View>
   );
@@ -105,6 +106,8 @@ const styles = StyleSheet.create({
   },
   list: {
     paddingRight: 16,
+    paddingLeft: 0,
+    gap: 16,
   },
   creatorItem: {
     alignItems: 'center',
