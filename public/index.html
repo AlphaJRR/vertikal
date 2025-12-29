@@ -20,14 +20,17 @@
     
     <style>
         :root {
-            --vertikal-black: #0A0A0F;
+            /* BRAND PALETTE - CINEMATIC DARK MODE */
+            --vertikal-black: #050505;       /* OLED Black */
+            --vertikal-panel: #0F0F12;       /* Dark Grey Panel */
+            --vertikal-gold: #D4AF37;        /* Metallic Gold */
+            --vertikal-gold-dim: #8A701E;    /* Muted Gold */
+            --vertikal-white: #EAEAEA;       /* Off-White (Cinema Standard) */
+            --vertikal-text-muted: #888888;
             --vertikal-purple: #7B68EE;
             --vertikal-blue: #4A90D9;
-            --vertikal-gold: #D4AF37;
-            --vertikal-white: #FFFFFF;
             --vertikal-gray: #1A1A1A;
             --vertikal-gray-light: #2A2A2A;
-            --vertikal-text-muted: #888888;
             --font-display: 'Bebas Neue', sans-serif;
             --font-body: 'Space Grotesk', sans-serif;
         }
@@ -50,21 +53,31 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #0a0a12 0%, #0f0f1a 50%, #0a0a12 100%);
+            background: radial-gradient(circle at 50% 10%, rgba(212, 175, 55, 0.08) 0%, transparent 60%),
+                        linear-gradient(180deg, #000 0%, #0A0A0F 100%);
             z-index: -2;
         }
 
-        .bg-gradient::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(ellipse at 20% 20%, rgba(123, 104, 238, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(74, 144, 217, 0.08) 0%, transparent 50%);
+        /* GOLD LOGO PLACEHOLDER (Use until you have the SVG) */
+        .logo-placeholder {
+            width: 40px; 
+            height: 40px;
+            background: linear-gradient(135deg, var(--vertikal-gold) 0%, #997B1A 100%);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+            border-radius: 4px; /* Slightly rounded, not circle */
         }
+
+        /* BADGE SECTION STYLES */
+        .badge-card {
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            background: linear-gradient(180deg, rgba(212, 175, 55, 0.05) 0%, transparent 100%);
+            padding: 40px;
+            text-align: center;
+            margin: 60px auto;
+            max-width: 800px;
+        }
+        
+        .gold-text { color: var(--vertikal-gold); }
 
         /* ===== HEADER ===== */
         .header {
@@ -141,9 +154,44 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            text-align: center;
             padding: 120px 24px 80px;
             position: relative;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        @media (max-width: 968px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+
+        .hero-left {
+            text-align: left;
+        }
+
+        .hero-right {
+            text-align: center;
+        }
+
+        .hero-label {
+            display: inline-block;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            padding: 8px 20px;
+            border: 1px solid var(--vertikal-gold);
+            color: var(--vertikal-gold);
+            margin-bottom: 24px;
+            border-radius: 100px;
         }
 
         .hero-badge {
@@ -170,11 +218,43 @@
         }
 
         .hero-subtitle {
-            font-size: 20px;
+            font-size: 18px;
             color: var(--vertikal-text-muted);
             max-width: 600px;
-            margin: 0 auto 48px;
-            line-height: 1.6;
+            margin-bottom: 40px;
+            line-height: 1.7;
+        }
+
+        .hero-subtitle strong {
+            color: var(--vertikal-white);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 48px;
+            margin-top: 40px;
+        }
+
+        .stat {
+            text-align: left;
+        }
+
+        .stat-value {
+            font-family: var(--font-display);
+            font-size: 48px;
+            background: linear-gradient(135deg, var(--vertikal-gold) 0%, var(--vertikal-gold-dim) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--vertikal-text-muted);
+            margin-top: 8px;
         }
 
         /* CTA Buttons */
@@ -260,6 +340,99 @@
             font-size: 12px;
             color: var(--vertikal-text-muted);
             max-width: 600px;
+        }
+
+        /* ===== NEW SECTIONS: LANDSCAPE & FORMAT ===== */
+        .why-section {
+            padding: 100px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin-top: 60px;
+        }
+
+        @media (max-width: 768px) {
+            .why-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .why-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 20px;
+            padding: 40px 32px;
+            transition: all 0.3s ease;
+        }
+
+        .why-card:hover {
+            background: rgba(255,255,255,0.04);
+            border-color: rgba(212, 175, 55, 0.2);
+            transform: translateY(-4px);
+        }
+
+        .why-card h3 {
+            font-family: var(--font-display);
+            font-size: 24px;
+            margin-bottom: 16px;
+            letter-spacing: 2px;
+        }
+
+        .why-card p {
+            color: var(--vertikal-text-muted);
+            line-height: 1.6;
+        }
+
+        .process-section {
+            padding: 100px 40px;
+            background: var(--vertikal-panel);
+        }
+
+        .process-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        @media (max-width: 968px) {
+            .process-steps {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .process-step {
+            text-align: center;
+        }
+
+        .step-number {
+            font-family: var(--font-display);
+            font-size: 72px;
+            color: var(--vertikal-gold);
+            opacity: 0.3;
+            margin-bottom: 16px;
+        }
+
+        .step-title {
+            font-family: var(--font-display);
+            font-size: 28px;
+            margin-bottom: 12px;
+            letter-spacing: 2px;
+        }
+
+        .step-desc {
+            color: var(--vertikal-text-muted);
+            line-height: 1.6;
         }
 
         /* ===== SECTION 2: ECOSYSTEM ===== */
@@ -932,27 +1105,99 @@
 
     <!-- SECTION 1: HERO -->
     <section class="hero" id="hero">
-        <div class="hero-badge">🎬 Coming Spring 2026</div>
-        <h1 class="hero-title">STOP ROTATING<br>YOUR PHONE.</h1>
-        <p class="hero-subtitle">
-            The Vertical Film Network is here. Premium cinema, built for the screen in your hand.
-        </p>
+        <div class="hero-content">
+            <div class="hero-left">
+                <div class="hero-label" style="border-color: var(--vertikal-gold); color: var(--vertikal-gold);">
+                    FOR FILMMAKERS. NOT INFLUENCERS.
+                </div>
+                
+                <h1 class="hero-title">
+                    STOP POSTING.<br>
+                    START <span class="gold-text">PROGRAMMING.</span>
+                </h1>
+                
+                <p class="hero-subtitle">
+                    Hollywood extracts our culture. Social algorithms suppress it. 
+                    <strong>VERTIKAL</strong> is where you own it. 
+                    <br><br>
+                    We don't want your clips. We want your <strong>Series.</strong>
+                    Build characters, drop seasons, and own your IP on the first cinema ecosystem built for Black ownership.
+                </p>
 
-        <div class="cta-group">
-            <button class="btn btn-gold" onclick="openModal()">CLAIM YOUR SPOT</button>
-            <a href="https://demo.vertikalapp.com" class="btn btn-outline">WATCH DEMO</a>
-        </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-value">50</div>
+                        <div class="stat-label">Founding Directors</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">IP</div>
+                        <div class="stat-label">100% Owned</div>
+                    </div>
+                </div>
 
-        <div class="avatar-row">
-            <div class="avatar"></div>
-            <div class="avatar"></div>
-            <div class="avatar"></div>
-            <div class="avatar"></div>
-            <div class="avatar"></div>
-            <div class="avatar"></div>
+                <div class="cta-group" style="justify-content: flex-start; margin-top: 40px;">
+                    <button class="btn btn-gold" onclick="openModal()">CLAIM YOUR SPOT</button>
+                    <a href="https://demo.vertikalapp.com" class="btn btn-outline">WATCH DEMO</a>
+                </div>
+            </div>
+
+            <div class="hero-right" id="formContainer">
+                <!-- Form will be inserted here via modal -->
+            </div>
         </div>
-        <p class="avatar-label">Joined by visionary filmmakers</p>
-        <p class="avatar-names">Joshua Roberts • Kel Mitchell • Joshua Argue • Nate Hosseini • Joe Guridy • Eric Almond • Chan C. Smith • Benny Ramos</p>
+    </section>
+
+    <!-- NEW SECTION: THE LANDSCAPE -->
+    <section class="why-section">
+        <p class="section-label">THE LANDSCAPE</p>
+        <h2 class="section-title">IP IS THE NEW REAL ESTATE.</h2>
+        
+        <div class="why-grid">
+            <div class="why-card">
+                <h3>THE ALGORITHM TRAP</h3>
+                <p style="color: #666;">You drive the trends, but you own nothing. Platforms like TikTok pay you in pennies while they sell ads against your culture.</p>
+            </div>
+            
+            <div class="why-card">
+                <h3>THE GATEKEEPERS</h3>
+                <p style="color: #666;">Hollywood ignores us until they need to copy us. You wait years for a "greenlight" that never comes.</p>
+            </div>
+
+            <div class="why-card" style="border-color: var(--vertikal-gold); background: rgba(212,175,55,0.03);">
+                <h3 class="gold-text">THE VERTIKAL MODEL</h3>
+                <p class="gold-text"><strong>Ownership. Data. Revenue.</strong></p>
+                <p>You own the masters. You own the audience relationship. You get paid directly by the culture.</p>
+            </div>
+            
+            <div class="why-card">
+                <h3>THE FAIR-TRADE SPLIT</h3>
+                <p>We don't hide money in "pools." You get a majority share of every subscription and ticket sold on your channel. A split designed to sustain a production company, not a side hustle.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: CINEMA FORMAT -->
+    <section class="process-section" style="background: var(--vertikal-panel);">
+        <div class="process-container">
+            <h2 class="section-title">CINEMA. ROTATED 90°.</h2>
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">01</div>
+                    <h3 class="step-title">EPISODIC STORYTELLING</h3>
+                    <p class="step-desc">No dances. No challenges. We are building the home of scripted drama, sci-fi, and documentary series.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">02</div>
+                    <h3 class="step-title">SEASON DROPS</h3>
+                    <p class="step-desc">Release your story in seasons. Keep your audience hooked. Build a library that gains value over time.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">03</div>
+                    <h3 class="step-title">PREMIUM PRODUCTION</h3>
+                    <p class="step-desc">Cinema cameras. Professional lighting. Real crews. The standard is excellence.</p>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- SECTION 2: ECOSYSTEM -->
@@ -1163,6 +1408,66 @@
                     <div class="form-group">
                         <label class="form-label">Username</label>
                         <input type="text" class="form-input creator-input" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Primary Role</label>
+                        <select class="form-input creator-input" name="role" required style="background: var(--vertikal-black); color: white;">
+                            <option value="" disabled selected>Select your craft...</option>
+                            
+                            <optgroup label="Above the Line">
+                                <option value="director">Director</option>
+                                <option value="writer">Screenwriter</option>
+                                <option value="producer">Producer</option>
+                                <option value="showrunner">Showrunner</option>
+                                <option value="ep">Executive Producer</option>
+                            </optgroup>
+
+                            <optgroup label="Camera Department">
+                                <option value="dp">Director of Photography</option>
+                                <option value="cam_op">Camera Operator</option>
+                                <option value="1st_ac">1st AC</option>
+                                <option value="2nd_ac">2nd AC</option>
+                                <option value="steadicam">Steadicam Operator</option>
+                                <option value="dit">DIT</option>
+                            </optgroup>
+
+                            <optgroup label="Lighting & Grip">
+                                <option value="gaffer">Gaffer</option>
+                                <option value="key_grip">Key Grip</option>
+                                <option value="best_boy">Best Boy</option>
+                                <option value="spark">Electrician / Spark</option>
+                                <option value="grip">Grip</option>
+                            </optgroup>
+
+                            <optgroup label="Art & Wardrobe">
+                                <option value="prod_designer">Production Designer</option>
+                                <option value="art_director">Art Director</option>
+                                <option value="costume">Costume Designer</option>
+                                <option value="stylist">Wardrobe Stylist</option>
+                                <option value="mua">Makeup Artist (MUA)</option>
+                                <option value="hair">Hair Stylist</option>
+                            </optgroup>
+
+                            <optgroup label="Sound">
+                                <option value="sound_mixer">Sound Mixer</option>
+                                <option value="boom">Boom Operator</option>
+                                <option value="sound_design">Sound Designer</option>
+                            </optgroup>
+
+                            <optgroup label="Post Production">
+                                <option value="editor">Editor</option>
+                                <option value="colorist">Colorist</option>
+                                <option value="vfx">VFX Artist</option>
+                                <option value="mograph">Motion Graphics</option>
+                            </optgroup>
+
+                            <optgroup label="Production Support">
+                                <option value="upm">Unit Production Manager</option>
+                                <option value="coordinator">Production Coordinator</option>
+                                <option value="pa_set">Set PA</option>
+                                <option value="pa_office">Office PA</option>
+                            </optgroup>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label class="form-label">Password</label>
