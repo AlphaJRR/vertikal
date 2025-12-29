@@ -1620,7 +1620,7 @@
             }
 
             btn.disabled = true;
-            btn.innerHTML = '<span class="loading"><span class="spinner"></span>CREATING...</span>';
+            btn.textContent = 'CREATING...';
 
             try {
                 const { data, error } = await supabase.auth.signUp({
@@ -1659,6 +1659,9 @@
                 showToast(error.message || 'Signup failed', 'error');
                 btn.disabled = false;
                 btn.textContent = 'CREATE ACCOUNT';
+                // Reset any inline styles
+                btn.style.opacity = '';
+                btn.style.cursor = '';
             }
         }
 
@@ -1675,7 +1678,7 @@
             }
 
             btn.disabled = true;
-            btn.innerHTML = '<span class="loading"><span class="spinner"></span>CREATING...</span>';
+            btn.textContent = 'CREATING...';
 
             try {
                 const username = formData.get('username').replace('@', '');
@@ -1718,6 +1721,9 @@
                 showToast(error.message || 'Signup failed', 'error');
                 btn.disabled = false;
                 btn.textContent = 'CLAIM YOUR SPOT';
+                // Reset any inline styles
+                btn.style.opacity = '';
+                btn.style.cursor = '';
             }
         }
 
@@ -1738,20 +1744,26 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             
-            // Select all forms on the page
-            const forms = document.querySelectorAll("form");
+            // Only attach to forms WITHOUT real handlers (forms without onsubmit attribute)
+            // This prevents interference with real signup forms
+            const forms = document.querySelectorAll("form:not([onsubmit])");
 
             forms.forEach(form => {
+                // Skip if form has data attribute indicating it has a real handler
+                if (form.hasAttribute('data-real-handler')) return;
+                
                 form.addEventListener("submit", (e) => {
                     e.preventDefault(); // Stop page reload
 
-                    // 1. Get the Button
+                    // 1. Get the Button (with null check)
                     const btn = form.querySelector("button[type='submit']");
-                    const originalText = btn.innerText;
+                    if (!btn) return; // Skip if no button found
+                    
+                    const originalText = btn.textContent || btn.innerText || "";
 
                     // 2. Change Button to "Loading" State
                     btn.disabled = true;
-                    btn.innerText = "VERIFYING CREDENTIALS...";
+                    btn.textContent = "VERIFYING CREDENTIALS...";
                     btn.style.opacity = "0.7";
                     btn.style.cursor = "wait";
 
@@ -1761,16 +1773,18 @@
                         // 4. Success State
                         btn.style.backgroundColor = "#22c55e"; // Success Green
                         btn.style.color = "black";
-                        btn.innerText = "ACCESS GRANTED";
+                        btn.textContent = "ACCESS GRANTED";
 
-                        // 5. Show a "Toast" Notification
-                        showToast("Application Submitted Successfully.");
+                        // 5. Show a "Toast" Notification (with scope check)
+                        if (typeof showToast === 'function') {
+                            showToast("Application Submitted Successfully.");
+                        }
 
                         // 6. Reset Form after 2 seconds
                         setTimeout(() => {
                             form.reset();
                             btn.disabled = false;
-                            btn.innerText = originalText;
+                            btn.textContent = originalText;
                             btn.style.backgroundColor = ""; // Revert to CSS default
                             btn.style.color = "";
                             btn.style.opacity = "1";
