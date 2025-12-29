@@ -51,6 +51,10 @@
     .nav-links a { margin-left: 2rem; color: var(--muted); text-decoration: none; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em; }
     .nav-links a:hover { color: #fff; }
     
+    /* FORMS */
+    input, textarea { width: 100%; padding: 1rem; margin-bottom: 1rem; background: var(--bg); border: 1px solid var(--border); color: #fff; font-size: 1rem; font-family: var(--font-main); }
+    input:focus, textarea:focus { outline: 1px solid #78909C; }
+    
     /* SMOOTH SCROLL */
     html { scroll-behavior: smooth; }
     </style>
@@ -66,17 +70,32 @@
     </nav>
 
     <section class="container" style="padding-top: 8rem;">
-        <h1 class="hero-text">STUDIOS REBUILT<br><span>FOR THE VERTICAL ERA.</span></h1>
+        <h1 class="hero-text">THE FOUNDING<br><span>50 NETWORKS.</span></h1>
         <p>A Vertikal Network is a studio-grade IP engine designed to manufacture, distribute, and monetize short-form cinematic franchises at scale. This is not a community.</p>
+    </section>
+
+    <section id="network-form">
+        <div class="container" style="max-width: 700px;">
+            <h2>APPLY TO BECOME A NETWORK</h2>
+            <p style="margin-bottom: 2rem;">Fill out the form below to apply for Founding 50 Network status. We're looking for established studios, production companies, and IP factories.</p>
+            <form id="networkForm" style="background: var(--card); padding: 2rem; border: 1px solid var(--border);">
+                <input type="text" placeholder="Network/Studio Name" required style="margin-bottom: 1rem;">
+                <input type="email" placeholder="Contact Email" required style="margin-bottom: 1rem;">
+                <input type="text" placeholder="Contact Name" required style="margin-bottom: 1rem;">
+                <textarea placeholder="Tell us about your network: existing IP, production capacity, distribution channels" required style="width: 100%; padding: 1rem; margin-bottom: 1rem; background: var(--bg); border: 1px solid var(--border); color: #fff; font-size: 1rem; font-family: var(--font-main); min-height: 150px; resize: vertical;"></textarea>
+                <input type="url" placeholder="Portfolio/Website URL (Optional)" style="margin-bottom: 1rem;">
+                <button type="submit" class="btn" style="width: 100%; background: #fff; color: #000;">Submit Application</button>
+            </form>
+        </div>
     </section>
 
     <section>
         <div class="container">
-            <h2>THE SHORT-SERIES FACTORY</h2>
+            <h2>WHY NETWORKS WIN</h2>
             <div class="grid grid-2">
                 <div class="badge-card" style="border-left: 4px solid #78909C;">
-                    <h3>Why Networks Win</h3>
-                    <p>Traditional platforms reward volume. We reward franchise depth. Networks gain permanent IP ownership and premium CPM access via the Titanium V Badge.</p>
+                    <h3>IP Ownership</h3>
+                    <p>Networks retain permanent IP ownership and premium CPM access via the Titanium V Badge. Traditional platforms reward volume. We reward franchise depth.</p>
                 </div>
                 <div class="badge-card" style="border-left: 4px solid #78909C;">
                     <h3>Institutional Authority</h3>
@@ -86,32 +105,30 @@
         </div>
     </section>
 
-    <section>
-        <div class="container">
-            <h2>THE ECOSYSTEM DIVISIONS</h2>
-            <div class="grid grid-4">
-                <div class="badge-card">
-                    <div class="badge-icon b-titanium">S</div>
-                    <h3>Vertikal Studios</h3>
-                    <p style="font-size:0.85rem;">Internal production house. Flagship originals.</p>
-                </div>
-                <div class="badge-card">
-                    <div class="badge-icon b-titanium">A</div>
-                    <h3>Alpha Visuals</h3>
-                    <p style="font-size:0.85rem;">High-art, experimental, motion design.</p>
-                </div>
-                <div class="badge-card">
-                    <div class="badge-icon b-titanium">N</div>
-                    <h3>Networks</h3>
-                    <p style="font-size:0.85rem;">Syndication and licensing hub.</p>
-                </div>
-                <div class="badge-card">
-                    <div class="badge-icon b-green">I</div>
-                    <h3>Investors</h3>
-                    <p style="font-size:0.85rem;">Connecting capital with media assets.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    <script>
+    document.getElementById('networkForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData);
+        
+        try {
+            const response = await fetch('/functions/v1/network-application', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            
+            if (response.ok) {
+                alert('Application submitted successfully. We\'ll be in touch soon.');
+                e.target.reset();
+            } else {
+                alert('Error submitting application. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error submitting application. Please try again.');
+        }
+    });
+    </script>
 </body>
 </html>
