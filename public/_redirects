@@ -1,9 +1,2 @@
-# Netlify redirects file
-# This file takes precedence over netlify.toml redirects
-
-# Privacy and Terms pages
-/privacy  /privacy.html  200
-/terms    /terms.html    200
-
-# SPA fallback - only for HTML routes (not assets)
-/*    /index.html   200
+/terms   /terms/index.html   200
+/privacy /privacy/index.html 200
