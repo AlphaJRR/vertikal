@@ -5,130 +5,138 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VERTIKAL | Networks</title>
     <style>
-    /* VERTIKAL CINEMATIC ENGINE */
-    :root {
-        --bg: #050505; --card: #0a0a0a; --text: #ffffff; --muted: #888; --border: #222;
-        --gold: linear-gradient(135deg, #FFD700 0%, #B8860B 100%);
-        --green: linear-gradient(135deg, #00C853 0%, #004D40 100%);
-        --blue: linear-gradient(135deg, #2962FF 0%, #0D47A1 100%);
-        --titanium: linear-gradient(135deg, #ECEFF1 0%, #455A64 100%);
-        --font-main: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: var(--bg); color: var(--text); font-family: var(--font-main); line-height: 1.6; -webkit-font-smoothing: antialiased; }
-    
-    /* TYPOGRAPHY */
-    h1, h2, h3 { text-transform: uppercase; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
-    h1 { font-size: clamp(3rem, 8vw, 6rem); margin-bottom: 1.5rem; }
-    h2 { font-size: 2rem; border-left: 4px solid #fff; padding-left: 1rem; margin-bottom: 2rem; }
-    h3 { font-size: 1.25rem; margin-bottom: 0.5rem; color: #fff; }
-    p { color: var(--muted); font-size: 1.1rem; max-width: 650px; margin-bottom: 1.5rem; }
-    .hero-text span { background: linear-gradient(180deg, #fff 0%, #666 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    
-    /* LAYOUT */
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-    section { padding: 6rem 0; border-bottom: 1px solid var(--border); }
-    .grid { display: grid; gap: 2rem; }
-    .grid-2 { grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); }
-    .grid-4 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-    
-    /* COMPONENTS */
-    .btn { display: inline-block; padding: 1rem 2.5rem; border: 1px solid #fff; color: #fff; text-decoration: none; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; transition: 0.3s; }
-    .btn:hover { background: #fff; color: #000; }
-    
-    /* BADGES */
-    .badge-card { background: var(--card); border: 1px solid var(--border); padding: 2rem; transition: transform 0.3s; }
-    .badge-card:hover { border-color: #555; transform: translateY(-5px); }
-    .badge-icon { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; color: #000; margin-bottom: 1rem; font-size: 0.9rem; }
-    .b-gold { background: var(--gold); box-shadow: 0 0 15px rgba(255, 215, 0, 0.2); }
-    .b-green { background: var(--green); box-shadow: 0 0 15px rgba(0, 200, 83, 0.2); }
-    .b-blue { background: var(--blue); box-shadow: 0 0 15px rgba(41, 98, 255, 0.2); }
-    .b-titanium { background: var(--titanium); box-shadow: 0 0 15px rgba(120, 144, 156, 0.2); }
+        /* --- VERTIKAL CINEMATIC ENGINE --- */
+        :root {
+            --bg: #050505; --card: #0a0a0a; --text: #ffffff; --muted: #888; --border: #222;
+            --titanium: #B0BEC5; --font-main: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--bg); color: var(--text); font-family: var(--font-main); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+        
+        h1, h2, h3, h4 { text-transform: uppercase; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+        h1 { font-size: clamp(3rem, 7vw, 6rem); margin-bottom: 1.5rem; }
+        h2 { font-size: clamp(2rem, 4vw, 3rem); border-left: 4px solid #fff; padding-left: 1.5rem; margin-bottom: 2.5rem; }
+        h3 { font-size: 1.25rem; margin-bottom: 0.5rem; color: #fff; }
+        p { color: var(--muted); font-size: 1.15rem; max-width: 750px; margin-bottom: 1.5rem; }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        section { padding: 6rem 0; border-bottom: 1px solid var(--border); }
+        .grid { display: grid; gap: 3rem; }
+        .grid-2 { grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); }
+        .grid-3 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+        
+        .card { background: var(--card); border: 1px solid var(--border); padding: 2rem; border-top: 4px solid #333; }
+        
+        .badge-row { display: grid; grid-template-columns: 140px 1fr; gap: 2rem; align-items: center; background: var(--card); border: 1px solid var(--border); padding: 2.5rem; border-left: 4px solid var(--titanium); }
+        .badge-img { width: 120px; height: 120px; object-fit: contain; filter: drop-shadow(0 0 15px rgba(255,255,255,0.05)); }
 
-    /* NAV */
-    nav { display: flex; justify-content: space-between; padding: 2rem; background: rgba(5,5,5,0.95); position: sticky; top: 0; border-bottom: 1px solid var(--border); z-index: 1000; }
-    .logo { font-weight: 900; letter-spacing: 0.1em; }
-    .nav-links a { margin-left: 2rem; color: var(--muted); text-decoration: none; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em; }
-    .nav-links a:hover { color: #fff; }
-    
-    /* FORMS */
-    input, textarea { width: 100%; padding: 1rem; margin-bottom: 1rem; background: var(--bg); border: 1px solid var(--border); color: #fff; font-size: 1rem; font-family: var(--font-main); }
-    input:focus, textarea:focus { outline: 1px solid #78909C; }
-    
-    /* SMOOTH SCROLL */
-    html { scroll-behavior: smooth; }
+        .btn { display: inline-block; padding: 1rem 3rem; border: 1px solid #fff; color: #fff; text-decoration: none; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; transition: 0.3s; margin-top: 1rem; }
+        .btn:hover { background: #fff; color: #000; }
+        
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 2rem; background: rgba(5,5,5,0.95); position: sticky; top: 0; border-bottom: 1px solid var(--border); z-index: 1000; }
+        .nav-links a { margin-left: 2rem; color: var(--muted); text-decoration: none; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 0.05em; }
+        .nav-links a:hover { color: #fff; }
+
+        .hero-text span { background: linear-gradient(180deg, #fff 0%, #666 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     </style>
 </head>
 <body>
+
     <nav>
-        <div class="logo">VERTIKAL <span style="color:#888">// NETWORKS</span></div>
+        <div style="font-weight:900; letter-spacing:0.1em; font-size:1.2rem;">VERTIKAL <span style="color:#888">// NETWORKS</span></div>
         <div class="nav-links">
-            <a href="../index.html">Main</a>
+            <a href="https://vertikalapp.com">Main</a>
             <a href="../creators/index.html">Creators</a>
             <a href="../investors/index.html">Investors</a>
+            <a href="#partner" class="btn" style="padding:0.5rem 1.5rem; margin-top:0;">Partner</a>
         </div>
     </nav>
 
-    <section class="container" style="padding-top: 8rem;">
-        <h1 class="hero-text">THE FOUNDING<br><span>50 NETWORKS.</span></h1>
-        <p>A Vertikal Network is a studio-grade IP engine designed to manufacture, distribute, and monetize short-form cinematic franchises at scale. This is not a community.</p>
-    </section>
-
-    <section id="network-form">
-        <div class="container" style="max-width: 700px;">
-            <h2>APPLY TO BECOME A NETWORK</h2>
-            <p style="margin-bottom: 2rem;">Fill out the form below to apply for Founding 50 Network status. We're looking for established studios, production companies, and IP factories.</p>
-            <form id="networkForm" style="background: var(--card); padding: 2rem; border: 1px solid var(--border);">
-                <input type="text" placeholder="Network/Studio Name" required style="margin-bottom: 1rem;">
-                <input type="email" placeholder="Contact Email" required style="margin-bottom: 1rem;">
-                <input type="text" placeholder="Contact Name" required style="margin-bottom: 1rem;">
-                <textarea placeholder="Tell us about your network: existing IP, production capacity, distribution channels" required style="width: 100%; padding: 1rem; margin-bottom: 1rem; background: var(--bg); border: 1px solid var(--border); color: #fff; font-size: 1rem; font-family: var(--font-main); min-height: 150px; resize: vertical;"></textarea>
-                <input type="url" placeholder="Portfolio/Website URL (Optional)" style="margin-bottom: 1rem;">
-                <button type="submit" class="btn" style="width: 100%; background: #fff; color: #000;">Submit Application</button>
-            </form>
-        </div>
-    </section>
+    <header class="container" style="padding-top: 8rem; min-height: 85vh; display: flex; flex-direction: column; justify-content: center;">
+        <h1 class="hero-text">MEDIA INFRASTRUCTURE.<br><span>NOT JUST PLAYLISTS.</span></h1>
+        <p style="font-size: 1.4rem; color: #fff; max-width: 800px;">Vertikal Networks are the studio-grade engines powering the short-series economy. Incubate, scale, and monetize Black IP.</p>
+    </header>
 
     <section>
         <div class="container">
-            <h2>WHY NETWORKS WIN</h2>
+            <h2>THE SHIFT</h2>
             <div class="grid grid-2">
-                <div class="badge-card" style="border-left: 4px solid #78909C;">
-                    <h3>IP Ownership</h3>
-                    <p>Networks retain permanent IP ownership and premium CPM access via the Titanium V Badge. Traditional platforms reward volume. We reward franchise depth.</p>
+                <div>
+                    <h3>The Problem</h3>
+                    <p>Traditional networks are too slow. They are losing speed, leverage, and the attention war to mobile-first platforms. But open platforms (TikTok/YouTube) are unsafe for premium brands.</p>
                 </div>
-                <div class="badge-card" style="border-left: 4px solid #78909C;">
-                    <h3>Institutional Authority</h3>
-                    <p>Verified Networks receive institutional status: job casting authority, brand trust, and long-term placement inside our syndication stack.</p>
+                <div>
+                    <h3>The Solution</h3>
+                    <p>Vertikal is infrastructure. We provide a brand-safe, high-fidelity environment where Networks can act as studios—curating slates, owning IP, and monetizing without algorithm volatility.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <script>
-    document.getElementById('networkForm').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        const data = Object.fromEntries(formData);
-        
-        try {
-            const response = await fetch('/functions/v1/network-application', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
-            
-            if (response.ok) {
-                alert('Application submitted successfully. We\'ll be in touch soon.');
-                e.target.reset();
-            } else {
-                alert('Error submitting application. Please try again.');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Error submitting application. Please try again.');
-        }
-    });
-    </script>
+    <section>
+        <div class="container">
+            <h2>INDUSTRY POSITIONING</h2>
+            <div class="badge-row">
+                <img src="FOUNDING 50 Networks titanium V speciality smoke.jpg" alt="Titanium Badge" class="badge-img">
+                <div>
+                    <h3 style="color: var(--titanium);">Titanium Network Partner</h3>
+                    <p style="margin:0;"><strong>Strategic Partnership.</strong> This badge signals studio-level authority. Titanium partners get priority access to vetted talent, early deal flow, and pipeline control. It is the mark of a content factory.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2>THE NETWORK ADVANTAGE</h2>
+            <div class="grid grid-3">
+                <div class="card">
+                    <h3>Vetted Deal Flow</h3>
+                    <p style="font-size:0.9rem;">Access the V Badge creator pool. No more sifting through amateur content.</p>
+                </div>
+                <div class="card">
+                    <h3>Reduced Risk</h3>
+                    <p style="font-size:0.9rem;">Test formats cheaply in the 2–10 minute window before committing to long-form budgets.</p>
+                </div>
+                <div class="card">
+                    <h3>Multi-Layer Revenue</h3>
+                    <p style="font-size:0.9rem;">Monetize via ad share, syndication licensing, and direct brand partnerships.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2>THE ARCHITECTURE</h2>
+            <div class="grid grid-2">
+                <div>
+                    <h3 style="color:#fff;">Alpha Visual Artists</h3>
+                    <p>High-art, experimental visual narratives.</p>
+                </div>
+                <div>
+                    <h3 style="color:#fff;">Vertikal Studios</h3>
+                    <p>Internal production house and original content arm.</p>
+                </div>
+                <div>
+                    <h3 style="color:#fff;">Vertikal Creators</h3>
+                    <p>Talent incubation and resource deployment.</p>
+                </div>
+                <div>
+                    <h3 style="color:#fff;">Vertikal Investors</h3>
+                    <p>Capital arm connecting institutional leverage.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="partner" style="text-align: center; border-bottom: none; background: #0a0a0a;">
+        <div class="container">
+            <h2 style="border: none; padding: 0;">THE WINDOW IS CLOSING</h2>
+            <p style="margin: 0 auto 2rem auto;">Early partners define the rules. Late partners pay the premiums.</p>
+            <a href="#" class="btn">Apply as Network</a>
+        </div>
+    </section>
+
 </body>
 </html>
