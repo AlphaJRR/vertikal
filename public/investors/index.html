@@ -51,6 +51,16 @@
         .close:hover { color: var(--green); }
 
         .hero-text span { background: linear-gradient(180deg, #fff 0%, #666 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        /* CHART PLACEHOLDER */
+        .chart-container { background: var(--card); border: 1px solid var(--border); padding: 2rem; margin-bottom: 2rem; min-height: 300px; display: flex; align-items: center; justify-content: center; }
+        .chart-placeholder { text-align: center; color: var(--muted); }
+        .chart-placeholder h3 { color: #fff; margin-bottom: 0.5rem; }
+        .chart-placeholder p { font-size: 0.9rem; }
+        
+        @media (max-width: 768px) {
+            .chart-container { min-height: 250px; padding: 1.5rem; }
+        }
     </style>
 </head>
 <body>
@@ -121,6 +131,22 @@
                         <li style="border-bottom:1px solid #333; padding:1rem 0; color:#fff;"><strong>Commerce:</strong> Transaction fees on creator merch.</li>
                         <li style="border-bottom:1px solid #333; padding:1rem 0; color:#fff;"><strong>Long-Tail:</strong> Permanent library value.</li>
                     </ul>
+                </div>
+            </div>
+            <div class="grid grid-2" style="margin-top: 3rem;">
+                <div class="chart-container">
+                    <div class="chart-placeholder">
+                        <h3>Revenue Projections</h3>
+                        <p>Chart: 3-year revenue forecast</p>
+                        <p style="font-size: 0.85rem; margin-top: 1rem; color: var(--muted);">Data visualization placeholder</p>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <div class="chart-placeholder">
+                        <h3>Market Size</h3>
+                        <p>Chart: Vertical video market growth</p>
+                        <p style="font-size: 0.85rem; margin-top: 1rem; color: var(--muted);">Data visualization placeholder</p>
+                    </div>
                 </div>
             </div>
         </div>

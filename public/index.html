@@ -64,6 +64,28 @@
     .poster-card { aspect-ratio: 9/16; background: var(--card); border: 1px solid var(--border); position: relative; overflow: hidden; cursor: pointer; }
     .poster-card:hover { border-color: #444; }
     
+    /* VIBECODE COMPONENT */
+    .vibecode-section { padding: 6rem 0; border-bottom: 1px solid var(--border); }
+    .vibecode-feature { border-left: 4px solid #333; padding-left: 1.5rem; margin-bottom: 2rem; }
+    
+    /* BADGE DESCRIPTION BLOCK */
+    .badge-description-block { background: var(--card); border: 1px solid var(--border); padding: 2rem; margin-bottom: 1.5rem; border-left: 4px solid var(--border); }
+    .badge-description-block.gold { border-left-color: #FFD700; }
+    .badge-description-block.blue { border-left-color: #2962FF; }
+    .badge-description-block.green { border-left-color: #00C853; }
+    .badge-description-block.titanium { border-left-color: #B0BEC5; }
+    
+    /* CHART PLACEHOLDER */
+    .chart-container { background: var(--card); border: 1px solid var(--border); padding: 2rem; margin-bottom: 2rem; min-height: 300px; display: flex; align-items: center; justify-content: center; }
+    .chart-placeholder { text-align: center; color: var(--muted); }
+    .chart-placeholder h3 { color: #fff; margin-bottom: 0.5rem; }
+    .chart-placeholder p { font-size: 0.9rem; }
+    
+    @media (max-width: 768px) {
+        .vibecode-section .grid { grid-template-columns: 1fr; }
+        .chart-container { min-height: 250px; padding: 1.5rem; }
+    }
+    
     /* MODAL */
     .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); align-items: center; justify-content: center; }
     .modal.active { display: flex; }
@@ -130,23 +152,52 @@
         </div>
     </section>
 
-    <!-- VIBE ENGINE: PASS THE CULTURE CHECK -->
+    <!-- VIBECODE EXPLANATION -->
+    <section class="vibecode-section">
+        <div class="container">
+            <h2>VIBECODE</h2>
+            <p style="color: #fff; font-size: 1.3rem; margin-bottom: 2rem;">
+                <strong>VibeCode</strong> is Vertikal's real-time comment overlay system. Comments flow across the screen as you watch, creating a shared viewing experience without interrupting the content.
+            </p>
+            <div class="grid grid-2">
+                <div class="vibecode-feature">
+                    <h3 style="color: #FFD700; margin-bottom: 0.5rem;">Live Engagement</h3>
+                    <p style="font-size: 0.95rem;">Comments appear in real-time as viewers react to moments. No scrolling, no pausing. Pure immersion.</p>
+                </div>
+                <div class="vibecode-feature">
+                    <h3 style="color: #2962FF; margin-bottom: 0.5rem;">Cultural Context</h3>
+                    <p style="font-size: 0.95rem;">VibeCode preserves the cultural conversation. It's not just comments—it's community context layered over the art.</p>
+                </div>
+                <div class="vibecode-feature">
+                    <h3 style="color: #00C853; margin-bottom: 0.5rem;">Creator Control</h3>
+                    <p style="font-size: 0.95rem;">Creators moderate the vibe. Quality conversations stay. Noise gets filtered. Your community, your rules.</p>
+                </div>
+                <div class="vibecode-feature">
+                    <h3 style="color: #B0BEC5; margin-bottom: 0.5rem;">Algorithm-Free</h3>
+                    <p style="font-size: 0.95rem;">No engagement bait. No forced virality. VibeCode amplifies authentic reactions, not manufactured metrics.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- MARKET DATA CHARTS -->
     <section>
         <div class="container">
-            <h2>PASS THE CULTURE CHECK</h2>
-            <p style="color: #fff; font-size: 1.3rem; margin-bottom: 2rem;"><strong>The Vibe Engine</strong> is our content moderation system. It's not about censorship—it's about maintaining the cultural integrity that makes Vertikal valuable.</p>
-            <div class="grid grid-3">
-                <div style="border-left: 4px solid #FFD700; padding-left: 1.5rem;">
-                    <h3 style="color: #FFD700; margin-bottom: 0.5rem;">Gold Badge</h3>
-                    <p style="font-size: 0.9rem;">Flagship originals. Highest CPM. Exclusive access.</p>
+            <h2>THE MARKET</h2>
+            <div class="grid grid-2">
+                <div class="chart-container">
+                    <div class="chart-placeholder">
+                        <h3>Vertical Video Consumption</h3>
+                        <p>Chart: Growth trajectory 2020-2024</p>
+                        <p style="font-size: 0.85rem; margin-top: 1rem; color: var(--muted);">Data visualization placeholder</p>
+                    </div>
                 </div>
-                <div style="border-left: 4px solid #00C853; padding-left: 1.5rem;">
-                    <h3 style="color: #00C853; margin-bottom: 0.5rem;">Green Badge</h3>
-                    <p style="font-size: 0.9rem;">Verified creators. Brand sponsorship eligible.</p>
-                </div>
-                <div style="border-left: 4px solid #2962FF; padding-left: 1.5rem;">
-                    <h3 style="color: #2962FF; margin-bottom: 0.5rem;">Blue Badge</h3>
-                    <p style="font-size: 0.9rem;">Emerging talent. Programmatic ads enabled.</p>
+                <div class="chart-container">
+                    <div class="chart-placeholder">
+                        <h3>Creator Revenue Distribution</h3>
+                        <p>Chart: Platform revenue share comparison</p>
+                        <p style="font-size: 0.85rem; margin-top: 1rem; color: var(--muted);">Data visualization placeholder</p>
+                    </div>
                 </div>
             </div>
         </div>

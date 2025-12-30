@@ -61,6 +61,21 @@
         .money { color: #00C853; font-weight: 700; font-family: monospace; font-size: 1.3rem; }
         
         .hero-text span { background: linear-gradient(180deg, #fff 0%, #666 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        /* VIBECODE COMPONENT */
+        .vibecode-section { padding: 6rem 0; border-bottom: 1px solid var(--border); }
+        .vibecode-feature { border-left: 4px solid #333; padding-left: 1.5rem; margin-bottom: 2rem; }
+        
+        /* CHART PLACEHOLDER */
+        .chart-container { background: var(--card); border: 1px solid var(--border); padding: 2rem; margin-bottom: 2rem; min-height: 300px; display: flex; align-items: center; justify-content: center; }
+        .chart-placeholder { text-align: center; color: var(--muted); }
+        .chart-placeholder h3 { color: #fff; margin-bottom: 0.5rem; }
+        .chart-placeholder p { font-size: 0.9rem; }
+        
+        @media (max-width: 768px) {
+            .vibecode-section .grid { grid-template-columns: 1fr; }
+            .chart-container { min-height: 250px; padding: 1.5rem; }
+        }
     </style>
 </head>
 <body>
@@ -154,6 +169,26 @@
         </div>
     </section>
 
+    <!-- VIBECODE EXPLANATION -->
+    <section class="vibecode-section">
+        <div class="container">
+            <h2>VIBECODE</h2>
+            <p style="color: #fff; font-size: 1.3rem; margin-bottom: 2rem;">
+                <strong>VibeCode</strong> is Vertikal's real-time comment overlay system. Comments flow across the screen as you watch, creating a shared viewing experience without interrupting the content.
+            </p>
+            <div class="grid grid-2">
+                <div class="vibecode-feature">
+                    <h3 style="color: var(--gold); margin-bottom: 0.5rem;">Live Engagement</h3>
+                    <p style="font-size: 0.95rem;">Comments appear in real-time as viewers react to moments. No scrolling, no pausing. Pure immersion.</p>
+                </div>
+                <div class="vibecode-feature">
+                    <h3 style="color: var(--blue); margin-bottom: 0.5rem;">Cultural Context</h3>
+                    <p style="font-size: 0.95rem;">VibeCode preserves the cultural conversation. It's not just comments—it's community context layered over the art.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="economics">
         <div class="container">
             <h2 style="border-color: #00C853;">CREATOR ECONOMICS</h2>
@@ -174,6 +209,13 @@
                     </tr>
                 </tbody>
             </table>
+            <div class="chart-container" style="margin-top: 3rem;">
+                <div class="chart-placeholder">
+                    <h3>Creator Revenue Growth</h3>
+                    <p>Chart: Monthly revenue by badge tier</p>
+                    <p style="font-size: 0.85rem; margin-top: 1rem; color: var(--muted);">Data visualization placeholder</p>
+                </div>
+            </div>
         </div>
     </section>
 
