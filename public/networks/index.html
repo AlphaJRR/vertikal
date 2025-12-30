@@ -36,17 +36,23 @@
         nav { display: flex; justify-content: space-between; align-items: center; padding: 2rem; background: rgba(5,5,5,0.95); position: sticky; top: 0; border-bottom: 1px solid var(--border); z-index: 1000; }
         .nav-links a { margin-left: 2rem; color: var(--muted); text-decoration: none; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 0.05em; }
         .nav-links a:hover { color: #fff; }
+        .logo-link { font-weight:900; letter-spacing:0.1em; font-size:1.2rem; color: #fff; text-decoration: none; }
+        .logo-link:hover { color: #fff; }
 
         .hero-text span { background: linear-gradient(180deg, #fff 0%, #666 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .roi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem; }
+        .roi-card { background: var(--card); border: 1px solid var(--border); padding: 2rem; border-left: 4px solid var(--titanium); }
+        .roi-number { font-size: 3rem; font-weight: 900; color: var(--titanium); line-height: 1; margin-bottom: 0.5rem; }
     </style>
 </head>
 <body>
 
     <nav>
-        <div style="font-weight:900; letter-spacing:0.1em; font-size:1.2rem;">VERTIKAL <span style="color:#888">// NETWORKS</span></div>
+        <a href="https://vertikalapp.com" class="logo-link">VERTIKAL <span style="color:#888">// NETWORKS</span></a>
         <div class="nav-links">
-            <a href="https://vertikalapp.com">Main</a>
             <a href="../creators/index.html">Creators</a>
+            <a href="../networks/index.html">Networks</a>
             <a href="../investors/index.html">Investors</a>
             <a href="#partner" class="btn" style="padding:0.5rem 1.5rem; margin-top:0;">Partner</a>
         </div>
@@ -54,8 +60,59 @@
 
     <header class="container" style="padding-top: 8rem; min-height: 85vh; display: flex; flex-direction: column; justify-content: center;">
         <h1 class="hero-text">MEDIA INFRASTRUCTURE.<br><span>NOT JUST PLAYLISTS.</span></h1>
-        <p style="font-size: 1.4rem; color: #fff; max-width: 800px;">Vertikal Networks are the studio-grade engines powering the short-series economy. Incubate, scale, and monetize Black IP.</p>
+        <p style="font-size: 1.4rem; color: #fff; max-width: 800px;">Vertikal Networks are the studio-grade engines powering the short-series economy. Faster deal flow. Reduced risk. Validated IP. Financial upside.</p>
+        <div style="margin-top: 3rem;">
+            <a href="#roi" class="btn">See The ROI</a>
+        </div>
     </header>
+
+    <section id="roi">
+        <div class="container">
+            <h2>THE NETWORK ROI</h2>
+            <p style="font-size: 1.3rem; color: #fff; margin-bottom: 2rem;">Four advantages that deliver measurable returns within your first quarter.</p>
+            <div class="roi-grid">
+                <div class="roi-card">
+                    <div class="roi-number">10x</div>
+                    <h3>Faster Deal Flow</h3>
+                    <p style="font-size:0.95rem;">Access pre-vetted V Badge creators. No sifting through amateur content. Quality pipeline from day one.</p>
+                </div>
+                <div class="roi-card">
+                    <div class="roi-number">80%</div>
+                    <h3>Reduced Risk</h3>
+                    <p style="font-size:0.95rem;">Test formats in the 2–10 minute window before committing long-form budgets. Validate concepts cheaply.</p>
+                </div>
+                <div class="roi-card">
+                    <div class="roi-number">Early</div>
+                    <h3>Validated IP Access</h3>
+                    <p style="font-size:0.95rem;">First access to proven franchises before they hit mainstream. Lock in licensing before competitors.</p>
+                </div>
+                <div class="roi-card">
+                    <div class="roi-number">3x</div>
+                    <h3>Revenue Layers</h3>
+                    <p style="font-size:0.95rem;">Ad share, syndication licensing, and direct brand partnerships. Multiple monetization streams per asset.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2>THE TITANIUM ADVANTAGE</h2>
+            <div class="badge-row">
+                <img src="FOUNDING 50 Networks titanium V speciality smoke.jpg" alt="Titanium Badge" class="badge-img">
+                <div>
+                    <h3 style="color: var(--titanium);">Titanium Network Partner</h3>
+                    <p style="margin:0; font-size: 1.1rem;"><strong>Studio-Level Authority.</strong> This badge signals you are a content factory. Priority access to vetted talent. Early deal flow. Pipeline control. When brands see Titanium, they know you deliver.</p>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem; color: var(--muted);">
+                        <li>Priority access to V Badge creator pool</li>
+                        <li>Early deal flow on validated IP</li>
+                        <li>Pipeline control and exclusivity windows</li>
+                        <li>Studio-level brand recognition</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <section>
         <div class="container">
@@ -68,39 +125,6 @@
                 <div>
                     <h3>The Solution</h3>
                     <p>Vertikal is infrastructure. We provide a brand-safe, high-fidelity environment where Networks can act as studios—curating slates, owning IP, and monetizing without algorithm volatility.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section>
-        <div class="container">
-            <h2>INDUSTRY POSITIONING</h2>
-            <div class="badge-row">
-                <img src="FOUNDING 50 Networks titanium V speciality smoke.jpg" alt="Titanium Badge" class="badge-img">
-                <div>
-                    <h3 style="color: var(--titanium);">Titanium Network Partner</h3>
-                    <p style="margin:0;"><strong>Strategic Partnership.</strong> This badge signals studio-level authority. Titanium partners get priority access to vetted talent, early deal flow, and pipeline control. It is the mark of a content factory.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section>
-        <div class="container">
-            <h2>THE NETWORK ADVANTAGE</h2>
-            <div class="grid grid-3">
-                <div class="card">
-                    <h3>Vetted Deal Flow</h3>
-                    <p style="font-size:0.9rem;">Access the V Badge creator pool. No more sifting through amateur content.</p>
-                </div>
-                <div class="card">
-                    <h3>Reduced Risk</h3>
-                    <p style="font-size:0.9rem;">Test formats cheaply in the 2–10 minute window before committing to long-form budgets.</p>
-                </div>
-                <div class="card">
-                    <h3>Multi-Layer Revenue</h3>
-                    <p style="font-size:0.9rem;">Monetize via ad share, syndication licensing, and direct brand partnerships.</p>
                 </div>
             </div>
         </div>

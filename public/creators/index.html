@@ -37,12 +37,14 @@
         nav { display: flex; justify-content: space-between; align-items: center; padding: 2rem; background: rgba(5,5,5,0.95); position: sticky; top: 0; border-bottom: 1px solid var(--border); z-index: 1000; }
         .nav-links a { margin-left: 2rem; color: var(--muted); text-decoration: none; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 0.05em; }
         .nav-links a:hover { color: #fff; }
+        .logo-link { font-weight:900; letter-spacing:0.1em; font-size:1.2rem; color: #fff; text-decoration: none; }
+        .logo-link:hover { color: #fff; }
 
         /* TABLES */
         table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
         th, td { text-align: left; padding: 1.5rem; border-bottom: 1px solid var(--border); }
         th { color: var(--muted); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.1em; }
-        .money { color: var(--green); font-weight: 700; font-family: monospace; font-size: 1.3rem; color: #00C853; }
+        .money { color: #00C853; font-weight: 700; font-family: monospace; font-size: 1.3rem; }
         
         .hero-text span { background: linear-gradient(180deg, #fff 0%, #666 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     </style>
@@ -50,11 +52,11 @@
 <body>
 
     <nav>
-        <div style="font-weight:900; letter-spacing:0.1em; font-size:1.2rem;">VERTIKAL <span style="color:#888">// CREATORS</span></div>
+        <a href="https://vertikalapp.com" class="logo-link">VERTIKAL <span style="color:#888">// CREATORS</span></a>
         <div class="nav-links">
-            <a href="https://vertikalapp.com">Main</a>
-            <a href="../investors/index.html">Investors</a>
+            <a href="../creators/index.html">Creators</a>
             <a href="../networks/index.html">Networks</a>
+            <a href="../investors/index.html">Investors</a>
             <a href="#apply" class="btn" style="padding:0.5rem 1.5rem; margin-top:0;">Apply</a>
         </div>
     </nav>
@@ -63,7 +65,7 @@
         <h1 class="hero-text">BUILD FRANCHISES.<br><span>NOT JUST FOLLOWERS.</span></h1>
         <p style="font-size: 1.4rem; color: #fff; max-width: 800px;">Vertikal is where creators stop chasing algorithms and start building short-series IP, ownership, and long-term leverage.</p>
         <div style="margin-top: 3rem;">
-            <a href="#economics" class="btn">See The Economics</a>
+            <a href="#badges" class="btn">See The Badges</a>
         </div>
     </header>
 
@@ -83,16 +85,22 @@
         </div>
     </section>
 
-    <section>
+    <section id="badges">
         <div class="container">
-            <h2>THE FOUNDING ARCHITECTURE</h2>
-            <p>The V Badge is not a participation trophy. It signals contribution, priority, and access. During our founding phase, scarcity is the rule.</p>
+            <h2>THE V BADGE SYSTEM</h2>
+            <p style="font-size: 1.3rem; color: #fff; margin-bottom: 2rem;">The V Badge is your status signal. It unlocks priority, monetization, and permanent platform advantage. Scarcity is intentional.</p>
             
             <div class="badge-row" style="border-left: 4px solid var(--gold);">
                 <img src="FOUNDING 50 GOLD V .jpg" alt="Gold Badge" class="badge-img">
                 <div>
                     <h3 style="color: var(--gold);">Gold Tier: The Founding 50</h3>
-                    <p style="margin:0;"><strong>Strictly capped at the first 50 creators.</strong> These are the visionaries who defined the platform before launch. Signals highest algorithmic priority and founding equity status.</p>
+                    <p style="margin:0; font-size: 1.1rem;"><strong>Strictly capped at 50 creators. Forever.</strong> This badge signals you were here first. Highest algorithmic priority. Premium brand deal access. Founding equity recognition. When people see Gold, they know you built this.</p>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem; color: var(--muted);">
+                        <li>Algorithmic priority in feed and discovery</li>
+                        <li>Exclusive brand partnership opportunities</li>
+                        <li>Founding equity stake recognition</li>
+                        <li>Permanent platform status</li>
+                    </ul>
                 </div>
             </div>
 
@@ -100,7 +108,13 @@
                 <img src="blue_v.jpg" alt="Blue Badge" class="badge-img">
                 <div>
                     <h3 style="color: var(--blue);">Blue Tier: Verified Creator</h3>
-                    <p style="margin:0;"><strong>The Quality Standard.</strong> Awarded to creators demonstrating consistent cinematic output. Unlocks monetization tools, brand deal eligibility, and franchise support.</p>
+                    <p style="margin:0; font-size: 1.1rem;"><strong>The Quality Standard.</strong> Awarded to creators who consistently deliver cinematic content. Unlocks monetization tools, brand deal eligibility, and franchise development support.</p>
+                    <ul style="margin-top: 1rem; padding-left: 1.5rem; color: var(--muted);">
+                        <li>Full monetization suite (ads, tipping, subscriptions)</li>
+                        <li>Brand deal marketplace access</li>
+                        <li>Franchise development resources</li>
+                        <li>Verified creator status badge</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -172,7 +186,7 @@
     <section id="apply" style="text-align: center; border-bottom: none; background: #0a0a0a;">
         <div class="container">
             <h2 style="border: none; padding: 0;">READY TO BUILD?</h2>
-            <p style="margin: 0 auto 2rem auto;">Access is curated. Scarcity is intentional.</p>
+            <p style="margin: 0 auto 2rem auto;">Access is curated. Scarcity is intentional. The badge is your advantage.</p>
             <a href="#" class="btn">Apply For Badge</a>
         </div>
     </section>
