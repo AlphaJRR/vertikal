@@ -34,10 +34,24 @@
         .btn:hover { background: #fff; color: #000; }
         
         nav { display: flex; justify-content: space-between; align-items: center; padding: 2rem; background: rgba(5,5,5,0.95); position: sticky; top: 0; border-bottom: 1px solid var(--border); z-index: 1000; }
+        .nav-links { display: flex; align-items: center; }
         .nav-links a { margin-left: 2rem; color: var(--muted); text-decoration: none; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 0.05em; }
         .nav-links a:hover { color: #fff; }
-        .logo-link { font-weight:900; letter-spacing:0.1em; font-size:1.2rem; color: #fff; text-decoration: none; }
+        .logo-link { font-weight:900; letter-spacing:0.1em; font-size:1.2rem; color: #fff; text-decoration: none; display: flex; align-items: center; }
         .logo-link:hover { color: #fff; }
+        .logo-img { height: 40px; width: auto; margin-right: 0.5rem; }
+        @media (max-width: 768px) {
+            nav { flex-wrap: wrap; }
+            .nav-links { margin-top: 1rem; width: 100%; }
+            .nav-links a { margin-left: 0; margin-right: 1rem; }
+        }
+        
+        /* MODAL */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); align-items: center; justify-content: center; }
+        .modal.active { display: flex; }
+        .modal-content { background: var(--card); border: 1px solid var(--border); padding: 3rem; max-width: 500px; width: 90%; position: relative; text-align: center; }
+        .close { position: absolute; top: 1rem; right: 1rem; font-size: 2rem; cursor: pointer; color: #fff; line-height: 1; }
+        .close:hover { color: var(--titanium); }
 
         .hero-text span { background: linear-gradient(180deg, #fff 0%, #666 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
@@ -49,12 +63,16 @@
 <body>
 
     <nav>
-        <a href="https://vertikalapp.com" class="logo-link">VERTIKAL <span style="color:#888">// NETWORKS</span></a>
+        <a href="https://vertikalapp.com" class="logo-link">
+            <img src="assets/Vertikal_Logo_Master.png" alt="VERTIKAL" class="logo-img">
+            <span style="color:#888">// NETWORKS</span>
+        </a>
         <div class="nav-links">
             <a href="../creators/index.html">Creators</a>
             <a href="../networks/index.html">Networks</a>
             <a href="../investors/index.html">Investors</a>
-            <a href="#partner" class="btn" style="padding:0.5rem 1.5rem; margin-top:0;">Partner</a>
+            <a href="#" class="btn" style="padding:0.5rem 1.5rem; margin-left:1rem; margin-top:0;" onclick="event.preventDefault(); document.getElementById('demoModal').classList.add('active');">Watch Live Demo</a>
+            <a href="#partner" class="btn" style="padding:0.5rem 1.5rem; margin-left:1rem; margin-top:0;">Partner</a>
         </div>
     </nav>
 
@@ -162,5 +180,24 @@
         </div>
     </section>
 
+    <!-- DEMO MODAL -->
+    <div id="demoModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="document.getElementById('demoModal').classList.remove('active');">&times;</span>
+            <h2 style="margin-bottom: 1.5rem; color: #fff;">Live Demo</h2>
+            <p style="color: var(--muted); font-size: 1.1rem; line-height: 1.6;">
+                Live demo launching March/April.<br>
+                Full beta expected June with at least 50 creators.
+            </p>
+        </div>
+    </div>
+
+    <script>
+    document.getElementById('demoModal').addEventListener('click', function(e) {
+        if (e.target === this || e.target.classList.contains('close')) {
+            this.classList.remove('active');
+        }
+    });
+    </script>
 </body>
 </html>
