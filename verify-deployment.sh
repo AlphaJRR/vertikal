@@ -1,49 +1,60 @@
 #!/bin/bash
-set -euo pipefail
 
-echo "🔒 PRE-DEPLOYMENT VERIFICATION"
-echo "================================"
+# VERTIKAL DEPLOYMENT VERIFICATION SCRIPT
+# Tests all 5 subdomains for correct deployment
 
-# Check secrets
-if [ -z "${CLOUDFLARE_API_TOKEN:-}" ]; then
-  echo "❌ CLOUDFLARE_API_TOKEN not set"
-  exit 1
-fi
-echo "✅ CLOUDFLARE_API_TOKEN set"
+echo "═══════════════════════════════════════════════════════════"
+echo "        🔍 VERTIKAL DEPLOYMENT VERIFICATION 🔍"
+echo "═══════════════════════════════════════════════════════════"
+echo ""
 
-if [ -z "${CLOUDFLARE_ACCOUNT_ID:-}" ]; then
-  echo "❌ CLOUDFLARE_ACCOUNT_ID not set"
-  exit 1
-fi
-echo "✅ CLOUDFLARE_ACCOUNT_ID set"
+DOMAINS=(
+    "https://vertikalapp.com"
+    "https://creators.vertikalapp.com"
+    "https://investors.vertikalapp.com"
+    "https://networks.vertikalapp.com"
+    "https://beta.vertikalapp.com"
+)
 
-# Check build output
-if [ ! -d "dist" ]; then
-  echo "❌ dist/ not found. Run 'npm run build' first."
-  exit 1
-fi
-echo "✅ dist/ exists"
+PASS=0
+FAIL=0
 
-# Check wrangler
-if ! command -v wrangler &> /dev/null; then
-  echo "⚠️  Wrangler not installed. Will use npx wrangler."
-else
-  echo "✅ Wrangler installed"
-fi
-
-# Verify project names exist
-PROJECTS=("vertikalapp" "investors-vertikalapp" "creators-vertikalapp" "networks-vertikalapp" "demo-vertikal")
-for project in "${PROJECTS[@]}"; do
-  if curl -s -X GET \
-    "https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/pages/projects/${project}" \
-    -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" | jq -e '.success' > /dev/null 2>&1; then
-    echo "✅ Project exists: $project"
-  else
-    echo "❌ Project missing: $project"
-    exit 1
-  fi
+for domain in "${DOMAINS[@]}"; do
+    echo "Testing: $domain"
+    echo "----------------------------------------"
+    
+    # Check HTTP status
+    STATUS=$(curl -s -o /dev/null -w "%{http_code}" -I "$domain" 2>/dev/null)
+    
+    if [ "$STATUS" = "200" ]; then
+        echo "✅ HTTP Status: $STATUS OK"
+        PASS=$((PASS + 1))
+    else
+        echo "❌ HTTP Status: $STATUS (Expected 200)"
+        FAIL=$((FAIL + 1))
+    fi
+    
+    # Check if page loads (basic content check)
+    CONTENT=$(curl -s -L "$domain" 2>/dev/null | head -20)
+    if echo "$CONTENT" | grep -q "VERTIKAL\|vertikal"; then
+        echo "✅ Content: Page loads correctly"
+    else
+        echo "⚠️  Content: May not be loading correctly"
+    fi
+    
+    echo ""
 done
 
-echo ""
-echo "✅ ALL VERIFICATIONS PASSED"
-echo "Ready to deploy"
+echo "═══════════════════════════════════════════════════════════"
+echo "RESULTS:"
+echo "  ✅ Passed: $PASS/5"
+echo "  ❌ Failed: $FAIL/5"
+echo "═══════════════════════════════════════════════════════════"
+
+if [ $FAIL -eq 0 ]; then
+    echo "🎉 ALL DOMAINS RESOLVING CORRECTLY!"
+    exit 0
+else
+    echo "⚠️  SOME DOMAINS NEED ATTENTION"
+    exit 1
+fi

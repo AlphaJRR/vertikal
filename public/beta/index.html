@@ -46,27 +46,68 @@
     .b-titanium { background: var(--titanium); box-shadow: 0 0 15px rgba(120, 144, 156, 0.2); }
 
     /* NAV */
-    nav { display: flex; justify-content: space-between; padding: 2rem; background: rgba(5,5,5,0.95); position: sticky; top: 0; border-bottom: 1px solid var(--border); z-index: 1000; }
-    .logo { font-weight: 900; letter-spacing: 0.1em; }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 2rem; background: rgba(5,5,5,0.95); position: sticky; top: 0; border-bottom: 1px solid var(--border); z-index: 1000; }
+    .nav-links { display: flex; align-items: center; }
     .nav-links a { margin-left: 2rem; color: var(--muted); text-decoration: none; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em; }
     .nav-links a:hover { color: #fff; }
+    @media (max-width: 768px) {
+        nav { flex-wrap: wrap; }
+        .nav-links { margin-top: 1rem; width: 100%; }
+        .nav-links a { margin-left: 0; margin-right: 1rem; }
+    }
     
     /* SMOOTH SCROLL */
     html { scroll-behavior: smooth; }
     </style>
 </head>
 <body>
+
     <nav>
-        <div class="logo">VERTIKAL <span style="color:#FFD700">// BETA</span></div>
+        <a href="https://vertikalapp.com" style="font-weight: 900; letter-spacing: 0.1em; color: #fff; text-decoration: none; display: flex; align-items: center;">
+            <img src="/assets/Vertikal_Logo_Master.png" alt="VERTIKAL" style="height: 40px; width: auto; margin-right: 0.5rem;">
+            <span style="color:#FFD700">// BETA</span>
+        </a>
         <div class="nav-links">
             <a href="../index.html">Main</a>
+            <a href="../creators/index.html">Creators</a>
+            <a href="../networks/index.html">Networks</a>
+            <a href="../investors/index.html">Investors</a>
         </div>
     </nav>
 
     <section class="container" style="text-align: center; padding-top: 8rem;">
         <h1 class="hero-text">INSIDE THE ENGINE.</h1>
-        <p style="margin: 0 auto 2rem auto;">You are standing on the ground floor. This is a preview of the operating system for Black ownership.</p>
+        <p style="margin: 0 auto 2rem auto; font-size: 1.3rem; color: #fff;">You are standing on the ground floor. This is a preview of the operating system for Black ownership.</p>
         <a href="mailto:beta@vertikalapp.com?subject=TestFlight%20Access" class="btn" style="background: #fff; color: #000;">Download Demo (TestFlight)</a>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2>FRIENDS & FAMILY HIGHLIGHTS</h2>
+            <p style="font-size: 1.2rem; color: #fff; margin-bottom: 3rem;">Early feedback from our beta testers. The engine is working.</p>
+            <div class="grid grid-2">
+                <div style="background: var(--card); border: 1px solid var(--border); padding: 2rem; border-left: 4px solid #FFD700;">
+                    <h3 style="color: #FFD700; margin-bottom: 1rem;">"The VibeCode is Revolutionary"</h3>
+                    <p style="font-size: 1rem; font-style: italic; color: var(--muted);">"Comments flowing over the video without interrupting? This is how we should consume content. Game changer."</p>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: #888;">— Early Beta Tester</p>
+                </div>
+                <div style="background: var(--card); border: 1px solid var(--border); padding: 2rem; border-left: 4px solid #2962FF;">
+                    <h3 style="color: #2962FF; margin-bottom: 1rem;">"Finally, Ownership"</h3>
+                    <p style="font-size: 1rem; font-style: italic; color: var(--muted);">"I've been creating for years. This is the first platform where I actually own my IP. That's the difference."</p>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: #888;">— Founding 50 Creator</p>
+                </div>
+                <div style="background: var(--card); border: 1px solid var(--border); padding: 2rem; border-left: 4px solid #00C853;">
+                    <h3 style="color: #00C853; margin-bottom: 1rem;">"The Badge System Works"</h3>
+                    <p style="font-size: 1rem; font-style: italic; color: var(--muted);">"Seeing the Gold badge on profiles immediately signals quality. It's not just decoration—it's a filter for premium content."</p>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: #888;">— Beta Viewer</p>
+                </div>
+                <div style="background: var(--card); border: 1px solid var(--border); padding: 2rem; border-left: 4px solid #B0BEC5;">
+                    <h3 style="color: #B0BEC5; margin-bottom: 1rem;">"This is Infrastructure"</h3>
+                    <p style="font-size: 1rem; font-style: italic; color: var(--muted);">"Vertikal isn't just another app. It's the infrastructure for the next generation of media. We're building something real here."</p>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: #888;">— Network Partner</p>
+                </div>
+            </div>
+        </div>
     </section>
 
     <section>
@@ -95,6 +136,14 @@
                     <p style="font-size: 0.85rem;">Studios & Infrastructure.</p>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <section style="text-align: center; border-bottom: none; background: #0a0a0a;">
+        <div class="container">
+            <h2 style="border: none; padding: 0;">SHARE YOUR FEEDBACK</h2>
+            <p style="margin: 0 auto 2rem auto; max-width: 600px;">You're part of building this. Tell us what's working, what's not, and what you want to see next.</p>
+            <a href="mailto:beta@vertikalapp.com?subject=Beta%20Feedback" class="btn" style="background: #fff; color: #000;">Send Feedback</a>
         </div>
     </section>
 </body>
