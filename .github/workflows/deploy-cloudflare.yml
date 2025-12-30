@@ -116,6 +116,12 @@ jobs:
             exit 1
           fi
 
+      - name: Copy shared assets to investors directory
+        if: steps.changed.outputs.changed == 'true'
+        run: |
+          mkdir -p ./public/investors/assets
+          cp -r ./public/assets/* ./public/investors/assets/ 2>/dev/null || true
+
       - name: Publish to Cloudflare Pages
         if: steps.changed.outputs.changed == 'true'
         uses: cloudflare/pages-action@v1
@@ -173,6 +179,12 @@ jobs:
             echo "Directory ./public/creators does not exist"
             exit 1
           fi
+
+      - name: Copy shared assets to creators directory
+        if: steps.changed.outputs.changed == 'true'
+        run: |
+          mkdir -p ./public/creators/assets
+          cp -r ./public/assets/* ./public/creators/assets/ 2>/dev/null || true
 
       - name: Publish to Cloudflare Pages
         if: steps.changed.outputs.changed == 'true'
@@ -232,6 +244,12 @@ jobs:
             exit 1
           fi
 
+      - name: Copy shared assets to networks directory
+        if: steps.changed.outputs.changed == 'true'
+        run: |
+          mkdir -p ./public/networks/assets
+          cp -r ./public/assets/* ./public/networks/assets/ 2>/dev/null || true
+
       - name: Publish to Cloudflare Pages
         if: steps.changed.outputs.changed == 'true'
         uses: cloudflare/pages-action@v1
@@ -289,6 +307,12 @@ jobs:
             echo "Directory ./public/beta does not exist"
             exit 1
           fi
+
+      - name: Copy shared assets to beta directory
+        if: steps.changed.outputs.changed == 'true'
+        run: |
+          mkdir -p ./public/beta/assets
+          cp -r ./public/assets/* ./public/beta/assets/ 2>/dev/null || true
 
       - name: Publish to Cloudflare Pages
         if: steps.changed.outputs.changed == 'true'
