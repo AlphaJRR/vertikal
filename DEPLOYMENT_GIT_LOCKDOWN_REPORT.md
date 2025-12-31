@@ -304,3 +304,4 @@ a759dcf DOCS: Add deployment verification checklist
 
 **END OF REPORT**
 
+curl -I https://creators.vertikalapp.com
