@@ -81,9 +81,15 @@
     .chart-placeholder h3 { color: #fff; margin-bottom: 0.5rem; }
     .chart-placeholder p { font-size: 0.9rem; }
     
+    /* BADGE ROW */
+    .badge-row { display: grid; grid-template-columns: auto 1fr; gap: 2rem; align-items: center; padding: 2rem; background: var(--card); border: 1px solid var(--border); margin-bottom: 2rem; }
+    .badge-img { width: 120px; height: 120px; object-fit: contain; filter: drop-shadow(0 0 15px rgba(255,255,255,0.05)); }
+    
     @media (max-width: 768px) {
         .vibecode-section .grid { grid-template-columns: 1fr; }
         .chart-container { min-height: 250px; padding: 1.5rem; }
+        .badge-row { grid-template-columns: 1fr; text-align: center; }
+        .badge-img { margin: 0 auto; }
     }
     
     /* MODAL */
@@ -108,10 +114,10 @@
             <img src="/assets/Vertikal_Logo_Master.png" alt="VERTIKAL" class="logo-img">
         </a>
         <div class="nav-links">
-            <a href="creators/index.html">Creators</a>
-            <a href="networks/index.html">Networks</a>
-            <a href="investors/index.html">Investors</a>
-            <a href="beta/index.html" style="color: #FFD700;">Beta Live</a>
+            <a href="/creators/">Creators</a>
+            <a href="/networks/">Networks</a>
+            <a href="/investors/">Investors</a>
+            <a href="/beta/" style="color: #FFD700;">Beta Live</a>
             <a href="/demo/" class="btn" style="padding:0.5rem 1.5rem; margin-left:1rem; margin-top:0;">Watch Live Demo</a>
         </div>
     </nav>
@@ -126,6 +132,20 @@
             <a href="investors/index.html" class="btn">View The Thesis</a>
         </div>
     </header>
+
+    <!-- BLUE BADGE: BUILDERS -->
+    <section>
+        <div class="container">
+            <h2>THE V BADGE STANDARD</h2>
+            <div class="badge-row" style="border-left: 4px solid var(--blue);">
+                <img src="/assets/badges/creators-badge-blue.jpg" alt="Blue Builder Badge" class="badge-img" onerror="this.style.display='none'; this.nextElementSibling.style.gridColumn='1/-1';">
+                <div>
+                    <h3 style="color: var(--blue);">Blue Tier: Builders</h3>
+                    <p style="margin:0;"><strong>The Quality Standard.</strong> Awarded to engineers, operators, and builders who contribute to the Vertikal infrastructure. Signals technical excellence and platform commitment.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- ECOSYSTEM: THE CLOSED-LOOP ECOSYSTEM -->
     <section>
