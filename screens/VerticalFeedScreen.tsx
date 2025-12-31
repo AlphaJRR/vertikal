@@ -43,6 +43,26 @@ export const VerticalFeedScreen: React.FC = () => {
     setRefreshing(false);
   }, []);
 
+  // ✅ PERFORMANCE: Memoized render item
+  const renderItem = useCallback(({ item, index }: { item: typeof VIDEOS[0]; index: number }) => (
+    <View style={{ height: VIDEO_HEIGHT, width: WINDOW_WIDTH, backgroundColor: '#000000' }}>
+      <Video
+        source={{ uri: item.url }}
+        style={StyleSheet.absoluteFill}
+        resizeMode={ResizeMode.COVER}
+        shouldPlay={index === activeIndex}
+        isLooping
+      />
+      <View style={styles.overlay}>
+        <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.creator}>{item.creator}</Text>
+      </View>
+    </View>
+  ), [activeIndex, VIDEO_HEIGHT]);
+
+  // ✅ PERFORMANCE: Memoized key extractor
+  const keyExtractor = useCallback((item: typeof VIDEOS[0]) => item.id, []);
+
   return (
     <View style={styles.container}>
       <FlatList
