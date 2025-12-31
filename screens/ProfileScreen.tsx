@@ -11,6 +11,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useCurrentUser } from '../hooks/useAuth';
 import { HowYouEarnScreen } from './HowYouEarnScreen';
+import { HowYouEarnScreen } from './HowYouEarnScreen';
 
 const { width } = Dimensions.get('window');
 
@@ -21,6 +22,7 @@ export const ProfileScreen: React.FC = () => {
   const navigation = useNavigation();
   const { data: currentUser, isLoading, error } = useCurrentUser();
   const [activeTab, setActiveTab] = useState<'SHOWS' | 'CREW'>('SHOWS');
+  const [showHowYouEarn, setShowHowYouEarn] = useState(false);
   
   // Determine role from backend data
   const userRole = currentUser?.profile?.type || 'VIEWER';
