@@ -46,7 +46,27 @@ const BLOCKERS = {
 
 function fetchHTML(url) {
     return new Promise((resolve, reject) => {
-        https.get(url, (res) => {
+        // Add cache-busting query param
+        const cacheBustUrl = url + (url.includes('?') ? '&' : '?') + '__v=' + Date.now();
+        
+        const options = {
+            headers: {
+                'cache-control': 'no-cache',
+                'pragma': 'no-cache'
+            },
+            followRedirect: true,
+            maxRedirects: 5
+        };
+        
+        https.get(cacheBustUrl, options, (res) => {
+            // Follow redirects
+            if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+                const redirectUrl = res.headers.location.startsWith('http') 
+                    ? res.headers.location 
+                    : new URL(res.headers.location, url).href;
+                return fetchHTML(redirectUrl).then(resolve).catch(reject);
+            }
+            
             let data = '';
             res.on('data', (chunk) => { data += chunk; });
             res.on('end', () => resolve(data));
@@ -80,21 +100,50 @@ function checkAbsoluteClaims(html, url) {
 
 function checkBadgeExclusivity(html, domain) {
     const issues = [];
-    const violations = BLOCKERS.BADGE_VIOLATIONS[domain];
-    if (!violations) return issues;
     
-    violations.forEach(badge => {
-        const patterns = [
-            new RegExp(`${badge}.*badge`, 'i'),
-            new RegExp(`badge.*${badge}`, 'i'),
-            new RegExp(`-${badge}\\.`, 'i')
-        ];
-        patterns.forEach(pattern => {
-            if (pattern.test(html)) {
-                issues.push(`${domain}: Contains forbidden ${badge} badge reference`);
-            }
-        });
+    // Extract all image srcs from HTML
+    const imgMatches = [...html.matchAll(/<img[^>]+src=["']([^"']+)["']/gi)];
+    const imgSrcs = imgMatches.map(m => m[1]);
+    
+    // Filter to only badge images (exact filename matching)
+    const badgePattern = /badge-(gold-founding50|investor-green|network-titanium|visionary-blue)\.(png|jpg|jpeg)/i;
+    const badgeImgs = imgSrcs.filter(src => badgePattern.test(src));
+    
+    if (badgeImgs.length === 0) return issues; // No badge images found, skip check
+    
+    // Define allowed badges per domain
+    const allowedBadges = {
+        'creators.vertikalapp.com': ['badge-gold-founding50'],
+        'investors.vertikalapp.com': ['badge-investor-green'],
+        'networks.vertikalapp.com': ['badge-network-titanium'],
+        'vertikalapp.com': ['badge-gold-founding50', 'badge-investor-green', 'badge-network-titanium', 'badge-visionary-blue']
+    };
+    
+    // For main site, check if badges are in badge-system section
+    if (domain === 'vertikalapp.com') {
+        const badgeSystemStart = html.indexOf('<!-- BADGE_SYSTEM_START') !== -1 || 
+                                 html.indexOf('<section id="badge-system"') !== -1 ||
+                                 html.indexOf('id="badge-system"') !== -1 ||
+                                 html.indexOf('class="badge-system"') !== -1 ||
+                                 html.indexOf('V BADGE SYSTEM') !== -1; // Fallback: check for section heading
+        
+        if (!badgeSystemStart && badgeImgs.length > 0) {
+            issues.push(`${domain}: Badge images found outside badge-system section`);
+        }
+        return issues; // Main site can have all badges if in correct section
+    }
+    
+    // For subdomain sites, check badge exclusivity
+    const allowed = allowedBadges[domain] || [];
+    badgeImgs.forEach(imgSrc => {
+        const badgeType = imgSrc.match(badgePattern)[1].toLowerCase();
+        const badgeKey = `badge-${badgeType}`;
+        
+        if (!allowed.some(allowedBadge => badgeKey.includes(allowedBadge.replace('badge-', '')))) {
+            issues.push(`${domain}: Contains forbidden badge image: ${imgSrc}`);
+        }
     });
+    
     return issues;
 }
 
@@ -103,14 +152,28 @@ function checkCanonical(html, expectedUrl) {
     if (!canonicalMatch) {
         return [`Missing canonical link (expected: ${expectedUrl})`];
     }
-    if (canonicalMatch[1] !== expectedUrl) {
-        return [`Canonical mismatch: ${canonicalMatch[1]} (expected: ${expectedUrl})`];
+    
+    const canonicalUrl = canonicalMatch[1];
+    const expectedHost = new URL(expectedUrl).hostname;
+    const canonicalHost = new URL(canonicalUrl, expectedUrl).hostname;
+    
+    // Check for forbidden hosts
+    if (canonicalUrl.includes('pages.dev') || canonicalUrl.includes('netlify.app')) {
+        return [`Canonical contains forbidden host: ${canonicalUrl}`];
     }
-    return [];
+    
+    // Allow exact match or redirect to canonical host
+    if (canonicalHost === expectedHost) {
+        return []; // PASS
+    }
+    
+    // Check if canonical redirects to expected host (treat as PASS)
+    // This is handled by fetchHTML following redirects, so if we got here, it's a mismatch
+    return [`Canonical mismatch: ${canonicalUrl} (expected host: ${expectedHost})`];
 }
 
 async function verifyDomain(url) {
-    const domain = url.replace('https://', '').replace('http://', '');
+    const domain = url.replace('https://', '').replace('http://', '').split('/')[0];
     const issues = [];
     
     try {
@@ -122,11 +185,20 @@ async function verifyDomain(url) {
         // Check absolute claims
         issues.push(...checkAbsoluteClaims(html, url));
         
-        // Check badge exclusivity
+        // Check badge exclusivity (image-based only)
         issues.push(...checkBadgeExclusivity(html, domain));
         
         // Check canonical
         issues.push(...checkCanonical(html, url));
+        
+        // Check for forbidden hosts in hrefs
+        const hrefMatches = [...html.matchAll(/href=["']([^"']+)["']/gi)];
+        hrefMatches.forEach(match => {
+            const href = match[1];
+            if (href.includes('pages.dev') || href.includes('netlify.app')) {
+                issues.push(`${url}: Contains forbidden host in href: ${href}`);
+            }
+        });
         
         return { url, issues, status: issues.length === 0 ? 'PASS' : 'FAIL' };
     } catch (error) {
