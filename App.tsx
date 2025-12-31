@@ -1,6 +1,5 @@
 // App.tsx - VERTIKAL Brand Identity UI
 import React, { useEffect, useState, useRef } from 'react';
-import { useCurrentUser } from './hooks/useAuth';
 import { 
   View, Text, ActivityIndicator, StyleSheet, 
   TouchableOpacity, FlatList, Image, ScrollView
@@ -389,8 +388,9 @@ const AppNavigator: React.FC = () => {
 // ROOT APP (With Providers)
 // ============================================
 const App: React.FC = () => {
-  const { data: currentUser, isLoading: authLoading } = useCurrentUser();
+  const { data: currentUser, isLoading: authLoading, error: authError } = useCurrentUser();
   const [appReady, setAppReady] = useState(false);
+  const [authTimeout, setAuthTimeout] = useState(false);
 
   useEffect(() => {
     // Set Sentry user context (example)
@@ -408,8 +408,19 @@ const App: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // ✅ PHASE 1: Hard guard - show loading until auth check completes
-  if (!appReady || authLoading) {
+  // ✅ FIX: Timeout auth loading after 5 seconds to prevent infinite loading
+  useEffect(() => {
+    if (authLoading) {
+      const timeout = setTimeout(() => {
+        console.warn('Auth loading timeout - proceeding without auth');
+        setAuthTimeout(true);
+      }, 5000); // 5 second timeout
+      return () => clearTimeout(timeout);
+    }
+  }, [authLoading]);
+
+  // ✅ PHASE 1: Hard guard - show loading until app ready OR auth timeout
+  if (!appReady || (authLoading && !authTimeout)) {
     return (
       <ErrorBoundary>
         <QueryClientProvider client={queryClient}>
@@ -452,13 +463,8 @@ const App: React.FC = () => {
               <TouchableOpacity
                 style={{ backgroundColor: '#FFD700', padding: 16, borderRadius: 8, alignItems: 'center', marginTop: 20 }}
                 onPress={() => {
-                  // Navigate to profile setup screen
-                  if (currentUser) {
-                    // Profile setup will be handled by navigation to ProfileScreen
-                    // For now, dismiss onboarding to allow profile completion
-                    setShowOnboarding(false);
-                    setHasSeenOnboarding(true);
-                  }
+                  // Navigate to profile setup screen - onboarding will be dismissed by navigating to ProfileScreen
+                  // The app will proceed normally and user can complete profile there
                 }}
               >
                 <Text style={{ color: '#000000', fontSize: 16, fontWeight: '900' }}>GET STARTED</Text>

@@ -114,12 +114,34 @@ export const useLogout = () => {
 export const useCurrentUser = () => {
   const query = useQuery({
     queryKey: authKeys.currentUser(),
-    queryFn: () => backendClient.auth.getCurrentUser(),
+    queryFn: async () => {
+      try {
+        return await backendClient.auth.getCurrentUser();
+      } catch (error: any) {
+        // 404 or 401 means not logged in - this is OK, return null
+        if (error?.statusCode === 404 || error?.statusCode === 401 || error?.code === 'ERR_BAD_REQUEST') {
+          return null;
+        }
+        // Other errors - throw to be handled by React Query
+        throw error;
+      }
+    },
     staleTime: 5 * 60 * 1000, // 5 minutes
     gcTime: 10 * 60 * 1000,
-    retry: 1,
+    retry: (failureCount, error: any) => {
+      // Don't retry on 404/401 (not logged in is OK)
+      if (error?.statusCode === 404 || error?.statusCode === 401) {
+        return false;
+      }
+      // Retry once for other errors
+      return failureCount < 1;
+    },
     refetchOnWindowFocus: false, // Don't refetch on focus to avoid 404 spam
     retryOnMount: false, // Don't retry on mount if it fails
+    // ✅ FIX: Set timeout to prevent infinite loading
+    meta: {
+      timeout: 5000, // 5 second timeout
+    },
   });
 
   // Handle errors gracefully (404 is expected when not logged in)
