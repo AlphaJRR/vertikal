@@ -23,6 +23,7 @@ export const ProfileScreen: React.FC = () => {
   const { data: currentUser, isLoading, error } = useCurrentUser();
   const [activeTab, setActiveTab] = useState<'SHOWS' | 'CREW'>('SHOWS');
   const [showHowYouEarn, setShowHowYouEarn] = useState(false);
+  const [showHowYouEarn, setShowHowYouEarn] = useState(false);
   
   // Determine role from backend data
   const userRole = currentUser?.profile?.type || 'VIEWER';
@@ -42,6 +43,11 @@ export const ProfileScreen: React.FC = () => {
     if (num >= 1000) return `${(num / 1000).toFixed(1)}K`;
     return num.toString();
   };
+
+  // Show How You Earn screen if requested
+  if (showHowYouEarn) {
+    return <HowYouEarnScreen onClose={() => setShowHowYouEarn(false)} />;
+  }
 
   // Loading state
   if (isLoading) {
@@ -111,6 +117,15 @@ export const ProfileScreen: React.FC = () => {
             <TouchableOpacity style={styles.iconBtn} activeOpacity={0.8}>
               <Ionicons name="share-social-outline" size={24} color="#FFFFFF" />
             </TouchableOpacity>
+            {isCreator && (
+              <TouchableOpacity 
+                style={[styles.iconBtn, { backgroundColor: '#FFD700', minWidth: 60 }]} 
+                activeOpacity={0.8}
+                onPress={() => setShowHowYouEarn(true)}
+              >
+                <Text style={{ color: '#000000', fontSize: 12, fontWeight: '900', letterSpacing: 0.5 }}>EARN</Text>
+              </TouchableOpacity>
+            )}
           </View>
 
           {/* BADGE STATUS - VISIBLE */}
