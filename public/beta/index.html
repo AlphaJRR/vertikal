@@ -58,6 +58,13 @@
     
     /* SMOOTH SCROLL */
     html { scroll-behavior: smooth; }
+    
+    /* MODAL */
+    .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); align-items: center; justify-content: center; }
+    .modal.active { display: flex; }
+    .modal-content { background: var(--card); border: 1px solid var(--border); padding: 3rem; max-width: 500px; width: 90%; position: relative; text-align: center; }
+    .close { position: absolute; top: 1rem; right: 1rem; font-size: 2rem; cursor: pointer; color: #fff; line-height: 1; }
+    .close:hover { color: #FFD700; }
     </style>
 </head>
 <body>
@@ -72,6 +79,7 @@
             <a href="https://vertikalapp.com/creators/">Creators</a>
             <a href="https://vertikalapp.com/networks/">Networks</a>
             <a href="https://vertikalapp.com/investors/">Investors</a>
+            <a href="#" class="btn" style="padding:0.5rem 1.5rem; margin-left:1rem; margin-top:0;" onclick="event.preventDefault(); document.getElementById('demoModal').classList.add('active');">Watch Live Demo</a>
         </div>
     </nav>
 
@@ -87,6 +95,7 @@
             <p style="font-size: 1.2rem; color: #fff; margin-bottom: 3rem;">Early feedback from our beta testers. The engine is working.</p>
             <div class="grid grid-2">
                 <div style="background: var(--card); border: 1px solid var(--border); padding: 2rem; border-left: 4px solid #FFD700;">
+                    <!-- TODO: Replace "VibeCode" with the correct feature name once provided by stakeholder -->
                     <h3 style="color: #FFD700; margin-bottom: 1rem;">"The VibeCode is Revolutionary"</h3>
                     <p style="font-size: 1rem; font-style: italic; color: var(--muted);">"Comments flowing over the video without interrupting? This is how we should consume content. Game changer."</p>
                     <p style="margin-top: 1rem; font-size: 0.9rem; color: #888;">— Early Beta Tester</p>
@@ -114,6 +123,7 @@
     <section class="vibecode-section" style="padding: 6rem 0; border-bottom: 1px solid var(--border);">
         <div class="container">
             <h2>VIBECODE</h2>
+            <!-- TODO: Replace "VibeCode" with the correct feature name once provided by stakeholder -->
             <p style="color: #fff; font-size: 1.3rem; margin-bottom: 2rem;">
                 <strong>VibeCode</strong> is Vertikal's real-time comment overlay system. Comments flow across the screen as you watch, creating a shared viewing experience without interrupting the content.
             </p>
@@ -132,6 +142,7 @@
                 </div>
                 <div style="border-left: 4px solid #333; padding-left: 1.5rem; margin-bottom: 2rem;">
                     <h3 style="color: #B0BEC5; margin-bottom: 0.5rem;">Algorithm-Free</h3>
+                    <!-- TODO: Replace "VibeCode" with the correct feature name once provided by stakeholder -->
                     <p style="font-size: 0.95rem;">No engagement bait. No forced virality. VibeCode amplifies authentic reactions, not manufactured metrics.</p>
                 </div>
             </div>
@@ -174,5 +185,29 @@
             <a href="mailto:beta@vertikalapp.com?subject=Beta%20Feedback" class="btn" style="background: #fff; color: #000;">Send Feedback</a>
         </div>
     </section>
+
+    <!-- DEMO MODAL -->
+    <div id="demoModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="document.getElementById('demoModal').classList.remove('active');">&times;</span>
+            <h2 style="margin-bottom: 1.5rem; color: #fff;">Live Demo</h2>
+            <p style="color: var(--muted); font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">
+                Live demo launching March/April.<br>
+                Full beta expected June with at least 50 creators.
+            </p>
+            <!-- TODO: Replace with actual signup form URL -->
+            <a href="/demo/" class="btn" style="margin-right: 1rem;">Join Demo Waitlist</a>
+            <!-- TODO: Replace with actual Founding 50 application URL -->
+            <a href="/apply/" class="btn" style="background: transparent; border-color: #FFD700; color: #FFD700;">Apply for Founding 50</a>
+        </div>
+    </div>
+
+    <script>
+    document.getElementById('demoModal').addEventListener('click', function(e) {
+        if (e.target === this || e.target.classList.contains('close')) {
+            this.classList.remove('active');
+        }
+    });
+    </script>
 </body>
 </html>

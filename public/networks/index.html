@@ -81,7 +81,7 @@
             <a href="https://vertikalapp.com">Main</a>
             <a href="https://vertikalapp.com/creators/">Creators</a>
             <a href="https://vertikalapp.com/investors/">Investors</a>
-            <a href="/demo/" class="btn" style="padding:0.5rem 1.5rem; margin-left:1rem; margin-top:0;">Watch Live Demo</a>
+            <a href="#" class="btn" style="padding:0.5rem 1.5rem; margin-left:1rem; margin-top:0;" onclick="event.preventDefault(); document.getElementById('demoModal').classList.add('active');">Watch Live Demo</a>
             <a href="#partner" class="btn" style="padding:0.5rem 1.5rem; margin-left:1rem; margin-top:0;">Partner</a>
         </div>
     </nav>
@@ -148,6 +148,7 @@
             <div class="grid grid-2">
                 <div class="card">
                     <h3 style="color: var(--titanium); margin-bottom: 1rem;">1. The Vibe Effect</h3>
+                    <!-- TODO: Replace "VibeCode" with the correct feature name once provided by stakeholder -->
                     <p style="font-size: 1rem;">VibeCode creates real-time engagement without interruption. Comments flow over content, preserving cultural context. This isn't social media—it's cinematic conversation.</p>
                 </div>
                 <div class="card">
@@ -230,10 +231,14 @@
         <div class="modal-content">
             <span class="close" onclick="document.getElementById('demoModal').classList.remove('active');">&times;</span>
             <h2 style="margin-bottom: 1.5rem; color: #fff;">Live Demo</h2>
-            <p style="color: var(--muted); font-size: 1.1rem; line-height: 1.6;">
+            <p style="color: var(--muted); font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">
                 Live demo launching March/April.<br>
                 Full beta expected June with at least 50 creators.
             </p>
+            <!-- TODO: Replace with actual signup form URL -->
+            <a href="/demo/" class="btn" style="margin-right: 1rem;">Join Demo Waitlist</a>
+            <!-- TODO: Replace with actual Founding 50 application URL -->
+            <a href="/apply/" class="btn" style="background: transparent; border-color: #FFD700; color: #FFD700;">Apply for Founding 50</a>
         </div>
     </div>
 
