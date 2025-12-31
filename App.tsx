@@ -23,6 +23,7 @@ import { DevRoleSwitcher } from './components/DevRoleSwitcher';
 import { JobsScreen } from './screens/JobsScreen';
 import { ProfileScreen } from './screens/ProfileScreen';
 import { VerticalFeedScreen } from './screens/VerticalFeedScreen';
+import { HowYouEarnScreen } from './screens/HowYouEarnScreen';
 
 // Utils
 import { initSentry } from './utils/sentry';

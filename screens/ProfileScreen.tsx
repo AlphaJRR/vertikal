@@ -110,6 +110,23 @@ export const ProfileScreen: React.FC = () => {
             </TouchableOpacity>
           </View>
 
+          {/* BADGE STATUS - VISIBLE */}
+          {isFounding50 && (
+            <View style={styles.badgeStatus}>
+              <Text style={styles.badgeStatusText}>FOUNDING 50</Text>
+              <Text style={styles.badgeStatusSubtext}>Highest algorithmic priority</Text>
+            </View>
+          )}
+          
+          {/* ROLE VISIBILITY */}
+          <View style={styles.roleDisplay}>
+            <Text style={styles.roleLabel}>Role:</Text>
+            <Text style={styles.roleValue}>{isCreator ? 'Creator' : 'Viewer'}</Text>
+            {currentUser?.profile?.type && (
+              <Text style={styles.roleDetail}>{currentUser.profile.type}</Text>
+            )}
+          </View>
+
           {/* STATS */}
           <View style={styles.statsRow}>
             <View style={styles.stat}>
