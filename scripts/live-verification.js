@@ -26,6 +26,15 @@ const BLOCKERS = {
         'Director Name',
         '[email protected]'
     ],
+    ABSOLUTE_CLAIMS: [
+        /\bthe only\b/i,
+        /\bonly app\b/i,
+        /\bonly platform\b/i,
+        /\bsole\b/i,
+        /\balways\b/i,
+        /\bnever\b/i,
+        /\bexclusively\b/i
+    ],
     BADGE_VIOLATIONS: {
         'creators.vertikalapp.com': ['blue', 'green', 'titanium'],
         'investors.vertikalapp.com': ['gold', 'blue', 'titanium'],
@@ -50,6 +59,20 @@ function checkPlaceholders(html, url) {
     BLOCKERS.PLACEHOLDER_CONTENT.forEach(placeholder => {
         if (html.includes(placeholder)) {
             issues.push(`${url}: Contains placeholder "${placeholder}"`);
+        }
+    });
+    return issues;
+}
+
+function checkAbsoluteClaims(html, url) {
+    const issues = [];
+    BLOCKERS.ABSOLUTE_CLAIMS.forEach(pattern => {
+        const matches = html.match(pattern);
+        if (matches) {
+            // Exclude console.log/error statements
+            if (!html.includes('console.')) {
+                issues.push(`${url}: Contains absolute claim "${matches[0]}"`);
+            }
         }
     });
     return issues;
@@ -95,6 +118,9 @@ async function verifyDomain(url) {
         
         // Check placeholders
         issues.push(...checkPlaceholders(html, url));
+        
+        // Check absolute claims
+        issues.push(...checkAbsoluteClaims(html, url));
         
         // Check badge exclusivity
         issues.push(...checkBadgeExclusivity(html, domain));
