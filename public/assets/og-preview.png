@@ -1,0 +1,41 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#050505"/>
+  
+  <!-- Gradient overlay -->
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1" />
+      <stop offset="80%" style="stop-color:#000000;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#666666;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+  
+  <!-- Logo placeholder (center) -->
+  <text x="600" y="280" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="120" font-weight="900" fill="url(#textGrad)" text-anchor="middle" letter-spacing="0.1em">VERTIKAL</text>
+  
+  <!-- Tagline -->
+  <text x="600" y="360" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="32" font-weight="400" fill="#888" text-anchor="middle" letter-spacing="0.05em">FUTURE OF VERTICAL CINEMA</text>
+  
+  <!-- Accent line -->
+  <line x1="400" y1="400" x2="800" y2="400" stroke="#2962FF" stroke-width="3" opacity="0.6"/>
+  
+  <!-- Badge indicators (bottom) -->
+  <circle cx="300" cy="550" r="8" fill="#FFD700" opacity="0.8"/>
+  <text x="320" y="555" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="18" fill="#fff" font-weight="600">Founding 50</text>
+  
+  <circle cx="500" cy="550" r="8" fill="#2962FF" opacity="0.8"/>
+  <text x="520" y="555" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="18" fill="#fff" font-weight="600">Visionary</text>
+  
+  <circle cx="700" cy="550" r="8" fill="#00C853" opacity="0.8"/>
+  <text x="720" y="555" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="18" fill="#fff" font-weight="600">Investor</text>
+  
+  <circle cx="900" cy="550" r="8" fill="#BDBDBD" opacity="0.8"/>
+  <text x="920" y="555" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="18" fill="#fff" font-weight="600">Networks</text>
+</svg>
+
