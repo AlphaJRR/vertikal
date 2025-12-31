@@ -3,7 +3,7 @@
  * VERTIKAL Brand Identity - Snap enforced, mobile-first vertical scrolling
  */
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useCallback, useMemo } from 'react';
 import { View, Text, StyleSheet, FlatList, ScrollView } from 'react-native';
 import { CreatorCard } from './CreatorCard';
 import { ShowCard } from './ShowCard';
@@ -64,28 +64,32 @@ function VerticalFeed({
     </View>
   );
 
-  const renderCreatorItem = ({ item }: { item: Founding50Creator }) => (
+  // ✅ PERFORMANCE: Memoized render functions with useCallback
+  const renderCreatorItem = useCallback(({ item }: { item: Founding50Creator }) => (
     <CreatorCard
       creator={item}
       onPress={() => onCreatorPress?.(item)}
     />
-  );
+  ), [onCreatorPress]);
 
-  const renderShowItem = ({ item }: { item: ShowData }) => (
+  const renderShowItem = useCallback(({ item }: { item: ShowData }) => (
     <ShowCard
       show={item}
       variant="grid"
       onPress={() => onShowPress?.(item)}
     />
-  );
+  ), [onShowPress]);
 
-  const renderHorizontalShow = ({ item }: { item: ShowData }) => (
+  const renderHorizontalShow = useCallback(({ item }: { item: ShowData }) => (
     <ShowCard
       show={item}
       variant="horizontal"
       onPress={() => onShowPress?.(item)}
     />
-  );
+  ), [onShowPress]);
+
+  // ✅ PERFORMANCE: Memoized key extractors
+  const keyExtractor = useCallback((item: ShowData | Founding50Creator) => item.id, []);
 
   return (
     <ScrollView
@@ -143,7 +147,7 @@ function VerticalFeed({
         <FlatList
           data={continueWatching}
           renderItem={renderHorizontalShow}
-          keyExtractor={(item) => item.id}
+          keyExtractor={keyExtractor}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.horizontalList}
@@ -159,7 +163,7 @@ function VerticalFeed({
         <FlatList
           data={shows}
           renderItem={renderHorizontalShow}
-          keyExtractor={(item) => item.id}
+          keyExtractor={keyExtractor}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={styles.horizontalList}

@@ -10,6 +10,8 @@ import { analytics } from '../services/analytics';
 import { errorTracking } from '../services/errorTracking';
 import { transformShowDataToProject } from '../utils/dataTransform';
 import { Project } from '../data';
+import { ApiError, isApiError, isNetworkError } from '../types/api';
+import { EmptyState } from '../components/ui/EmptyState';
 
 // Query Keys
 export const projectKeys = {
@@ -50,25 +52,29 @@ async function fetchProjects(): Promise<Project[]> {
     
     // Transform: ShowData (coverImage) → Project (img)
     return shows.map(transformShowDataToProject);
-  } catch (error: any) {
-    // ✅ Enhanced error handling for 500 errors
-    if (error?.response?.status === 500 || error?.code === 'ERR_NETWORK') {
-      errorTracking.captureError(error, {
+  } catch (error: unknown) {
+    // ✅ Enhanced error handling for 500 errors with proper typing
+    const apiError = isApiError(error) ? error : null;
+    const networkError = isNetworkError(error) ? error : null;
+    
+    if (apiError?.statusCode === 500 || networkError?.code === 'ERR_NETWORK') {
+      const errorMessage = apiError?.message || networkError?.message || 'Unknown error';
+      errorTracking.captureError(error instanceof Error ? error : new Error(String(error)), {
         action: 'fetchProjects',
         metadata: {
-          statusCode: error?.response?.status,
-          code: error?.code,
-          message: error?.message,
+          statusCode: apiError?.statusCode || networkError?.response?.status,
+          code: apiError?.code || networkError?.code,
+          message: errorMessage,
           apiUrl: process.env.EXPO_PUBLIC_API_URL || 'not_set',
         },
       });
       
       // Return empty array instead of throwing to prevent app crash
-      console.warn('⚠️ API error in fetchProjects, returning empty array:', error.message);
+      console.warn('⚠️ API error in fetchProjects, returning empty array:', errorMessage);
       return [];
     }
     
-    errorTracking.captureError(error, {
+    errorTracking.captureError(error instanceof Error ? error : new Error(String(error)), {
       action: 'fetchProjects',
     });
     throw error;
@@ -82,8 +88,8 @@ async function fetchProject(id: string): Promise<Project> {
     const show = await backendClient.shows.getById(id);
     // Transform: ShowData (coverImage) → Project (img)
     return transformShowDataToProject(show);
-  } catch (error: any) {
-    errorTracking.captureError(error, {
+  } catch (error: unknown) {
+    errorTracking.captureError(error instanceof Error ? error : new Error(String(error)), {
       action: 'fetchProject',
       metadata: { projectId: id },
     });
@@ -102,8 +108,8 @@ async function fetchPopularProjects(): Promise<Project[]> {
     const shows = await backendClient.shows.getPopular();
     // Transform: ShowData (coverImage) → Project (img)
     return shows.map(transformShowDataToProject);
-  } catch (error: any) {
-    errorTracking.captureError(error, {
+  } catch (error: unknown) {
+    errorTracking.captureError(error instanceof Error ? error : new Error(String(error)), {
       action: 'fetchPopularProjects',
     });
     throw error;
@@ -117,9 +123,12 @@ export function useProjects() {
     queryFn: fetchProjects,
     staleTime: 5 * 60 * 1000, // 5 minutes
     gcTime: 10 * 60 * 1000, // 10 minutes
-    retry: (failureCount, error: any) => {
+    retry: (failureCount, error: unknown) => {
       // ✅ Don't retry on 500 errors or network errors (they'll likely fail again)
-      if (error?.response?.status === 500 || error?.code === 'ERR_NETWORK') {
+      const apiError = isApiError(error) ? error : null;
+      const networkError = isNetworkError(error) ? error : null;
+      
+      if (apiError?.statusCode === 500 || networkError?.code === 'ERR_NETWORK') {
         return false;
       }
       // Retry up to 2 times for other errors
@@ -132,11 +141,12 @@ export function useProjects() {
 
   React.useEffect(() => {
     if (query.error) {
-      errorTracking.captureError(query.error as Error, {
+      const apiError = isApiError(query.error) ? query.error : null;
+      errorTracking.captureError(query.error instanceof Error ? query.error : new Error(String(query.error)), {
         action: 'useProjects',
         metadata: {
-          statusCode: (query.error as any)?.response?.status,
-          code: (query.error as any)?.code,
+          statusCode: apiError?.statusCode,
+          code: apiError?.code,
         },
       });
     }

@@ -37,7 +37,7 @@ async function fetchCreators(filters?: Record<string, any>): Promise<Creator[]> 
     }
     
     return creators;
-  } catch (error: any) {
+  } catch (error: unknown) {
     // Log error to tracking service
     errorTracking.captureError(error instanceof Error ? error : new Error(String(error)), {
       action: 'fetchCreators',
@@ -63,7 +63,7 @@ async function fetchCreator(id: string): Promise<Creator> {
     }
     
     return creator;
-  } catch (error: any) {
+  } catch (error: unknown) {
     // Log error to tracking service
     errorTracking.captureError(error instanceof Error ? error : new Error(String(error)), {
       action: 'fetchCreator',
@@ -80,8 +80,8 @@ async function subscribeToCreator(creatorId: string): Promise<void> {
   try {
     await apiClient.subscribe(creatorId);
     analytics.trackSubscription(creatorId, 'monthly');
-  } catch (error: any) {
-    errorTracking.captureError(error, {
+  } catch (error: unknown) {
+    errorTracking.captureError(error instanceof Error ? error : new Error(String(error)), {
       action: 'subscribeToCreator',
       metadata: { creatorId },
     });

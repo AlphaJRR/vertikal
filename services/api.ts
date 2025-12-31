@@ -90,8 +90,32 @@ api.interceptors.response.use(
       },
     });
 
-    // Handle 401 (token expired)
+    // Handle 401 (token expired) - Attempt token refresh
     if (apiError.statusCode === 401) {
+      const refreshToken = await SecureStore.getItemAsync('refresh_token');
+      if (refreshToken && error.config) {
+        try {
+          // Attempt to refresh token
+          const refreshResponse = await axios.post(
+            `${API_URL}/api/auth/refresh`,
+            { refreshToken },
+            { skipAuthRefresh: true } // Prevent infinite loop
+          );
+          
+          if (refreshResponse.data?.token) {
+            await SecureStore.setItemAsync('auth_token', refreshResponse.data.token);
+            // Retry original request with new token
+            if (error.config.headers) {
+              error.config.headers.Authorization = `Bearer ${refreshResponse.data.token}`;
+            }
+            return api.request(error.config);
+          }
+        } catch (refreshError) {
+          // Refresh failed, clear tokens and redirect to login
+          console.warn('Token refresh failed, clearing auth tokens');
+        }
+      }
+      
       // ✅ FIXED: Use SecureStore instead of AsyncStorage
       await SecureStore.deleteItemAsync('auth_token');
       // Clear refresh token if exists

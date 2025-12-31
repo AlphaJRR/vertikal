@@ -4,8 +4,8 @@
  * FIXED: Removed database fetch, hardcoded videos
  */
 
-import React, { useRef, useState } from 'react';
-import { View, Text, FlatList, Dimensions, StyleSheet } from 'react-native';
+import React, { useRef, useState, useCallback } from 'react';
+import { View, Text, FlatList, Dimensions, StyleSheet, RefreshControl } from 'react-native';
 import { Video, ResizeMode } from 'expo-av';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 
@@ -23,42 +23,51 @@ const VIDEOS = [
 
 export const VerticalFeedScreen: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [refreshing, setRefreshing] = useState(false);
   // Fallback height if hook fails
   const tabHeight = 85; 
   const VIDEO_HEIGHT = WINDOW_HEIGHT - tabHeight;
 
-  const onViewableItemsChanged = useRef(({ viewableItems }: any) => {
+  const onViewableItemsChanged = useRef(({ viewableItems }: { viewableItems: Array<{ index: number | null }> }) => {
     if (viewableItems.length > 0) {
       setActiveIndex(viewableItems[0].index ?? 0);
     }
   }).current;
 
+  // ✅ Pull-to-refresh handler
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    // In production, this would refetch data from API
+    // For now, simulate refresh delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    setRefreshing(false);
+  }, []);
+
   return (
     <View style={styles.container}>
       <FlatList
         data={VIDEOS}
-        keyExtractor={(item) => item.id}
+        keyExtractor={keyExtractor}
         pagingEnabled
         showsVerticalScrollIndicator={false}
         onViewableItemsChanged={onViewableItemsChanged}
         viewabilityConfig={{ itemVisiblePercentThreshold: 50 }}
         snapToInterval={VIDEO_HEIGHT}
         decelerationRate="fast"
-        renderItem={({ item, index }) => (
-          <View style={{ height: VIDEO_HEIGHT, width: WINDOW_WIDTH, backgroundColor: '#000000' }}>
-            <Video
-              source={{ uri: item.url }}
-              style={StyleSheet.absoluteFill}
-              resizeMode={ResizeMode.COVER}
-              shouldPlay={index === activeIndex}
-              isLooping
-            />
-            <View style={styles.overlay}>
-              <Text style={styles.title}>{item.title}</Text>
-              <Text style={styles.creator}>{item.creator}</Text>
-            </View>
-          </View>
-        )}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor="#FFD700"
+            colors={['#FFD700']}
+          />
+        }
+        renderItem={renderItem}
+        // ✅ PERFORMANCE: FlatList optimizations
+        removeClippedSubviews={true}
+        maxToRenderPerBatch={3}
+        windowSize={5}
+        initialNumToRender={2}
       />
     </View>
   );
