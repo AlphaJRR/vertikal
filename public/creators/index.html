@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VERTIKAL | Creators</title>
+    <link rel="canonical" href="https://creators.vertikalapp.com">
     <style>
         /* --- VERTIKAL CINEMATIC ENGINE --- */
         :root {
@@ -123,7 +124,7 @@
             <a href="https://vertikalapp.com/networks/">Networks</a>
             <a href="https://vertikalapp.com/investors/">Investors</a>
             <a href="#" class="btn" style="padding:0.5rem 1.5rem; margin-left:1rem; margin-top:0;" onclick="event.preventDefault(); document.getElementById('demoModal').classList.add('active');">Watch Live Demo</a>
-            <a href="/apply/" class="btn" style="padding:0.5rem 1.5rem; margin-left:1rem; margin-top:0;">Apply</a>
+            <a href="https://vertikalapp.com/apply" class="btn" style="padding:0.5rem 1.5rem; margin-left:1rem; margin-top:0;">Apply</a>
         </div>
     </nav>
 
@@ -134,6 +135,37 @@
             <a href="#economics" class="btn">See The Economics</a>
         </div>
     </header>
+
+    <!-- MISSION -->
+    <section>
+        <div class="container">
+            <h2>THE MISSION</h2>
+            <p style="color: #fff; font-size: 1.3rem; max-width: 900px;">
+                A home for Black creatives to create short-form vertical series, long-form, and documentary — with distribution + ownership upside.
+            </p>
+        </div>
+    </section>
+
+    <!-- 3 FEATURES -->
+    <section>
+        <div class="container">
+            <h2>THE PLATFORM</h2>
+            <div class="grid grid-2">
+                <div class="card" style="background: var(--card); border: 1px solid var(--border); padding: 2rem; border-left: 4px solid var(--gold);">
+                    <h3 style="color: var(--gold); margin-bottom: 1rem;">Vertical Cinema Originals</h3>
+                    <p style="font-size: 1rem;">Premium 2–10 minute vertical series built for retention, not virality. Cinematic quality, franchise potential.</p>
+                </div>
+                <div class="card" style="background: var(--card); border: 1px solid var(--border); padding: 2rem; border-left: 4px solid var(--gold);">
+                    <h3 style="color: var(--gold); margin-bottom: 1rem;">VIBE™ Live Overlay</h3>
+                    <p style="font-size: 1rem;">Real-time audience engagement layer. Comments flow over content, preserving cultural context without interruption.</p>
+                </div>
+                <div class="card" style="background: var(--card); border: 1px solid var(--border); padding: 2rem; border-left: 4px solid var(--gold);">
+                    <h3 style="color: var(--gold); margin-bottom: 1rem;">V Badge System</h3>
+                    <p style="font-size: 1rem;">Trust + access + monetization paths. Badges signal quality, unlock distribution, and create defensible moats.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <section>
         <div class="container">
@@ -247,8 +279,7 @@
             <div class="chart-container" style="margin-top: 3rem;">
                 <div class="chart-placeholder">
                     <h3>Creator Revenue Growth</h3>
-                    <p>Chart: Monthly revenue by badge tier</p>
-                    <p style="font-size: 0.85rem; margin-top: 1rem; color: var(--muted);">Data visualization placeholder</p>
+                    <p>Revenue data coming soon</p>
                 </div>
             </div>
         </div>
@@ -282,7 +313,7 @@
         <div class="container">
             <h2 style="border: none; padding: 0;">READY TO BUILD?</h2>
             <p style="margin: 0 auto 2rem auto;">Access is curated. Scarcity is intentional.</p>
-            <a href="/apply/" class="btn">Apply For Badge</a>
+            <a href="https://vertikalapp.com/apply" class="btn">Apply For Badge</a>
         </div>
     </section>
 
@@ -295,10 +326,8 @@
                 Live demo launching March/April.<br>
                 Full beta expected June with at least 50 creators.
             </p>
-            <!-- TODO: Replace with actual signup form URL -->
-            <a href="/demo/" class="btn" style="margin-right: 1rem;">Join Demo Waitlist</a>
-            <!-- TODO: Replace with actual Founding 50 application URL -->
-            <a href="/apply/" class="btn" style="background: transparent; border-color: #FFD700; color: #FFD700;">Apply for Founding 50</a>
+            <a href="https://vertikalapp.com/demo" class="btn" style="margin-right: 1rem;">Join Demo Waitlist</a>
+            <a href="https://vertikalapp.com/apply" class="btn" style="background: transparent; border-color: #FFD700; color: #FFD700;">Apply for Founding 50</a>
         </div>
     </div>
 
@@ -322,9 +351,13 @@
     </div>
 
     <script>
-    document.getElementById('demoModal').addEventListener('click', function(e) {
+    // Demo Modal - show only once per user
+    const demoModal = document.getElementById('demoModal');
+    
+    demoModal.addEventListener('click', function(e) {
         if (e.target === this || e.target.classList.contains('close')) {
             this.classList.remove('active');
+            localStorage.setItem('demoModalShown', 'true');
         }
     });
     </script>

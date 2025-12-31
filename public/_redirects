@@ -1,2 +1,7 @@
 /terms   /terms/index.html   200
 /privacy /privacy/index.html 200
+/creators/*   https://creators.vertikalapp.com/:splat   301
+/investors/*  https://investors.vertikalapp.com/:splat  301
+/networks/*   https://networks.vertikalapp.com/:splat  301
+/demo/*       https://vertikalapp.com/demo              301
+/beta/*       https://vertikalapp.com/demo              302

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VERTIKAL | Investors</title>
+    <link rel="canonical" href="https://investors.vertikalapp.com">
     <style>
         /* --- VERTIKAL CINEMATIC ENGINE --- */
         :root {
@@ -153,15 +154,13 @@
                 <div class="chart-container">
                     <div class="chart-placeholder">
                         <h3>Revenue Projections</h3>
-                        <p>Chart: 3-year revenue forecast</p>
-                        <p style="font-size: 0.85rem; margin-top: 1rem; color: var(--muted);">Data visualization placeholder</p>
+                        <p>Financial data coming soon</p>
                     </div>
                 </div>
                 <div class="chart-container">
                     <div class="chart-placeholder">
                         <h3>Market Size</h3>
-                        <p>Chart: Vertical video market growth</p>
-                        <p style="font-size: 0.85rem; margin-top: 1rem; color: var(--muted);">Data visualization placeholder</p>
+                        <p>Market data coming soon</p>
                     </div>
                 </div>
             </div>
@@ -209,17 +208,19 @@
                 Live demo launching March/April.<br>
                 Full beta expected June with at least 50 creators.
             </p>
-            <!-- TODO: Replace with actual signup form URL -->
-            <a href="/demo/" class="btn" style="margin-right: 1rem;">Join Demo Waitlist</a>
-            <!-- TODO: Replace with actual Founding 50 application URL -->
-            <a href="/apply/" class="btn" style="background: transparent; border-color: #FFD700; color: #FFD700;">Apply for Founding 50</a>
+            <a href="https://vertikalapp.com/demo" class="btn" style="margin-right: 1rem;">Join Demo Waitlist</a>
+            <a href="https://vertikalapp.com/apply" class="btn" style="background: transparent; border-color: #FFD700; color: #FFD700;">Apply for Founding 50</a>
         </div>
     </div>
 
     <script>
-    document.getElementById('demoModal').addEventListener('click', function(e) {
+    // Demo Modal - show only once per user
+    const demoModal = document.getElementById('demoModal');
+    
+    demoModal.addEventListener('click', function(e) {
         if (e.target === this || e.target.classList.contains('close')) {
             this.classList.remove('active');
+            localStorage.setItem('demoModalShown', 'true');
         }
     });
     </script>
