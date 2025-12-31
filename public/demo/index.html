@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Demo | VERTIKAL</title>
+    <style>
+        :root {
+            --bg: #050505; --card: #0a0a0a; --text: #ffffff; --muted: #888; --border: #222;
+            --blue: #2962FF; --font-main: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--bg); color: var(--text); font-family: var(--font-main); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+        
+        .container { max-width: 900px; margin: 0 auto; padding: 4rem 2rem; }
+        h1 { font-size: clamp(2rem, 5vw, 3rem); text-transform: uppercase; font-weight: 800; margin-bottom: 1rem; }
+        p { color: var(--muted); margin-bottom: 2rem; }
+        
+        .demo-info { background: var(--card); border: 1px solid var(--border); padding: 2rem; border-radius: 4px; margin-bottom: 2rem; }
+        .demo-info h2 { font-size: 1.5rem; margin-bottom: 1rem; color: #fff; }
+        
+        form { background: var(--card); border: 1px solid var(--border); padding: 2rem; border-radius: 4px; }
+        .form-group { margin-bottom: 1.5rem; }
+        label { display: block; margin-bottom: 0.5rem; color: var(--muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        input { width: 100%; padding: 1rem; background: var(--bg); border: 1px solid var(--border); color: var(--text); font-family: inherit; font-size: 1rem; border-radius: 4px; }
+        input:focus { outline: none; border-color: var(--blue); }
+        
+        .btn { display: block; width: 100%; padding: 1rem 2rem; background: var(--blue); color: #fff; border: none; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; cursor: pointer; transition: 0.3s; }
+        .btn:hover:not(:disabled) { background: #1a4fd0; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        
+        nav { padding: 2rem; border-bottom: 1px solid var(--border); }
+        .logo-link { font-weight: 900; letter-spacing: 0.1em; color: #fff; text-decoration: none; display: flex; align-items: center; }
+        .logo-img { height: 40px; width: auto; margin-right: 0.5rem; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="https://vertikalapp.com" class="logo-link">
+            <img src="/assets/Vertikal_Logo_Master.png" alt="VERTIKAL" class="logo-img">
+        </a>
+    </nav>
+
+    <div class="container">
+        <h1>Live Demo</h1>
+        
+        <div class="demo-info">
+            <h2>Coming Soon</h2>
+            <p>Live demo launching March/April. Full beta expected June with at least 50 creators.</p>
+            <p>Join the waitlist to be notified when the demo is available.</p>
+        </div>
+
+        <form data-zapier-form="demo" data-role="viewer">
+            <div class="form-group">
+                <label for="name">Name *</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email *</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <button type="submit" class="btn">Notify Me When Demo Launches</button>
+        </form>
+    </div>
+
+    <script src="/assets/js/zapierForms.js"></script>
+</body>
+</html>
+

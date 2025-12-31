@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Series | VERTIKAL</title>
+    <style>
+        :root {
+            --bg: #050505; --card: #0a0a0a; --text: #ffffff; --muted: #888; --border: #222;
+            --blue: #2962FF; --font-main: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--bg); color: var(--text); font-family: var(--font-main); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 4rem 2rem; }
+        h1 { font-size: clamp(2rem, 5vw, 3rem); text-transform: uppercase; font-weight: 800; margin-bottom: 2rem; }
+        p { color: var(--muted); margin-bottom: 2rem; }
+        
+        .series-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem; }
+        .series-card { background: var(--card); border: 1px solid var(--border); padding: 2rem; border-radius: 4px; }
+        .series-card h3 { font-size: 1.5rem; margin-bottom: 1rem; color: #fff; }
+        
+        nav { padding: 2rem; border-bottom: 1px solid var(--border); }
+        .logo-link { font-weight: 900; letter-spacing: 0.1em; color: #fff; text-decoration: none; display: flex; align-items: center; }
+        .logo-img { height: 40px; width: auto; margin-right: 0.5rem; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="https://vertikalapp.com" class="logo-link">
+            <img src="/assets/Vertikal_Logo_Master.png" alt="VERTIKAL" class="logo-img">
+        </a>
+    </nav>
+
+    <div class="container">
+        <h1>Original Series</h1>
+        <p>Explore VERTIKAL's original vertical cinema series.</p>
+
+        <div class="series-grid">
+            <div class="series-card">
+                <h3>Coming Soon</h3>
+                <p>Original series will be available here.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
