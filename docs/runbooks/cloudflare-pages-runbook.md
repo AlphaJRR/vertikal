@@ -320,11 +320,29 @@ public/
 
 ---
 
+## Common Issues
+
+### Error 1014: CNAME Cross-User
+
+**Symptom:** Custom domain returns Cloudflare Error 1014 even though domain shows "Active" in Pages project.
+
+**Root Causes:**
+1. Domain attached to multiple Pages projects
+2. Manual Pages project cannot connect to Git (must recreate)
+3. DNS zone and Pages project in different Cloudflare accounts
+
+**Fix:** See `docs/runbooks/demo-1014-fix.md` for detailed diagnostic and fix steps.
+
+**Critical Note:** You cannot retrofit Git onto a manual Pages project — you must recreate via Connect to Git and migrate domains.
+
+---
+
 ## Related Documentation
 
 - Repository: `AlphaJRR/vertikal`
 - Branch: `main`
 - Deployment Report: `DEPLOYMENT_LOCKDOWN_REPORT.md`
+- Error 1014 Fix Guide: `docs/runbooks/demo-1014-fix.md`
 
 ---
 
