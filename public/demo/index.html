@@ -23,15 +23,23 @@
     <meta name="twitter:title" content="Platform Demo • VERTIKAL">
     <meta name="twitter:description" content="See how the Vertikal engine works. The closed-loop economy for cinematic IP.">
     <meta name="twitter:image" content="https://vertikalapp.com/assets/Vertikal_Logo_Master.png">
+    
     <style>
         /* --- VERTIKAL CINEMATIC ENGINE --- */
         :root {
             --bg: #050505; --card: #0a0a0a; --text: #ffffff; --muted: #888; --border: #222;
             --accent: #2962FF; --green: #00C853; --font-main: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             --bg-gradient: radial-gradient(circle at 50% 0%, #1a1a2e 0%, #000000 80%);
+            --demo-bg: #070708; --demo-card: #0f0f12; --demo-muted: #9aa0a6;
+            --accent1: linear-gradient(90deg, #7b61ff, #ff5fa3);
+            --chip-bg: rgba(255, 255, 255, 0.04);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: var(--bg-gradient); background-color: #000; color: var(--text); font-family: var(--font-main); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+        body { 
+            background: var(--bg-gradient); background-color: #000; 
+            color: var(--text); font-family: var(--font-main); 
+            line-height: 1.6; -webkit-font-smoothing: antialiased; 
+        }
         
         h1, h2, h3, h4 { text-transform: uppercase; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
         h1 { font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: 1.5rem; text-shadow: 0 0 60px rgba(41, 98, 255, 0.4); }
@@ -55,6 +63,169 @@
             nav { flex-wrap: wrap; }
             .nav-links { margin-top: 1rem; width: 100%; }
             .nav-links a { margin-left: 0; margin-right: 1rem; }
+        }
+        
+        /* DEMO LAYOUT */
+        .demo-layout {
+            display: grid;
+            grid-template-columns: 1fr 420px;
+            gap: 28px;
+            align-items: start;
+            margin-top: 2rem;
+        }
+        
+        /* Vertical Cinema grid */
+        .cinema-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        .thumb {
+            background: var(--demo-card);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            padding-bottom: 177%; /* 9:16 aspect ratio */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .thumb:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent);
+        }
+        .thumb .meta {
+            position: absolute;
+            left: 12px;
+            bottom: 12px;
+            right: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .badge-small {
+            background: var(--chip-bg);
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 13px;
+            color: #fff;
+        }
+        .thumb .title {
+            position: absolute;
+            left: 12px;
+            top: 12px;
+            font-weight: 700;
+            font-size: 14px;
+            color: #fff;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+        }
+        
+        /* Player + VIBE overlay */
+        .player-wrap {
+            background: linear-gradient(180deg, #0b0b0d, #0a0a0b);
+            border-radius: 14px;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .player {
+            background: #000;
+            border-radius: 10px;
+            height: 360px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .player .poster {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        /* VIBE overlay comments */
+        .vibe-overlay {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+        .vibe-comment {
+            position: absolute;
+            white-space: nowrap;
+            font-weight: 600;
+            padding: 6px 10px;
+            border-radius: 999px;
+            color: #fff;
+            font-size: 13px;
+            opacity: 0.95;
+            transform: translateX(110%);
+        }
+        /* Sample color classes */
+        .c1 { background: linear-gradient(90deg, #7b61ff, #ff5fa3); }
+        .c2 { background: linear-gradient(90deg, #00d4ff, #6be56b); }
+        .c3 { background: linear-gradient(90deg, #ffb86b, #ff6b9a); }
+        
+        /* Animation */
+        @keyframes slideLeft {
+            from { transform: translateX(110%); }
+            to { transform: translateX(-120%); }
+        }
+        .anim {
+            animation: 9s linear infinite slideLeft;
+        }
+        
+        /* V Badge row */
+        .badges {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+        .badge {
+            background: var(--chip-bg);
+            padding: 8px 12px;
+            border-radius: 999px;
+            display: inline-flex;
+            gap: 8px;
+            align-items: center;
+            font-weight: 700;
+            color: #fff;
+            font-size: 13px;
+        }
+        .badge .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .gold { background: linear-gradient(90deg, #ffd36b, #ffb84d); color: #111; }
+        .vision { background: linear-gradient(90deg, #6fb3ff, #7b61ff); }
+        .titanium { background: linear-gradient(90deg, #bdbdbd, #8f8f8f); color: #111; }
+        .green { background: linear-gradient(90deg, #6be56b, #00c853); color: #011; }
+        
+        /* Controls */
+        .controls {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        .btn {
+            background: #111;
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            color: #fff;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 13px;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #222;
+        }
+        .muted {
+            color: var(--demo-muted);
+            font-size: 13px;
+            margin-top: 8px;
         }
         
         /* TIMELINE VISUALS */
@@ -84,15 +255,6 @@
         }
         .timeline-step:last-child .step-number { color: var(--green); }
         
-        /* BUTTONS */
-        .btn { display: inline-block; padding: 1rem 3rem; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; transition: 0.3s; margin-top: 1rem; cursor: pointer; background: transparent; font-family: inherit; font-size: 1rem; }
-        .btn:hover:not(:disabled) { background: var(--accent); color: #000; }
-        .btn--primary { border-color: var(--accent); color: var(--accent); }
-        .btn--primary:hover:not(:disabled) { background: var(--accent); color: #000; }
-        .btn--secondary { border-color: var(--muted); color: var(--muted); }
-        .btn--secondary:hover:not(:disabled) { background: var(--muted); color: #000; }
-        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-        
         /* FORM */
         form { background: var(--card); border: 1px solid var(--border); padding: 2.5rem; max-width: 400px; margin: 0 auto; }
         .form-control { 
@@ -113,12 +275,13 @@
         .form-success { background: var(--green); color: #000; padding: 1rem; border-radius: 4px; font-weight: 700; }
         .form-error { background: #f44336; color: #fff; padding: 1rem; border-radius: 4px; font-weight: 700; }
         
-        /* HERO SECTION */
-        .vk-hero-subtitle { font-size: 1.3rem; color: var(--muted); margin-bottom: 3rem; }
-        
         /* ACCENT SECTION */
         .vk-section--accent { background: rgba(41, 98, 255, 0.05); border-color: rgba(41, 98, 255, 0.2); }
         
+        @media (max-width: 900px) {
+            .demo-layout { grid-template-columns: 1fr; }
+            .player { height: 260px; }
+        }
         @media (max-width: 768px) {
             section { padding: 4rem 0; }
             .timeline-step { padding-left: 1.5rem; }
@@ -136,7 +299,7 @@
             <a href="https://vertikalapp.com">Main</a>
             <a href="https://vertikalapp.com/creators/">Creators</a>
             <a href="https://vertikalapp.com/networks/">Networks</a>
-            <a href="https://vertikalapp.com/download" class="btn btn--secondary" style="padding:0.5rem 1.5rem; margin-left:1rem; margin-top:0;">Get Access</a>
+            <a href="https://vertikalapp.com/download" class="btn" style="padding:0.5rem 1.5rem; margin-left:1rem; margin-top:0;">Get Access</a>
         </div>
     </nav>
 
@@ -147,6 +310,74 @@
                 <p class="vk-hero-subtitle" style="margin: 0 auto;">
                     Vertikal is not just a feed. It is a closed-loop economy for cinematic IP.
                 </p>
+            </div>
+        </section>
+
+        <!-- INTERACTIVE DEMO -->
+        <section class="vk-section">
+            <div class="container">
+                <div class="demo-layout">
+                    <div>
+                        <h3 style="margin: 0 0 12px 0; color: #fff;">Vertical Cinema Originals</h3>
+                        <div class="cinema-grid" aria-hidden="false">
+                            <div class="thumb" role="button" tabindex="0">
+                                <div class="title">Short Film: Night Drive</div>
+                                <div class="meta">
+                                    <div class="badge-small">4m • Drama</div>
+                                    <div class="badge-small">Creator: A. Smith</div>
+                                </div>
+                            </div>
+                            <div class="thumb" role="button" tabindex="0">
+                                <div class="title">Doc: City Voices</div>
+                                <div class="meta">
+                                    <div class="badge-small">8m • Doc</div>
+                                    <div class="badge-small">Creator: L. Jones</div>
+                                </div>
+                            </div>
+                            <div class="thumb" role="button" tabindex="0">
+                                <div class="title">Series: Blocklight</div>
+                                <div class="meta">
+                                    <div class="badge-small">6m • Series</div>
+                                    <div class="badge-small">Creator: R. Cole</div>
+                                </div>
+                            </div>
+                            <div class="thumb" role="button" tabindex="0">
+                                <div class="title">Short: After Hours</div>
+                                <div class="meta">
+                                    <div class="badge-small">3m • Thriller</div>
+                                    <div class="badge-small">Creator: M. Lee</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top: 18px">
+                            <h4 style="margin: 0 0 8px 0; color: #fff;">V Badge System</h4>
+                            <div class="badges" aria-hidden="false">
+                                <div class="badge gold"><span class="dot" style="background: #ffcf6b"></span> Founding 50</div>
+                                <div class="badge vision"><span class="dot" style="background: #7b61ff"></span> Visionary</div>
+                                <div class="badge titanium"><span class="dot" style="background: #bdbdbd"></span> Networks</div>
+                                <div class="badge green"><span class="dot" style="background: #6be56b"></span> Investor</div>
+                            </div>
+                            <div class="muted">Badges are earned. Hover a badge to see access and monetization paths.</div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 style="margin: 0 0 12px 0; color: #fff;">VIBE™ Live Overlay Demo</h3>
+                        <div class="player-wrap" role="region" aria-label="VIBE demo">
+                            <div class="player" id="player">
+                                <div class="poster">[Video Player Placeholder]</div>
+                                <div class="vibe-overlay" id="vibe"></div>
+                            </div>
+
+                            <div class="controls">
+                                <button class="btn" id="toggle">Toggle VIBE™</button>
+                                <button class="btn" id="spawn">Spawn comment</button>
+                            </div>
+                            <div class="muted">VIBE™ shows real-time reactions without pausing the content. Creator moderation controls appear on hover.</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -185,7 +416,7 @@
                 
                 <form data-zapier-form="demo" data-role="viewer">
                     <input type="email" name="email" placeholder="Enter your email" class="form-control" required>
-                    <button type="submit" class="btn btn--primary" style="width: 100%;">Request Access</button>
+                    <button type="submit" class="btn btn--primary" style="width: 100%; padding: 1rem; background: var(--accent); color: #000; border: none; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;">Request Access</button>
                     <div data-form-status class="form-status"></div>
                 </form>
             </div>
@@ -199,6 +430,58 @@
             <p style="color: var(--muted); margin-top: 2rem; font-size: 0.9rem;">&copy; 2024 Vertikal. All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+        // Simple VIBE™ overlay simulator
+        const vibe = document.getElementById('vibe');
+        const toggle = document.getElementById('toggle');
+        const spawn = document.getElementById('spawn');
+        let enabled = true;
+
+        const sampleComments = [
+            {text: 'That shot 🔥', cls: 'c1', top: 20},
+            {text: 'This scene hits different', cls: 'c2', top: 60},
+            {text: 'Who wrote this? Brilliant', cls: 'c3', top: 120},
+            {text: 'Pause for the score', cls: 'c1', top: 180},
+            {text: 'Crew killed it', cls: 'c2', top: 240},
+        ];
+
+        function createComment(c) {
+            const el = document.createElement('div');
+            el.className = 'vibe-comment ' + c.cls + ' anim';
+            el.style.top = c.top + 'px';
+            el.textContent = c.text;
+            // randomize duration slightly
+            const dur = 7 + Math.random() * 6;
+            el.style.animationDuration = dur + 's';
+            vibe.appendChild(el);
+            // remove after animation
+            setTimeout(() => el.remove(), (dur * 1000) + 500);
+        }
+
+        // spawn initial stream
+        let streamInterval = setInterval(() => {
+            if (!enabled) return;
+            const c = sampleComments[Math.floor(Math.random() * sampleComments.length)];
+            createComment({...c, top: 30 + Math.random() * 260});
+        }, 1400);
+
+        toggle.addEventListener('click', () => {
+            enabled = !enabled;
+            toggle.textContent = enabled ? 'Toggle VIBE™' : 'VIBE™ Off';
+        });
+
+        spawn.addEventListener('click', () => {
+            const c = sampleComments[Math.floor(Math.random() * sampleComments.length)];
+            createComment({...c, top: 30 + Math.random() * 260});
+        });
+
+        // Accessibility: pause animations if user prefers reduced motion
+        const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+        if (mq.matches) {
+            document.querySelectorAll('.anim').forEach(e => e.style.animation = 'none');
+        }
+    </script>
 
     <script src="/assets/js/zapierForms.js"></script>
 </body>
