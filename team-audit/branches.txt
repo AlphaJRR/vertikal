@@ -1,0 +1,1 @@
+main | AlphaJRR | 2025-12-31 01:14:54 -0600 | Fix verification: cache-busting, image-based badge checks, canonical improvements

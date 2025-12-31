@@ -3,70 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Demo | VERTIKAL</title>
+    <title>Platform Demo • VERTIKAL</title>
     <link rel="canonical" href="https://vertikalapp.com/demo">
     <style>
+        /* --- VERTIKAL CINEMATIC ENGINE --- */
         :root {
             --bg: #050505; --card: #0a0a0a; --text: #ffffff; --muted: #888; --border: #222;
-            --blue: #2962FF; --font-main: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            --accent: #2962FF; --green: #00C853; --font-main: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            --bg-gradient: radial-gradient(circle at 50% 0%, #1a1a2e 0%, #000000 80%);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: var(--bg); color: var(--text); font-family: var(--font-main); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+        body { background: var(--bg-gradient); background-color: #000; color: var(--text); font-family: var(--font-main); line-height: 1.6; -webkit-font-smoothing: antialiased; }
         
-        .container { max-width: 900px; margin: 0 auto; padding: 4rem 2rem; }
-        h1 { font-size: clamp(2rem, 5vw, 3rem); text-transform: uppercase; font-weight: 800; margin-bottom: 1rem; }
-        p { color: var(--muted); margin-bottom: 2rem; }
+        h1, h2, h3, h4 { text-transform: uppercase; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+        h1 { font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: 1.5rem; text-shadow: 0 0 60px rgba(41, 98, 255, 0.4); }
+        h2 { font-size: clamp(1.5rem, 3vw, 2rem); margin-bottom: 1rem; color: #fff; }
+        h3 { font-size: 1.25rem; margin-bottom: 0.5rem; color: #fff; }
+        p { color: var(--muted); font-size: 1.15rem; max-width: 750px; margin-bottom: 1.5rem; }
         
-        .demo-info { background: var(--card); border: 1px solid var(--border); padding: 2rem; border-radius: 4px; margin-bottom: 2rem; }
-        .demo-info h2 { font-size: 1.5rem; margin-bottom: 1rem; color: #fff; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        section { padding: 6rem 0; border-bottom: 1px solid var(--border); }
+        .text-center { text-align: center; }
         
-        form { background: var(--card); border: 1px solid var(--border); padding: 2rem; border-radius: 4px; }
-        .form-group { margin-bottom: 1.5rem; }
-        label { display: block; margin-bottom: 0.5rem; color: var(--muted); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; }
-        input { width: 100%; padding: 1rem; background: var(--bg); border: 1px solid var(--border); color: var(--text); font-family: inherit; font-size: 1rem; border-radius: 4px; }
-        input:focus { outline: none; border-color: var(--blue); }
+        /* NAV */
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 2rem; background: rgba(5,5,5,0.95); position: sticky; top: 0; border-bottom: 1px solid var(--border); z-index: 1000; }
+        .nav-links { display: flex; align-items: center; }
+        .nav-links a { margin-left: 2rem; color: var(--muted); text-decoration: none; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 0.05em; }
+        .nav-links a:hover { color: #fff; }
+        .logo-link { font-weight: 900; letter-spacing: 0.1em; font-size: 1.2rem; color: #fff; text-decoration: none; display: flex; align-items: center; }
+        .logo-link:hover { color: #fff; }
+        .logo-img { height: 40px; width: auto; margin-right: 0.5rem; }
+        @media (max-width: 768px) {
+            nav { flex-wrap: wrap; }
+            .nav-links { margin-top: 1rem; width: 100%; }
+            .nav-links a { margin-left: 0; margin-right: 1rem; }
+        }
         
-        .btn { display: block; width: 100%; padding: 1rem 2rem; background: var(--blue); color: #fff; border: none; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; cursor: pointer; transition: 0.3s; }
-        .btn:hover:not(:disabled) { background: #1a4fd0; }
+        /* TIMELINE VISUALS */
+        .timeline-step { 
+            border-left: 2px solid var(--accent); 
+            padding-left: 2rem; 
+            margin-bottom: 3rem; 
+            position: relative; 
+            padding-bottom: 2rem;
+        }
+        .timeline-step::before {
+            content: ''; position: absolute; left: -9px; top: 0;
+            width: 16px; height: 16px; background: var(--accent);
+            border-radius: 50%; box-shadow: 0 0 20px var(--accent);
+        }
+        .timeline-step:last-child { border-left-color: var(--green); }
+        .timeline-step:last-child::before { background: var(--green); box-shadow: 0 0 20px var(--green); }
+        
+        .step-number { 
+            font-size: 0.8rem; 
+            letter-spacing: 0.1em; 
+            color: var(--accent); 
+            margin-bottom: 0.5rem; 
+            display: block; 
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+        .timeline-step:last-child .step-number { color: var(--green); }
+        
+        /* BUTTONS */
+        .btn { display: inline-block; padding: 1rem 3rem; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; transition: 0.3s; margin-top: 1rem; cursor: pointer; background: transparent; font-family: inherit; font-size: 1rem; }
+        .btn:hover:not(:disabled) { background: var(--accent); color: #000; }
+        .btn--primary { border-color: var(--accent); color: var(--accent); }
+        .btn--primary:hover:not(:disabled) { background: var(--accent); color: #000; }
+        .btn--secondary { border-color: var(--muted); color: var(--muted); }
+        .btn--secondary:hover:not(:disabled) { background: var(--muted); color: #000; }
         .btn:disabled { opacity: 0.5; cursor: not-allowed; }
         
-        nav { padding: 2rem; border-bottom: 1px solid var(--border); }
-        .logo-link { font-weight: 900; letter-spacing: 0.1em; color: #fff; text-decoration: none; display: flex; align-items: center; }
-        .logo-img { height: 40px; width: auto; margin-right: 0.5rem; }
+        /* FORM */
+        form { background: var(--card); border: 1px solid var(--border); padding: 2.5rem; max-width: 400px; margin: 0 auto; }
+        .form-control { 
+            width: 100%; 
+            padding: 1rem; 
+            background: var(--bg); 
+            border: 1px solid var(--border); 
+            color: var(--text); 
+            font-family: inherit; 
+            font-size: 1rem; 
+            margin-bottom: 1rem;
+            transition: border-color 0.3s;
+        }
+        .form-control:focus { outline: none; border-color: var(--accent); }
+        .form-control::placeholder { color: var(--muted); }
+        
+        .form-status { margin-top: 1rem; text-align: center; }
+        .form-success { background: var(--green); color: #000; padding: 1rem; border-radius: 4px; font-weight: 700; }
+        .form-error { background: #f44336; color: #fff; padding: 1rem; border-radius: 4px; font-weight: 700; }
+        
+        /* HERO SECTION */
+        .vk-hero-subtitle { font-size: 1.3rem; color: var(--muted); margin-bottom: 3rem; }
+        
+        /* ACCENT SECTION */
+        .vk-section--accent { background: rgba(41, 98, 255, 0.05); border-color: rgba(41, 98, 255, 0.2); }
+        
+        @media (max-width: 768px) {
+            section { padding: 4rem 0; }
+            .timeline-step { padding-left: 1.5rem; }
+            form { padding: 2rem; }
+        }
     </style>
 </head>
 <body>
+
     <nav>
         <a href="https://vertikalapp.com" class="logo-link">
             <img src="/assets/Vertikal_Logo_Master.png" alt="VERTIKAL" class="logo-img">
         </a>
+        <div class="nav-links">
+            <a href="https://vertikalapp.com">Main</a>
+            <a href="https://vertikalapp.com/creators/">Creators</a>
+            <a href="https://vertikalapp.com/networks/">Networks</a>
+            <a href="https://vertikalapp.com/download" class="btn btn--secondary" style="padding:0.5rem 1.5rem; margin-left:1rem; margin-top:0;">Get Access</a>
+        </div>
     </nav>
 
-    <div class="container">
-        <h1>Live Demo</h1>
-        
-        <div class="demo-info">
-            <h2>Coming Soon</h2>
-            <p>Live demo launching March/April. Full beta expected June with at least 50 creators.</p>
-            <p>Join the waitlist to be notified when the demo is available.</p>
+    <main>
+        <section class="vk-section vk-section--hero text-center" style="padding-top: 8rem;">
+            <div class="container">
+                <h1 class="vk-section-title">HOW THE ENGINE WORKS.</h1>
+                <p class="vk-hero-subtitle" style="margin: 0 auto;">
+                    Vertikal is not just a feed. It is a closed-loop economy for cinematic IP.
+                </p>
+            </div>
+        </section>
+
+        <section class="vk-section" style="max-width: 800px; margin: 0 auto;">
+            <div class="container">
+                <div class="timeline-step">
+                    <span class="step-number">STEP 01</span>
+                    <h2>The Cinematic Feed</h2>
+                    <p>No dance trends. No noise. A curated, noise-free stream of 2–10 minute serialized dramas, thrillers, and comedies. Vertical cinema, optimized for retention.</p>
+                </div>
+
+                <div class="timeline-step">
+                    <span class="step-number">STEP 02</span>
+                    <h2>VIBE™ Layer</h2>
+                    <p>This is where the culture lives. Viewers react to specific timestamps with memes, audio clips, and text. It creates a "live stadium" feel on every video.</p>
+                </div>
+
+                <div class="timeline-step">
+                    <span class="step-number">STEP 03</span>
+                    <h2>The Labor Market</h2>
+                    <p>See a show you love? Click the creator's profile. See open roles for their next season. Apply directly with your Vertikal profile. We turn viewers into crews.</p>
+                </div>
+
+                <div class="timeline-step" style="border-left: 2px solid var(--green);">
+                    <span class="step-number" style="color:var(--green);">STEP 04</span>
+                    <h2 style="color:var(--green);">Ownership & Monetization</h2>
+                    <p>Creators own their IP. The V Badge system unlocks direct transaction fees, ad-revenue sharing, and licensing opportunities without the middleman.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="vk-section vk-section--accent text-center" style="margin-top: 4rem; border-bottom: none;">
+            <div class="container">
+                <h2 class="vk-section-title">SEE IT LIVE.</h2>
+                <p style="margin-bottom: 2rem; color: var(--muted);">We are onboarding users in waves to ensure server stability.</p>
+                
+                <form data-zapier-form="demo" data-role="viewer">
+                    <input type="email" name="email" placeholder="Enter your email" class="form-control" required>
+                    <button type="submit" class="btn btn--primary" style="width: 100%;">Request Access</button>
+                    <div data-form-status class="form-status"></div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer style="padding: 4rem 2rem; border-top: 1px solid var(--border); text-align: center; background: var(--bg);">
+        <div class="container">
+            <p style="color: var(--muted); margin-bottom: 1rem;">For demo inquiries:</p>
+            <a href="mailto:demo@vertikalapp.com" style="color: var(--accent); text-decoration: none; font-weight: 700;">demo@vertikalapp.com</a>
+            <p style="color: var(--muted); margin-top: 2rem; font-size: 0.9rem;">&copy; 2024 Vertikal. All rights reserved.</p>
         </div>
-
-        <form data-zapier-form="demo" data-role="viewer">
-            <div class="form-group">
-                <label for="name">Name *</label>
-                <input type="text" id="name" name="name" required>
-            </div>
-
-            <div class="form-group">
-                <label for="email">Email *</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-
-            <button type="submit" class="btn">Notify Me When Demo Launches</button>
-        </form>
-    </div>
+    </footer>
 
     <script src="/assets/js/zapierForms.js"></script>
 </body>
 </html>
-

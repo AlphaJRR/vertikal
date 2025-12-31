@@ -1,0 +1,18 @@
+No banned placeholder strings found.
+
+Filtered out legitimate uses:
+- CSS ::placeholder pseudo-elements (form inputs)
+- HTML placeholder attributes (form inputs)
+- approved-sources.md note (documentation only)
+
+No matches for:
+- "Data visualization placeholder"
+- "Chart:"
+- "Series Title"
+- "Director Name"
+- "[email protected]"
+- "ZAPIER_HOOK_"
+- "lorem"
+- "gmail.com"
+- "yahoo.com"
+

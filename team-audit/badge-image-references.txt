@@ -1,0 +1,4 @@
+public/networks/index.html:125:                <img src="/assets/badges/networks-badge-titanium.jpg" alt="Titanium Network Badge" class="badge-img" onerror="this.style.display='none'; this.nextElementSibling.style.gridColumn='1/-1';">
+public/creators/index.html:129:                <img src="/assets/img/badge-gold.jpg" alt="Gold V Badge" class="badge-img" onerror="this.style.display='none'; this.nextElementSibling.style.gridColumn='1/-1';">
+public/creators/index.html:136:                <img src="/assets/img/badge-visionary.jpg" alt="Visionary Badge" class="badge-img" onerror="this.style.display='none'; this.nextElementSibling.style.gridColumn='1/-1';">
+public/investors/index.html:113:                <img src="/assets/badges/investors-badge-green.jpg" alt="Green Investor Badge" class="badge-img" onerror="this.style.display='none'; this.nextElementSibling.style.gridColumn='1/-1';">

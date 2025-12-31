@@ -1,0 +1,46 @@
+f73a330 | AlphaJRR | 2025-12-31 01:14:54 -0600 | Fix verification: cache-busting, image-based badge checks, canonical improvements
+dbe83fd | AlphaJRR | 2025-12-31 01:11:31 -0600 | Fix badge violations: remove green references from creators/networks Mission sections
+08eeff2 | AlphaJRR | 2025-12-31 01:09:43 -0600 | Fix placeholders, canonical URLs, add security headers, create source docs
+b90f3ec | AlphaJRR | 2025-12-31 01:05:08 -0600 | Fix canonical URLs to match subdomain structure
+2aef1df | AlphaJRR | 2025-12-31 01:03:31 -0600 | MASTER PROMPT v3: Mission+Features, VIBE™ naming, CI/CD workflow, enhanced verification
+28b2937 | AlphaJRR | 2025-12-31 00:57:10 -0600 | CARD 1: Traffic Control & Stealth - _redirects, canonical tags, email fixes
+fd9a30a | AlphaJRR | 2025-12-31 00:50:00 -0600 | Fix: Remove chart placeholder from networks page
+5772626 | AlphaJRR | 2025-12-31 00:42:39 -0600 | MASTER UPDATE: Canonical links, redirects, placeholder removal, badge exclusivity, Gemi-compliant creators design, Live Verification Mode
+bd91e89 | AlphaJRR | 2025-12-30 22:53:41 -0600 | Enforce badge/logo rules, add demo modal, prep feature name updates
+90d44e8 | AlphaJRR | 2025-12-30 22:42:17 -0600 | Prepare repository for Cloudflare Pages Git deploy: enforce brand assets, badge usage, VibeCode explainer, and routing
+d0015e9 | AlphaJRR | 2025-12-30 19:57:31 -0600 | FIX: Create profile image directories structure
+504793e | AlphaJRR | 2025-12-30 19:55:33 -0600 | FEAT: CTA + Forms activation - Zapier webhook integration, all buttons wired, founder profiles added
+e2d3b89 | AlphaJRR | 2025-12-30 12:09:40 -0600 | FIX: Deployment lockdown - asset paths, content sections, Git-only deployment
+95a713b | AlphaJRR | 2025-12-30 11:18:01 -0600 | FIX: Deployment infrastructure - absolute asset paths, DNS verified, domain resolution locked down
+c80d074 | AlphaJRR | 2025-12-30 04:42:55 -0600 | ATLAS: Add Founding 50 ticker to creators page (CNBC/Bloomberg style)
+4734e47 | AlphaJRR | 2025-12-30 04:20:20 -0600 | EXECUTE: PART 2 Task Group C - VibeCode component, badge blocks, chart placeholders
+9572479 | AlphaJRR | 2025-12-30 04:15:12 -0600 | EXECUTE: PART 1 Complete - Logo routing, badge enforcement, demo modal
+0b813f6 | AlphaJRR | 2025-12-29 19:36:10 -0600 | SYSTEM MODE: Execution only - Rebuild specialty pages with strict badge segregation, status/scarcity/advantage focus
+6eb99af | AlphaJRR | 2025-12-29 19:33:19 -0600 | SYSTEM OVERRIDE: Pure execution mode - Final production-ready HTML with strict badge segregation
+fe68a78 | AlphaJRR | 2025-12-29 17:44:09 -0600 | FIX CREATORS: Add V Badge system, creators-specific branding, standalone identity
+b6f3a49 | AlphaJRR | 2025-12-29 17:42:58 -0600 | Update creators page: Cleaner design with creators logo
+c509d01 | AlphaJRR | 2025-12-29 17:39:38 -0600 | Fix creators page: Add 'FOR DIRECTORS. NOT INFLUENCERS.' headline
+25a0559 | AlphaJRR | 2025-12-29 17:38:47 -0600 | Fix networks page: Add 'THE FOUNDING 50 NETWORKS' headline and application form
+1b7063e | AlphaJRR | 2025-12-29 17:37:29 -0600 | EMERGENCY FIX: Replace all landing pages with correct content - STOP ROTATING YOUR PHONE hero, PRE-SEED tiers, Founding 50 Networks form
+3bfcf9b | AlphaJRR | 2025-12-29 17:28:45 -0600 | Fix all bugs: Add investor form, fix broken links, add missing nav links, add smooth scroll
+16c321c | AlphaJRR | 2025-12-29 17:21:44 -0600 | SYSTEM OVERRIDE: Deploy deck-grade landing pages - Cinema Isn't Dying. It's Rotating. All 5 surfaces rewritten with institutional cinematic language.
+9ec88ca | AlphaJRR | 2025-12-29 17:05:11 -0600 | Fix all landing pages with correct content: STOP ROTATING YOUR PHONE hero, PRE-SEED tiers, Founding 50 Networks form, FOR DIRECTORS headline
+4f9dc2e | AlphaJRR | 2025-12-29 14:22:43 -0600 | Deploy: Update beta, creators, and networks surfaces
+4f55768 | AlphaJRR | 2025-12-29 14:19:20 -0600 | feat: Full fleet deployment - all 5 surfaces with shared CSS engine
+33d4939 | AlphaJRR | 2025-12-29 13:34:27 -0600 | chore: Prepare creators deployment package
+9ed6a78 | AlphaJRR | 2025-12-29 12:59:28 -0600 | fix: Make showToast globally available and prevent XSS
+cc4adc1 | AlphaJRR | 2025-12-29 12:59:15 -0600 | fix: Critical bug fixes - auth simulation no longer blocks real signups
+3b6cc96 | AlphaJRR | 2025-12-29 12:40:20 -0600 | feat: Add auth simulation script to networks and creators pages
+b48db0e | AlphaJRR | 2025-12-29 12:39:51 -0600 | feat: Add auth simulation script to forms for better UX
+864196c | AlphaJRR | 2025-12-29 11:53:33 -0600 | feat: Add Kel Mitchell Founding Partner landing page
+acf3d1a | AlphaJRR | 2025-12-29 11:38:57 -0600 | feat: Transform landing page to Black Ownership & Cinematic Series platform
+788dd21 | AlphaJRR | 2025-12-29 11:31:55 -0600 | feat: Secure signup via Supabase Edge Function - Remove exposed keys, add Founding 50 cap, server-side referrals
+cff641d | AlphaJRR | 2025-12-29 08:51:27 -0600 | fix: Replace networks header gradient with Core Vertikal logo
+8652078 | Joshua Roberts | 2025-12-29 06:31:27 -0600 | fix: Update investors page - use core logo in header, preserve badge in hero
+fa88b55 | Joshua Roberts | 2025-12-29 05:38:40 -0600 | feat: Restore old PDF format layout, preserve all functionality
+f3e8c8c | Joshua Roberts | 2025-12-29 00:04:33 -0600 | feat: Restore old marketing format, preserve all functionality
+fca2249 | Joshua Roberts | 2025-12-27 16:05:01 -0600 | fix: Replace Supabase credentials, optimize Netlify redirects, add cache headers
+955c846 | Joshua Roberts | 2025-12-14 01:55:33 -0600 | feat: add video embeds (About + Founding 50) and scroll fix
+48ddf7c | Joshua Roberts | 2025-12-13 11:13:46 -0600 | feat: deploy waitlist landing page
+78b4fe6 | Joshua Roberts | 2025-12-13 10:49:41 -0600 | fix: netlify routing and public folder structure
+d641ef1 | Joshua Roberts | 2025-12-13 10:29:46 -0600 | fix: configure netlify redirects and file structure

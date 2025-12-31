@@ -14,13 +14,14 @@ https://www.vertikalapp.com/* https://vertikalapp.com/:splat 301!
 /investors /investors/index.html 200
 /beta /beta/index.html 200
 /demo /demo/index.html 200
+/demo/ /demo/index.html 200
 
 # Subdomain redirects (canonical routing)
 /creators/*   https://creators.vertikalapp.com/:splat   301
 /investors/*  https://investors.vertikalapp.com/:splat  301
 /networks/*   https://networks.vertikalapp.com/:splat  301
-/demo/*       https://vertikalapp.com/demo              301
-/beta/*       https://vertikalapp.com/demo              302
+# Note: /demo/* redirect removed to prevent loop - /demo is served directly via line 16
+/beta/*       https://beta.vertikalapp.com/:splat       301
 
 # SPA Fallback (Optional - keep if you add dynamic routing later)
 # /* /index.html 200
