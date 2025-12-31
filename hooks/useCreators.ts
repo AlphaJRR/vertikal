@@ -10,6 +10,7 @@ import { apiClient } from '../services/api';
 import { Creator } from '../types';
 import { analytics } from '../services/analytics';
 import { errorTracking } from '../services/errorTracking';
+import { ApiError, isApiError } from '../types/api';
 
 // Re-export Creator type from types/index.ts
 export type { Creator } from '../types';
