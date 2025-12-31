@@ -3,7 +3,7 @@
  * VERTIKAL Brand Identity - Snap enforced, mobile-first vertical scrolling
  */
 
-import React, { useRef, useState, useCallback, useMemo } from 'react';
+import React, { useRef, useState, useCallback, useMemo, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, ScrollView } from 'react-native';
 import { CreatorCard } from './CreatorCard';
 import { ShowCard } from './ShowCard';
@@ -28,9 +28,17 @@ function VerticalFeed({
   onShowPress,
   onSeeAllFounding50,
   currentUserId,
-  vibeModeEnabled = true,
+  vibeModeEnabled = false, // ✅ PHASE 1: Disable VIBE overlays by default on mount
   onCategoryChange,
 }: VerticalFeedProps) {
+  // ✅ PHASE 1: Delay VIBE overlay initialization
+  const [vibeReady, setVibeReady] = useState(false);
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setVibeReady(true);
+    }, 1000); // 1s delay before enabling VIBE overlays
+    return () => clearTimeout(timer);
+  }, []);
   const creators = getFounding50Creators();
   const shows = getShows();
   const featuredShow = shows[0];
@@ -108,6 +116,7 @@ function VerticalFeed({
               onPress={() => onShowPress?.(featuredShow)}
             />
             {/* 🔥 DAUNT EFFECT OVERLAY 🔥 */}
+            {/* ✅ PHASE 1: Only enable VIBE overlays after delay AND user preference */}
             <DanmakuOverlay
               comments={danmakuComments.map((comment, index) => ({
                 id: comment.id,
@@ -116,7 +125,7 @@ function VerticalFeed({
                 topPosition: `${10 + (index % 5) * 15}%`,
                 color: comment.color,
               }))}
-              enabled={vibeModeEnabled}
+              enabled={vibeModeEnabled && vibeReady}
             />
           </View>
           {/* Category Rails */}

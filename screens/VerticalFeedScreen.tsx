@@ -24,12 +24,22 @@ const VIDEOS = [
 export const VerticalFeedScreen: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [refreshing, setRefreshing] = useState(false);
+  // ✅ PHASE 1: Delay video initialization until user interaction
+  const [videosReady, setVideosReady] = useState(false);
   // Fallback height if hook fails
   const tabHeight = 85; 
   const VIDEO_HEIGHT = WINDOW_HEIGHT - tabHeight;
 
+  // ✅ PHASE 1: Delay video init on mount
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      setVideosReady(true);
+    }, 500); // 500ms delay before enabling videos
+    return () => clearTimeout(timer);
+  }, []);
+
   const onViewableItemsChanged = useRef(({ viewableItems }: { viewableItems: Array<{ index: number | null }> }) => {
-    if (viewableItems.length > 0) {
+    if (viewableItems.length > 0 && videosReady) {
       setActiveIndex(viewableItems[0].index ?? 0);
     }
   }).current;
@@ -44,13 +54,14 @@ export const VerticalFeedScreen: React.FC = () => {
   }, []);
 
   // ✅ PERFORMANCE: Memoized render item
+  // ✅ PHASE 1: Disable auto-play on mount - only play when user scrolls AND videosReady
   const renderItem = useCallback(({ item, index }: { item: typeof VIDEOS[0]; index: number }) => (
     <View style={{ height: VIDEO_HEIGHT, width: WINDOW_WIDTH, backgroundColor: '#000000' }}>
       <Video
         source={{ uri: item.url }}
         style={StyleSheet.absoluteFill}
         resizeMode={ResizeMode.COVER}
-        shouldPlay={index === activeIndex}
+        shouldPlay={videosReady && index === activeIndex}
         isLooping
       />
       <View style={styles.overlay}>
@@ -58,7 +69,7 @@ export const VerticalFeedScreen: React.FC = () => {
         <Text style={styles.creator}>{item.creator}</Text>
       </View>
     </View>
-  ), [activeIndex, VIDEO_HEIGHT]);
+  ), [activeIndex, VIDEO_HEIGHT, videosReady]);
 
   // ✅ PERFORMANCE: Memoized key extractor
   const keyExtractor = useCallback((item: typeof VIDEOS[0]) => item.id, []);

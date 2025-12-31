@@ -1,5 +1,6 @@
 // App.tsx - VERTIKAL Brand Identity UI
 import React, { useEffect, useState, useRef } from 'react';
+import { useCurrentUser } from './hooks/useAuth';
 import { 
   View, Text, ActivityIndicator, StyleSheet, 
   TouchableOpacity, FlatList, Image, ScrollView
@@ -83,15 +84,27 @@ const ErrorScreen: React.FC<{
 const HomeTab: React.FC = () => {
   const [selectedCreatorId, setSelectedCreatorId] = useState<string | null>(null);
   const [selectedShowId, setSelectedShowId] = useState<string | null>(null);
+  // ✅ PHASE 1: Delay feed initialization
+  const [feedReady, setFeedReady] = useState(false);
+
+  // ✅ PHASE 1: Delay feed fetch until after mount
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setFeedReady(true);
+    }, 500); // 500ms delay before enabling feed
+    return () => clearTimeout(timer);
+  }, []);
 
   // Track screen view in Sentry
   useEffect(() => {
-    Sentry.addBreadcrumb({
-      category: 'navigation',
-      message: 'Navigated to Home tab',
-      level: 'info',
-    });
-  }, []);
+    if (feedReady) {
+      Sentry.addBreadcrumb({
+        category: 'navigation',
+        message: 'Navigated to Home tab',
+        level: 'info',
+      });
+    }
+  }, [feedReady]);
 
   // Show creator profile if selected
   if (selectedCreatorId) {
@@ -121,6 +134,15 @@ const HomeTab: React.FC = () => {
           />
         </View>
       </RouteErrorBoundary>
+    );
+  }
+
+  // ✅ PHASE 1: Show loading until feed is ready
+  if (!feedReady) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#000000' }}>
+        <LoadingScreen message="Loading feed..." />
+      </View>
     );
   }
 
@@ -156,7 +178,7 @@ const HomeTab: React.FC = () => {
             console.log('See All Founding 50');
           }}
           currentUserId="joshuaroberts" // TODO: Get from auth context
-          vibeModeEnabled={true}
+          vibeModeEnabled={false} // ✅ PHASE 1: Disable VIBE overlays on mount
         />
       </View>
     </RouteErrorBoundary>
@@ -366,6 +388,9 @@ const AppNavigator: React.FC = () => {
 // ROOT APP (With Providers)
 // ============================================
 const App: React.FC = () => {
+  const { data: currentUser, isLoading: authLoading } = useCurrentUser();
+  const [appReady, setAppReady] = useState(false);
+
   useEffect(() => {
     // Set Sentry user context (example)
     // In real app, this would come from auth state
@@ -373,6 +398,29 @@ const App: React.FC = () => {
       Sentry.setUser({ id: 'anonymous' });
     }
   }, []);
+
+  // ✅ PHASE 1: Delay app initialization to prevent crashes
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setAppReady(true);
+    }, 300); // 300ms delay before rendering main app
+    return () => clearTimeout(timer);
+  }, []);
+
+  // ✅ PHASE 1: Hard guard - show loading until auth check completes
+  if (!appReady || authLoading) {
+    return (
+      <ErrorBoundary>
+        <QueryClientProvider client={queryClient}>
+          <LoadingScreen message="Loading VERTIKAL..." />
+        </QueryClientProvider>
+      </ErrorBoundary>
+    );
+  }
+
+  // ✅ PHASE 1: Hard guard - redirect to login if no session
+  // Note: Profile check happens in ProfileScreen itself
+  // For now, allow app to load even without session (some features work without auth)
 
   return (
     <ErrorBoundary>

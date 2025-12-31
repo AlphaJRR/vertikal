@@ -1,35 +1,195 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.3">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VERTIKAL Demo | Vertical Cinema in Motion</title>
+    <style>
+        :root {
+            --bg: #050505; --card: #0a0a0a; --text: #ffffff; --muted: #888; --border: #222;
+            --gold: #FFD700;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--bg); color: var(--text); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+        
+        .vk-tagline {
+            width: 100%;
+            text-align: center;
+            margin: 18px 0 10px 0;
+            letter-spacing: .08em;
+            font-size: 12px;
+            opacity: .85;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem;
+            background: rgba(5,5,5,0.95);
+            position: sticky;
+            top: 0;
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+        }
+        .logo-img { height: 40px; width: auto; cursor: pointer; }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            text-transform: uppercase;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: var(--muted);
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .video-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .video-info {
+            padding: 1.5rem;
+        }
+        
+        .video-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .video-creator {
+            color: var(--gold);
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+        }
+        
+        .video-status {
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+        
+        .cta-section {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 3rem;
+            border-top: 1px solid var(--border);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            border: 1px solid #fff;
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background: #fff;
+            color: #000;
+        }
+        .btn-primary {
+            background: #fff;
+            color: #000;
+            border-color: #fff;
+        }
+    </style>
 </head>
 <body>
-<div class="vk-tagline" style="width:100%;text-align:center;margin:18px 0 10px 0;letter-spacing:.08em;font-size:12px;opacity:.85;">
-  CINEMA ISN'T DYING — IT'S ROTATING
-</div>
-<p class="p1">&lt;!doctype html&gt;</p>
-<p class="p1">&lt;html lang="en"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="utf-8" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width,initial-scale=1" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;Vertikal Demo Video&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>body{margin:0;background:#000;display:flex;min-height:100vh;align-items:center;justify-content:center}</p>
-<p class="p1"><span class="Apple-converted-space">    </span>video{max-width:100%;height:auto}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;video controls autoplay muted playsinline width="100%"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;source src="/demo/test-video.mp4" type="video/mp4"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/video&gt;</p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+    <div class="vk-tagline">
+        CINEMA ISN'T DYING — IT'S ROTATING
+    </div>
+    
+    <nav>
+        <a href="/">
+            <img src="/assets/Vertikal_Logo_Master.png" alt="VERTIKAL" class="logo-img" />
+        </a>
+        <div>
+            <a href="/apply/" class="btn" style="padding:0.5rem 1.5rem; margin-left:1rem; margin-top:0;">Apply to Build</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <h1>THIS IS VERTIKAL IN MOTION</h1>
+        <p class="subtitle">Experience vertical cinema built for how you watch. Flagship originals from Vertikal Studios and Founding 50 creators.</p>
+        
+        <div class="video-grid">
+            <div class="video-card">
+                <video controls playsinline>
+                    <source src="/demo/test-video.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="video-info">
+                    <div class="video-title">Beyond the Bases</div>
+                    <div class="video-creator">J.R. Roberts</div>
+                    <div class="video-status">Pilot</div>
+                </div>
+            </div>
+            
+            <div class="video-card">
+                <video controls playsinline>
+                    <source src="/demo/test-video.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="video-info">
+                    <div class="video-title">Dark Room</div>
+                    <div class="video-creator">Joe Guidry</div>
+                    <div class="video-status">In Production</div>
+                </div>
+            </div>
+            
+            <div class="video-card">
+                <video controls playsinline>
+                    <source src="/demo/test-video.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="video-info">
+                    <div class="video-title">Argueably the Best Burgers</div>
+                    <div class="video-creator">Joshua Argue</div>
+                    <div class="video-status">Pilot</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="cta-section">
+            <a href="/apply/" class="btn btn-primary">Apply to Build</a>
+        </div>
+    </div>
 </body>
 </html>
