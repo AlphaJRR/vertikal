@@ -28,12 +28,46 @@ async function fetchProjects(): Promise<Project[]> {
   try {
     // ✅ FAIL-LOUD: Check backendClient is initialized
     if (!backendClient || !backendClient.shows) {
-      throw new Error('backendClient.shows is not initialized. Check API configuration.');
+      const error = new Error('backendClient.shows is not initialized. Check API configuration.');
+      errorTracking.captureError(error, {
+        action: 'fetchProjects',
+        metadata: { issue: 'backendClient_not_initialized' },
+      });
+      throw error;
     }
+    
     const shows = await backendClient.shows.getAll();
+    
+    // ✅ Validate response
+    if (!Array.isArray(shows)) {
+      const error = new Error('Invalid API response: expected array of shows');
+      errorTracking.captureError(error, {
+        action: 'fetchProjects',
+        metadata: { responseType: typeof shows },
+      });
+      throw error;
+    }
+    
     // Transform: ShowData (coverImage) → Project (img)
     return shows.map(transformShowDataToProject);
   } catch (error: any) {
+    // ✅ Enhanced error handling for 500 errors
+    if (error?.response?.status === 500 || error?.code === 'ERR_NETWORK') {
+      errorTracking.captureError(error, {
+        action: 'fetchProjects',
+        metadata: {
+          statusCode: error?.response?.status,
+          code: error?.code,
+          message: error?.message,
+          apiUrl: process.env.EXPO_PUBLIC_API_URL || 'not_set',
+        },
+      });
+      
+      // Return empty array instead of throwing to prevent app crash
+      console.warn('⚠️ API error in fetchProjects, returning empty array:', error.message);
+      return [];
+    }
+    
     errorTracking.captureError(error, {
       action: 'fetchProjects',
     });
@@ -83,14 +117,27 @@ export function useProjects() {
     queryFn: fetchProjects,
     staleTime: 5 * 60 * 1000, // 5 minutes
     gcTime: 10 * 60 * 1000, // 10 minutes
-    retry: 2,
+    retry: (failureCount, error: any) => {
+      // ✅ Don't retry on 500 errors or network errors (they'll likely fail again)
+      if (error?.response?.status === 500 || error?.code === 'ERR_NETWORK') {
+        return false;
+      }
+      // Retry up to 2 times for other errors
+      return failureCount < 2;
+    },
     refetchOnWindowFocus: false,
+    // ✅ Return empty array as fallback instead of undefined
+    placeholderData: [],
   });
 
   React.useEffect(() => {
     if (query.error) {
       errorTracking.captureError(query.error as Error, {
         action: 'useProjects',
+        metadata: {
+          statusCode: (query.error as any)?.response?.status,
+          code: (query.error as any)?.code,
+        },
       });
     }
   }, [query.error]);
