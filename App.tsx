@@ -452,7 +452,13 @@ const App: React.FC = () => {
               <TouchableOpacity
                 style={{ backgroundColor: '#FFD700', padding: 16, borderRadius: 8, alignItems: 'center', marginTop: 20 }}
                 onPress={() => {
-                  // Navigate to profile setup - handled by ProfileScreen
+                  // Navigate to profile setup screen
+                  if (currentUser) {
+                    // Profile setup will be handled by navigation to ProfileScreen
+                    // For now, dismiss onboarding to allow profile completion
+                    setShowOnboarding(false);
+                    setHasSeenOnboarding(true);
+                  }
                 }}
               >
                 <Text style={{ color: '#000000', fontSize: 16, fontWeight: '900' }}>GET STARTED</Text>
