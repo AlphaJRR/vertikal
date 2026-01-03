@@ -24,8 +24,8 @@ document.addEventListener('DOMContentLoaded', () => {
       full_name: formData.get('name'),
       email: formData.get('email'),
       applying_as: formData.get('role') || 'creator',
-      portfolio_url: formData.get('portfolio'),
-      why_vertikal: formData.get('message') || formData.get('why')
+      portfolio_url: formData.get('portfolio') || null,
+      why_vertikal: formData.get('why') || formData.get('message') || ''
     };
     
     submitBtn.disabled = true;
