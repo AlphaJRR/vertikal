@@ -11,7 +11,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useCurrentUser } from '../hooks/useAuth';
 import { HowYouEarnScreen } from './HowYouEarnScreen';
-import { HowYouEarnScreen } from './HowYouEarnScreen';
 
 const { width } = Dimensions.get('window');
 
@@ -22,7 +21,6 @@ export const ProfileScreen: React.FC = () => {
   const navigation = useNavigation();
   const { data: currentUser, isLoading, error } = useCurrentUser();
   const [activeTab, setActiveTab] = useState<'SHOWS' | 'CREW'>('SHOWS');
-  const [showHowYouEarn, setShowHowYouEarn] = useState(false);
   const [showHowYouEarn, setShowHowYouEarn] = useState(false);
   
   // Determine role from backend data
@@ -94,8 +92,8 @@ export const ProfileScreen: React.FC = () => {
                 <Text style={styles.badgeText}>FOUNDING 50</Text>
               </View>
             )}
-            {/* Verified Badge - Show if verified */}
-            {currentUser?.profile?.isVerified && (
+            {/* Verified Badge - Show if verified (check if property exists) */}
+            {currentUser?.profile && 'isVerified' in currentUser.profile && currentUser.profile.isVerified && (
               <View style={[styles.badge, styles.verifiedBadge]}>
                 <Ionicons name="checkmark-circle" size={12} color="#000" />
                 <Text style={styles.badgeText}>VERIFIED</Text>
@@ -384,6 +382,46 @@ const styles = StyleSheet.create({
     color: '#FFFFFF', 
     fontWeight: '700',
     fontSize: 14,
+  },
+  badgeStatus: {
+    marginTop: 15,
+    padding: 12,
+    backgroundColor: '#1A1A1A',
+    borderRadius: 8,
+    borderLeftWidth: 4,
+    borderLeftColor: '#FFD700',
+  },
+  badgeStatusText: {
+    color: '#FFD700',
+    fontSize: 14,
+    fontWeight: '900',
+    letterSpacing: 1,
+  },
+  badgeStatusSubtext: {
+    color: '#888888',
+    fontSize: 12,
+    marginTop: 4,
+  },
+  roleDisplay: {
+    marginTop: 15,
+    padding: 12,
+    backgroundColor: '#1A1A1A',
+    borderRadius: 8,
+  },
+  roleLabel: {
+    color: '#888888',
+    fontSize: 12,
+    marginBottom: 4,
+  },
+  roleValue: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  roleDetail: {
+    color: '#666666',
+    fontSize: 12,
+    marginTop: 4,
   }
 });
 
