@@ -18,9 +18,19 @@ export function ProfileGate({ children }: ProfileGateProps) {
 
   // Set up Supabase auth listener
   useEffect(() => {
+    // Check if supabase is initialized
+    if (!supabase || !supabase.auth) {
+      console.warn('Supabase not initialized, skipping auth listener');
+      setBootLoading(false);
+      return;
+    }
+
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
+      setBootLoading(false);
+    }).catch((error) => {
+      console.error('Error getting session:', error);
       setBootLoading(false);
     });
 
@@ -36,7 +46,7 @@ export function ProfileGate({ children }: ProfileGateProps) {
     });
 
     return () => {
-      subscription.unsubscribe();
+      subscription?.unsubscribe();
     };
   }, [disableGuestMode]);
 
