@@ -33,6 +33,9 @@ import { Founding50Creator, ShowData } from './utils/dataLoader';
 import { useCreators, useProjects } from './hooks/useApi';
 import { useCurrentUser } from './hooks/useAuth';
 
+// Constants
+import { FEATURED_ORIGINALS, FeaturedSeries } from './constants/featuredSeries';
+
 // Types - imported from hooks (they transform backend data)
 // Note: Creator and Project types are defined in hooks/useCreators.ts and data.ts
 
@@ -191,6 +194,7 @@ const HomeTab: React.FC = () => {
 // ============================================
 const SeriesTab: React.FC = () => {
   const { data: projects, isLoading, error, refetch } = useProjects();
+  const [selectedSeries, setSelectedSeries] = useState<FeaturedSeries | null>(null);
 
   useEffect(() => {
     Sentry.addBreadcrumb({
@@ -203,24 +207,100 @@ const SeriesTab: React.FC = () => {
   if (isLoading) return <LoadingScreen message="Loading series..." />;
   if (error) return <ErrorScreen error={error as Error} retry={refetch} />;
 
+  const handleViewSeries = (series: FeaturedSeries) => {
+    // TODO: Check if route exists: /series/${series.slug}
+    // For now, show modal with series details
+    setSelectedSeries(series);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedSeries(null);
+  };
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>SERIES</Text>
-      {projects && projects.length > 0 ? (
-        <FlatList
-          data={projects}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <View style={styles.projectCard}>
-              <Image source={{ uri: item.img }} style={styles.projectImage} />
-              <Text style={styles.projectTitle}>{item.title}</Text>
+    <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
+      {/* FEATURED ORIGINALS SECTION */}
+      <View style={styles.featuredSection}>
+        <Text style={styles.featuredTitle}>FEATURED ORIGINALS</Text>
+        <View style={styles.featuredGrid}>
+          {FEATURED_ORIGINALS.map((series) => (
+            <View key={series.id} style={styles.featuredCard}>
+              <View style={styles.featuredCardContent}>
+                <Text style={styles.featuredCardTitle}>{series.title}</Text>
+                <Text style={styles.featuredCardLogline} numberOfLines={2}>
+                  {series.logline}
+                </Text>
+                <View style={styles.featuredCardFooter}>
+                  <View style={[
+                    styles.statusTag,
+                    series.status === 'PILOT IN PROGRESS' ? styles.statusTagPilot : styles.statusTagDev
+                  ]}>
+                    <Text style={styles.statusTagText}>{series.status}</Text>
+                  </View>
+                  <TouchableOpacity
+                    style={styles.viewSeriesButton}
+                    onPress={() => handleViewSeries(series)}
+                    activeOpacity={0.8}
+                  >
+                    <Text style={styles.viewSeriesButtonText}>VIEW SERIES</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
             </View>
-          )}
-        />
-      ) : (
-        <Text style={styles.emptyText}>No series available</Text>
+          ))}
+        </View>
+      </View>
+
+      {/* ALL SERIES SECTION */}
+      <View style={styles.allSeriesSection}>
+        <Text style={styles.title}>ALL SERIES</Text>
+        {projects && projects.length > 0 ? (
+          <FlatList
+            data={projects}
+            keyExtractor={(item) => item.id}
+            scrollEnabled={false}
+            renderItem={({ item }) => (
+              <View style={styles.projectCard}>
+                <Image source={{ uri: item.img }} style={styles.projectImage} />
+                <Text style={styles.projectTitle}>{item.title}</Text>
+              </View>
+            )}
+          />
+        ) : (
+          <Text style={styles.emptyText}>No series available</Text>
+        )}
+      </View>
+
+      {/* SERIES DETAIL MODAL */}
+      {selectedSeries && (
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <TouchableOpacity
+              style={styles.modalCloseButton}
+              onPress={handleCloseModal}
+            >
+              <Text style={styles.modalCloseText}>✕</Text>
+            </TouchableOpacity>
+            <Text style={styles.modalTitle}>{selectedSeries.title}</Text>
+            <Text style={styles.modalCreator}>by {selectedSeries.creator}</Text>
+            <Text style={styles.modalLogline}>{selectedSeries.logline}</Text>
+            <View style={[
+              styles.modalStatusTag,
+              selectedSeries.status === 'PILOT IN PROGRESS' ? styles.statusTagPilot : styles.statusTagDev
+            ]}>
+              <Text style={styles.statusTagText}>{selectedSeries.status}</Text>
+            </View>
+            <Text style={styles.modalComingSoon}>More details coming soon</Text>
+            <TouchableOpacity
+              style={styles.modalCloseButtonMain}
+              onPress={handleCloseModal}
+            >
+              <Text style={styles.modalCloseButtonMainText}>CLOSE</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       )}
-    </View>
+    </ScrollView>
   );
 };
 
