@@ -33,6 +33,7 @@ export const SetupProfileScreen: React.FC<SetupProfileScreenProps> = ({ navigati
   
   // Get current user to access user ID
   const { data: currentUser, isLoading: isLoadingUser } = useCurrentUser();
+  const queryClient = useQueryClient();
 
   /**
    * Pick image from device
@@ -110,22 +111,17 @@ export const SetupProfileScreen: React.FC<SetupProfileScreenProps> = ({ navigati
 
       console.log('Profile updated successfully:', updatedUser);
 
-      // 4. Navigation handled by AppNavigator automatically
-      // Or you can force it:
-      if (navigation) {
-        navigation.reset({
-          index: 0,
-          routes: [{ name: 'Home' }],
-        });
-      }
-
+      // ✅ Invalidate and refetch current user to update ProfileGate
+      queryClient.invalidateQueries({ queryKey: authKeys.currentUser() });
+      
+      // ✅ ProfileGate will automatically detect profile exists and show AppNavigator
+      // No manual navigation needed - ProfileGate handles routing
+      
       // Show success message
       Alert.alert('Success', 'Profile created successfully!', [
         {
           text: 'OK',
-          onPress: () => {
-            // Navigation will be handled by auth state change
-          },
+          // ProfileGate will automatically route to app once query refetches
         },
       ]);
     } catch (error: any) {
