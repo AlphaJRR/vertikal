@@ -28,7 +28,7 @@ function VerticalFeed({
   onShowPress,
   onSeeAllFounding50,
   currentUserId,
-  vibeModeEnabled = false, // ✅ PHASE 1: Disable VIBE overlays by default on mount
+  vibeModeEnabled = true, // ✅ REQUIREMENT: VIBE effect enabled on every vertical page
   onCategoryChange,
 }: VerticalFeedProps) {
   // ✅ PHASE 1: Delay VIBE overlay initialization

@@ -69,6 +69,34 @@
         "series": "4",
         "views": "200M"
       }
+    },
+    {
+      "id": "joeguidry",
+      "name": "Joe Guidry",
+      "type": "creator",
+      "avatar": "https://www.dropbox.com/scl/fi/dgf6xyzfvq5hl2kj093cq/Image-1.jpg?rlkey=c2por9s72xsafnng0dp9azex5&st=qgogul20&raw=1",
+      "role": "Producer",
+      "isFounding50": true,
+      "bio": "Production Management.",
+      "stats": {
+        "fans": "3K",
+        "series": "1",
+        "views": "50K"
+      }
+    },
+    {
+      "id": "cloaq",
+      "name": "CLOAQ Studios",
+      "type": "network",
+      "avatar": "https://www.dropbox.com/scl/fi/pzrib9x3r0ax34gpew0l9/Image-3.jpg?rlkey=lbyuuqoy42mehwnz658dzaxfo&st=u5atuetv&raw=1",
+      "role": "Production Network",
+      "isFounding50": true,
+      "bio": "Unveiling the unseen.",
+      "stats": {
+        "fans": "45K",
+        "series": "3",
+        "views": "800K"
+      }
     }
   ]
 }

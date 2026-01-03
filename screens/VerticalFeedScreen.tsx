@@ -8,6 +8,7 @@ import React, { useRef, useState, useCallback } from 'react';
 import { View, Text, FlatList, Dimensions, StyleSheet, RefreshControl } from 'react-native';
 import { Video, ResizeMode } from 'expo-av';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import { DanmakuOverlay, DanmakuComment } from '../components/ui/DanmakuOverlay';
 
 const { height: WINDOW_HEIGHT, width: WINDOW_WIDTH } = Dimensions.get('window');
 
@@ -53,8 +54,15 @@ export const VerticalFeedScreen: React.FC = () => {
     setRefreshing(false);
   }, []);
 
+  // Mock Danmaku comments for VIBE effect
+  const danmakuComments: DanmakuComment[] = [
+    { id: '1', text: '🔥 This is fire', delay: 0, topPosition: '20%', color: '#FFFFFF' },
+    { id: '2', text: 'Chicago represent! 🏙️', delay: 1500, topPosition: '40%', color: '#FFD700' },
+    { id: '3', text: 'The lighting is insane', delay: 3000, topPosition: '60%', color: '#3B82F6' },
+  ];
+
   // ✅ PERFORMANCE: Memoized render item
-  // ✅ PHASE 1: Disable auto-play on mount - only play when user scrolls AND videosReady
+  // ✅ REQUIREMENT: VIBE effect on FIRST video (index === 0)
   const renderItem = useCallback(({ item, index }: { item: typeof VIDEOS[0]; index: number }) => (
     <View style={{ height: VIDEO_HEIGHT, width: WINDOW_WIDTH, backgroundColor: '#000000' }}>
       <Video
@@ -64,12 +72,19 @@ export const VerticalFeedScreen: React.FC = () => {
         shouldPlay={videosReady && index === activeIndex}
         isLooping
       />
+      {/* ✅ REQUIREMENT: VIBE effect on FIRST video */}
+      {index === 0 && videosReady && (
+        <DanmakuOverlay
+          comments={danmakuComments}
+          enabled={true}
+        />
+      )}
       <View style={styles.overlay}>
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.creator}>{item.creator}</Text>
       </View>
     </View>
-  ), [activeIndex, VIDEO_HEIGHT, videosReady]);
+  ), [activeIndex, VIDEO_HEIGHT, videosReady, danmakuComments]);
 
   // ✅ PERFORMANCE: Memoized key extractor
   const keyExtractor = useCallback((item: typeof VIDEOS[0]) => item.id, []);

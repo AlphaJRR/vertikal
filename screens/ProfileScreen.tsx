@@ -86,7 +86,13 @@ export const ProfileScreen: React.FC = () => {
           <Image source={{ uri: avatarUrl || DEFAULT_AVATAR }} style={styles.avatar} />
           <Text style={styles.name}>{displayName}</Text>
           <View style={styles.badgeRow}>
-            {/* Founding 50 Badge - Only show if user is Founding 50 */}
+            {/* Network Badge - Show if role is NETWORK */}
+            {userRole === 'NETWORK' && (
+              <View style={[styles.badge, styles.networkBadge]}>
+                <Text style={styles.badgeText}>NETWORK</Text>
+              </View>
+            )}
+            {/* Founding 50 Badge - Show if user is Founding 50 */}
             {isFounding50 && (
               <View style={styles.badge}>
                 <Text style={styles.badgeText}>FOUNDING 50</Text>
@@ -97,6 +103,12 @@ export const ProfileScreen: React.FC = () => {
               <View style={[styles.badge, styles.verifiedBadge]}>
                 <Ionicons name="checkmark-circle" size={12} color="#000" />
                 <Text style={styles.badgeText}>VERIFIED</Text>
+              </View>
+            )}
+            {/* Default Badge - Show for all profiles */}
+            {!isFounding50 && userRole !== 'NETWORK' && (
+              <View style={[styles.badge, styles.defaultBadge]}>
+                <Text style={styles.badgeText}>{isCreator ? 'CREATOR' : 'VIEWER'}</Text>
               </View>
             )}
             {/* Role Text */}
@@ -262,6 +274,12 @@ const styles = StyleSheet.create({
             flexDirection: 'row',
             alignItems: 'center',
             gap: 4,
+          },
+          networkBadge: {
+            backgroundColor: '#C0C0C0',
+          },
+          defaultBadge: {
+            backgroundColor: '#333333',
           },
           loadingContainer: {
             flex: 1,
