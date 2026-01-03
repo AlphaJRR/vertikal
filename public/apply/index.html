@@ -73,7 +73,7 @@
 
             <div class="form-group">
                 <label for="message">Why VERTIKAL? *</label>
-                <textarea id="message" name="message" placeholder="Tell us about your vision for vertical cinema..." required></textarea>
+                <textarea id="message" name="why" placeholder="Tell us about your vision for vertical cinema..." required></textarea>
             </div>
 
             <button type="submit" class="btn">Submit Application</button>
@@ -86,16 +86,14 @@
     <script type="module" src="/assets/js/applyForm.js"></script>
     <script>
         // Set role from URL parameter or default to creator
-        const urlParams = new URLSearchParams(window.location.search);
-        const roleParam = urlParams.get('role') || 'creator';
-        const form = document.getElementById('applyForm');
-        if (form) {
-            // Set role select if coming from network/investor pages
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const roleParam = urlParams.get('role') || 'creator';
             const roleSelect = document.getElementById('role');
             if (roleSelect && roleParam === 'network') {
                 roleSelect.value = 'network';
             }
-        }
+        });
     </script>
 </body>
 </html>
