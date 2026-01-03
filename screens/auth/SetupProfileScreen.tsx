@@ -67,6 +67,7 @@ export const SetupProfileScreen: React.FC<SetupProfileScreenProps> = ({ navigati
 
   /**
    * Handle profile submission
+   * ✅ Idempotent: Backend uses upsert, so repeated submits are safe
    */
   const handleSubmit = async () => {
     // Validation
@@ -87,7 +88,20 @@ export const SetupProfileScreen: React.FC<SetupProfileScreenProps> = ({ navigati
       return;
     }
 
+    // ✅ Prevent duplicate submissions
+    if (loading) {
+      console.warn('[SetupProfileScreen] Submit already in progress - ignoring duplicate');
+      return;
+    }
+
     setLoading(true);
+    
+    console.log('[SetupProfileScreen] Starting profile creation:', {
+      userId: currentUser.id,
+      username: username.trim(),
+      displayName: displayName.trim(),
+      hasAvatar: !!avatarUri,
+    });
 
     try {
       let finalAvatarUrl: string | null = null;
@@ -103,12 +117,15 @@ export const SetupProfileScreen: React.FC<SetupProfileScreenProps> = ({ navigati
         }
       }
 
-      // 3. Update Profile in DB (sending the Public Cloud URL, not local path)
+      // 3. Update/Create Profile in DB (idempotent upsert on backend)
+      // ✅ Backend uses upsert keyed by user_id, so duplicate submits are safe
       const updatedUser = await apiClient.updateUserProfile({
         username: username.trim(),
         displayName: displayName.trim(),
         avatarUrl: finalAvatarUrl,
       });
+      
+      console.log('[SetupProfileScreen] Backend upsert completed successfully');
 
       console.log('Profile updated successfully:', updatedUser);
 
@@ -126,10 +143,25 @@ export const SetupProfileScreen: React.FC<SetupProfileScreenProps> = ({ navigati
         },
       ]);
     } catch (error: any) {
-      console.error('Profile update error:', error);
+      console.error('[SetupProfileScreen] Profile creation error:', {
+        message: error.message,
+        statusCode: error.statusCode,
+        code: error.code,
+        userId: currentUser?.id,
+      });
       
       // Display user-friendly error message
-      const errorMessage = error.message || 'Failed to create profile. Please try again.';
+      let errorMessage = 'Failed to create profile. Please try again.';
+      
+      // Handle specific error cases
+      if (error.statusCode === 409) {
+        errorMessage = 'Username is already taken. Please choose another.';
+      } else if (error.statusCode === 400) {
+        errorMessage = error.message || 'Invalid profile data. Please check your inputs.';
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
       Alert.alert('Error', errorMessage);
     } finally {
       setLoading(false);

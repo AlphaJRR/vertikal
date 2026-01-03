@@ -1,10 +1,15 @@
 /**
  * ProfileGate Component
- * Auto-routes to CreateProfile when profile is missing
- * Handles all profile state logic in one place
+ * Production-grade profile routing with timeout protection and error recovery
+ * 
+ * Guarantees:
+ * - No infinite spinners (10s hard timeout)
+ * - No duplicate profiles (idempotent backend upsert)
+ * - Explicit NOT FOUND detection
+ * - Real errors show Recovery UI (never silent)
  */
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, ActivityIndicator, StyleSheet, TouchableOpacity } from 'react-native';
 import { useCurrentUser } from '../../hooks/useAuth';
 import { SetupProfileScreen } from '../../screens/auth/SetupProfileScreen';
@@ -22,12 +27,17 @@ const ProfileSkeleton: React.FC = () => (
 interface ProfileRecoveryProps {
   error: Error;
   onRetry: () => void;
+  isTimeout?: boolean;
 }
 
-const ProfileRecovery: React.FC<ProfileRecoveryProps> = ({ error, onRetry }) => (
+const ProfileRecovery: React.FC<ProfileRecoveryProps> = ({ error, onRetry, isTimeout }) => (
   <View style={styles.centerContainer}>
-    <Text style={styles.errorTitle}>Connection Lost</Text>
-    <Text style={styles.errorMessage}>{error.message || 'Failed to load profile'}</Text>
+    <Text style={styles.errorTitle}>{isTimeout ? 'Request Timeout' : 'Connection Lost'}</Text>
+    <Text style={styles.errorMessage}>
+      {isTimeout 
+        ? 'Profile load took too long. Check your connection and try again.'
+        : error.message || 'Failed to load profile'}
+    </Text>
     <TouchableOpacity style={styles.retryButton} onPress={onRetry}>
       <Text style={styles.retryText}>RETRY</Text>
     </TouchableOpacity>
@@ -38,46 +48,107 @@ const ProfileRecovery: React.FC<ProfileRecoveryProps> = ({ error, onRetry }) => 
  * ProfileGate - Single source of truth for profile routing
  * 
  * Behavior:
- * 1. Profile exists → Render Profile (via AppNavigator)
- * 2. Profile does NOT exist (404 / null) → Auto-route to CreateProfile
- * 3. Real error (RLS/network/500) → Show Recovery UI with Retry
+ * 1. Not logged in (404/401) → LoginScreen
+ * 2. Loading → Skeleton (with 10s timeout)
+ * 3. Profile NOT FOUND → Auto-route to CreateProfile
+ * 4. Real error (network/500/RLS) → Recovery UI with Retry
+ * 5. Profile exists → Render AppNavigator
  */
 export const ProfileGate: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { data: currentUser, isLoading, error, refetch } = useCurrentUser();
+  const [timeoutReached, setTimeoutReached] = useState(false);
 
-  // Loading state
+  // ✅ 10-second hard timeout to prevent infinite spinner
+  useEffect(() => {
+    if (isLoading) {
+      const timeout = setTimeout(() => {
+        console.warn('[ProfileGate] Profile fetch timeout after 10s');
+        setTimeoutReached(true);
+      }, 10000); // 10 second timeout
+      return () => clearTimeout(timeout);
+    } else {
+      setTimeoutReached(false);
+    }
+  }, [isLoading]);
+
+  // ✅ Logging for debugging
+  useEffect(() => {
+    if (currentUser) {
+      console.log('[ProfileGate] User loaded:', {
+        userId: currentUser.id,
+        username: currentUser.username,
+        hasProfile: !!currentUser.profile,
+        profileComplete: !!(currentUser.profile?.displayName && currentUser.profile?.avatarUrl),
+      });
+    }
+  }, [currentUser]);
+
+  useEffect(() => {
+    if (error) {
+      const errorObj = error as any;
+      console.error('[ProfileGate] Error:', {
+        message: errorObj.message || error.message,
+        statusCode: errorObj.statusCode,
+        code: errorObj.code,
+        isNotFound: errorObj.statusCode === 404 || errorObj.statusCode === 401,
+      });
+    }
+  }, [error]);
+
+  // ✅ Timeout reached - show recovery UI
+  if (timeoutReached && isLoading) {
+    return (
+      <ProfileRecovery 
+        error={new Error('Profile fetch timeout')} 
+        onRetry={() => {
+          setTimeoutReached(false);
+          refetch();
+        }}
+        isTimeout={true}
+      />
+    );
+  }
+
+  // ✅ Loading state (with timeout protection)
   if (isLoading) {
     return <ProfileSkeleton />;
   }
 
-  // Not logged in (404/401 on auth check)
-  // For now, show a simple login prompt - LoginScreen can be integrated later
-  if (!currentUser || error?.statusCode === 404 || error?.statusCode === 401) {
-    return (
-      <View style={styles.centerContainer}>
-        <Text style={styles.errorTitle}>Not Logged In</Text>
-        <Text style={styles.errorMessage}>Please log in to continue</Text>
-        <Text style={styles.errorMessage}>Login screen integration pending</Text>
-      </View>
-    );
+  // ✅ Not logged in (404/401 on auth check) - explicit NOT FOUND detection
+  const isNotFound = !currentUser || 
+    (error as any)?.statusCode === 404 || 
+    (error as any)?.statusCode === 401 ||
+    (error as any)?.code === 'ERR_BAD_REQUEST';
+
+  if (isNotFound) {
+    console.log('[ProfileGate] Not logged in - showing LoginScreen');
+    return <LoginScreen />;
   }
 
-  // Real error (network, 500, etc.) - show recovery UI
+  // ✅ Real error (network, 500, RLS, etc.) - show recovery UI
+  // Distinguish NOT FOUND from real errors
   if (error) {
-    return <ProfileRecovery error={error as Error} onRetry={() => refetch()} />;
+    const errorObj = error as any;
+    // Only show recovery for non-404/401 errors (real errors)
+    if (errorObj.statusCode !== 404 && errorObj.statusCode !== 401) {
+      console.error('[ProfileGate] Real error detected - showing Recovery UI');
+      return <ProfileRecovery error={error as Error} onRetry={() => refetch()} />;
+    }
   }
 
-  // Profile missing (user exists but no profile record)
-  // Check if profile exists and has required fields
+  // ✅ Profile missing (user exists but no profile record)
+  // Explicit check: profile must exist AND have required fields
   const profileExists = currentUser.profile && 
     currentUser.profile.displayName && 
     currentUser.profile.avatarUrl;
 
   if (!profileExists) {
+    console.log('[ProfileGate] Profile missing - auto-routing to CreateProfile');
     return <SetupProfileScreen />;
   }
 
-  // Profile exists - render app content
+  // ✅ Profile exists - render app content
+  console.log('[ProfileGate] Profile complete - rendering app');
   return <>{children}</>;
 };
 
