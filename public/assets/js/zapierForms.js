@@ -3,7 +3,7 @@
  * Shared helper for all form submissions across Pages
  */
 
-const ZAPIER_WEBHOOK_URL = "PASTE_HERE"; // Replace with actual Zapier webhook URL
+const ZAPIER_WEBHOOK_URL = "https://hooks.zapier.com/hooks/catch/25853501/uw57cnq/";
 
 /**
  * Submit form data to Zapier webhook
