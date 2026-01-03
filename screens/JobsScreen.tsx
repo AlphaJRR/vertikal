@@ -9,7 +9,7 @@ import { View, Text, FlatList, TouchableOpacity, StyleSheet, Image, Dimensions }
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
-import { useRequireAuth } from '../../hooks/useRequireAuth';
+import { useRequireAuth } from '../hooks/useRequireAuth';
 
 const JOBS = [
   { id: '1', title: 'Music Video Director', location: 'Chicago, IL', rate: '$5,000 / day', type: 'PAID', postedBy: 'Black Awesomeness', avatar: 'https://ui-avatars.com/api/?name=Black+Awesomeness&background=000&color=fff' },
