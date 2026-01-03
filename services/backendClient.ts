@@ -376,6 +376,7 @@ if (!api) {
 
 export const backendClient = {
   users: usersApi,
+  usersApi: usersApi, // Alias for compatibility
   shows: showsApi,
   comments: commentsApi,
   subscriptions: subscriptionsApi,
