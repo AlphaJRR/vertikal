@@ -6,9 +6,7 @@ on:
       - main
   workflow_dispatch:
 
-env:
-  CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-  CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+# Secrets are accessed directly in each step
 
 jobs:
   deploy-main:
@@ -19,12 +17,11 @@ jobs:
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
-          apiToken: ${{ env.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ env.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: vertikalapp
           directory: ./public
           branch: ${{ github.ref_name }}
-          commitHash: ${{ github.sha }}
 
   deploy-creators:
     name: Deploy creators.vertikalapp.com
@@ -34,12 +31,11 @@ jobs:
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
-          apiToken: ${{ env.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ env.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: creators-vertikalapp
           directory: ./public/creators
           branch: ${{ github.ref_name }}
-          commitHash: ${{ github.sha }}
 
   deploy-investors:
     name: Deploy investors.vertikalapp.com
@@ -49,12 +45,11 @@ jobs:
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
-          apiToken: ${{ env.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ env.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: investors-vertikalapp
           directory: ./public/investors
           branch: ${{ github.ref_name }}
-          commitHash: ${{ github.sha }}
 
   deploy-networks:
     name: Deploy networks.vertikalapp.com
@@ -64,12 +59,11 @@ jobs:
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
-          apiToken: ${{ env.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ env.CLOUDFLARE_ACCOUNT_ID }}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: networks-vertikalapp
           directory: ./public/networks
           branch: ${{ github.ref_name }}
-          commitHash: ${{ github.sha }}
 
   live-verification:
     name: Live Verification Mode
