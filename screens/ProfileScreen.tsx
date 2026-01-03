@@ -83,7 +83,7 @@ export const ProfileScreen: React.FC = () => {
       <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
         {/* IDENTITY SECTION */}
         <View style={styles.profileHeader}>
-          <Image source={{ uri: avatarUrl }} style={styles.avatar} />
+          <Image source={{ uri: avatarUrl || DEFAULT_AVATAR }} style={styles.avatar} />
           <Text style={styles.name}>{displayName}</Text>
           <View style={styles.badgeRow}>
             {/* Founding 50 Badge - Only show if user is Founding 50 */}
