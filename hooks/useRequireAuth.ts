@@ -3,10 +3,8 @@
  * Shows login prompt for guest users attempting auth-required actions
  */
 
-import { useState } from 'react';
 import { Alert } from 'react-native';
 import { useGuestMode } from './useGuestMode';
-import { useNavigation } from '@react-navigation/native';
 
 export function useRequireAuth() {
   const { isGuest } = useGuestMode();
