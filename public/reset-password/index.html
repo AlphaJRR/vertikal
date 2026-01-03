@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reset Password - VERTIKAL</title>
+  <style>
+    body {
+      background: #000;
+      color: #FFF;
+      font-family: system-ui;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .container {
+      max-width: 400px;
+      width: 100%;
+      padding: 40px;
+      background: #1a1a1a;
+      border-radius: 16px;
+      border: 2px solid #333;
+    }
+    h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+    p {
+      color: #999;
+      margin-bottom: 30px;
+    }
+    input {
+      width: 100%;
+      padding: 16px;
+      background: #000;
+      border: 2px solid #333;
+      border-radius: 8px;
+      color: #FFF;
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+    button {
+      width: 100%;
+      padding: 16px;
+      background: #FFD700;
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      font-weight: 900;
+      font-size: 18px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #FFA500;
+    }
+    .error {
+      background: #ff3333;
+      color: #fff;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: none;
+    }
+    .success {
+      background: #00ff00;
+      color: #000;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Reset Password</h1>
+    <p>Enter your new password</p>
+    
+    <div class="error" id="error"></div>
+    <div class="success" id="success">Password updated! Redirecting...</div>
+    
+    <form id="resetForm">
+      <input type="password" id="password" placeholder="New Password" required minlength="8">
+      <input type="password" id="confirmPassword" placeholder="Confirm Password" required minlength="8">
+      <button type="submit">Reset Password</button>
+    </form>
+  </div>
+
+  <script type="module">
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+    
+    const supabase = createClient(
+      'https://vuwawtzhhcarckybdgbd.supabase.co',
+      'sb_publishable_r52TGUTyJr0uU9dPFi6V8g_va7Iab3Y'
+    );
+
+    const form = document.getElementById('resetForm');
+    const errorDiv = document.getElementById('error');
+    const successDiv = document.getElementById('success');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      
+      errorDiv.style.display = 'none';
+      successDiv.style.display = 'none';
+      
+      if (password !== confirmPassword) {
+        errorDiv.textContent = 'Passwords do not match';
+        errorDiv.style.display = 'block';
+        return;
+      }
+      
+      if (password.length < 8) {
+        errorDiv.textContent = 'Password must be at least 8 characters';
+        errorDiv.style.display = 'block';
+        return;
+      }
+      
+      try {
+        const { error } = await supabase.auth.updateUser({
+          password: password
+        });
+        
+        if (error) throw error;
+        
+        successDiv.style.display = 'block';
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 2000);
+        
+      } catch (error) {
+        errorDiv.textContent = error.message;
+        errorDiv.style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>
+
