@@ -385,9 +385,9 @@ const AppNavigator: React.FC = () => {
 };
 
 // ============================================
-// ROOT APP (With Providers)
+// APP CONTENT (Inside QueryClientProvider)
 // ============================================
-const App: React.FC = () => {
+const AppContent: React.FC = () => {
   const { data: currentUser, isLoading: authLoading, error: authError } = useCurrentUser();
   const [appReady, setAppReady] = useState(false);
   const [authTimeout, setAuthTimeout] = useState(false);
@@ -421,13 +421,7 @@ const App: React.FC = () => {
 
   // ✅ PHASE 1: Hard guard - show loading until app ready OR auth timeout
   if (!appReady || (authLoading && !authTimeout)) {
-    return (
-      <ErrorBoundary>
-        <QueryClientProvider client={queryClient}>
-          <LoadingScreen message="Loading VERTIKAL, LLC...." />
-        </QueryClientProvider>
-      </ErrorBoundary>
-    );
+    return <LoadingScreen message="Loading VERTIKAL, LLC...." />;
   }
 
   // ✅ MASTER DIRECTIVE: Show onboarding if profile incomplete
@@ -435,51 +429,54 @@ const App: React.FC = () => {
   
   if (needsOnboarding) {
     return (
-      <ErrorBoundary>
-        <QueryClientProvider client={queryClient}>
-          <View style={{ flex: 1, backgroundColor: '#000000', justifyContent: 'center', padding: 20 }}>
-            <ScrollView contentContainerStyle={{ paddingTop: 60 }}>
-              <Text style={{ fontSize: 24, fontWeight: '900', color: '#FFFFFF', marginBottom: 30, textAlign: 'center' }}>
-                WELCOME TO VERTIKAL, LLC.
-              </Text>
-              <Text style={{ fontSize: 18, fontWeight: '700', color: '#FFD700', marginBottom: 15 }}>
-                Step 1: Create Profile
-              </Text>
-              <Text style={{ fontSize: 16, color: '#FFFFFF', marginBottom: 30 }}>
-                Complete your profile with display name, avatar, and bio to get started.
-              </Text>
-              <Text style={{ fontSize: 18, fontWeight: '700', color: '#FFD700', marginBottom: 15 }}>
-                Step 2: Import Past Work
-              </Text>
-              <Text style={{ fontSize: 16, color: '#FFFFFF', marginBottom: 30 }}>
-                Upload your portfolio, past projects, or reel to showcase your work.
-              </Text>
-              <Text style={{ fontSize: 18, fontWeight: '700', color: '#FFD700', marginBottom: 15 }}>
-                Step 3: Launch Project or Apply to Roles
-              </Text>
-              <Text style={{ fontSize: 16, color: '#FFFFFF', marginBottom: 30 }}>
-                Start your first vertical cinema project or browse available cast and crew roles.
-              </Text>
-              <TouchableOpacity
-                style={{ backgroundColor: '#FFD700', padding: 16, borderRadius: 8, alignItems: 'center', marginTop: 20 }}
-                onPress={() => {
-                  // Navigate to profile setup screen - onboarding will be dismissed by navigating to ProfileScreen
-                  // The app will proceed normally and user can complete profile there
-                }}
-              >
-                <Text style={{ color: '#000000', fontSize: 16, fontWeight: '900' }}>GET STARTED</Text>
-              </TouchableOpacity>
-            </ScrollView>
-          </View>
-        </QueryClientProvider>
-      </ErrorBoundary>
+      <View style={{ flex: 1, backgroundColor: '#000000', justifyContent: 'center', padding: 20 }}>
+        <ScrollView contentContainerStyle={{ paddingTop: 60 }}>
+          <Text style={{ fontSize: 24, fontWeight: '900', color: '#FFFFFF', marginBottom: 30, textAlign: 'center' }}>
+            WELCOME TO VERTIKAL, LLC.
+          </Text>
+          <Text style={{ fontSize: 18, fontWeight: '700', color: '#FFD700', marginBottom: 15 }}>
+            Step 1: Create Profile
+          </Text>
+          <Text style={{ fontSize: 16, color: '#FFFFFF', marginBottom: 30 }}>
+            Complete your profile with display name, avatar, and bio to get started.
+          </Text>
+          <Text style={{ fontSize: 18, fontWeight: '700', color: '#FFD700', marginBottom: 15 }}>
+            Step 2: Import Past Work
+          </Text>
+          <Text style={{ fontSize: 16, color: '#FFFFFF', marginBottom: 30 }}>
+            Upload your portfolio, past projects, or reel to showcase your work.
+          </Text>
+          <Text style={{ fontSize: 18, fontWeight: '700', color: '#FFD700', marginBottom: 15 }}>
+            Step 3: Launch Project or Apply to Roles
+          </Text>
+          <Text style={{ fontSize: 16, color: '#FFFFFF', marginBottom: 30 }}>
+            Start your first vertical cinema project or browse available cast and crew roles.
+          </Text>
+          <TouchableOpacity
+            style={{ backgroundColor: '#FFD700', padding: 16, borderRadius: 8, alignItems: 'center', marginTop: 20 }}
+            onPress={() => {
+              // Navigate to profile setup screen - onboarding will be dismissed by navigating to ProfileScreen
+              // The app will proceed normally and user can complete profile there
+            }}
+          >
+            <Text style={{ color: '#000000', fontSize: 16, fontWeight: '900' }}>GET STARTED</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </View>
     );
   }
 
+  return <AppNavigator />;
+};
+
+// ============================================
+// ROOT APP (With Providers)
+// ============================================
+const App: React.FC = () => {
   return (
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
-        <AppNavigator />
+        <AppContent />
       </QueryClientProvider>
     </ErrorBoundary>
   );
