@@ -80,26 +80,22 @@
         </form>
     </div>
 
-    <script src="/assets/js/zapierForms.js"></script>
+    <div class="error-message" style="display:none;background:#ff3333;color:#fff;padding:16px;border-radius:8px;margin-bottom:20px;"></div>
+    <div class="success-message" style="display:none;background:#00ff00;color:#000;padding:16px;border-radius:8px;margin-bottom:20px;"></div>
+    
+    <script type="module" src="/assets/js/applyForm.js"></script>
     <script>
         // Set role from URL parameter or default to creator
         const urlParams = new URLSearchParams(window.location.search);
         const roleParam = urlParams.get('role') || 'creator';
         const form = document.getElementById('applyForm');
-        form.dataset.role = roleParam;
-        
-        // Set role select if coming from network/investor pages
-        if (roleParam === 'network') {
-            document.getElementById('role').value = 'network';
-        }
-        
-        // Add portfolio URL to extra data
-        form.addEventListener('submit', function(e) {
-            const portfolio = document.getElementById('portfolio').value;
-            if (portfolio) {
-                this.dataset.extra = JSON.stringify({ portfolio });
+        if (form) {
+            // Set role select if coming from network/investor pages
+            const roleSelect = document.getElementById('role');
+            if (roleSelect && roleParam === 'network') {
+                roleSelect.value = 'network';
             }
-        });
+        }
     </script>
 </body>
 </html>
