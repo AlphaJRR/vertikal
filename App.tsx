@@ -19,6 +19,7 @@ import { VerticalFeed } from './components/feed/VerticalFeed';
 import { CreatorProfile } from './components/profile/CreatorProfile';
 import { NavigationBar } from './components/layout/NavigationBar';
 import { DevRoleSwitcher } from './components/DevRoleSwitcher';
+import { ProfileGate } from './components/auth/ProfileGate';
 import { JobsScreen } from './screens/JobsScreen';
 import { ProfileScreen } from './screens/ProfileScreen';
 import { VerticalFeedScreen } from './screens/VerticalFeedScreen';

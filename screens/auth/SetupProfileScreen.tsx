@@ -17,9 +17,10 @@ import {
   ScrollView,
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import { useQueryClient } from '@tanstack/react-query';
 import { uploadAvatarToSupabase } from '../../utils/storage';
 import { apiClient } from '../../services/api';
-import { useCurrentUser } from '../../hooks/useAuth';
+import { useCurrentUser, authKeys } from '../../hooks/useAuth';
 
 interface SetupProfileScreenProps {
   navigation?: any; // Navigation prop from React Navigation
