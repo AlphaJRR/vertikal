@@ -8,11 +8,13 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator, KeyboardAvoidingView, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLogin } from '../../hooks/useAuth';
+import { useGuestMode } from '../../hooks/useGuestMode';
 
 export const LoginScreen: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const loginMutation = useLogin();
+  const { enableGuestMode } = useGuestMode();
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -71,6 +73,14 @@ export const LoginScreen: React.FC = () => {
                 {loginMutation.error instanceof Error ? loginMutation.error.message : 'Login failed'}
               </Text>
             )}
+            
+            <TouchableOpacity
+              style={styles.guestButton}
+              onPress={enableGuestMode}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.guestButtonText}>Continue as Guest</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </KeyboardAvoidingView>
@@ -139,6 +149,20 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
     marginTop: 16,
+  },
+  guestButton: {
+    marginTop: 24,
+    paddingVertical: 12,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#333333',
+    borderRadius: 8,
+  },
+  guestButtonText: {
+    color: '#999999',
+    fontSize: 14,
+    fontWeight: '700',
+    letterSpacing: 0.5,
   },
 });
 

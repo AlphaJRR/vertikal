@@ -9,6 +9,7 @@ import { View, Text, FlatList, TouchableOpacity, StyleSheet, Image, Dimensions }
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { useRequireAuth } from '../../hooks/useRequireAuth';
 
 const JOBS = [
   { id: '1', title: 'Music Video Director', location: 'Chicago, IL', rate: '$5,000 / day', type: 'PAID', postedBy: 'Black Awesomeness', avatar: 'https://ui-avatars.com/api/?name=Black+Awesomeness&background=000&color=fff' },
@@ -18,12 +19,27 @@ const JOBS = [
 
 export const JobsScreen: React.FC = () => {
   const navigation = useNavigation();
+  const { requireAuth } = useRequireAuth();
+
+  const handlePostJob = () => {
+    requireAuth('post a job', () => {
+      // TODO: Navigate to post job screen
+      console.log('Post job');
+    });
+  };
+
+  const handleApplyJob = (jobId: string) => {
+    requireAuth('apply for this job', () => {
+      // TODO: Navigate to apply screen
+      console.log('Apply for job:', jobId);
+    });
+  };
 
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <View style={styles.header}>
         <Text style={styles.title}>PRODUCTION JOBS</Text>
-        <TouchableOpacity style={styles.postBtn} activeOpacity={0.8}>
+        <TouchableOpacity style={styles.postBtn} activeOpacity={0.8} onPress={handlePostJob}>
           <Ionicons name="add" size={24} color="#000000" />
         </TouchableOpacity>
       </View>
@@ -33,7 +49,7 @@ export const JobsScreen: React.FC = () => {
         keyExtractor={(item) => item.id}
         contentContainerStyle={{ padding: 20 }}
         renderItem={({ item }) => (
-          <TouchableOpacity style={styles.card} activeOpacity={0.8}>
+          <TouchableOpacity style={styles.card} activeOpacity={0.8} onPress={() => handleApplyJob(item.id)}>
             {/* JOB HEADER */}
             <View style={styles.row}>
               <Text style={styles.jobTitle}>{item.title}</Text>

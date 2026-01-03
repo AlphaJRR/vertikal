@@ -151,15 +151,23 @@ export function useLogout() {
         errorTracking.captureError();
       }
     },
-    onSuccess: () => {
+    onSuccess: async () => {
       // Clear all auth-related queries
       queryClient.setQueryData(authKeys.currentUser(), null);
       queryClient.removeQueries({ queryKey: authKeys.all });
+      
+      // Clear Supabase session
+      const { supabase } = await import('../lib/supabase');
+      await supabase.auth.signOut();
     },
-    onError: (error) => {
+    onError: async (error) => {
       // Even on error, clear local state
       queryClient.setQueryData(authKeys.currentUser(), null);
       queryClient.removeQueries({ queryKey: authKeys.all });
+      
+      // Clear Supabase session
+      const { supabase } = await import('../lib/supabase');
+      await supabase.auth.signOut();
       
       errorTracking.captureError();
     },
