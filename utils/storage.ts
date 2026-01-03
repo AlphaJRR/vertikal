@@ -4,6 +4,8 @@
  */
 
 import { supabase } from '../lib/supabase';
+
+// ✅ FIX: Handle null supabase client gracefully
 import * as FileSystem from 'expo-file-system';
 import { decode } from 'base64-arraybuffer';
 

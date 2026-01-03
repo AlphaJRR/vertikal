@@ -19,7 +19,7 @@ import {
 import * as ImagePicker from 'expo-image-picker';
 import { useQueryClient } from '@tanstack/react-query';
 import { uploadAvatarToSupabase } from '../../utils/storage';
-import { apiClient } from '../../services/api';
+import { backendClient } from '../../services/backendClient';
 import { useCurrentUser, authKeys } from '../../hooks/useAuth';
 
 interface SetupProfileScreenProps {
@@ -119,7 +119,7 @@ export const SetupProfileScreen: React.FC<SetupProfileScreenProps> = ({ navigati
 
       // 3. Update/Create Profile in DB (idempotent upsert on backend)
       // ✅ Backend uses upsert keyed by user_id, so duplicate submits are safe
-      const updatedUser = await apiClient.updateUserProfile({
+      const updatedUser = await backendClient.usersApi.updateProfile({
         username: username.trim(),
         displayName: displayName.trim(),
         avatarUrl: finalAvatarUrl,

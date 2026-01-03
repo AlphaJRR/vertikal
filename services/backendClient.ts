@@ -143,6 +143,18 @@ export const usersApi = {
   async unsubscribe(creatorId: string): Promise<void> {
     await api.post(API_CONFIG.endpoints.users.unsubscribe(creatorId));
   },
+
+  /**
+   * Update user profile
+   * Backend endpoint: PUT /api/users/profile
+   */
+  async updateProfile(data: { username: string; displayName: string; avatarUrl?: string | null }): Promise<UserProfile> {
+    const response = await api.put<UserProfile>(
+      API_CONFIG.endpoints.users.profile(''), // Empty string for current user
+      data
+    );
+    return response.data;
+  },
 };
 
 /**
