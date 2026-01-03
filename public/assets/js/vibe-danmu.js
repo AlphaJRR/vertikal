@@ -1,69 +1,71 @@
 class VibeDanmu {
   constructor(video) {
     this.video = video;
-    this.container = this.createContainer();
+    this.container = document.createElement('div');
+    this.container.className = 'vibe-danmu-container';
+    this.container.style.cssText = 'position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:5';
+    
+    const parent = video.parentElement;
+    parent.style.position = 'relative';
+    parent.appendChild(this.container);
+    
     this.comments = [
-      "🔥 This is fire!",
-      "Loving this content",
-      "More of this please!",
-      "Amazing work 👏",
+      '🔥 This is fire!',
+      'Loving this content',
+      'More of this please!',
+      'Amazing work 👏',
       "Can't stop watching",
-      "This is what we need",
-      "Vertical cinema future",
-      "Revolutionary 🚀",
-      "Keep it coming!",
-      "Instant classic"
+      'This is what we need',
+      'Vertical cinema future',
+      'Revolutionary 🚀',
+      'Keep it coming!',
+      'Instant classic'
     ];
-    this.init();
+    
+    this.addStyles();
+    this.startSpawning();
   }
-
-  createContainer() {
-    const container = document.createElement('div');
-    container.style.cssText = `
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 5;
-    `;
-    this.video.parentElement.style.position = 'relative';
-    this.video.parentElement.appendChild(container);
-    return container;
+  
+  addStyles() {
+    if (!document.getElementById('vibe-styles')) {
+      const style = document.createElement('style');
+      style.id = 'vibe-styles';
+      style.textContent = '@keyframes vibe-float{from{right:-100%}to{right:100%}}';
+      document.head.appendChild(style);
+    }
   }
-
+  
   createComment() {
-    const comment = document.createElement('div');
-    comment.textContent = this.comments[Math.floor(Math.random() * this.comments.length)];
-    const lane = Math.floor(Math.random() * 6);
-    comment.style.cssText = `
-      position: absolute;
-      right: -100%;
-      top: ${lane * 16}%;
-      color: #FFF;
-      font-size: 18px;
-      font-weight: 900;
-      text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
-      white-space: nowrap;
-      animation: danmu 8s linear;
+    const div = document.createElement('div');
+    div.textContent = this.comments[Math.floor(Math.random() * this.comments.length)];
+    div.style.cssText = `
+      position:absolute;
+      right:-100%;
+      top:${Math.floor(Math.random() * 6) * 16}%;
+      color:#FFF;
+      font-size:20px;
+      font-weight:900;
+      text-shadow:-2px -2px 0 #000,2px -2px 0 #000,-2px 2px 0 #000,2px 2px 0 #000;
+      white-space:nowrap;
+      animation:vibe-float 8s linear;
+      pointer-events:none;
     `;
-    return comment;
+    return div;
   }
-
-  init() {
-    const style = document.createElement('style');
-    style.textContent = '@keyframes danmu { from { right: -100%; } to { right: 100%; } }';
-    document.head.appendChild(style);
-
+  
+  startSpawning() {
     setInterval(() => {
       if (!this.video.paused) {
         const comment = this.createComment();
         this.container.appendChild(comment);
         setTimeout(() => comment.remove(), 8000);
       }
-    }, 2500);
+    }, 2000);
   }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('video[data-vibe="true"]').forEach(v => new VibeDanmu(v));
+  document.querySelectorAll('video[data-vibe="true"]').forEach(v => {
+    new VibeDanmu(v);
+  });
 });

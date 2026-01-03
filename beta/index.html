@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VERTIKAL | Beta</title>
+    <link rel="canonical" href="https://beta.vertikalapp.com">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Favicon & PWA -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://beta.vertikalapp.com">
+    <meta property="og:title" content="VERTIKAL | Beta">
+    <meta property="og:description" content="Early access to Vertikal. The vertical-first cinematic ecosystem for Black cultural ownership.">
+    <meta property="og:image" content="https://vertikalapp.com/assets/og-preview.png">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://beta.vertikalapp.com">
+    <meta name="twitter:title" content="VERTIKAL | Beta">
+    <meta name="twitter:description" content="Early access to Vertikal. The vertical-first cinematic ecosystem for Black cultural ownership.">
+    <meta name="twitter:image" content="https://vertikalapp.com/assets/og-preview.png">
+    <style>
+    /* VERTIKAL CINEMATIC ENGINE */
+    :root {
+        --bg: #050505; --card: #0a0a0a; --text: #ffffff; --muted: #888; --border: #222;
+        --gold: linear-gradient(135deg, #FFD700 0%, #B8860B 100%);
+        --green: linear-gradient(135deg, #00C853 0%, #004D40 100%);
+        --blue: linear-gradient(135deg, #2962FF 0%, #0D47A1 100%);
+        --titanium: linear-gradient(135deg, #ECEFF1 0%, #455A64 100%);
+        --font-main: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-main); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    
+    /* TYPOGRAPHY */
+    h1, h2, h3 { text-transform: uppercase; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+    h1 { font-size: clamp(3rem, 8vw, 6rem); margin-bottom: 1.5rem; }
+    h2 { font-size: 2rem; border-left: 4px solid #fff; padding-left: 1rem; margin-bottom: 2rem; }
+    h3 { font-size: 1.25rem; margin-bottom: 0.5rem; color: #fff; }
+    p { color: var(--muted); font-size: 1.1rem; max-width: 650px; margin-bottom: 1.5rem; }
+    .hero-text span { background: linear-gradient(180deg, #fff 0%, #666 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    
+    /* LAYOUT */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+    section { padding: 6rem 0; border-bottom: 1px solid var(--border); }
+    .grid { display: grid; gap: 2rem; }
+    .grid-2 { grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    
+    /* COMPONENTS */
+    .btn { display: inline-block; padding: 1rem 2.5rem; border: 1px solid #fff; color: #fff; text-decoration: none; text-transform: uppercase; font-weight: 700; letter-spacing: 0.1em; transition: 0.3s; }
+    .btn:hover { background: #fff; color: #000; }
+    
+    /* BADGES */
+    .badge-card { background: var(--card); border: 1px solid var(--border); padding: 2rem; transition: transform 0.3s; }
+    .badge-card:hover { border-color: #555; transform: translateY(-5px); }
+    .badge-icon { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; color: #000; margin-bottom: 1rem; font-size: 0.9rem; }
+    .b-gold { background: var(--gold); box-shadow: 0 0 15px rgba(255, 215, 0, 0.2); }
+    .b-green { background: var(--green); box-shadow: 0 0 15px rgba(0, 200, 83, 0.2); }
+    .b-blue { background: var(--blue); box-shadow: 0 0 15px rgba(41, 98, 255, 0.2); }
+    .b-titanium { background: var(--titanium); box-shadow: 0 0 15px rgba(120, 144, 156, 0.2); }
+
+    /* NAV */
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 2rem; background: rgba(5,5,5,0.95); position: sticky; top: 0; border-bottom: 1px solid var(--border); z-index: 1000; }
+    .nav-links { display: flex; align-items: center; }
+    .nav-links a { margin-left: 2rem; color: var(--muted); text-decoration: none; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.05em; }
+    .nav-links a:hover { color: #fff; }
+    @media (max-width: 768px) {
+        nav { flex-wrap: wrap; }
+        .nav-links { margin-top: 1rem; width: 100%; }
+        .nav-links a { margin-left: 0; margin-right: 1rem; }
+    }
+    
+    /* SMOOTH SCROLL */
+    html { scroll-behavior: smooth; }
+    
+    /* MODAL */
+    .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); align-items: center; justify-content: center; }
+    .modal.active { display: flex; }
+    .modal-content { background: var(--card); border: 1px solid var(--border); padding: 3rem; max-width: 500px; width: 90%; position: relative; text-align: center; }
+    .close { position: absolute; top: 1rem; right: 1rem; font-size: 2rem; cursor: pointer; color: #fff; line-height: 1; }
+    .close:hover { color: #FFD700; }
+    </style>
+</head>
+<body>
+<div class="vk-tagline" style="width:100%;text-align:center;margin:18px 0 10px 0;letter-spacing:.08em;font-size:12px;opacity:.85;">
+  CINEMA ISN'T DYING — IT'S ROTATING
+</div>
+
+    <nav>
+        <a href="https://vertikalapp.com" style="font-weight: 900; letter-spacing: 0.1em; color: #fff; text-decoration: none; display: flex; align-items: center;">
+            <img src="/assets/Vertikal_Logo_Master.png" alt="VERTIKAL" style="height: 40px; width: auto; margin-right: 0.5rem;">
+            <span style="color:#FFD700">// BETA</span>
+        </a>
+        <div class="nav-links">
+            <a href="https://vertikalapp.com">Main</a>
+            <a href="https://vertikalapp.com/creators/">Creators</a>
+            <a href="https://vertikalapp.com/networks/">Networks</a>
+            <a href="https://vertikalapp.com/investors/">Investors</a>
+            <a href="/demo" class="btn" style="padding:0.5rem 1.5rem; margin-left:1rem; margin-top:0;">Watch Live Demo</a>
+        </div>
+    </nav>
+
+    <section class="container" style="text-align: center; padding-top: 8rem;">
+        <h1 class="hero-text">BETA ACCESS HUB</h1>
+        <p style="margin: 0 auto 2rem auto; font-size: 1.3rem; color: #fff;">Early access to VERTIKAL, LLC. Join the Founding 50, access the platform, and build vertical cinema productions with full IP ownership.</p>
+        <div style="margin-top: 2rem;">
+            <a href="/apply/" class="btn btn-primary" style="margin-right: 1rem;">Join Beta</a>
+            <a href="/demo" class="btn">Watch Demo</a>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2>WHO BETA IS FOR</h2>
+            <p style="font-size: 1.2rem; color: #fff; margin-bottom: 2rem; text-align: center;">Beta users get early access to post roles, hire crews, and launch productions. Choose your path:</p>
+            <div class="grid grid-2" style="margin-top: 2rem;">
+                <div style="background: var(--card); border: 1px solid var(--border); padding: 2.5rem; border-left: 4px solid #FFD700;">
+                    <h3 style="color: #FFD700; margin-bottom: 1rem;">FOR CREATORS</h3>
+                    <p style="font-size: 1rem; margin-bottom: 1.5rem;">Build franchises, not followers. Join the Founding 50 and own your vertical cinema IP. Post jobs, build crews, and retain ownership.</p>
+                    <a href="/apply/" class="btn" style="border-color: #FFD700; color: #FFD700; padding: 0.75rem 2rem;">Join Beta</a>
+                </div>
+                <div style="background: var(--card); border: 1px solid var(--border); padding: 2.5rem; border-left: 4px solid #B0BEC5;">
+                    <h3 style="color: #B0BEC5; margin-bottom: 1rem;">FOR NETWORKS</h3>
+                    <p style="font-size: 1rem; margin-bottom: 1.5rem;">Media infrastructure, not just playlists. Studio-grade engines with faster deal flow, validated IP, and priority access to vetted talent.</p>
+                    <a href="/networks/" class="btn" style="border-color: #B0BEC5; color: #B0BEC5; padding: 0.75rem 2rem;">Networks</a>
+                </div>
+                <div style="background: var(--card); border: 1px solid var(--border); padding: 2.5rem; border-left: 4px solid #00C853;">
+                    <h3 style="color: #00C853; margin-bottom: 1rem;">FOR INVESTORS</h3>
+                    <p style="font-size: 1rem; margin-bottom: 1.5rem;">Capitalizing on the rotation. Early access to deal flow, founding equity positions, and permanent ownership signals in the ecosystem.</p>
+                    <a href="/investors/" class="btn" style="border-color: #00C853; color: #00C853; padding: 0.75rem 2rem;">Investors</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2>WHY BADGES MATTER</h2>
+            <p style="font-size: 1.2rem; color: #fff; margin-bottom: 2rem;">The V Badge system creates a defensible layer of quality. It signals contribution, priority, and access. Earned, not bought.</p>
+            <div class="grid grid-4" style="margin-top: 2rem;">
+                <div class="badge-card" style="border-left: 4px solid #FFD700;">
+                    <img src="/assets/badges/badge-founding50-gold.png" alt="Gold Badge" style="width: 80px; height: 80px; margin-bottom: 1rem; object-fit: contain;">
+                    <h3 style="color: #FFD700;">Gold</h3>
+                    <p style="font-size: 0.9rem;">Founding 50 creators. Highest priority, founding equity, permanent ownership signal.</p>
+                </div>
+                <div class="badge-card" style="border-left: 4px solid #2962FF;">
+                    <img src="/assets/badges/badge-verified-blue 2.png" alt="Blue Badge" style="width: 80px; height: 80px; margin-bottom: 1rem; object-fit: contain;">
+                    <h3 style="color: #2962FF;">Blue</h3>
+                    <p style="font-size: 0.9rem;">Visionary creators (51-200). Priority access, crew posting privileges, elevated visibility.</p>
+                </div>
+                <div class="badge-card" style="border-left: 4px solid #00C853;">
+                    <img src="/assets/badges/badge-investor-green.png" alt="Green Badge" style="width: 80px; height: 80px; margin-bottom: 1rem; object-fit: contain;">
+                    <h3 style="color: #00C853;">Green</h3>
+                    <p style="font-size: 0.9rem;">Investors. Priority deal flow, founding equity positions, permanent ownership signals.</p>
+                </div>
+                <div class="badge-card" style="border-left: 4px solid #B0BEC5;">
+                    <img src="/assets/badges/badge-network-titanium.png" alt="Titanium Badge" style="width: 80px; height: 80px; margin-bottom: 1rem; object-fit: contain;">
+                    <h3 style="color: #B0BEC5;">Titanium</h3>
+                    <p style="font-size: 0.9rem;">Networks. Studio-level authority, priority access to vetted talent, early deal flow.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2>WHY EARLY ACCESS MATTERS</h2>
+            <div class="grid grid-2" style="margin-top: 2rem;">
+                <div style="border-left: 4px solid #333; padding-left: 1.5rem;">
+                    <h3 style="color: #fff; margin-bottom: 0.5rem;">Define The Standard</h3>
+                    <p style="font-size: 0.95rem;">Early creators shape the platform. Your feedback directly influences features, tools, and the future of vertical cinema.</p>
+                </div>
+                <div style="border-left: 4px solid #333; padding-left: 1.5rem;">
+                    <h3 style="color: #fff; margin-bottom: 0.5rem;">Permanent Ownership</h3>
+                    <p style="font-size: 0.95rem;">Founding 50 status is permanent. Once capped, this tier closes forever. Early access means permanent recognition.</p>
+                </div>
+                <div style="border-left: 4px solid #333; padding-left: 1.5rem;">
+                    <h3 style="color: #fff; margin-bottom: 0.5rem;">Priority Everything</h3>
+                    <p style="font-size: 0.95rem;">Algorithmic priority, early feature access, direct feedback loops. Your voice matters more when you're early.</p>
+                </div>
+                <div style="border-left: 4px solid #333; padding-left: 1.5rem;">
+                    <h3 style="color: #fff; margin-bottom: 0.5rem;">Build The Network</h3>
+                    <p style="font-size: 0.95rem;">Connect with other Founding 50 creators. Build crews, collaborate, and create the infrastructure together.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2>FRIENDS & FAMILY HIGHLIGHTS</h2>
+            <p style="font-size: 1.2rem; color: #fff; margin-bottom: 3rem;">Early feedback from our beta testers. The engine is working.</p>
+            <div class="grid grid-2">
+                <div style="background: var(--card); border: 1px solid var(--border); padding: 2rem; border-left: 4px solid #FFD700;">
+                    <!-- TODO: Replace "VIBE™" with the correct feature name once provided by stakeholder -->
+                    <h3 style="color: #FFD700; margin-bottom: 1rem;">VIBE™ Real-Time Overlays</h3>
+                    <p style="font-size: 1rem; font-style: italic; color: var(--muted);">"Comments flowing over the video without interrupting? This is how we should consume content. Game changer."</p>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: #888;">— Early Beta Tester</p>
+                </div>
+                <div style="background: var(--card); border: 1px solid var(--border); padding: 2rem; border-left: 4px solid #2962FF;">
+                    <h3 style="color: #2962FF; margin-bottom: 1rem;">"Finally, Ownership"</h3>
+                    <p style="font-size: 1rem; font-style: italic; color: var(--muted);">"I've been creating for years. This is the first platform where I actually own my IP. That's the difference."</p>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: #888;">— Founding 50 Creator</p>
+                </div>
+                <div style="background: var(--card); border: 1px solid var(--border); padding: 2rem; border-left: 4px solid #00C853;">
+                    <h3 style="color: #00C853; margin-bottom: 1rem;">"The Badge System Works"</h3>
+                    <p style="font-size: 1rem; font-style: italic; color: var(--muted);">"Seeing the Gold badge on profiles immediately signals quality. It's not just decoration—it's a filter for premium content."</p>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: #888;">— Beta Viewer</p>
+                </div>
+                <div style="background: var(--card); border: 1px solid var(--border); padding: 2rem; border-left: 4px solid #B0BEC5;">
+                    <h3 style="color: #B0BEC5; margin-bottom: 1rem;">"This is Infrastructure"</h3>
+                    <p style="font-size: 1rem; font-style: italic; color: var(--muted);">"Vertikal isn't just another app. It's the infrastructure for the next generation of media. We're building something real here."</p>
+                    <p style="margin-top: 1rem; font-size: 0.9rem; color: #888;">— Network Partner</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VIBE™ EXPLANATION -->
+    <section class="vibe-section" style="padding: 6rem 0; border-bottom: 1px solid var(--border);">
+        <div class="container">
+            <h2>VIBE™</h2>
+            <!-- TODO: Replace "VIBE™" with the correct feature name once provided by stakeholder -->
+            <p style="color: #fff; font-size: 1.3rem; margin-bottom: 2rem;">
+                <strong>VIBE™</strong> is Vertikal's real-time comment overlay system. Comments flow across the screen as you watch, creating a shared viewing experience without interrupting the content.
+            </p>
+            <div class="grid grid-2">
+                <div style="border-left: 4px solid #333; padding-left: 1.5rem; margin-bottom: 2rem;">
+                    <h3 style="color: #FFD700; margin-bottom: 0.5rem;">Real-Time Emotional Reactions</h3>
+                    <p style="font-size: 0.95rem;">Comments appear in real-time as viewers react to moments. No scrolling, no pausing. Pure immersion.</p>
+                </div>
+                <div style="border-left: 4px solid #333; padding-left: 1.5rem; margin-bottom: 2rem;">
+                    <h3 style="color: #2962FF; margin-bottom: 0.5rem;">Replacement of Low-Signal Comments</h3>
+                    <p style="font-size: 0.95rem;">VIBE™ replaces traditional comment sections with contextual, real-time engagement. No noise, just signal.</p>
+                </div>
+                <div style="border-left: 4px solid #333; padding-left: 1.5rem; margin-bottom: 2rem;">
+                    <h3 style="color: #00C853; margin-bottom: 0.5rem;">Engagement Signals & Heatmaps</h3>
+                    <p style="font-size: 0.95rem;">Heatmaps show where viewers engage most. Creators see what resonates. Data-driven storytelling.</p>
+                </div>
+                <div style="border-left: 4px solid #333; padding-left: 1.5rem; margin-bottom: 2rem;">
+                    <h3 style="color: #B0BEC5; margin-bottom: 0.5rem;">Algorithm-Free</h3>
+                    <!-- TODO: Replace "VIBE™" with the correct feature name once provided by stakeholder -->
+                    <p style="font-size: 0.95rem;">No engagement bait. No forced virality. VIBE™ amplifies authentic reactions, not manufactured metrics.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="container">
+            <h2>THE FOUNDING CLASS</h2>
+            <p>The V Badge recognizes real contribution. These are the architects.</p>
+            <div class="grid grid-4">
+                <div class="badge-card">
+                    <div class="badge-icon b-gold">V</div>
+                    <h3>Founding 50</h3>
+                    <p style="font-size: 0.85rem;">The Visionaries. Capped at 50.</p>
+                </div>
+                <div class="badge-card">
+                    <div class="badge-icon b-green">V</div>
+                    <h3>Investors</h3>
+                    <p style="font-size: 0.85rem;">Capital Partners.</p>
+                </div>
+                <div class="badge-card">
+                    <div class="badge-icon b-blue">V</div>
+                    <h3>Builders</h3>
+                    <p style="font-size: 0.85rem;">Engineers & Ops.</p>
+                </div>
+                <div class="badge-card">
+                    <div class="badge-icon b-titanium">V</div>
+                    <h3>Networks</h3>
+                    <p style="font-size: 0.85rem;">Studios & Infrastructure.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="text-align: center; border-bottom: none; background: #0a0a0a;">
+        <div class="container">
+            <h2 style="border: none; padding: 0;">SHARE YOUR FEEDBACK</h2>
+            <p style="margin: 0 auto 2rem auto; max-width: 600px;">You're part of building this. Tell us what's working, what's not, and what you want to see next.</p>
+            <a href="mailto:beta@vertikalapp.com?subject=Beta%20Feedback" class="btn" style="background: #fff; color: #000;">Send Feedback</a>
+        </div>
+    </section>
+
+    <!-- DEMO MODAL -->
+    <div id="demoModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="document.getElementById('demoModal').classList.remove('active');">&times;</span>
+            <h2 style="margin-bottom: 1.5rem; color: #fff;">Live Demo</h2>
+            <p style="color: var(--muted); font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem;">
+                Live demo launching March/April.<br>
+                Full beta expected June with at least 50 creators.
+            </p>
+            <a href="https://vertikalapp.com/demo" class="btn" style="margin-right: 1rem;">Join Demo Waitlist</a>
+            <a href="https://vertikalapp.com/apply" class="btn" style="background: transparent; border-color: #FFD700; color: #FFD700;">Apply for Founding 50</a>
+        </div>
+    </div>
+
+    <script>
+    // Demo Modal - show only once per user
+    const demoModal = document.getElementById('demoModal');
+    
+    demoModal.addEventListener('click', function(e) {
+        if (e.target === this || e.target.classList.contains('close')) {
+            this.classList.remove('active');
+            localStorage.setItem('demoModalShown', 'true');
+        }
+    });
+    </script>
+</body>
+</html>
