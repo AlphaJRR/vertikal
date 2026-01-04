@@ -208,16 +208,35 @@ export const ShowPlayer = ({
         }
       }}
     >
-      <video
-        ref={videoRef}
-        src={videoUrl}
-        poster={thumbnail}
-        className="w-full h-full object-cover"
-        muted={isMuted}
-        loop={loop}
-        playsInline
-        onClick={togglePlayPause}
-      />
+      {useCloudflareIframe ? (
+        // ✅ Cloudflare Stream iframe
+        <iframe
+          src={cloudflare!.iframe}
+          style={{
+            border: 0,
+            width: '100%',
+            height: '100%',
+            aspectRatio: '9/16',
+            borderRadius: '0',
+            overflow: 'hidden',
+          }}
+          allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+          allowFullScreen
+          className="w-full h-full object-cover"
+        />
+      ) : (
+        // Standard video player
+        <video
+          ref={videoRef}
+          src={videoUrl}
+          poster={thumbnail}
+          className="w-full h-full object-cover"
+          muted={isMuted}
+          loop={loop}
+          playsInline
+          onClick={togglePlayPause}
+        />
+      )}
 
       {/* Controls Overlay */}
       {showControls && (

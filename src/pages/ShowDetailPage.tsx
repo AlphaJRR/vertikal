@@ -178,11 +178,13 @@ export const ShowDetailPage = ({
         <div className="sticky top-0 z-40">
           <ShowPlayer
             videoUrl={show.video_url || show.thumbnail}
-            thumbnail={show.thumbnail}
+            thumbnail={(show as any).cloudflare?.thumbnail || show.thumbnail}
             autoPlay={true}
             loop={false}
             muted={true}
             showId={show.id}
+            cloudflare={(show as any).cloudflare}
+            readyToStream={(show as any).readyToStream || (show as any).cloudflare?.readyToStream}
             onPlay={() => console.log(`[ANALYTICS] video_start:`, { show_id: show.id })}
             onPause={() => console.log(`[ANALYTICS] video_pause:`, { show_id: show.id })}
             onComplete={() => {
