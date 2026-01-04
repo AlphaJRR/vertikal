@@ -23,8 +23,26 @@ export const ProfilePage = ({ creatorId, creators, onBack, onOpenChat, isMyProfi
   const [selectedJob, setSelectedJob] = useState<any>(null);
   const creator = creators[creatorId] || creators[Object.keys(creators)[0]];
   const isNetwork = creator?.type === 'network';
+  
+  // Check if user is guest
+  const isGuest = typeof window !== 'undefined' && localStorage.getItem('vertikal_is_guest') === 'true';
+  const isSignedIn = typeof window !== 'undefined' && !isGuest && localStorage.getItem('vertikal_token');
 
   if (!creator) return null;
+  
+  // Handle sign in - clear guest state and trigger onboarding
+  const handleSignIn = () => {
+    localStorage.removeItem('vertikal_is_guest');
+    // Reload to trigger ProfileGate to show onboarding
+    window.location.reload();
+  };
+  
+  // Handle switch to creator/studio view
+  const handleSwitchToCreator = () => {
+    // Navigate to studio tab (this will be handled by parent App component)
+    // For now, we'll use a custom event or window location
+    window.dispatchEvent(new CustomEvent('switchToStudio'));
+  };
 
   const handleProfileUpdate = (updatedProfile: Partial<Creator>) => {
     // In production, this would update the database
@@ -134,36 +152,57 @@ export const ProfilePage = ({ creatorId, creators, onBack, onOpenChat, isMyProfi
             </div>
           </div>
         </div>
-        <div className="flex gap-3 w-full mb-8">
-          {isNetwork ? (
+        {/* Action Buttons - Different for guest vs signed in */}
+        {isMyProfile && isGuest ? (
+          // Guest viewing their own profile - show Sign In and Switch to Creator
+          <div className="flex flex-col gap-3 w-full mb-8">
+            <button
+              onClick={handleSignIn}
+              className="w-full bg-gradient-to-r from-yellow-500 to-yellow-400 text-black font-black py-3 rounded-lg flex items-center justify-center gap-2 active:scale-95 transition-transform"
+            >
+              Sign In / Create Account
+            </button>
+            <button
+              onClick={handleSwitchToCreator}
+              className="w-full bg-[#1A1A1A] border-2 border-yellow-500/50 text-yellow-500 font-bold py-3 rounded-lg flex items-center justify-center gap-2 active:scale-95 transition-transform"
+            >
+              <Clapperboard className="w-4 h-4" />
+              Switch to Creator / Studio View
+            </button>
+          </div>
+        ) : (
+          // Normal profile buttons (Follow/Subscribe, Message)
+          <div className="flex gap-3 w-full mb-8">
+            {isNetwork ? (
+              <button
+                onClick={() => {
+                  setShowSubModal(true);
+                  triggerHaptic('heavy');
+                }}
+                className="flex-1 bg-yellow-500 hover:bg-yellow-400 text-black font-black py-3 rounded-lg flex items-center justify-center gap-2 active:scale-95 transition-transform"
+              >
+                SUBSCRIBE ${creator.subPrice}
+              </button>
+            ) : (
+              <button
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg flex items-center justify-center gap-2 active:scale-95 transition-transform"
+                onClick={() => triggerHaptic('medium')}
+              >
+                <UserPlus className="w-4 h-4" />
+                Follow
+              </button>
+            )}
             <button
               onClick={() => {
-                setShowSubModal(true);
-                triggerHaptic('heavy');
+                onOpenChat(creatorId);
+                triggerHaptic('light');
               }}
-              className="flex-1 bg-yellow-500 hover:bg-yellow-400 text-black font-black py-3 rounded-lg flex items-center justify-center gap-2 active:scale-95 transition-transform"
+              className="flex-1 bg-[#1A1A1A] border border-gray-700 text-white font-bold py-3 rounded-lg flex items-center justify-center gap-2 active:scale-95 transition-transform"
             >
-              SUBSCRIBE ${creator.subPrice}
+              Message <span className="text-[10px] opacity-50 ml-1">/ Tip</span>
             </button>
-          ) : (
-            <button
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg flex items-center justify-center gap-2 active:scale-95 transition-transform"
-              onClick={() => triggerHaptic('medium')}
-            >
-              <UserPlus className="w-4 h-4" />
-              Follow
-            </button>
-          )}
-          <button
-            onClick={() => {
-              onOpenChat(creatorId);
-              triggerHaptic('light');
-            }}
-            className="flex-1 bg-[#1A1A1A] border border-gray-700 text-white font-bold py-3 rounded-lg flex items-center justify-center gap-2 active:scale-95 transition-transform"
-          >
-            Message <span className="text-[10px] opacity-50 ml-1">/ Tip</span>
-          </button>
-        </div>
+          </div>
+        )}
         <div className="flex w-full justify-between px-8 text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">
           <button
             onClick={() => {

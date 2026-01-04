@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Header } from './components/layout/Header';
 import { BottomNav } from './components/layout/BottomNav';
 import { HomePage } from './pages/HomePage';
@@ -112,6 +112,18 @@ function App() {
     triggerHaptic('heavy');
     // ProfileGate will handle routing
   };
+
+  // Listen for switch to studio event from ProfilePage
+  useEffect(() => {
+    const handleSwitchToStudio = () => {
+      setIsStudioMode(true);
+      setTab('studio');
+      triggerHaptic('medium');
+    };
+    
+    window.addEventListener('switchToStudio', handleSwitchToStudio);
+    return () => window.removeEventListener('switchToStudio', handleSwitchToStudio);
+  }, []);
 
   return (
     <ProfileGate onComplete={handleOnboardingComplete}>
