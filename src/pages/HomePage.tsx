@@ -28,18 +28,32 @@ export const HomePage = ({ creators, onViewProfile, onShowSelect }: HomePageProp
       // Include if it has video_url OR cloudflare data
       const hasVideoUrl = show.video_url && typeof show.video_url === 'string' && show.video_url.trim() !== '';
       const hasCloudflare = show.cloudflare?.readyToStream || show.readyToStream;
-      return hasVideoUrl || hasCloudflare;
+      const hasStreamUid = show.streamUid || show.cloudflare?.uid;
+      
+      // ✅ CRITICAL: Must have streamUid AND readyToStream to show
+      if (hasCloudflare && !hasStreamUid) {
+        console.warn('[HomePage] Video has readyToStream but no streamUid:', show.id, show.title);
+      }
+      
+      return hasVideoUrl || (hasCloudflare && hasStreamUid);
     });
     
-    // Debug: Log what videos we're showing
+    // ✅ CRITICAL DEBUG: Log what videos we're showing with full Cloudflare data
     if (typeof window !== 'undefined') {
-      console.log('[HomePage] Available videos:', filtered.map((s: any) => ({
-        id: s.id,
-        title: s.title,
-        hasCloudflare: !!s.cloudflare,
-        thumbnail: s.cloudflare?.thumbnail || s.thumbnail,
-        readyToStream: s.cloudflare?.readyToStream || s.readyToStream,
-      })));
+      console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+      console.log('[HomePage] ✅ AVAILABLE VIDEOS:', filtered.length);
+      filtered.forEach((s: any) => {
+        const thumb = s.cloudflare?.thumbnail || s.thumbnail;
+        const isCloudflare = thumb?.includes('cloudflarestream.com');
+        console.log(`  • ${s.title}:`, {
+          id: s.id,
+          streamUid: s.streamUid || s.cloudflare?.uid || 'MISSING',
+          readyToStream: s.cloudflare?.readyToStream || s.readyToStream || false,
+          thumbnail: isCloudflare ? '✅ Cloudflare' : `❌ ${thumb?.substring(0, 50)}`,
+          hasCloudflare: !!s.cloudflare,
+        });
+      });
+      console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
     }
     
     return filtered;
