@@ -1,6 +1,6 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import BottomNav from '@/components/layout/BottomNav';
+import BottomNav from '../src/components/layout/BottomNav';
 
 export const metadata: Metadata = {
   title: 'VERTIKAL',
@@ -18,7 +18,7 @@ export default function RootLayout({
         <div className="pb-20">
           {children}
         </div>
-        <BottomNav />
+        <BottomNav activeTab="home" setTab={() => {}} />
       </body>
     </html>
   );

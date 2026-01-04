@@ -6,10 +6,10 @@ import { triggerHaptic } from '../utils/helpers';
 
 export const SeriesPage = () => {
   const [series, setSeries] = useState<Series[]>([]);
-  const isGuest = localStorage.getItem('vertikal_is_guest') === 'true';
 
   useEffect(() => {
     // Use demo series if guest or if no API data
+    const isGuest = typeof window !== 'undefined' && localStorage.getItem('vertikal_is_guest') === 'true';
     setSeries(DEMO_SERIES);
   }, []);
 
@@ -93,7 +93,7 @@ export const SeriesPage = () => {
             <li>• Every tile reflects live activity, not static profiles.</li>
           </ul>
           <p className="text-gray-400 text-xs mt-4">
-            VIBE™ is a live visual layer that updates as creators and networks move, post, and connect. Each tile represents real activity happening right now. It's a fast way to understand what's active, rising, or worth exploring.
+            VIBE™ is a live visual layer that updates as creators and networks move, post, and connect. Each tile represents real activity happening right now. It&apos;s a fast way to understand what&apos;s active, rising, or worth exploring.
           </p>
         </div>
       </div>

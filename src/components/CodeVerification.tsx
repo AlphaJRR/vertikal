@@ -171,7 +171,7 @@ export const CodeVerification = ({
 
       {/* Help Text */}
       <p className="text-xs text-gray-500 text-center">
-        Can't find your code? Check your email or contact support.
+        Can&apos;t find your code? Check your email or contact support.
       </p>
     </motion.div>
   );

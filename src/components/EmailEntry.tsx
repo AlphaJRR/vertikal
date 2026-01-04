@@ -46,7 +46,7 @@ export const EmailEntry = ({ onEmailSubmit }: EmailEntryProps) => {
       <div className="text-center mb-6">
         <h3 className="text-2xl font-bold mb-2">Enter Your Email</h3>
         <p className="text-gray-400 text-sm">
-          We'll use this to verify your Founding 50 access
+          We&apos;ll use this to verify your Founding 50 access
         </p>
       </div>
 

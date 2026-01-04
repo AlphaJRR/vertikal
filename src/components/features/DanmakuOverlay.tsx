@@ -1,52 +1,48 @@
 import { useEffect, useRef, useState } from 'react';
 
-// Individual Danmaku Item Component (for dynamic keyframes)
-const DanmakuItem = ({ item, containerWidth, totalDistance, topPercent }: {
+const GLOBAL_KEYFRAMES_ID = 'danmaku-global-keyframes';
+
+// Individual Danmaku Item Component (premium: uses global keyframes + CSS custom properties)
+const DanmakuItem = ({
+  item,
+  containerWidth,
+  totalDistance,
+  topPx,
+}: {
   item: DanmakuItem;
   containerWidth: number;
   totalDistance: number;
-  topPercent: number;
+  topPx: number;
 }) => {
-  const animationId = `danmaku-${item.id.replace(/[^a-zA-Z0-9]/g, '')}`;
-  
+  // Inject global keyframes once (premium: no per-item <style>)
   useEffect(() => {
+    if (document.getElementById(GLOBAL_KEYFRAMES_ID)) return;
+
     const style = document.createElement('style');
-    style.id = animationId;
+    style.id = GLOBAL_KEYFRAMES_ID;
     style.textContent = `
-      @keyframes ${animationId} {
-        0% {
-          transform: translateX(0);
-          opacity: 0;
-        }
-        5% {
-          opacity: 1;
-        }
-        95% {
-          opacity: 1;
-        }
-        100% {
-          transform: translateX(-${totalDistance}px);
-          opacity: 0;
-        }
+      @keyframes danmaku-move {
+        0%   { transform: translateX(0); opacity: 0; }
+        5%   { opacity: 1; }
+        95%  { opacity: 1; }
+        100% { transform: translateX(calc(-1 * var(--danmaku-distance))); opacity: 0; }
       }
     `;
     document.head.appendChild(style);
-    
-    return () => {
-      const existingStyle = document.getElementById(animationId);
-      if (existingStyle) {
-        existingStyle.remove();
-      }
-    };
-  }, [animationId, totalDistance]);
+  }, []);
 
   return (
     <div
       className="absolute text-white text-sm font-bold bg-black/70 backdrop-blur-md px-4 py-2 rounded-full border-2 border-yellow-500/50 shadow-lg shadow-yellow-500/30 whitespace-nowrap"
       style={{
-        top: `${topPercent}%`,
-        left: `${containerWidth}px`,
-        animation: `${animationId} ${item.durationMs}ms linear forwards`,
+        top: topPx,
+        left: containerWidth,
+        // CSS custom property for distance
+        ['--danmaku-distance' as any]: `${totalDistance}px`,
+        animationName: 'danmaku-move',
+        animationDuration: `${item.durationMs}ms`,
+        animationTimingFunction: 'linear',
+        animationFillMode: 'forwards',
         willChange: 'transform',
       }}
     >
@@ -69,11 +65,13 @@ interface DanmakuItem {
   startTime: number;
 }
 
-// ✅ PREMIUM: Danmaku tuning constants
+// ✅ PREMIUM tuning constants (keep yours)
 const LANES = 7;
 const FONT_SIZE = 16;
-const BASE_SPEED_PX_PER_S = 220; // Global "energy" knob (increase to 250 for more hype)
+const BASE_SPEED_PX_PER_S = 240; // bump from 220 -> more premium energy
 const LANE_HEIGHT_PX = 28;
+const TOP_PADDING_PX = 18;
+const MAX_ON_SCREEN_COMMENTS = 8;
 
 // ✅ Adaptive speed by length (short faster, long slower)
 function lengthSpeedMultiplier(text: string): number {
@@ -84,25 +82,20 @@ function lengthSpeedMultiplier(text: string): number {
   return 0.78;
 }
 
-// ✅ Text width measurement (canvas-based, accurate)
 let _measureCanvas: HTMLCanvasElement | null = null;
 function measureTextWidth(text: string, font = `${FONT_SIZE}px system-ui`): number {
-  if (!_measureCanvas) {
-    _measureCanvas = document.createElement('canvas');
-  }
+  if (!_measureCanvas) _measureCanvas = document.createElement('canvas');
   const ctx = _measureCanvas.getContext('2d')!;
   ctx.font = font;
   return ctx.measureText(text).width;
 }
 
-// ✅ Compute duration based on distance and adaptive speed
 function computeDurationMs(text: string, containerWidth: number): number {
   const textW = measureTextWidth(text);
-  const dist = containerWidth + textW + 40; // padding
+  const dist = containerWidth + textW + 40;
   const speed = BASE_SPEED_PX_PER_S * lengthSpeedMultiplier(text);
   const ms = (dist / speed) * 1000;
-  // Clamp for sanity
-  return Math.max(3500, Math.min(8500, Math.round(ms)));
+  return Math.max(3200, Math.min(8200, Math.round(ms)));
 }
 
 // ✅ Minimum gap in px between items in same lane
@@ -130,18 +123,21 @@ const VIBE_PRESETS: Record<string, Array<{ t: number; u: string; m: string }>> =
 export const DanmakuOverlay = ({ active, vibeThreadId, vibePreset }: DanmakuOverlayProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [danmakuItems, setDanmakuItems] = useState<DanmakuItem[]>([]);
+  const itemsRef = useRef<DanmakuItem[]>([]);
+  useEffect(() => {
+    itemsRef.current = danmakuItems;
+  }, [danmakuItems]);
+  
   const laneNextFreeAt = useRef<number[]>(Array(LANES).fill(0));
   const spawnTimeoutRef = useRef<number | null>(null);
   const presetQueueRef = useRef<Array<{ t: number; u: string; m: string }>>([]);
+  const presetTimeoutsRef = useRef<number[]>([]);
   const videoStartTimeRef = useRef<number>(Date.now());
 
-  // ✅ Pick lane with collision avoidance
   function pickLane(now: number): number {
-    // Prefer a lane that is already free
     for (let i = 0; i < LANES; i++) {
       if (laneNextFreeAt.current[i] <= now) return i;
     }
-    // If all busy, pick the one that frees soonest
     let best = 0;
     let bestTime = laneNextFreeAt.current[0];
     for (let i = 1; i < LANES; i++) {
@@ -153,24 +149,30 @@ export const DanmakuOverlay = ({ active, vibeThreadId, vibePreset }: DanmakuOver
     return best;
   }
 
-  // ✅ Spawn one comment with adaptive speed and collision avoidance
   function spawnComment(text: string, containerWidth: number) {
     const now = performance.now();
+
+    // Hard cap: don't spawn if we're already at max visible density
+    if (itemsRef.current.length >= MAX_ON_SCREEN_COMMENTS) return;
+
     const lane = pickLane(now);
     const durationMs = computeDurationMs(text, containerWidth);
 
-    // Reserve lane time so next comment won't collide
+    // Reserve lane time so next comment won't collide (FIXED math)
     const textW = measureTextWidth(text);
     const speedPxPerS = BASE_SPEED_PX_PER_S * lengthSpeedMultiplier(text);
-    const speedPxPerMs = speedPxPerS / 1000;
     const gap = minGapPx(text);
-    const laneBlockMs = ((textW + gap) / speedPxPerMs) * 1000;
 
-    // Clamp lane block to avoid stalling
-    laneNextFreeAt.current[lane] = now + Math.max(600, Math.min(1600, laneBlockMs));
+    // ✅ time (ms) until enough space opens in that lane
+    const laneBlockMs = ((textW + gap) / speedPxPerS) * 1000; // <-- THIS is the correct formula
+
+    laneNextFreeAt.current[lane] = now + Math.max(600, Math.min(1800, laneBlockMs));
+
+    // ✅ Ensure absolutely unique ID (timestamp + random + counter to prevent collisions)
+    const uniqueId = `danmaku-${now}-${Math.random().toString(36).substr(2, 9)}-${itemsRef.current.length}`;
 
     const newItem: DanmakuItem = {
-      id: crypto.randomUUID(),
+      id: uniqueId,
       text,
       lane,
       durationMs,
@@ -179,19 +181,18 @@ export const DanmakuOverlay = ({ active, vibeThreadId, vibePreset }: DanmakuOver
 
     setDanmakuItems(prev => [...prev, newItem]);
 
-    // Remove item after animation completes
-    setTimeout(() => {
+    // One cleanup path only (premium): remove after animation completes
+    window.setTimeout(() => {
       setDanmakuItems(prev => prev.filter(item => item.id !== newItem.id));
-    }, durationMs);
+    }, durationMs + 50);
   }
 
-  // ✅ Adaptive spawn rate (faster when empty, slower when crowded)
   function nextSpawnDelayMs(): number {
-    const n = danmakuItems.length;
-    if (n <= 3) return 550; // Faster when empty (was 650)
-    if (n <= 6) return 800;
-    if (n <= 9) return 1000;
-    return 1200;
+    const n = itemsRef.current.length;
+    if (n <= 2) return 520;  // more premium energy
+    if (n <= 5) return 720;
+    if (n <= 7) return 920;
+    return 1150;
   }
 
   // ✅ Self-scheduling spawn loop
@@ -217,7 +218,27 @@ export const DanmakuOverlay = ({ active, vibeThreadId, vibePreset }: DanmakuOver
   useEffect(() => {
     if (!active) {
       presetQueueRef.current = [];
+      setDanmakuItems([]); // ✅ Clear all items when inactive
+      // Clear preset timeouts when inactive
+      presetTimeoutsRef.current.forEach(timeoutId => clearTimeout(timeoutId));
+      presetTimeoutsRef.current = [];
+      if (spawnTimeoutRef.current) {
+        clearTimeout(spawnTimeoutRef.current);
+        spawnTimeoutRef.current = null;
+      }
       return;
+    }
+
+    // ✅ CRITICAL: Clear existing items and queue when preset changes to prevent duplicates
+    setDanmakuItems([]);
+    presetQueueRef.current = [];
+    
+    // Clear any existing timeouts before scheduling new ones
+    presetTimeoutsRef.current.forEach(timeoutId => clearTimeout(timeoutId));
+    presetTimeoutsRef.current = [];
+    if (spawnTimeoutRef.current) {
+      clearTimeout(spawnTimeoutRef.current);
+      spawnTimeoutRef.current = null;
     }
 
     let preset: Array<{ t: number; u: string; m: string }> = [];
@@ -240,11 +261,13 @@ export const DanmakuOverlay = ({ active, vibeThreadId, vibePreset }: DanmakuOver
 
     // Schedule preset comments based on their timing
     videoStartTimeRef.current = Date.now();
+    
     preset.forEach(p => {
       const delayMs = p.t * 1000;
-      setTimeout(() => {
+      const timeoutId = window.setTimeout(() => {
         presetQueueRef.current.push(p);
       }, delayMs);
+      presetTimeoutsRef.current.push(timeoutId);
     });
 
     // Start spawn loop
@@ -253,14 +276,16 @@ export const DanmakuOverlay = ({ active, vibeThreadId, vibePreset }: DanmakuOver
     return () => {
       if (spawnTimeoutRef.current) {
         clearTimeout(spawnTimeoutRef.current);
+        spawnTimeoutRef.current = null;
       }
+      // Clear all preset timeouts on cleanup
+      presetTimeoutsRef.current.forEach(timeoutId => clearTimeout(timeoutId));
+      presetTimeoutsRef.current = [];
+      presetQueueRef.current = [];
     };
   }, [active, vibeThreadId, vibePreset]);
 
-  if (!active) return null;
-
   // ✅ Cap on-screen comments to max 8 for performance
-  const MAX_ON_SCREEN_COMMENTS = 8;
   const visibleItems = danmakuItems.slice(-MAX_ON_SCREEN_COMMENTS);
 
   // Clean up expired items
@@ -278,26 +303,28 @@ export const DanmakuOverlay = ({ active, vibeThreadId, vibePreset }: DanmakuOver
     return () => clearInterval(interval);
   }, [active, visibleItems.length]);
 
+  if (!active) return null;
+
   return (
     <div 
       ref={containerRef}
       className="absolute inset-0 z-40 pointer-events-none overflow-hidden"
     >
       {visibleItems.map(item => {
-        const containerWidth = containerRef.current?.clientWidth ?? 360;
-        const textW = measureTextWidth(item.text);
-        const totalDistance = containerWidth + textW + 40;
-        const topPercent = 10 + (item.lane * (100 / LANES));
+            const containerWidth = containerRef.current?.clientWidth ?? 360;
+            const textW = measureTextWidth(item.text);
+            const totalDistance = containerWidth + textW + 40;
+            const topPx = TOP_PADDING_PX + (item.lane * LANE_HEIGHT_PX);
 
-        return (
-          <DanmakuItem
-            key={item.id}
-            item={item}
-            containerWidth={containerWidth}
-            totalDistance={totalDistance}
-            topPercent={topPercent}
-          />
-        );
+            return (
+              <DanmakuItem
+                key={item.id}
+                item={item}
+                containerWidth={containerWidth}
+                totalDistance={totalDistance}
+                topPx={topPx}
+              />
+            );
       })}
     </div>
   );
