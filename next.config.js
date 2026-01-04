@@ -7,7 +7,10 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: false,
   },
+  // Only use app directory for routing, ignore src/pages
+  pageExtensions: ['page.tsx', 'page.ts'],
   webpack: (config) => {
+    // Exclude src/pages from being treated as Next.js pages
     config.resolve.alias = {
       ...config.resolve.alias,
     };

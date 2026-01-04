@@ -9,7 +9,6 @@ export const SeriesPage = () => {
 
   useEffect(() => {
     // Use demo series if guest or if no API data
-    const isGuest = typeof window !== 'undefined' && localStorage.getItem('vertikal_is_guest') === 'true';
     setSeries(DEMO_SERIES);
   }, []);
 

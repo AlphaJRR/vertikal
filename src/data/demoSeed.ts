@@ -60,7 +60,7 @@ export const DEMO_BLACK_AWESOMENESS: Creator = {
     {
       title: 'ARGUEably the Best Burgers',
       type: 'DOCU',
-      img: FEATURED_VIDEO.thumbnail,
+      img: 'https://customer-fyh68ijrcuys7ag8.cloudflarestream.com/9d3d0efed36b71e5f75c7b5e218809d7/thumbnails/thumbnail.jpg',
     },
   ],
   roster: ['joshuaargue'],
@@ -177,7 +177,7 @@ export const DEMO_JOSHUA_ARGUE: Creator = {
     {
       title: 'ARGUEably the Best Burgers',
       type: 'DOCU',
-      img: FEATURED_VIDEO.thumbnail,
+      img: 'https://customer-fyh68ijrcuys7ag8.cloudflarestream.com/9d3d0efed36b71e5f75c7b5e218809d7/thumbnails/thumbnail.jpg',
     },
   ],
 };

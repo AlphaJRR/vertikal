@@ -1,16 +1,1 @@
-{
-  "/_app": "pages/_app.js",
-  "/_error": "pages/_error.js",
-  "/FeedPage": "pages/FeedPage.js",
-  "/HomePage": "pages/HomePage.js",
-  "/CodeVerificationPage": "pages/CodeVerificationPage.js",
-  "/ProfilePage": "pages/ProfilePage.js",
-  "/SeriesPage": "pages/SeriesPage.js",
-  "/ShortsPage": "pages/ShortsPage.js",
-  "/OnboardingPage": "pages/OnboardingPage.js",
-  "/_document": "pages/_document.js",
-  "/TrailersPage": "pages/TrailersPage.js",
-  "/StudioPage": "pages/StudioPage.js",
-  "/ShowDetailPage": "pages/ShowDetailPage.js",
-  "/ProfileSetupPage": "pages/ProfileSetupPage.js"
-}
+{"/_app":"pages/_app.js","/_error":"pages/_error.js","/_document":"pages/_document.js","/404":"pages/404.html"}
