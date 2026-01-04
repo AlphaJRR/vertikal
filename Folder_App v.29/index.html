@@ -156,10 +156,59 @@
             </div>
         );
 
-        const DanmakuOverlay = ({ active }) => {
+        // VIBE Presets
+        window.VIBE_PRESETS = window.VIBE_PRESETS || {};
+        window.VIBE_PRESETS["vibe_argueably_best_burgers_v1"] = [
+            { t: 2.5, u: "AVA_Member", m: "This intro is CRAZY 🔥" },
+            { t: 6.0, u: "Founder50", m: "Vertical cinema is rotating. Not dying." },
+            { t: 9.2, u: "BlackAwe", m: "Argue don't miss 🎬" },
+            { t: 13.0, u: "KelFan", m: "That pacing is clean 😮‍💨" },
+            { t: 18.5, u: "Showrunner", m: "This looks premium." },
+            { t: 25.0, u: "Network", m: "We need Episode 1 ASAP." },
+            { t: 33.0, u: "Creator", m: "The vibe overlay is the sauce." },
+            { t: 45.0, u: "Viewer", m: "Okay… I'm locked in." }
+        ];
+
+        const DanmakuOverlay = ({ active, vibeThreadId }) => {
             if (!active) return null;
-            const comments = [ { text: "This lighting is insane 🔥", top: "10%", duration: "8s", delay: "0s" }, { text: "Wait for the drop...", top: "20%", duration: "12s", delay: "1s" }, { text: "Chicago represent! 🏙️", top: "35%", duration: "7s", delay: "2s" } ];
-            return ( <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden h-3/4"> {comments.map((c, i) => ( <div key={i} className="animate-danmaku text-white/90 text-sm font-bold bg-black/40 backdrop-blur-sm px-3 py-1 rounded-full border border-white/10" style={{ top: c.top, animationDuration: `${6+i}s` }}>{c.text}</div> ))} </div> );
+            
+            // Use preset if vibeThreadId is provided
+            let comments = [];
+            if (vibeThreadId && window.VIBE_PRESETS && window.VIBE_PRESETS[vibeThreadId]) {
+                const preset = window.VIBE_PRESETS[vibeThreadId];
+                comments = preset.map((p, i) => ({
+                    text: `${p.u}: ${p.m}`,
+                    top: `${10 + (i * 12)}%`,
+                    duration: '10s',
+                    delay: `${p.t}s`
+                }));
+            } else {
+                // Default comments
+                comments = [
+                    { text: "This lighting is insane 🔥", top: "10%", duration: "8s", delay: "0s" },
+                    { text: "Wait for the drop...", top: "20%", duration: "12s", delay: "1s" },
+                    { text: "Chicago represent! 🏙️", top: "35%", duration: "7s", delay: "2s" }
+                ];
+            }
+            
+            return ( 
+                <div className="absolute inset-0 z-40 pointer-events-none overflow-hidden"> 
+                    {comments.map((c, i) => ( 
+                        <div 
+                            key={i} 
+                            className="animate-danmaku text-white text-sm font-bold bg-black/70 backdrop-blur-md px-4 py-2 rounded-full border-2 border-yellow-500/50 shadow-lg shadow-yellow-500/30" 
+                            style={{ 
+                                top: c.top, 
+                                animationDuration: c.duration,
+                                animationDelay: c.delay,
+                                left: '-100%'
+                            }}
+                        >
+                            {c.text}
+                        </div>
+                    ))} 
+                </div> 
+            );
         };
 
         const Header = ({ onOpenInbox }) => (
@@ -338,19 +387,26 @@
             const [danmakuOn, setDanmakuOn] = useState(true);
             const [filter, setFilter] = useState('For You');
             const allProjects = getAllProjects();
-            const videoRef = useRef(null);
             const displayCreators = filter === 'Networks' ? Object.entries(CREATORS).filter(([k,v]) => v.type === 'network') : Object.entries(CREATORS).filter(([k,v]) => v.type === 'creator');
-            useEffect(() => { if (videoRef.current) videoRef.current.play().catch(e => console.log("Autoplay blocked")); }, []);
 
             return (
                 <div className="pb-24 animate-fade overflow-y-auto h-full no-scrollbar relative">
-                    <div className="relative h-[500px] w-full cursor-pointer gpu-accelerated" onClick={() => { setDanmakuOn(!danmakuOn); triggerHaptic('light'); }}>
-                        <div className="absolute inset-0"><video ref={videoRef} src={VIDEO_TRAILER} className="w-full h-full object-cover" muted loop playsInline poster={IMG_BASES} /><div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div></div>
-                        <DanmakuOverlay active={danmakuOn} />
+                    <!-- FEATURED HERO: ARGUEably the Best Burgers (Joshua Argue) -->
+                    <div className="relative h-[500px] w-full cursor-pointer gpu-accelerated hero-video" data-vibe="true" data-vibe-thread="vibe_argueably_best_burgers_v1" onClick={() => { setDanmakuOn(!danmakuOn); triggerHaptic('light'); }}>
+                        <div className="absolute inset-0">
+                            <iframe
+                                src="https://customer-fyh68ijrcuys7ag8.cloudflarestream.com/9d3d0efed36b71e5f75c7b5e218809d7/iframe"
+                                style={{border:0,width:'100%',height:'100%',aspectRatio:'9/16',borderRadius:'18px',overflow:'hidden'}}
+                                allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+                                allowFullScreen={true}
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent pointer-events-none"></div>
+                        </div>
+                        <DanmakuOverlay active={danmakuOn} vibeThreadId="vibe_argueably_best_burgers_v1" />
                         <div className="absolute top-4 right-4 z-30"><button onClick={(e) => { e.stopPropagation(); setDanmakuOn(!danmakuOn); triggerHaptic('medium'); }} className={`px-4 py-1.5 text-[10px] font-black tracking-widest rounded-full border backdrop-blur-md transition-all ${danmakuOn ? 'bg-gradient-to-r from-purple-600 to-blue-600 border-transparent text-white animate-hype shadow-lg shadow-purple-500/50' : 'bg-black/40 border-white/20 text-gray-400'}`}>VIBE {danmakuOn ? 'ON' : 'OFF'}</button></div>
                         <div className="absolute bottom-0 w-full p-4 flex flex-col items-center z-30">
                             <div className="flex gap-2 overflow-x-auto no-scrollbar w-full justify-center mb-6 z-40">{['For You', 'Networks', 'Drama', 'Docu'].map((g, i) => ( <button key={g} onClick={(e) => { e.stopPropagation(); setFilter(g); triggerHaptic('light'); }} className={`whitespace-nowrap px-4 py-1.5 rounded-full text-xs font-bold transition-all ${filter === g ? 'bg-white text-black' : 'bg-white/10 backdrop-blur text-white'}`}>{g}</button> ))}</div>
-                            <div className="flex flex-col items-center mb-6"><span className="text-blue-500 font-black tracking-widest text-[10px] mb-2 block animate-pulse border border-blue-500/50 px-2 py-0.5 rounded bg-blue-900/20">★ FEATURED PREMIERE</span><h1 className="text-5xl font-black text-white mb-2 leading-none text-center drop-shadow-2xl italic tracking-tighter">BEYOND THE BASES</h1><div className="flex gap-2"><span className="bg-green-500/20 text-green-400 text-xs font-bold px-2 py-1 rounded">98% Match</span><span className="bg-blue-600/20 text-blue-400 text-xs font-bold px-2 py-1 rounded">Sports Docu</span></div></div>
+                            <div className="flex flex-col items-center mb-6"><span className="text-blue-500 font-black tracking-widest text-[10px] mb-2 block animate-pulse border border-blue-500/50 px-2 py-0.5 rounded bg-blue-900/20">★ FEATURED PREMIERE</span><h1 className="text-5xl font-black text-white mb-2 leading-none text-center drop-shadow-2xl italic tracking-tighter">ARGUEABLY THE BEST BURGERS</h1><div className="flex gap-2"><span className="bg-green-500/20 text-green-400 text-xs font-bold px-2 py-1 rounded">98% Match</span><span className="bg-blue-600/20 text-blue-400 text-xs font-bold px-2 py-1 rounded">Food Docu</span></div></div>
                             <div className="flex gap-3 w-full max-w-xs mb-8"><button className="flex-1 bg-white text-black font-bold py-3 rounded flex items-center justify-center gap-2 active:scale-95 transition-transform" onClick={() => triggerHaptic('heavy')}><i data-lucide="play" className="fill-black w-4 h-4"></i> PLAY</button><button className="w-12 bg-gray-800/80 text-white rounded flex items-center justify-center active:scale-95 transition-transform"><i data-lucide="plus" className="w-6 h-6"></i></button></div>
                             <div className="flex gap-4 w-full overflow-x-auto no-scrollbar justify-start px-2"><div className="flex flex-col items-center gap-1 min-w-[64px]"><div className="w-16 h-16 rounded-full border-2 border-dashed border-gray-600 flex items-center justify-center relative active:scale-90 transition-transform"><i data-lucide="plus" className="text-gray-400"></i></div><span className="text-xs text-gray-400">Add</span></div>{displayCreators.slice(0, 10).map(([key, creator]) => (<div key={key} className="flex flex-col items-center gap-1 cursor-pointer min-w-[64px]" onClick={(e) => { e.stopPropagation(); onViewProfile(key); triggerHaptic('light'); }}><div className={`w-16 h-16 rounded-full border-2 p-0.5 overflow-hidden active:scale-90 transition-transform ${creator.type === 'network' ? 'border-yellow-500' : 'border-purple-500'}`}><img src={creator.avatar} className="w-full h-full rounded-full object-cover bg-black" /></div><span className="text-xs font-bold truncate w-16 text-center">{creator.name.split(' ')[0]}</span></div>))}</div>
                         </div>

@@ -1,0 +1,157 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  handle        String?  @unique
+  displayName   String
+  bio           String?
+  profilePicture String?
+  tags          String[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  shows         Show[]
+  comments      Comment[]
+  tips          Tip[]
+  verificationCode VerificationCode?
+
+  @@index([email])
+  @@index([handle])
+}
+
+model VerificationCode {
+  id        String   @id @default(cuid())
+  code      String   @unique
+  tier      String   // "master" | "founding"
+  used      Boolean  @default(false)
+  usedBy    String?
+  usedAt    DateTime?
+  expiresAt DateTime?
+  createdAt DateTime @default(now())
+
+  // Relations
+  user      User?    @relation(fields: [usedBy], references: [id], onDelete: SetNull)
+
+  @@index([code])
+  @@index([used])
+}
+
+model Creator {
+  id            String   @id @default(cuid())
+  userId        String   @unique
+  name          String
+  handle        String   @unique
+  avatar        String?
+  bio           String?
+  company       String?
+  role          String?
+  isFounding50  Boolean  @default(false)
+  stats         Json?    // { fans: string, series: string, views?: string }
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  shows         Show[]
+  tips          Tip[]
+
+  @@index([userId])
+  @@index([handle])
+}
+
+model Show {
+  id              String   @id @default(cuid())
+  title           String
+  series          String?
+  creatorId       String
+  creatorHandle   String?
+  creatorAvatar   String?
+  thumbnail       String
+  videoUrl        String?
+  description     String?
+  tags            String[]
+  duration        Int?     // in seconds
+  views           Int       @default(0)
+  likes           Int       @default(0)
+  episode         Int?
+  season          Int?
+  publishedAt     DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Relations
+  creator         Creator  @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  comments        Comment[]
+  tips            Tip[]
+  analytics       Analytics[]
+
+  @@index([creatorId])
+  @@index([publishedAt])
+  @@index([tags])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  showId   String
+  userId   String
+  text     String
+  likes    Int       @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  show     Show     @relation(fields: [showId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([showId])
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model Tip {
+  id        String   @id @default(cuid())
+  showId   String?
+  creatorId String
+  userId   String
+  amount   Decimal   @db.Decimal(10, 2)
+  message  String?
+  createdAt DateTime @default(now())
+
+  // Relations
+  show     Show?    @relation(fields: [showId], references: [id], onDelete: SetNull)
+  creator  Creator  @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([showId])
+  @@index([creatorId])
+  @@index([userId])
+  @@index([createdAt])
+}
+
+model Analytics {
+  id        String   @id @default(cuid())
+  showId   String
+  eventType String   // "play", "pause", "complete", "scrub", "quartile"
+  data      Json?
+  createdAt DateTime @default(now())
+
+  // Relations
+  show     Show     @relation(fields: [showId], references: [id], onDelete: Cascade)
+
+  @@index([showId])
+  @@index([eventType])
+  @@index([createdAt])
+}
+
+

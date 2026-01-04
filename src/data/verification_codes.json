@@ -1,0 +1,62 @@
+{
+  "FOUNDING_GENESIS": {
+    "used": false,
+    "creator_id": null,
+    "tier": "master"
+  },
+  "F50-001": {
+    "used": false,
+    "creator_id": null,
+    "tier": "founding"
+  },
+  "F50-002": {
+    "used": false,
+    "creator_id": null,
+    "tier": "founding"
+  },
+  "F50-003": {
+    "used": false,
+    "creator_id": null,
+    "tier": "founding"
+  },
+  "F50-004": {
+    "used": false,
+    "creator_id": null,
+    "tier": "founding"
+  },
+  "F50-005": {
+    "used": false,
+    "creator_id": null,
+    "tier": "founding"
+  },
+  "F50-006": {
+    "used": false,
+    "creator_id": null,
+    "tier": "founding"
+  },
+  "F50-007": {
+    "used": false,
+    "creator_id": null,
+    "tier": "founding"
+  },
+  "F50-008": {
+    "used": false,
+    "creator_id": null,
+    "tier": "founding"
+  },
+  "F50-009": {
+    "used": false,
+    "creator_id": null,
+    "tier": "founding"
+  },
+  "F50-010": {
+    "used": false,
+    "creator_id": null,
+    "tier": "founding"
+  },
+  "F50-011": {
+    "used": true,
+    "creator_id": "zion-harper",
+    "tier": "founding"
+  }
+}
