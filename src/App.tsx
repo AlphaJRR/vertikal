@@ -165,15 +165,19 @@ function App() {
         {/* Main Content Tabs */}
         {!viewingShow && (
           <>
-            {tab === 'home' && (
-              <HomePage
-                creators={creators}
-                onViewProfile={id => {
-                  setViewingProfile(id);
-                  triggerHaptic('medium');
-                }}
-              />
-            )}
+                {tab === 'home' && (
+                  <HomePage
+                    creators={creators}
+                    onViewProfile={id => {
+                      setViewingProfile(id);
+                      triggerHaptic('medium');
+                    }}
+                    onShowSelect={id => {
+                      setViewingShow(id);
+                      triggerHaptic('medium');
+                    }}
+                  />
+                )}
             {tab === 'feed' && (
               <FeedPage
                 onShowDetail={id => {
