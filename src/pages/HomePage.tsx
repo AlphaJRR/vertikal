@@ -12,6 +12,7 @@ import type { Show } from '../utils/types';
 interface HomePageProps {
   creators: Record<string, Creator>;
   onViewProfile: (id: string) => void;
+  onShowSelect?: (showId: string) => void;
 }
 
 export const HomePage = ({ creators, onViewProfile }: HomePageProps) => {
