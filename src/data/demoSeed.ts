@@ -14,6 +14,15 @@ interface Show {
   published_at?: string;
   episode?: number;
   season?: number;
+  cloudflare?: {
+    uid: string;
+    iframe: string;
+    thumbnail: string;
+    duration: number;
+    readyToStream: boolean;
+  };
+  streamUid?: string; // Alias for cloudflare.uid
+  readyToStream?: boolean; // Alias for cloudflare.readyToStream
 }
 
 // Demo Creator: JoeGuidry
