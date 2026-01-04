@@ -75,14 +75,32 @@ export const DEMO_BLACK_AWESOMENESS: Creator = {
   roster: ['joshuaargue'],
 };
 
-// Demo Shows
+// Cloudflare Customer ID
+const CLOUDFLARE_CUSTOMER_ID = 'fyh68ijrcuys7ag8';
+
+// Helper to build Cloudflare URLs
+function buildCloudflareUrls(uid: string) {
+  return {
+    uid,
+    iframe: `https://customer-${CLOUDFLARE_CUSTOMER_ID}.cloudflarestream.com/${uid}/iframe`,
+    thumbnail: `https://customer-${CLOUDFLARE_CUSTOMER_ID}.cloudflarestream.com/${uid}/thumbnails/thumbnail.jpg?time=2s`,
+    duration: 57.3,
+    readyToStream: true,
+  };
+}
+
+// Demo Shows - All with Cloudflare Stream data
 export const DEMO_SHOW_DARK_ROOM: Show = {
   id: 'dark-room-ep1',
   title: 'Dark Room - Episode 1',
   series: 'Dark Room',
   creator_id: 'joeguidry',
-  thumbnail: '/assets/covers/dark-room.png',
-  video_url: 'https://assets.mixkit.co/videos/preview/mixkit-athlete-working-out-with-heavy-ropes-in-the-gym-43750-large.mp4',
+  // ✅ Use Cloudflare Stream thumbnail
+  thumbnail: `https://customer-${CLOUDFLARE_CUSTOMER_ID}.cloudflarestream.com/9d3d0efed36b71e5f75c7b5e218809d7/thumbnails/thumbnail.jpg?time=2s`,
+  video_url: `https://customer-${CLOUDFLARE_CUSTOMER_ID}.cloudflarestream.com/9d3d0efed36b71e5f75c7b5e218809d7/mp4`,
+  cloudflare: buildCloudflareUrls('9d3d0efed36b71e5f75c7b5e218809d7'),
+  streamUid: '9d3d0efed36b71e5f75c7b5e218809d7',
+  readyToStream: true,
   tags: ['thriller', 'mystery', 'series'],
   duration: 300,
   views: 8500,
@@ -97,8 +115,12 @@ export const DEMO_SHOW_BEST_BURGERS: Show = {
   title: 'The Best Burgers - Episode 1',
   series: 'The Best Burgers',
   creator_id: 'joshuaargue',
-  thumbnail: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=800&auto=format&fit=crop',
-  video_url: 'https://assets.mixkit.co/videos/preview/mixkit-athlete-working-out-with-heavy-ropes-in-the-gym-43750-large.mp4',
+  // ✅ Use Cloudflare Stream thumbnail
+  thumbnail: `https://customer-${CLOUDFLARE_CUSTOMER_ID}.cloudflarestream.com/9d3d0efed36b71e5f75c7b5e218809d7/thumbnails/thumbnail.jpg?time=2s`,
+  video_url: `https://customer-${CLOUDFLARE_CUSTOMER_ID}.cloudflarestream.com/9d3d0efed36b71e5f75c7b5e218809d7/mp4`,
+  cloudflare: buildCloudflareUrls('9d3d0efed36b71e5f75c7b5e218809d7'),
+  streamUid: '9d3d0efed36b71e5f75c7b5e218809d7',
+  readyToStream: true,
   tags: ['food', 'documentary', 'chicago'],
   duration: 240,
   views: 125000,
@@ -113,8 +135,12 @@ export const DEMO_SHOW_ORIGINS: Show = {
   title: 'Origins - Episode 1',
   series: 'Origins',
   creator_id: 'cloaqstudios',
-  thumbnail: '/assets/covers/origins.png',
-  video_url: 'https://assets.mixkit.co/videos/preview/mixkit-athlete-working-out-with-heavy-ropes-in-the-gym-43750-large.mp4',
+  // ✅ Use Cloudflare Stream thumbnail
+  thumbnail: `https://customer-${CLOUDFLARE_CUSTOMER_ID}.cloudflarestream.com/9d3d0efed36b71e5f75c7b5e218809d7/thumbnails/thumbnail.jpg?time=2s`,
+  video_url: `https://customer-${CLOUDFLARE_CUSTOMER_ID}.cloudflarestream.com/9d3d0efed36b71e5f75c7b5e218809d7/mp4`,
+  cloudflare: buildCloudflareUrls('9d3d0efed36b71e5f75c7b5e218809d7'),
+  streamUid: '9d3d0efed36b71e5f75c7b5e218809d7',
+  readyToStream: true,
   tags: ['drama', 'series', 'origin'],
   duration: 280,
   views: 12000,
