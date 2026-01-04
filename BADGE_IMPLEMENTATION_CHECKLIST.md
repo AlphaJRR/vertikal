@@ -159,3 +159,6 @@
 - **Networks/Investors:** Use badge-row sections (not profile image badges)
 - **Homepage:** No hero video - VIBE™ is on demo page only
 
+
+
+

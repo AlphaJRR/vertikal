@@ -8,6 +8,9 @@ import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'rea
 import { LinearGradient } from 'expo-linear-gradient';
 import { Crown, Play, Users, Film, Eye, ArrowLeft } from 'lucide-react-native';
 import { getCreatorById, getShowsByCreator, Founding50Creator, ShowData } from '../../utils/dataLoader';
+import { CloudflareIframeCard } from '../video/CloudflareIframeCard';
+import { DanmakuOverlay, DanmakuComment } from '../ui/DanmakuOverlay';
+import { getAVAVideoData } from '../../utils/avaVideoSeed';
 
 interface CreatorProfileProps {
   creatorId: string;
@@ -25,6 +28,20 @@ export const CreatorProfile: React.FC<CreatorProfileProps> = ({
   const creator = getCreatorById(creatorId);
   const shows = getCreatorById(creatorId) ? getShowsByCreator(creatorId) : [];
   const isCurrentUser = creatorId === currentUserId;
+  
+  // Check if AVA video should be shown (app-only, profile preview only)
+  // Match on: creatorId ('Alpha'), creator name ('Alpha Visuals'), or any handle/username/slug
+  const avaVideoData = getAVAVideoData(creatorId, creator?.id, creator?.name, undefined, creator?.name);
+  const shouldShowAVAVideo = avaVideoData !== null;
+  
+  // Convert VIBE preset to DanmakuComment format
+  const vibeComments: DanmakuComment[] = avaVideoData?.vibePreset.map((preset, i) => ({
+    id: `ava-vibe-${i}`,
+    text: `${preset.u}: ${preset.m}`,
+    delay: preset.t * 1000, // Convert seconds to milliseconds
+    topPosition: `${10 + (i * 12)}%`,
+    color: '#FFD700', // Gold color for VIBE comments
+  })) || [];
 
   if (!creator) {
     return (
@@ -182,6 +199,21 @@ export const CreatorProfile: React.FC<CreatorProfileProps> = ({
           );
         })()}
       </View>
+
+      {/* AVA Video Preview - App-only, Alpha Visual Artists profile only */}
+      {shouldShowAVAVideo && avaVideoData && (
+        <View style={styles.videoSection}>
+          <View style={styles.videoContainer}>
+            <CloudflareIframeCard
+              iframeUrl={avaVideoData.cloudflare.iframe}
+              title={avaVideoData.title}
+              thumbnail={avaVideoData.cloudflare.thumbnail}
+            />
+            {/* VIBE Overlay */}
+            <DanmakuOverlay comments={vibeComments} enabled={true} />
+          </View>
+        </View>
+      )}
 
       {/* Shows Section */}
       <View style={styles.showsSection}>
@@ -471,6 +503,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
     letterSpacing: 0.5,
+  },
+  videoSection: {
+    paddingHorizontal: 16,
+    paddingBottom: 24,
+  },
+  videoContainer: {
+    position: 'relative',
+    width: '100%',
   },
 });
 

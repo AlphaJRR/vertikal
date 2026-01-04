@@ -12,15 +12,15 @@ const { width, height } = Dimensions.get('window');
 export interface DanmakuComment {
   id: string;
   text: string;
-  delay?: number;
-  topPosition?: string;
+  delay?: number; // Delay in milliseconds
+  topPosition?: string | number; // Percentage string like "10%" or number
   color?: string;
 }
 
 interface FlyingCommentProps {
   text: string;
   delay: number;
-  topPosition: string;
+  topPosition: string | number;
   color?: string;
 }
 
