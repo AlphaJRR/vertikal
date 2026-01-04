@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { ChevronRight, Play } from 'lucide-react';
 import { VideoHero } from '../components/features/VideoHero';
 import { ProjectCard } from '../components/cards/ProjectCard';
@@ -8,6 +8,7 @@ import { getAllProjects } from '../utils/helpers';
 import type { Creator, Project } from '../utils/types';
 import { DEMO_FEED } from '../data/demoSeed';
 import type { Show } from '../utils/types';
+import { verifyDemoVideos } from '../utils/verifyDemoVideos';
 
 interface HomePageProps {
   creators: Record<string, Creator>;
@@ -20,6 +21,13 @@ export const HomePage = ({ creators, onViewProfile, onShowSelect }: HomePageProp
   const [danmakuOn, setDanmakuOn] = useState(true);
   const [filter, setFilter] = useState('For You');
   const allProjects = getAllProjects(creators);
+  
+  // ✅ CRITICAL: Verify demo videos on mount (development only)
+  useEffect(() => {
+    if (typeof window !== 'undefined' && process.env.NODE_ENV === 'development') {
+      verifyDemoVideos();
+    }
+  }, []);
   
   // ✅ FILTER: Only show videos that have actual video URLs (live/available videos)
   // ✅ PRIORITY: Show videos with Cloudflare Stream data first
