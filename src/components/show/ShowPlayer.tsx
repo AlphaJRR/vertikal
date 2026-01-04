@@ -14,6 +14,14 @@ interface ShowPlayerProps {
   onComplete?: () => void;
   onTimeUpdate?: (current: number, duration: number) => void;
   showId?: string;
+  cloudflare?: {
+    uid: string;
+    iframe: string;
+    thumbnail: string;
+    duration: number;
+    readyToStream: boolean;
+  };
+  readyToStream?: boolean;
 }
 
 export const ShowPlayer = ({
@@ -27,7 +35,11 @@ export const ShowPlayer = ({
   onComplete,
   onTimeUpdate,
   showId,
+  cloudflare,
+  readyToStream,
 }: ShowPlayerProps) => {
+  // ✅ Use Cloudflare iframe if available and ready
+  const useCloudflareIframe = (cloudflare?.readyToStream || readyToStream) && cloudflare?.iframe;
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(initialMuted);
