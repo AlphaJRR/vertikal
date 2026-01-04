@@ -15,7 +15,7 @@ interface HomePageProps {
   onShowSelect?: (showId: string) => void;
 }
 
-export const HomePage = ({ creators, onViewProfile }: HomePageProps) => {
+export const HomePage = ({ creators, onViewProfile, onShowSelect }: HomePageProps) => {
   // VIBE comments enabled by default for featured video
   const [danmakuOn, setDanmakuOn] = useState(true);
   const [filter, setFilter] = useState('For You');
@@ -109,8 +109,7 @@ export const HomePage = ({ creators, onViewProfile }: HomePageProps) => {
                   progress={progress}
                   thumbnail={thumbnail}
                   onClick={() => {
-                    // Navigate to show detail
-                    console.log('[MOCK] Navigate to show:', show.id);
+                    onShowSelect?.(show.id);
                   }}
                 />
               );
@@ -138,9 +137,7 @@ export const HomePage = ({ creators, onViewProfile }: HomePageProps) => {
                   key={show.id} 
                   project={project}
                   onClick={() => {
-                    // Navigate to show detail (will be handled by App.tsx)
-                    console.log('[MOCK] Navigate to show:', show.id);
-                    // In real app, this would trigger navigation via onShowSelect prop
+                    onShowSelect?.(show.id);
                   }}
                 />
               );
