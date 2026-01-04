@@ -22,8 +22,27 @@ export const HomePage = ({ creators, onViewProfile, onShowSelect }: HomePageProp
   const allProjects = getAllProjects(creators);
   
   // ✅ FILTER: Only show videos that have actual video URLs (live/available videos)
+  // ✅ PRIORITY: Show videos with Cloudflare Stream data first
   const availableVideos = useMemo(() => {
-    return DEMO_FEED.filter((show: any) => show.video_url && typeof show.video_url === 'string' && show.video_url.trim() !== '');
+    const filtered = DEMO_FEED.filter((show: any) => {
+      // Include if it has video_url OR cloudflare data
+      const hasVideoUrl = show.video_url && typeof show.video_url === 'string' && show.video_url.trim() !== '';
+      const hasCloudflare = show.cloudflare?.readyToStream || show.readyToStream;
+      return hasVideoUrl || hasCloudflare;
+    });
+    
+    // Debug: Log what videos we're showing
+    if (typeof window !== 'undefined') {
+      console.log('[HomePage] Available videos:', filtered.map((s: any) => ({
+        id: s.id,
+        title: s.title,
+        hasCloudflare: !!s.cloudflare,
+        thumbnail: s.cloudflare?.thumbnail || s.thumbnail,
+        readyToStream: s.cloudflare?.readyToStream || s.readyToStream,
+      })));
+    }
+    
+    return filtered;
   }, []);
   
   // Continue Watching: Videos with progress > 0 (simulated - in real app, this comes from user data)
