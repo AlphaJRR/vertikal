@@ -20,7 +20,20 @@ export const ContinueWatchingCard = ({
   return (
     <div className="min-w-[160px]">
       <div className="h-24 w-full relative rounded-lg overflow-hidden mb-2">
-        <img src={thumbnail} className="w-full h-full object-cover" alt={title} />
+        <img 
+          src={thumbnail} 
+          className="w-full h-full object-cover" 
+          alt={title}
+          onError={(e) => {
+            console.error('[ContinueWatchingCard] Thumbnail failed to load:', thumbnail);
+            // Don't show placeholder - let the error be visible so we can debug
+          }}
+          onLoad={() => {
+            if (thumbnail?.includes('cloudflarestream.com')) {
+              console.log('[ContinueWatchingCard] Cloudflare thumbnail loaded:', thumbnail);
+            }
+          }}
+        />
         <div className="absolute inset-0 flex items-center justify-center bg-black/30">
           <Play className="fill-white text-white w-8 h-8" />
         </div>
