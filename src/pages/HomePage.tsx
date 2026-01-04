@@ -97,6 +97,8 @@ export const HomePage = ({ creators, onViewProfile }: HomePageProps) => {
               const progress = Math.floor(Math.random() * 80) + 10; // 10-90% progress
               const timeLeft = duration > 0 ? `${Math.max(1, Math.round(duration * (1 - progress / 100)))}m left` : '';
               
+              // ✅ Use Cloudflare thumbnail if available
+              const thumbnail = show.cloudflare?.thumbnail || show.thumbnail;
               return (
                 <ContinueWatchingCard
                   key={show.id}
@@ -104,7 +106,11 @@ export const HomePage = ({ creators, onViewProfile }: HomePageProps) => {
                   episode={episode}
                   timeLeft={timeLeft}
                   progress={progress}
-                  thumbnail={show.thumbnail}
+                  thumbnail={thumbnail}
+                  onClick={() => {
+                    // Navigate to show detail
+                    console.log('[MOCK] Navigate to show:', show.id);
+                  }}
                 />
               );
             })}
@@ -118,13 +124,25 @@ export const HomePage = ({ creators, onViewProfile }: HomePageProps) => {
           <h2 className="text-lg font-bold mb-3">Director Originals</h2>
           <div className="flex gap-3 overflow-x-auto no-scrollbar">
             {directorOriginals.map((show: any) => {
+              // ✅ Use Cloudflare thumbnail if available
+              const thumbnail = show.cloudflare?.thumbnail || show.thumbnail;
               // Convert Show to Project format for ProjectCard
               const project: Project = {
                 title: show.title,
                 type: show.series ? 'SERIES' : 'DOCU',
-                img: show.thumbnail,
+                img: thumbnail,
               };
-              return <ProjectCard key={show.id} project={project} />;
+              return (
+                <ProjectCard 
+                  key={show.id} 
+                  project={project}
+                  onClick={() => {
+                    // Navigate to show detail (will be handled by App.tsx)
+                    console.log('[MOCK] Navigate to show:', show.id);
+                    // In real app, this would trigger navigation via onShowSelect prop
+                  }}
+                />
+              );
             })}
           </div>
         </div>
