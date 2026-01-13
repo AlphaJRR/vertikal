@@ -59,3 +59,4 @@ export const InboxView = ({ chats, creators, onClose, onOpenChat }: InboxViewPro
 };
 
 
+

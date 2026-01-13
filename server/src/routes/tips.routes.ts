@@ -12,3 +12,4 @@ router.post('/', authenticate, tipsController.create.bind(tipsController));
 export default router;
 
 
+

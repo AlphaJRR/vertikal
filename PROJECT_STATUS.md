@@ -147,3 +147,4 @@ vertikal/
 The project is now ready for development! 🎉
 
 
+

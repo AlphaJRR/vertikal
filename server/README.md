@@ -101,3 +101,4 @@ See `prisma/schema.prisma` for the complete database schema.
 - `CORS_ORIGIN` - CORS allowed origin
 
 
+

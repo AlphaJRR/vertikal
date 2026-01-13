@@ -15,3 +15,4 @@ export const functionsBaseUrl = import.meta.env.VITE_FIREBASE_FUNCTIONS_URL ||
   `https://${firebaseConfig.projectId}.cloudfunctions.net`;
 
 
+

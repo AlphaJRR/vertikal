@@ -89,18 +89,23 @@ function buildCloudflareUrls(uid: string) {
   };
 }
 
+// ✅ HARD-LOCKED: Exactly 3 curated demo videos with unique UIDs
+// ⚠️  CRITICAL: Each video MUST have a unique Cloudflare Stream UID
+// ⚠️  If UIDs are duplicated, verification will FAIL
+
 // Demo Shows - All with Cloudflare Stream data
 export const DEMO_SHOW_DARK_ROOM: Show = {
   id: 'dark-room-ep1',
   title: 'Dark Room - Episode 1',
   series: 'Dark Room',
   creator_id: 'joeguidry',
-  // ✅ Use Cloudflare Stream thumbnail
-  thumbnail: `https://customer-${CLOUDFLARE_CUSTOMER_ID}.cloudflarestream.com/9d3d0efed36b71e5f75c7b5e218809d7/thumbnails/thumbnail.jpg?time=2s`,
-  video_url: `https://customer-${CLOUDFLARE_CUSTOMER_ID}.cloudflarestream.com/9d3d0efed36b71e5f75c7b5e218809d7/mp4`,
-  cloudflare: buildCloudflareUrls('9d3d0efed36b71e5f75c7b5e218809d7'),
-  streamUid: '9d3d0efed36b71e5f75c7b5e218809d7',
-  readyToStream: true,
+  // ⚠️  TODO: Replace with actual Dark Room video UID from Cloudflare Stream
+  // Currently using placeholder - this will cause verification to fail
+  thumbnail: `https://customer-${CLOUDFLARE_CUSTOMER_ID}.cloudflarestream.com/PLACEHOLDER_DARK_ROOM_UID/thumbnails/thumbnail.jpg?time=2s`,
+  video_url: `https://customer-${CLOUDFLARE_CUSTOMER_ID}.cloudflarestream.com/PLACEHOLDER_DARK_ROOM_UID/mp4`,
+  cloudflare: buildCloudflareUrls('PLACEHOLDER_DARK_ROOM_UID'),
+  streamUid: 'PLACEHOLDER_DARK_ROOM_UID', // ⚠️  REPLACE WITH REAL UID
+  readyToStream: false, // ⚠️  Set to true once real UID is added
   tags: ['thriller', 'mystery', 'series'],
   duration: 300,
   views: 8500,
@@ -115,11 +120,11 @@ export const DEMO_SHOW_BEST_BURGERS: Show = {
   title: 'The Best Burgers - Episode 1',
   series: 'The Best Burgers',
   creator_id: 'joshuaargue',
-  // ✅ Use Cloudflare Stream thumbnail
+  // ✅ This is the REAL video - keep this UID
   thumbnail: `https://customer-${CLOUDFLARE_CUSTOMER_ID}.cloudflarestream.com/9d3d0efed36b71e5f75c7b5e218809d7/thumbnails/thumbnail.jpg?time=2s`,
   video_url: `https://customer-${CLOUDFLARE_CUSTOMER_ID}.cloudflarestream.com/9d3d0efed36b71e5f75c7b5e218809d7/mp4`,
   cloudflare: buildCloudflareUrls('9d3d0efed36b71e5f75c7b5e218809d7'),
-  streamUid: '9d3d0efed36b71e5f75c7b5e218809d7',
+  streamUid: '9d3d0efed36b71e5f75c7b5e218809d7', // ✅ REAL UID - Joshua Argue's Best Burgers
   readyToStream: true,
   tags: ['food', 'documentary', 'chicago'],
   duration: 240,
@@ -135,12 +140,13 @@ export const DEMO_SHOW_ORIGINS: Show = {
   title: 'Origins - Episode 1',
   series: 'Origins',
   creator_id: 'cloaqstudios',
-  // ✅ Use Cloudflare Stream thumbnail
-  thumbnail: `https://customer-${CLOUDFLARE_CUSTOMER_ID}.cloudflarestream.com/9d3d0efed36b71e5f75c7b5e218809d7/thumbnails/thumbnail.jpg?time=2s`,
-  video_url: `https://customer-${CLOUDFLARE_CUSTOMER_ID}.cloudflarestream.com/9d3d0efed36b71e5f75c7b5e218809d7/mp4`,
-  cloudflare: buildCloudflareUrls('9d3d0efed36b71e5f75c7b5e218809d7'),
-  streamUid: '9d3d0efed36b71e5f75c7b5e218809d7',
-  readyToStream: true,
+  // ⚠️  TODO: Replace with actual Origins video UID from Cloudflare Stream
+  // Currently using placeholder - this will cause verification to fail
+  thumbnail: `https://customer-${CLOUDFLARE_CUSTOMER_ID}.cloudflarestream.com/PLACEHOLDER_ORIGINS_UID/thumbnails/thumbnail.jpg?time=2s`,
+  video_url: `https://customer-${CLOUDFLARE_CUSTOMER_ID}.cloudflarestream.com/PLACEHOLDER_ORIGINS_UID/mp4`,
+  cloudflare: buildCloudflareUrls('PLACEHOLDER_ORIGINS_UID'),
+  streamUid: 'PLACEHOLDER_ORIGINS_UID', // ⚠️  REPLACE WITH REAL UID
+  readyToStream: false, // ⚠️  Set to true once real UID is added
   tags: ['drama', 'series', 'origin'],
   duration: 280,
   views: 12000,

@@ -234,3 +234,4 @@ curl -X POST http://localhost:5001/[project-id]/[region]/validateFounding50Invit
 - All validation happens in Firebase function
 
 
+

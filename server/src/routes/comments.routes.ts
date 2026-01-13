@@ -12,3 +12,4 @@ router.post('/:id/like', commentsController.like.bind(commentsController));
 export default router;
 
 
+
