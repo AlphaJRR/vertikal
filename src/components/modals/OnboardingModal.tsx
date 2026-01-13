@@ -79,7 +79,7 @@ export const OnboardingModal = ({ onClose, onComplete }: OnboardingModalProps) =
     triggerHaptic('light');
   };
 
-  const handleSubmitProfile = () => {
+  const handleSubmitProfile = async () => {
     if (!name.trim() || !role.trim() || !bio.trim()) {
       triggerHaptic('heavy');
       return;
@@ -96,7 +96,21 @@ export const OnboardingModal = ({ onClose, onComplete }: OnboardingModalProps) =
     };
 
     triggerHaptic('heavy');
-    onComplete(onboardingData);
+    
+    // TODO: Send to Zapier webhook for email notification
+    // const zapierWebhookUrl = process.env.REACT_APP_ZAPIER_WEBHOOK_URL;
+    // if (zapierWebhookUrl) {
+    //   fetch(zapierWebhookUrl, {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({ type: 'creator_application', data: onboardingData })
+    //   }).catch(console.error);
+    // }
+    
+    // TODO: Send email notification to owner
+    // await sendCreatorApplicationEmail(onboardingData);
+    
+    setStep('complete');
   };
 
   return (
@@ -200,6 +214,54 @@ export const OnboardingModal = ({ onClose, onComplete }: OnboardingModalProps) =
                 Skip for Now
               </button>
             </div>
+          </div>
+        )}
+
+        {/* Complete/Thank You Step */}
+        {step === 'complete' && (
+          <div className="text-center py-8 space-y-6">
+            <div className="w-20 h-20 bg-gradient-to-r from-green-500/20 to-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-green-500/50">
+              <CheckCircle className="text-green-400" size={40} />
+            </div>
+            <h3 className="text-2xl font-bold text-white mb-2">Welcome to VERTIKAL!</h3>
+            <p className="text-gray-400 mb-6">
+              Your profile has been created successfully. {isFounding50 && 'Your Founding 50 status is active!'}
+            </p>
+            <div className="bg-gray-900/50 rounded-lg p-4 text-left space-y-2">
+              <p className="text-sm text-gray-300"><strong>Name:</strong> {name}</p>
+              <p className="text-sm text-gray-300"><strong>Role:</strong> {role}</p>
+              {company && <p className="text-sm text-gray-300"><strong>Company:</strong> {company}</p>}
+              {isFounding50 && (
+                <div className="mt-3 pt-3 border-t border-gray-700">
+                  <p className="text-xs text-purple-400 font-bold">✨ Founding 50 Member</p>
+                </div>
+              )}
+            </div>
+            <div className="space-y-3">
+              <p className="text-sm text-gray-500">Next Steps:</p>
+              <ul className="text-sm text-gray-400 space-y-1 text-left bg-gray-900/30 rounded-lg p-4">
+                <li>• Complete your profile setup</li>
+                <li>• Upload your first project</li>
+                <li>• Connect with other creators</li>
+                {isFounding50 && <li>• Explore Founding 50 exclusive features</li>}
+              </ul>
+            </div>
+            <button
+              onClick={() => {
+                onComplete({
+                  name: name.trim(),
+                  role: role.trim(),
+                  company: company.trim() || undefined,
+                  bio: bio.trim(),
+                  avatar: avatar.trim() || undefined,
+                  inviteCode: inviteCode.trim() || undefined,
+                  isFounding50,
+                });
+              }}
+              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-black py-3 rounded-lg transition-all active:scale-95"
+            >
+              Get Started
+            </button>
           </div>
         )}
 

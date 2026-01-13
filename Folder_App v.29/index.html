@@ -121,7 +121,7 @@
         // --- MASTER CREATOR DATABASE ---
         const CREATORS = {
             'BAF_Network': { name: 'Black Awesomeness', role: 'Production Network', company: 'BAF', avatar: LOGO_BAF, bio: 'The Hub for Urban Cinema.', stats: {fans: '150k', series: '12', views: '2.5M'}, type: 'network', subPrice: '2.99', isFounding50: true, projects: [{ title: "The Best Burgers", type: "DOCU", img: IMG_BURGERS }, { title: "Windy City Love", type: "SERIES", img: IMG_HERO }, { title: "Race Hoes", type: "SERIES", img: IMG_TEXTURE }], roster: ['joshuaargue', 'joshuaroberts'] },
-            'Alpha_Network': { name: 'Alpha Visual Artists', role: 'Production Network', company: 'AVA', avatar: LOGO_ALPHA, bio: 'Visual Storytelling House.', stats: {fans: '80k', series: '6', views: '1.2M'}, type: 'network', subPrice: '1.99', isFounding50: true, projects: [{ title: "Beyond the Bases", type: "SERIES", img: IMG_BASES }], roster: ['joshuaroberts'] },
+            'Alpha_Network': { name: 'Vertikal Network', role: 'Production Network', company: 'Vertikal', avatar: LOGO_ALPHA, bio: 'Visual Storytelling House.', stats: {fans: '80k', series: '6', views: '1.2M'}, type: 'network', subPrice: '1.99', isFounding50: true, projects: [{ title: "Beyond the Bases", type: "SERIES", img: IMG_BASES }], roster: ['joshuaroberts'] },
             'Cloaq_Network': { name: 'CLOAQ Studios', role: 'Production Network', company: 'CLOAQ', avatar: LOGO_CLOAQ, bio: 'Unveiling the unseen.', stats: {fans: '45k', series: '3', views: '800k'}, type: 'network', subPrice: '2.99', isFounding50: true, projects: [{ title: "The Darkroom", type: "SERIES", img: IMG_TEXTURE }], roster: ['joeguridy'] },
             'joshuaargue': { name: 'Joshua Argue', role: 'Creator / Lead', company: 'Black Awesomeness', avatar: 'https://www.dropbox.com/scl/fi/vaudy76mhaqtcukpkzeve/JoshuaArgue.JPG?rlkey=is2eixyxhseij6jft5k91zm9k&st=0mp4lgv9&raw=1', bio: 'Showrunner. Creating @BestBurgers.', stats: {fans: '42.5k', series: '8'}, type: 'creator', isFounding50: true, projects: [{ title: "The Best Burgers", type: "DOCU", img: IMG_BURGERS }, { title: "Windy City Love", type: "SERIES", img: IMG_HERO }], products: [{title: "Showrunner Bible Template", price: "$49", sold: "1.2k"}, {title: "Indie Film Budget Sheet", price: "$19", sold: "850"}], bts: ["https://www.dropbox.com/scl/fi/tw514m8xn640ejllhdypx/GP6A3193.JPG?rlkey=1w6laqitmifmnojdufbm8ki7s&st=gufznqky&raw=1"], jobs: [ { title: "Editor (Davinci)", proj: "Best Burgers S2", rate: "$2,500 Flat", type: "Post-Prod" }, { title: "Sound Mixer", proj: "Windy City Love", rate: "$350/Day", type: "Production" } ] },
             'joshuaroberts': { name: 'J.R.R. Roberts', role: 'Founder', company: 'Vertikal', avatar: 'https://www.dropbox.com/scl/fi/v77iz4i895pqmlmzvqhsk/JoshuaRoberts.JPG?rlkey=4bag3kp7ud5y8w8ibi8s3lfa2&st=04hrxb2c&raw=1', bio: 'Building the Vertical Film Network.', stats: {fans: '28k', series: '4'}, type: 'creator', isFounding50: true, projects: [{ title: "Beyond the Bases", type: "SERIES", img: IMG_BASES }], products: [{title: "Cinematic LUTs Vol 1", price: "$25", sold: "2.4k"}, {title: "Director's Treatment Keynote", price: "$35", sold: "500"}], jobs: [ { title: "1st AC", proj: "Beyond the Bases", rate: "$400/Day", type: "Camera" }, { title: "Gaffer", proj: "Commercial Spec", rate: "$500/Day", type: "Lighting" } ] },
@@ -159,7 +159,7 @@
         // VIBE Presets
         window.VIBE_PRESETS = window.VIBE_PRESETS || {};
         window.VIBE_PRESETS["vibe_argueably_best_burgers_v1"] = [
-            { t: 2.5, u: "AVA_Member", m: "This intro is CRAZY 🔥" },
+            { t: 2.5, u: "Vertikal_Member", m: "This intro is CRAZY 🔥" },
             { t: 6.0, u: "Founder50", m: "Vertical cinema is rotating. Not dying." },
             { t: 9.2, u: "BlackAwe", m: "Argue don't miss 🎬" },
             { t: 13.0, u: "KelFan", m: "That pacing is clean 😮‍💨" },
@@ -469,5 +469,17 @@
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
     </script>
+    <footer style="padding: 40px; background: #000; border-top: 1px solid #333; color: #fff; font-family: sans-serif; text-align: center;">
+    <div style="max-width: 1200px; margin: auto;">
+        <h3 style="letter-spacing: 2px; margin-bottom: 15px;">VERTIKAL MEDIA COMPANY</h3>
+        <p style="font-size: 14px; color: #888; margin-bottom: 20px;">
+            © 2026 Vertikal Media Company LLC. All Rights Reserved.
+        </p>
+        <div style="font-size: 12px; color: #555; line-height: 1.6;">
+            <strong>Official Registered Agent Address:</strong><br>
+            On file.
+        </div>
+    </div>
+</footer>
 </body>
 </html>

@@ -36,13 +36,29 @@ export const ApplyFormModal = ({ job, onClose, onSubmit }: ApplyFormModalProps) 
     triggerHaptic('medium');
 
     try {
+      // TODO: Send to Zapier webhook for email notification
+      // const zapierWebhookUrl = process.env.REACT_APP_ZAPIER_WEBHOOK_URL;
+      // if (zapierWebhookUrl) {
+      //   await fetch(zapierWebhookUrl, {
+      //     method: 'POST',
+      //     headers: { 'Content-Type': 'application/json' },
+      //     body: JSON.stringify({ 
+      //       type: 'job_application', 
+      //       job: job.title,
+      //       data: { name: name.trim(), email: email.trim(), message: message.trim() }
+      //     })
+      //   });
+      // }
+      
+      // TODO: Send email notification to owner
+      // await sendJobApplicationEmail({ job, name: name.trim(), email: email.trim(), message: message.trim() });
+      
       // Call onSubmit if provided, otherwise simulate
       if (onSubmit) {
         await onSubmit({ name: name.trim(), email: email.trim(), message: message.trim() });
       } else {
         // Simulate API call
         await new Promise(resolve => setTimeout(resolve, 1500));
-        // In production, this would call Supabase/Zapier
         console.log('[MOCK] Application submitted:', { job, name, email, message });
       }
 

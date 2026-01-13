@@ -109,7 +109,7 @@ function minGapPx(text: string): number {
 // VIBE Presets
 const VIBE_PRESETS: Record<string, Array<{ t: number; u: string; m: string }>> = {
   vibe_argueably_best_burgers_v1: [
-    { t: 2.5, u: "AVA_Member", m: "This intro is CRAZY 🔥" },
+    { t: 2.5, u: "Vertikal_Member", m: "This intro is CRAZY 🔥" },
     { t: 6.0, u: "Founder50", m: "Vertical cinema is rotating. Not dying." },
     { t: 9.2, u: "BlackAwe", m: "Argue don't miss 🎬" },
     { t: 13.0, u: "KelFan", m: "That pacing is clean 😮‍💨" },
