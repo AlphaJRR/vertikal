@@ -1,8 +1,10 @@
 import React from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { View, Text, Pressable, StyleSheet } from "react-native";
+import { ToolkitHtmlSlideView } from "../../components/toolkit/ToolkitHtmlSlideView";
 import { ToolkitSlideView } from "../../components/toolkit/ToolkitSlideView";
 import { getSlideById } from "../../data/toolkitContent";
+import { isBundledHtmlSlidePath } from "../../data/toolkitSlideAssets";
 
 export default function SlideDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -17,6 +19,16 @@ export default function SlideDetailScreen() {
           <Text style={styles.back}>← Go back</Text>
         </Pressable>
       </View>
+    );
+  }
+
+  if (slide.htmlPath && isBundledHtmlSlidePath(slide.htmlPath)) {
+    return (
+      <ToolkitHtmlSlideView
+        htmlPath={slide.htmlPath}
+        title={slide.title}
+        onBack={() => router.back()}
+      />
     );
   }
 

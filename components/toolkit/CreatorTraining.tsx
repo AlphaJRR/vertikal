@@ -3,6 +3,7 @@ import { Modal, Pressable, ScrollView, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import {
   getCategoriesByTab,
+  getLessonById,
   TOOLKIT_TABS,
   ToolkitLesson,
   ToolkitTab,
@@ -113,6 +114,12 @@ export function CreatorTraining() {
             saved={isSaved(selectedLesson.id)}
             onBack={() => setSelectedLesson(null)}
             onToggleSave={() => toggleSaved(selectedLesson.id)}
+            onOpenLesson={(lessonId) => {
+              const next = getLessonById(lessonId);
+              if (next) {
+                setSelectedLesson({ ...next, saved: isSaved(next.id) });
+              }
+            }}
           />
         ) : null}
       </Modal>

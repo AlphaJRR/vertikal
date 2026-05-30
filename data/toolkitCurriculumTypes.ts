@@ -1,5 +1,11 @@
 export type ToolkitTab = "camera" | "framing" | "lighting" | "editing" | "strategy";
 
+export type ToolkitLessonType =
+  | "static"
+  | "motion"
+  | "interactive"
+  | "html_presentation";
+
 export interface ToolkitLesson {
   id: string;
   number: string;
@@ -10,6 +16,26 @@ export interface ToolkitLesson {
   steps: string[];
   images: string[];
   saved: boolean;
+  /** Lesson format — static text, motion demo, or interactive */
+  type?: ToolkitLessonType;
+  /** THE GUIDE — longer explanation */
+  guide?: string;
+  /** KEY RULE — single highlighted takeaway */
+  keyRule?: string;
+  /** PRO TIP */
+  proTip?: string;
+  /** COMMON MISTAKE */
+  commonMistake?: string;
+  /** Relative path to bundled HTML slide (creators-toolkit layout) */
+  htmlSlidePath?: string;
+  /** Slide id for app/slide/[id] and toolkit-content.json */
+  htmlSlideId?: string;
+  /** Parsed or author-supplied guided links (optional; also parsed inline) */
+  guidedLinks?: { label: string; href: string }[];
+  /** Single image path shown after THE GUIDE (from /public/assets/toolkit/ or assets/) */
+  imageAfterGuide?: string;
+  /** Alt text for imageAfterGuide */
+  imageAlt?: string;
 }
 
 export interface ToolkitCategory {
