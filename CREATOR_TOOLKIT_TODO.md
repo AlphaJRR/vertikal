@@ -1,5 +1,8 @@
 # Creator Toolkit — Joshua reminder
 
+**Status: AVA Creator Toolkit v1.0 — slide system complete (2026-05-30).**  
+Content-complete for canonical slides; **next: integration testing** (Expo device QA per `SLIDE_QA_CHECKLIST.md`, `RELEASE_NOTES_v1.0.md`).
+
 **Due: June 5, 2026 (next week)**
 
 - [ ] Paste **SHOOTING MODES (5)** + **CAMERA MOVEMENT (5)** camera lessons in v2 format
