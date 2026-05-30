@@ -1,0 +1,17 @@
+{
+  "id": "framing_framing_within_frame",
+  "tab": "framing",
+  "type": "STATIC",
+  "title": "Framing Within a Frame",
+  "description": "Framing within a frame uses objects to surround your subject. It matters because it adds depth and directs attention.",
+  "guide": "Doorways, windows, mirrors, foliage—anything can frame your subject. It creates layers and makes the viewer feel like they're peeking into a moment. Use it to isolate your subject or add storytelling context. It's a simple trick that elevates any shot.",
+  "keyRule": "Use frames to guide focus, not hide the subject.",
+  "howTo": [
+    "Look for natural frames in the environment.",
+    "Position your subject inside the frame.",
+    "Adjust depth of field to control emphasis.",
+    "Keep the frame edges clean."
+  ],
+  "proTip": "Out‑of‑focus foreground frames add cinematic depth.",
+  "commonMistake": "Letting the frame overpower the subject."
+}

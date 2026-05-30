@@ -1,0 +1,17 @@
+{
+  "id": "framing_high_low_angle",
+  "tab": "framing",
+  "type": "HTML_PRESENTATION",
+  "title": "High Angle vs Low Angle",
+  "description": "High angles diminish subjects; low angles empower them. It matters because angle changes meaning.",
+  "guide": "A high angle makes a subject look small, vulnerable, or overwhelmed. A low angle makes them look strong, dominant, or heroic. Use angle to reinforce character emotion or power dynamics. Even subtle shifts change the story.",
+  "keyRule": "Choose angle based on the character's emotional state.",
+  "howTo": [
+    "Decide what the scene says about the subject.",
+    "Raise or lower the camera accordingly.",
+    "Keep vertical lines straight.",
+    "Rebalance composition after changing angle."
+  ],
+  "proTip": "Low angles with wide lenses exaggerate power.",
+  "commonMistake": "Using eye level for every shot."
+}

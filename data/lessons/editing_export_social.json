@@ -1,0 +1,17 @@
+{
+  "id": "editing_export_social",
+  "tab": "editing",
+  "type": "STATIC",
+  "title": "Instagram & TikTok Export Settings",
+  "description": "Social exports target 9:16 vertical delivery. They matter because wrong specs get crushed on upload.",
+  "guide": "Build a 1080×1920 timeline—reframe in a separate timeline, do not stretch 16:9. Export H.264 or H.265 at 10–15 Mbps for 1080×1920. Target -14 LUFS with -1dB true peak—phones normalize loud anyway. Keep text and faces inside the center 80% safe zone. Version every upload in the filename.",
+  "keyRule": "Native vertical beats stretched horizontal.",
+  "howTo": [
+    "Create a 1080×1920 delivery timeline.",
+    "Export H.264 or H.265 at 10–15 Mbps.",
+    "Mix audio to -14 LUFS, -1dB true peak.",
+    "Keep faces and text inside the safe zone."
+  ],
+  "proTip": "Client_Platform_Date_v01—version every upload.",
+  "commonMistake": "Stretching 16:9 into 9:16 instead of reframing."
+}

@@ -1,0 +1,47 @@
+{
+  "id": "slides_cinematic_setup",
+  "lessonId": "lighting_cinematic_setup",
+  "title": "Cinematic Setup",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "CINEMATIC SETUP",
+      "subheading": "Light with motivation, not symmetry"
+    },
+    {
+      "type": "concept",
+      "heading": "WHY IT MATTERS",
+      "bullets": [
+        "Cinematic lighting uses contrast, direction, and color to create mood",
+        "Use motivated light sources—windows, lamps, screens",
+        "Cinematic lighting is about intention, not brightness"
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "MOTIVATED LAYOUT",
+      "image": "ava/common/placeholder.svg",
+      "caption": "Motivated key, negative fill for depth, warm vs cool separation."
+    },
+    {
+      "type": "steps",
+      "heading": "HOW TO BUILD IT",
+      "steps": [
+        "Choose a motivated key source.",
+        "Add negative fill for contrast.",
+        "Add backlight or edge light.",
+        "Add color contrast subtly."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "PRO TIP",
+      "text": "Turn off overheads—they kill cinematic mood."
+    },
+    {
+      "type": "warning",
+      "heading": "COMMON MISTAKE",
+      "text": "Over‑lighting and losing direction."
+    }
+  ]
+}

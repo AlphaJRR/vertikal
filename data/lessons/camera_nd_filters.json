@@ -1,0 +1,17 @@
+{
+  "id": "camera_nd_filters",
+  "tab": "camera",
+  "type": "STATIC",
+  "title": "ND Filters",
+  "description": "ND filters reduce light so you can keep cinematic settings outdoors.",
+  "guide": "Use ND to maintain wide apertures and correct shutter speeds.",
+  "keyRule": "Use ND — not shutter — to control exposure.",
+  "howTo": [
+    "Set aperture + shutter.",
+    "Add ND to reduce light.",
+    "Adjust ISO last.",
+    "Recheck WB."
+  ],
+  "proTip": "Use fixed NDs for color accuracy.",
+  "commonMistake": "Raising shutter instead of using ND."
+}

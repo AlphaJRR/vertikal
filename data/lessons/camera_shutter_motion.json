@@ -1,0 +1,18 @@
+{
+  "id": "camera_shutter_motion",
+  "tab": "camera",
+  "type": "HTML_PRESENTATION",
+  "title": "Shutter Speed & Motion",
+  "description": "Shutter speed controls motion blur.",
+  "guide": "Match shutter to frame rate for natural motion. Faster = crisp. Slower = blur.",
+  "keyRule": "Shutter ≈ 2× frame rate.",
+  "howTo": [
+    "Set shutter for motion style.",
+    "Increase for action.",
+    "Lower for blur.",
+    "Rebalance exposure."
+  ],
+  "proTip": "Use high shutter for sports.",
+  "commonMistake": "Fast shutter indoors causing underexposure.",
+  "slideRef": "slides_shutter_motion"
+}

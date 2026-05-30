@@ -1,0 +1,47 @@
+{
+  "id": "slides_batch_shooting",
+  "lessonId": "strategy_batch_shooting",
+  "title": "Batch Shooting — One Day, 30 Days of Content",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "BATCH SHOOTING",
+      "subheading": "One Day, 30 Days of Content"
+    },
+    {
+      "type": "concept",
+      "heading": "WHY IT MATTERS",
+      "bullets": [
+        "Plan 10–15 scripts or outlines ahead of time.",
+        "Shoot all A‑roll in one block.",
+        "Capture B‑roll in another."
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "BATCH WORKFLOW",
+      "image": "ava/strategy/batch-shooting-calendar.svg",
+      "caption": "Separate planning, shooting, and editing into distinct phases."
+    },
+    {
+      "type": "steps",
+      "heading": "HOW TO APPLY IT",
+      "steps": [
+        "Write 10–15 scripts.",
+        "Shoot all A‑roll in one session.",
+        "Capture B‑roll in bulk.",
+        "Edit in batches."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "PRO TIP",
+      "text": "Use consistent lighting and framing to speed up shooting."
+    },
+    {
+      "type": "warning",
+      "heading": "COMMON MISTAKE",
+      "text": "Trying to plan and shoot on the same day."
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "id": "framing_depth_layers",
+  "tab": "framing",
+  "type": "HTML_PRESENTATION",
+  "title": "Depth Layers (Foreground, Mid, Background)",
+  "description": "Depth layers create dimensionality. They matter because flat images feel cheap and lifeless.",
+  "guide": "Foreground adds texture, midground holds the subject, background sets context. Use all three to create cinematic depth. Move your camera, not just your zoom, to build layers. Depth makes even simple scenes feel intentional and expensive.",
+  "keyRule": "Always build at least three layers in your frame.",
+  "howTo": [
+    "Add a foreground element.",
+    "Place your subject in the midground.",
+    "Use background to set context.",
+    "Adjust aperture to control separation."
+  ],
+  "proTip": "Foreground blur instantly adds production value.",
+  "commonMistake": "Shooting everything from eye level with no layers."
+}

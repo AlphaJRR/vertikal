@@ -1,0 +1,18 @@
+{
+  "id": "lighting_three_point_lighting",
+  "tab": "lighting",
+  "type": "HTML_PRESENTATION",
+  "title": "Three-Point Lighting",
+  "description": "Three-point lighting is the foundation of controlled lighting setups. It matters because it shapes depth, separation, and subject clarity.",
+  "guide": "The key light defines the subject. The fill light softens shadows. The backlight separates the subject from the background. This setup works for interviews, portraits, and narrative scenes. Mastering it gives you predictable, professional results.",
+  "keyRule": "Balance the three lights to control contrast, not eliminate it.",
+  "howTo": [
+    "Place key light at a 45° angle.",
+    "Add fill on the opposite side.",
+    "Add backlight behind the subject.",
+    "Adjust intensity for mood."
+  ],
+  "proTip": "Use negative fill instead of adding more lights when you want drama.",
+  "commonMistake": "Over-filling and flattening the face.",
+  "slideRef": "slides_three_point_lighting"
+}

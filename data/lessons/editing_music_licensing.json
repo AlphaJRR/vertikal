@@ -1,0 +1,17 @@
+{
+  "id": "editing_music_licensing",
+  "tab": "editing",
+  "type": "STATIC",
+  "title": "Music Licensing — Where to Get It Legally",
+  "description": "Music licensing clears you to publish and invoice clients. It matters because strikes and lawsuits are expensive.",
+  "guide": "Stock libraries spell out broadcast vs social scope in each tier. Save license PDFs per track in the project folder—Artlist, Epidemic, Musicbed, and similar. Commercial Top 40 needs a sync license—platforms will strike without it. Custom score needs a work-for-hire agreement in writing before delivery. Add credits to descriptions when the license requires it.",
+  "keyRule": "No license on file means no publish.",
+  "howTo": [
+    "Check license tier for your delivery scope.",
+    "Save license PDF per track in the project folder.",
+    "Get sync licenses for commercial tracks.",
+    "Put required credits in the description."
+  ],
+  "proTip": "Name tracks in the timeline the same as the license file.",
+  "commonMistake": "Assuming a subscription covers client broadcast use."
+}

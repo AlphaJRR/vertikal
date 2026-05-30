@@ -1,0 +1,17 @@
+{
+  "id": "framing_cu",
+  "tab": "framing",
+  "type": "STATIC",
+  "title": "Close Up",
+  "description": "Close ups capture emotion and detail. They matter because they show what the character feels.",
+  "guide": "Frame from shoulders up or tighter. Use shallow depth to isolate the subject. Close ups are powerful—use them for key emotional beats. They slow the viewer down and force attention.",
+  "keyRule": "Use close ups when emotion peaks.",
+  "howTo": [
+    "Move physically closer, don't just zoom.",
+    "Use soft light for flattering skin.",
+    "Focus on the eyes.",
+    "Keep background minimal."
+  ],
+  "proTip": "A close up with hard light creates intensity.",
+  "commonMistake": "Overusing close ups and losing emotional pacing."
+}

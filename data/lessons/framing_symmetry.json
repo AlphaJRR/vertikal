@@ -1,0 +1,17 @@
+{
+  "id": "framing_symmetry",
+  "tab": "framing",
+  "type": "STATIC",
+  "title": "Symmetry",
+  "description": "Symmetry creates balance and calm. It matters because it makes a frame feel intentional and controlled.",
+  "guide": "Perfect symmetry is rare in real life, which makes it visually striking. Center your subject and align the environment around them. Works well for architecture, portraits, and dramatic reveals. Symmetry is strongest when everything in the frame supports it.",
+  "keyRule": "If you choose symmetry, commit fully.",
+  "howTo": [
+    "Center your subject.",
+    "Align vertical and horizontal lines.",
+    "Remove distracting elements.",
+    "Hold the frame steady."
+  ],
+  "proTip": "Use symmetry to reset the viewer before a chaotic sequence.",
+  "commonMistake": "Calling a shot \"symmetrical\" when the lines don't actually match."
+}

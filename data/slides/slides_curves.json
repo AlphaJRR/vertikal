@@ -1,0 +1,48 @@
+{
+  "id": "slides_curves",
+  "lessonId": "editing_curves",
+  "title": "Curves (RGB and Luma)",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "CURVES",
+      "subheading": "RGB and Luma"
+    },
+    {
+      "type": "concept",
+      "heading": "WHY IT MATTERS",
+      "bullets": [
+        "Curves give precise control over contrast and color.",
+        "They allow fine‑tuning.",
+        "Use the luma curve for contrast.",
+        "Use RGB curves for color shifts."
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "LUMA + RGB",
+      "image": "ava/editing/rgb-curves.svg",
+      "caption": "Use curves to refine, not replace, basic grading."
+    },
+    {
+      "type": "steps",
+      "heading": "WORKFLOW",
+      "steps": [
+        "Add anchor points.",
+        "Adjust luma for contrast.",
+        "Use RGB for color shifts.",
+        "Check scopes."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "PRO TIP",
+      "text": "S‑curves add cinematic contrast."
+    },
+    {
+      "type": "warning",
+      "heading": "COMMON MISTAKE",
+      "text": "Over‑bending curves and creating artifacts."
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "camera_aperture_priority",
+  "tab": "camera",
+  "type": "STATIC",
+  "title": "Aperture Priority",
+  "description": "You set f-stop, camera picks shutter. Useful for fast-changing light when depth matters most.",
+  "guide": "",
+  "keyRule": "",
+  "howTo": [
+    "Set minimum shutter limit in menu (e.g. 1/50 at 24fps) to prevent stutter",
+    "Use for events and documentary when subjects move between sun and shade",
+    "Watch for shutter dropping too low in dim corners — add light or bump ISO",
+    "Not ideal for high-frame-rate slow motion — switch to manual",
+    "Pair with auto ISO cap so the camera cannot climb into noisy territory"
+  ],
+  "proTip": "",
+  "commonMistake": ""
+}

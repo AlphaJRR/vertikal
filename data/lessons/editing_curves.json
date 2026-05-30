@@ -1,0 +1,18 @@
+{
+  "id": "editing_curves",
+  "tab": "editing",
+  "type": "HTML_PRESENTATION",
+  "title": "Curves (RGB and Luma)",
+  "description": "Curves give precise control over contrast and color. They matter because they allow fine‑tuning.",
+  "guide": "Use the luma curve for contrast. Use RGB curves for color shifts. Anchor points control specific tonal ranges. Curves are powerful but easy to overdo—use restraint.",
+  "keyRule": "Use curves to refine, not replace, basic grading.",
+  "howTo": [
+    "Add anchor points.",
+    "Adjust luma for contrast.",
+    "Use RGB for color shifts.",
+    "Check scopes."
+  ],
+  "proTip": "S‑curves add cinematic contrast.",
+  "commonMistake": "Over‑bending curves and creating artifacts.",
+  "slideRef": "slides_curves"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "lighting_interview_setup",
+  "tab": "lighting",
+  "type": "HTML_PRESENTATION",
+  "title": "Interview Setup",
+  "description": "Interview lighting prioritizes clarity and flattering skin. It matters because interviews are unforgiving.",
+  "guide": "Use a soft key at 45°, a gentle fill, and a subtle backlight. Keep the background slightly darker than the subject. Add practicals for depth. This setup works for corporate, documentary, and creator content.",
+  "keyRule": "Light the subject brighter than the background.",
+  "howTo": [
+    "Place soft key at 45°.",
+    "Add fill to taste.",
+    "Add backlight for separation.",
+    "Shape background with practicals."
+  ],
+  "proTip": "Use negative fill on the far side for dimension.",
+  "commonMistake": "Lighting the background brighter than the subject."
+}

@@ -1,0 +1,17 @@
+{
+  "id": "editing_basic_cut",
+  "tab": "editing",
+  "type": "STATIC",
+  "title": "Basic Cut (Razor Tool, Trim, Ripple Edit)",
+  "description": "Basic cutting shapes your story. It matters because editing is rhythm.",
+  "guide": "Use the razor tool to split clips. Trim to tighten pacing. Ripple edits close gaps automatically. Mastering these basics makes your timeline clean and intentional.",
+  "keyRule": "Cut with purpose, not habit.",
+  "howTo": [
+    "Use razor to split.",
+    "Trim excess.",
+    "Ripple to close gaps.",
+    "Rewatch for pacing."
+  ],
+  "proTip": "Cut on action for smoother transitions.",
+  "commonMistake": "Leaving unnecessary handles."
+}

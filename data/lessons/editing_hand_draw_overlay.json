@@ -1,0 +1,17 @@
+{
+  "id": "editing_hand_draw_overlay",
+  "tab": "editing",
+  "type": "STATIC",
+  "title": "Hand-Draw Overlay Transition",
+  "description": "Hand-draw overlays add sketch-style emphasis between or over shots. They matter because they signal tutorial or explainer energy.",
+  "guide": "Build strokes in Fusion with slight wobble—avoid perfect vector lines for a hand-drawn feel. Animate draw-on with stroke reveal or write-on. Use for tutorials and explainers, not every corporate frame. Match line weight to platform—thicker for mobile 9:16. Export with alpha for flexibility on the Cut page.",
+  "keyRule": "Hand-draw should clarify—not decorate every frame.",
+  "howTo": [
+    "Create wobbly white strokes in Fusion.",
+    "Animate draw-on or write-on.",
+    "Use for tutorial moments only.",
+    "Export with alpha for reuse."
+  ],
+  "proTip": "Thicker strokes read on phone screens at arm's length.",
+  "commonMistake": "Perfect vector lines that read as motion graphics, not sketch."
+}

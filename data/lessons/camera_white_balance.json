@@ -1,0 +1,17 @@
+{
+  "id": "camera_white_balance",
+  "tab": "camera",
+  "type": "STATIC",
+  "title": "White Balance",
+  "description": "White balance controls color temperature and skin tone accuracy.",
+  "guide": "Match Kelvin to your lighting. Avoid auto WB.",
+  "keyRule": "Match WB to the dominant light source.",
+  "howTo": [
+    "Identify lighting temperature.",
+    "Set Kelvin manually.",
+    "Avoid mixed lighting.",
+    "Check skin tones."
+  ],
+  "proTip": "Use a gray card.",
+  "commonMistake": "Leaving WB on auto."
+}

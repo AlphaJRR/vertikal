@@ -1,0 +1,18 @@
+{
+  "id": "camera_shutter_priority",
+  "tab": "camera",
+  "type": "STATIC",
+  "title": "Shutter Priority",
+  "description": "You set shutter, camera picks aperture. Best when motion look is non-negotiable.",
+  "guide": "",
+  "keyRule": "",
+  "howTo": [
+    "Lock 1/48 at 24fps for filmic motion on the move",
+    "Use for sports and stage when action sharpness beats background blur",
+    "Monitor aperture — camera may pin wide open and overexpose in bright scenes",
+    "Add ND when aperture hits minimum and image still blows out",
+    "Match shutter-priority settings across B-roll operators for consistent feel"
+  ],
+  "proTip": "",
+  "commonMistake": ""
+}

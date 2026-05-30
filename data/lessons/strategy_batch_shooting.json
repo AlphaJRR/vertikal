@@ -1,0 +1,18 @@
+{
+  "id": "strategy_batch_shooting",
+  "tab": "strategy",
+  "type": "HTML_PRESENTATION",
+  "title": "Batch Shooting — One Day, 30 Days of Content",
+  "description": "Batch shooting compresses production into focused sessions. It matters because consistency beats intensity.",
+  "guide": "Plan 10–15 scripts or outlines ahead of time. Shoot all A‑roll in one block. Capture B‑roll in another. Edit in batches. This system removes daily friction and keeps output steady.",
+  "keyRule": "Separate planning, shooting, and editing into distinct phases.",
+  "howTo": [
+    "Write 10–15 scripts.",
+    "Shoot all A‑roll in one session.",
+    "Capture B‑roll in bulk.",
+    "Edit in batches."
+  ],
+  "proTip": "Use consistent lighting and framing to speed up shooting.",
+  "commonMistake": "Trying to plan and shoot on the same day.",
+  "slideRef": "slides_batch_shooting"
+}

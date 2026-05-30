@@ -1,0 +1,17 @@
+{
+  "id": "framing_negative_space",
+  "tab": "framing",
+  "type": "STATIC",
+  "title": "Negative Space",
+  "description": "Negative space is the empty area around your subject. It matters because it creates mood and breathing room.",
+  "guide": "Use negative space to emphasize isolation, calm, or scale. It shifts attention to the subject by contrast. Works well in minimal environments or wide shots. Negative space is a storytelling tool, not just empty background.",
+  "keyRule": "Let the empty space say something.",
+  "howTo": [
+    "Place your subject on one side.",
+    "Leave intentional empty space.",
+    "Use simple backgrounds.",
+    "Balance the frame visually."
+  ],
+  "proTip": "Negative space makes titles and graphics easier to place.",
+  "commonMistake": "Confusing empty space with dead space that adds nothing."
+}

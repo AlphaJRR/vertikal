@@ -1,0 +1,18 @@
+{
+  "id": "lighting_rembrandt_lighting",
+  "tab": "lighting",
+  "type": "HTML_PRESENTATION",
+  "title": "Rembrandt Lighting",
+  "description": "Rembrandt lighting creates a triangle of light under the eye. It matters because it adds depth and drama.",
+  "guide": "Place the key at 45° and slightly above eye level. The shadow from the nose should connect with the cheek shadow, leaving a small lit triangle. It's flattering and cinematic. Works well for portraits and interviews.",
+  "keyRule": "Aim for the signature triangle under the eye.",
+  "howTo": [
+    "Place key at 45°.",
+    "Raise it slightly above eye level.",
+    "Adjust angle until triangle forms.",
+    "Add fill sparingly."
+  ],
+  "proTip": "Use negative fill to deepen the shadow side.",
+  "commonMistake": "Letting the triangle get too large or too bright.",
+  "slideRef": "slides_rembrandt_lighting"
+}

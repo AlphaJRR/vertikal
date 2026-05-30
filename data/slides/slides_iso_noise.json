@@ -1,0 +1,47 @@
+{
+  "id": "slides_iso_noise",
+  "lessonId": "camera_iso_noise",
+  "title": "ISO & Noise",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "ISO &amp; Noise",
+      "subheading": "Clean • Controlled • Intentional"
+    },
+    {
+      "type": "concept",
+      "heading": "Why It Matters",
+      "bullets": [
+        "High ISO introduces noise",
+        "Noise affects shadows first",
+        "ISO should be your last exposure tool"
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "ISO vs Noise",
+      "image": "ava/camera/iso-noise.svg",
+      "caption": "Higher ISO = more noise."
+    },
+    {
+      "type": "steps",
+      "heading": "How To Use It",
+      "steps": [
+        "Set aperture and shutter first.",
+        "Raise ISO only as needed.",
+        "Expose slightly brighter to reduce noise.",
+        "Fix minor noise in post."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "Pro Tip",
+      "text": "Expose to the right (ETTR) to minimize noise."
+    },
+    {
+      "type": "warning",
+      "heading": "Common Mistake",
+      "text": "Using ISO as the primary exposure tool."
+    }
+  ]
+}

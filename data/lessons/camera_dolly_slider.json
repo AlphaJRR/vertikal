@@ -1,0 +1,18 @@
+{
+  "id": "camera_dolly_slider",
+  "tab": "camera",
+  "type": "STATIC",
+  "title": "Dolly / Slider",
+  "description": "Controlled linear motion for reveals, product pushes, and slow tension.",
+  "guide": "",
+  "keyRule": "",
+  "howTo": [
+    "Level the slider — uneven rails add accidental Dutch and drift",
+    "Mark start and end points with tape for repeatable takes",
+    "Move slow — 15–30 second pushes feel premium; fast slides feel like B-roll filler",
+    "Parallax foreground objects (plants, columns) to sell depth on slider moves",
+    "Motorized slider for interviews — consistent speed beats hand-crank wobble"
+  ],
+  "proTip": "",
+  "commonMistake": ""
+}

@@ -1,0 +1,17 @@
+{
+  "id": "lighting_low_budget_setup",
+  "tab": "lighting",
+  "type": "STATIC",
+  "title": "Low Budget Setup",
+  "description": "Low‑budget lighting uses minimal gear to create professional results. It matters because constraints force creativity.",
+  "guide": "Use windows as key lights. Use cheap reflectors or foam boards as fill. Use practicals for background interest. Small LED panels can shape the scene. Good lighting is about control, not gear.",
+  "keyRule": "Use natural and practical light as your foundation.",
+  "howTo": [
+    "Place subject near a window.",
+    "Add reflector for fill.",
+    "Add practicals for depth.",
+    "Use one LED for shaping."
+  ],
+  "proTip": "White shower curtains make great diffusion.",
+  "commonMistake": "Pointing lights directly at the subject without shaping."
+}

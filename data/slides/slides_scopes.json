@@ -1,0 +1,48 @@
+{
+  "id": "slides_scopes",
+  "lessonId": "editing_reading_scopes",
+  "title": "Reading Waveforms & Scopes",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "READING SCOPES",
+      "subheading": "Waveforms &amp; Vectorscope"
+    },
+    {
+      "type": "concept",
+      "heading": "WHY IT MATTERS",
+      "bullets": [
+        "Waveforms and scopes show the truth about your image.",
+        "Monitors lie.",
+        "The waveform reads luminance.",
+        "The RGB parade shows color balance."
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "SCOPE LAYOUT",
+      "image": "ava/common/placeholder.svg",
+      "caption": "The vectorscope shows hue and saturation—especially the skin tone line on the yellow-red axis."
+    },
+    {
+      "type": "steps",
+      "heading": "WORKFLOW",
+      "steps": [
+        "Read the waveform for exposure—skin sits ~50–70 IRE on Rec.709.",
+        "Check the parade for RGB balance on neutrals.",
+        "Use the vectorscope—keep skin on the skin tone line.",
+        "Calibrate your monitor annually—scopes do not lie."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "PRO TIP",
+      "text": "Histogram alone lies on LOG—use the waveform for exposure."
+    },
+    {
+      "type": "warning",
+      "heading": "COMMON MISTAKE",
+      "text": "Grading by eye on an uncalibrated display."
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "id": "framing_ecu",
+  "tab": "framing",
+  "type": "STATIC",
+  "title": "Extreme Close Up",
+  "description": "Extreme close ups isolate a single detail. They matter because they amplify tension or symbolism.",
+  "guide": "Use them for eyes, hands, objects, or textures. They create intimacy or discomfort depending on context. Extreme close ups break normal framing rules to highlight something critical. Use sparingly for maximum impact.",
+  "keyRule": "Use extreme close ups only when the detail matters.",
+  "howTo": [
+    "Get physically close.",
+    "Use macro or tight lenses.",
+    "Control lighting carefully.",
+    "Keep the frame simple."
+  ],
+  "proTip": "Extreme close ups make great transitions.",
+  "commonMistake": "Using them without narrative purpose."
+}

@@ -1,0 +1,17 @@
+{
+  "id": "camera_sensor_size",
+  "tab": "camera",
+  "type": "STATIC",
+  "title": "Sensor Size",
+  "description": "Sensor size affects depth and field of view.",
+  "guide": "Full-frame = shallow depth / APS‑C = crop / MFT = deeper depth",
+  "keyRule": "Know your crop factor.",
+  "howTo": [
+    "Identify sensor size.",
+    "Multiply focal length by crop factor.",
+    "Adjust lens choice.",
+    "Reframe."
+  ],
+  "proTip": "Full-frame gives the most flexibility.",
+  "commonMistake": "Ignoring crop factor when switching cameras."
+}

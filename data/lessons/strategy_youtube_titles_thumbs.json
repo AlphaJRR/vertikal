@@ -1,0 +1,18 @@
+{
+  "id": "strategy_youtube_titles_thumbs",
+  "tab": "strategy",
+  "type": "HTML_PRESENTATION",
+  "title": "YouTube — Titles, Thumbnails, Retention Arc",
+  "description": "YouTube is won in the thumbnail, title, and retention graph. They matter because click-through and watch time drive distribution.",
+  "guide": "Deliver the title promise in the first thirty seconds. Pattern interrupt every thirty to forty-five seconds—B-roll, graphics, angle changes. Add chapters on videos over eight minutes for session time and snippets. One clear end-screen CTA in the last twenty seconds—not three competing links. A/B test thumbnails—swap if CTR stays under 4% after forty-eight hours.",
+  "keyRule": "Thumbnail and title must promise what the video delivers.",
+  "howTo": [
+    "Deliver the title promise in the first 30 seconds.",
+    "Pattern interrupt every 30–45 seconds.",
+    "Add chapters on 8+ minute videos.",
+    "A/B test thumbnails before a wide push."
+  ],
+  "proTip": "Design the thumbnail before you write the script.",
+  "commonMistake": "Clickbait titles with slow payoffs—retention collapses.",
+  "slideRef": "slides_youtube_titles_thumbs"
+}

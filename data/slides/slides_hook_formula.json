@@ -1,0 +1,47 @@
+{
+  "id": "slides_hook_formula",
+  "lessonId": "strategy_hook_formula",
+  "title": "The Hook Formula — First 3 Seconds",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "THE HOOK FORMULA",
+      "subheading": "First 3 Seconds"
+    },
+    {
+      "type": "concept",
+      "heading": "WHY IT MATTERS",
+      "bullets": [
+        "Use problem plus promise in two seconds—the viewer must know why to keep watching.",
+        "Show the result first, then rewind to how with a visual hook.",
+        "Controversy hooks work sparingly only when you deliver real value."
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "FIRST 3 SECONDS",
+      "image": "ava/strategy/hook-formula.svg",
+      "caption": "State the payoff before you ask for attention."
+    },
+    {
+      "type": "steps",
+      "heading": "HOW TO APPLY IT",
+      "steps": [
+        "Write problem + promise in text and voice.",
+        "Show the result first, then rewind.",
+        "Draft ten hooks—shoot the best two.",
+        "Open with a face or moving object."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "PRO TIP",
+      "text": "Read the hook out loud—if it sounds like an ad, rewrite it."
+    },
+    {
+      "type": "warning",
+      "heading": "COMMON MISTAKE",
+      "text": "Slow intros that bury the promise after three seconds."
+    }
+  ]
+}

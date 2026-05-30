@@ -1,0 +1,48 @@
+{
+  "id": "slides_node_structure",
+  "lessonId": "editing_node_structure",
+  "title": "Node Structure (Serial, Parallel, Layer)",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "NODE STRUCTURE",
+      "subheading": "Serial, Parallel, Layer"
+    },
+    {
+      "type": "concept",
+      "heading": "WHY IT MATTERS",
+      "bullets": [
+        "Node structure organizes your grade into repeatable steps.",
+        "Messy node trees break consistency.",
+        "Serial nodes stack in order.",
+        "Parallel nodes split the image."
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "NODE TREE",
+      "image": "ava/common/placeholder.svg",
+      "caption": "Layer nodes combine passes. Build prep → look → skin → background so changes stay isolated."
+    },
+    {
+      "type": "steps",
+      "heading": "WORKFLOW",
+      "steps": [
+        "Input transform and exposure normalize.",
+        "Spatial NR and exposure zones if needed.",
+        "Creative look node.",
+        "Dedicated skin and background nodes."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "PRO TIP",
+      "text": "Export node stills for match reference on long projects."
+    },
+    {
+      "type": "warning",
+      "heading": "COMMON MISTAKE",
+      "text": "One giant node that does everything."
+    }
+  ]
+}

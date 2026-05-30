@@ -1,0 +1,17 @@
+{
+  "id": "framing_wide_vs_tight",
+  "tab": "framing",
+  "type": "STATIC",
+  "title": "Wide vs Tight — When to Use Each",
+  "description": "Wide shots show context; tight shots show emotion. It matters because choosing the wrong one weakens the scene.",
+  "guide": "Use wide shots to establish space, relationships, and movement. Use tight shots to capture detail, intensity, or intimacy. Switching between wide and tight creates rhythm. Let the story dictate how close you should be.",
+  "keyRule": "Choose focal length based on story, not habit.",
+  "howTo": [
+    "Ask what the viewer needs to feel.",
+    "Pick wide for context.",
+    "Pick tight for emotion.",
+    "Mix both for visual rhythm."
+  ],
+  "proTip": "Tight shots hide messy locations.",
+  "commonMistake": "Shooting everything at one focal length."
+}

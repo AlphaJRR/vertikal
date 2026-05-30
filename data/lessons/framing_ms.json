@@ -1,0 +1,17 @@
+{
+  "id": "framing_ms",
+  "tab": "framing",
+  "type": "STATIC",
+  "title": "Medium Shot",
+  "description": "Medium shots balance subject and environment. They matter because they're the most versatile framing.",
+  "guide": "A medium shot usually frames from waist to head. It's great for dialogue, interviews, and natural movement. Use it when you need emotion and context together. It's the workhorse of filmmaking.",
+  "keyRule": "Use mediums when you need both story and emotion.",
+  "howTo": [
+    "Frame from waist or mid‑torso.",
+    "Keep background simple.",
+    "Maintain clean headroom.",
+    "Use subtle camera movement if needed."
+  ],
+  "proTip": "Medium shots hide minor location flaws.",
+  "commonMistake": "Framing too loose and drifting into wide‑shot territory."
+}

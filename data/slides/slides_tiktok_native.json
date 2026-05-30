@@ -1,0 +1,47 @@
+{
+  "id": "slides_tiktok_native",
+  "lessonId": "strategy_tiktok_native",
+  "title": "TikTok — Native Feel, Trending Audio, Retention",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "TIKTOK NATIVE",
+      "subheading": "Native Feel, Trending Audio, Retention"
+    },
+    {
+      "type": "concept",
+      "heading": "WHY IT MATTERS",
+      "bullets": [
+        "Shoot lo-fi when the brand allows—polished reads as an ad.",
+        "Match the end frame to the start for seamless loops—the algorithm rewards rewatches.",
+        "Use trending audio inside your niche quickly—stale trends hurt reach."
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "LOOP + RETENTION",
+      "image": "ava/common/placeholder.svg",
+      "caption": "Native feel beats polished unless the brand demands polish."
+    },
+    {
+      "type": "steps",
+      "heading": "HOW TO APPLY IT",
+      "steps": [
+        "Match end frame to start for loops.",
+        "Use trending audio while it is still fresh.",
+        "Reply to comments with video.",
+        "State the payoff in the first 0.5 seconds."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "PRO TIP",
+      "text": "Lo-fi BTS often outperforms glossy hero edits on TikTok."
+    },
+    {
+      "type": "warning",
+      "heading": "COMMON MISTAKE",
+      "text": "Recycling Instagram polish without adapting pacing."
+    }
+  ]
+}

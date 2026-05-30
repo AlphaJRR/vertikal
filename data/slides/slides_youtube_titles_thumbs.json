@@ -1,0 +1,47 @@
+{
+  "id": "slides_youtube_titles_thumbs",
+  "lessonId": "strategy_youtube_titles_thumbs",
+  "title": "YouTube — Titles, Thumbnails, Retention Arc",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "YOUTUBE TITLES & THUMBS",
+      "subheading": "Titles, Thumbnails, Retention Arc"
+    },
+    {
+      "type": "concept",
+      "heading": "WHY IT MATTERS",
+      "bullets": [
+        "Deliver the title promise in the first thirty seconds.",
+        "Pattern interrupt every thirty to forty-five seconds—B-roll, graphics, angle changes.",
+        "Add chapters on videos over eight minutes for session time and snippets."
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "CTR + RETENTION ARC",
+      "image": "ava/common/placeholder.svg",
+      "caption": "Thumbnail and title must promise what the video delivers."
+    },
+    {
+      "type": "steps",
+      "heading": "HOW TO APPLY IT",
+      "steps": [
+        "Deliver the title promise in the first 30 seconds.",
+        "Pattern interrupt every 30–45 seconds.",
+        "Add chapters on 8+ minute videos.",
+        "A/B test thumbnails before a wide push."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "PRO TIP",
+      "text": "Design the thumbnail before you write the script."
+    },
+    {
+      "type": "warning",
+      "heading": "COMMON MISTAKE",
+      "text": "Clickbait titles with slow payoffs—retention collapses."
+    }
+  ]
+}

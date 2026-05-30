@@ -1,0 +1,17 @@
+{
+  "id": "editing_sound_design",
+  "tab": "editing",
+  "type": "STATIC",
+  "title": "Sound Design (Ambience, Foley, SFX)",
+  "description": "Sound design layers ambience, foley, and SFX under picture. It matters because edits feel empty without it.",
+  "guide": "Build a library—whoosh, impact, riser, room tone. One subtle whoosh per whip pan or logo reveal, not every cut. Layer two or three impacts for trailer hits: low thump, mid crack, high transient. Room tone under every scene—thirty seconds recorded on set fills gaps. Mix SFX 3–6dB under dialogue so they are felt, not heard.",
+  "keyRule": "Sound supports the story—it does not compete with dialogue.",
+  "howTo": [
+    "Organize SFX by category in a library.",
+    "Add one whoosh per major motion transition.",
+    "Layer impacts for trailer-style hits.",
+    "Bed room tone under every scene."
+  ],
+  "proTip": "Record thirty seconds of room tone on every location.",
+  "commonMistake": "Whoosh on every cut—viewers tune it out."
+}

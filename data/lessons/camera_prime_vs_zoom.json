@@ -1,0 +1,17 @@
+{
+  "id": "camera_prime_vs_zoom",
+  "tab": "camera",
+  "type": "STATIC",
+  "title": "Prime vs Zoom Lenses",
+  "description": "Primes are sharp and fast; zooms are flexible.",
+  "guide": "Use primes for controlled shoots; zooms for run‑and‑gun.",
+  "keyRule": "Use primes for quality, zooms for speed.",
+  "howTo": [
+    "Choose based on workflow.",
+    "Use primes for low light.",
+    "Use zooms for events.",
+    "Match lenses for consistency."
+  ],
+  "proTip": "A 24–70mm covers most needs.",
+  "commonMistake": "Using primes when speed matters more."
+}

@@ -1,0 +1,47 @@
+{
+  "id": "slides_exposure_triangle",
+  "lessonId": "camera_exposure_triangle",
+  "title": "Exposure Triangle",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "Exposure Triangle",
+      "subheading": "Aperture • Shutter • ISO"
+    },
+    {
+      "type": "concept",
+      "heading": "Why It Matters",
+      "bullets": [
+        "Controls brightness and creative style",
+        "Each setting affects the others",
+        "Mastery gives full control over your image"
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "Triangle Relationship",
+      "image": "ava/camera/exposure-triangle.svg",
+      "caption": "Aperture, shutter speed, and ISO work together."
+    },
+    {
+      "type": "steps",
+      "heading": "How To Balance",
+      "steps": [
+        "Set aperture for depth of field.",
+        "Set shutter speed for motion.",
+        "Raise ISO only when needed.",
+        "Rebalance all three for proper exposure."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "Pro Tip",
+      "text": "Lock two settings for your style and adjust the third."
+    },
+    {
+      "type": "warning",
+      "heading": "Common Mistake",
+      "text": "Using ISO as the primary exposure tool."
+    }
+  ]
+}

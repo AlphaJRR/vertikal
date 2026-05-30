@@ -1,0 +1,17 @@
+{
+  "id": "lighting_portrait_setup",
+  "tab": "lighting",
+  "type": "STATIC",
+  "title": "Portrait Setup",
+  "description": "Portrait lighting highlights facial structure. It matters because small changes dramatically affect the look.",
+  "guide": "Use a soft, directional key to sculpt the face. Add a subtle backlight for separation. Keep the background simple. Portrait lighting is about shaping, not blasting.",
+  "keyRule": "Use directional soft light for flattering portraits.",
+  "howTo": [
+    "Place key slightly above eye level.",
+    "Add backlight for separation.",
+    "Use minimal fill.",
+    "Keep background clean."
+  ],
+  "proTip": "Feather the key light to avoid hotspots.",
+  "commonMistake": "Placing the key too low and flattening the face."
+}

@@ -1,0 +1,47 @@
+{
+  "id": "slides_hooks_convert",
+  "lessonId": "strategy_hooks_that_convert",
+  "title": "Hooks That Convert — Specific Hook Types That Drive Action",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "HOOKS THAT CONVERT",
+      "subheading": "Specific Hook Types That Drive Action"
+    },
+    {
+      "type": "concept",
+      "heading": "WHY IT MATTERS",
+      "bullets": [
+        "Use problem‑solution hooks to target pain points.",
+        "Use &quot;myth‑busting&quot; hooks to challenge assumptions.",
+        "Use &quot;here's what nobody tells you&quot; hooks to trigger curiosity."
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "HOOK TYPE → ACTION",
+      "image": "ava/common/placeholder.svg",
+      "caption": "Choose hook type based on the action you want the viewer to take."
+    },
+    {
+      "type": "steps",
+      "heading": "HOW TO APPLY IT",
+      "steps": [
+        "Identify the desired action.",
+        "Pick a hook type that aligns with it.",
+        "Write the hook before filming.",
+        "Deliver the payoff quickly."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "PRO TIP",
+      "text": "Myth‑busting hooks have the highest share rate."
+    },
+    {
+      "type": "warning",
+      "heading": "COMMON MISTAKE",
+      "text": "Using hooks that don't match the video's actual value."
+    }
+  ]
+}

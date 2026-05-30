@@ -1,0 +1,18 @@
+{
+  "id": "lighting_cinematic_setup",
+  "tab": "lighting",
+  "type": "HTML_PRESENTATION",
+  "title": "Cinematic Setup",
+  "description": "Cinematic lighting uses contrast, direction, and color to create mood. It matters because it elevates simple scenes.",
+  "guide": "Use motivated light sources—windows, lamps, screens. Add negative fill for depth. Use color contrast (warm vs cool) to separate elements. Cinematic lighting is about intention, not brightness.",
+  "keyRule": "Light with motivation, not symmetry.",
+  "howTo": [
+    "Choose a motivated key source.",
+    "Add negative fill for contrast.",
+    "Add backlight or edge light.",
+    "Add color contrast subtly."
+  ],
+  "proTip": "Turn off overheads—they kill cinematic mood.",
+  "commonMistake": "Over‑lighting and losing direction.",
+  "slideRef": "slides_cinematic_setup"
+}

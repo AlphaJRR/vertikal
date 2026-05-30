@@ -1,0 +1,47 @@
+{
+  "id": "slides_headroom_lookroom",
+  "lessonId": "framing_headroom_lookroom",
+  "title": "Headroom & Nose Room",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "HEADROOM & LOOK ROOM",
+      "subheading": "Give subjects space in the direction they're looking"
+    },
+    {
+      "type": "concept",
+      "heading": "WHY IT MATTERS",
+      "bullets": [
+        "Headroom and nose room control breathing space around a subject.",
+        "Too much headroom feels amateur; too little feels cramped.",
+        "Small adjustments make big differences."
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "FRAMING SPACE",
+      "image": "ava/framing/headroom-noseroom.svg",
+      "caption": "Give subjects space in the direction they're looking."
+    },
+    {
+      "type": "steps",
+      "heading": "HOW TO APPLY IT",
+      "steps": [
+        "Place eyes on the upper third.",
+        "Leave space in front of the face.",
+        "Adjust headroom based on emotion.",
+        "Reframe after movement."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "PRO TIP",
+      "text": "Less nose room creates tension—use intentionally."
+    },
+    {
+      "type": "warning",
+      "heading": "COMMON MISTAKE",
+      "text": "Centering the head vertically."
+    }
+  ]
+}

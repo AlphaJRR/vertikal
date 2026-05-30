@@ -1,0 +1,18 @@
+{
+  "id": "editing_dialogue_cleanup",
+  "tab": "editing",
+  "type": "HTML_PRESENTATION",
+  "title": "Dialogue Cleanup (Noise Reduction)",
+  "description": "Dialogue cleanup fixes location audio before anyone else hears it. It matters because noise reduction is not optional on client work.",
+  "guide": "Learn a noise profile from a room-tone snippet in RX or Fairlight. De-plosive and de-ess lightly—over-processing sounds robotic. Cut distracting breaths manually; do not remove all breath or speech feels uncanny. Align multicam audio to a single master lav. Keep original tracks muted but unprocessed as backup.",
+  "keyRule": "Fix dialogue before you mix music.",
+  "howTo": [
+    "Learn noise profile from room tone.",
+    "De-plosive and de-ess lightly.",
+    "Cut distracting breaths by hand.",
+    "Keep unprocessed backups on muted tracks."
+  ],
+  "proTip": "Process a short section first—ears fatigue on long passes.",
+  "commonMistake": "Heavy NR that turns voices into underwater radio.",
+  "slideRef": "slides_dialogue_cleanup"
+}

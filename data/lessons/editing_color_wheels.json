@@ -1,0 +1,18 @@
+{
+  "id": "editing_color_wheels",
+  "tab": "editing",
+  "type": "HTML_PRESENTATION",
+  "title": "Color Wheels (Lift, Gamma, Gain)",
+  "description": "Lift, Gamma, and Gain control shadows, midtones, and highlights. They matter because they shape the entire tonal balance.",
+  "guide": "Lift adjusts shadows. Gamma adjusts midtones. Gain adjusts highlights. Use small adjustments to avoid breaking the image. Color wheels are the foundation of grading.",
+  "keyRule": "Adjust wheels gently—small moves go far.",
+  "howTo": [
+    "Balance exposure with Lift/Gamma/Gain.",
+    "Adjust color balance.",
+    "Add contrast.",
+    "Refine skin tones."
+  ],
+  "proTip": "Use scopes, not your eyes alone.",
+  "commonMistake": "Crushing shadows too early.",
+  "slideRef": "slides_color_wheels"
+}

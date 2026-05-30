@@ -1,0 +1,18 @@
+{
+  "id": "strategy_instagram_reels",
+  "tab": "strategy",
+  "type": "HTML_PRESENTATION",
+  "title": "Instagram Reels — Hook, Pacing, Caption Strategy",
+  "description": "Instagram Reels reward hooks, pacing, and captions in the first seconds. They matter because the scroll decision happens instantly.",
+  "guide": "Hook in frame one—face, action, or bold text before the swipe. Shoot native 9:16 in camera, not stretched in post. Burn captions on-screen—most viewers watch muted. Keep most reels in the 15–30 second sweet spot for completion. Post when your audience is active according to insights, not generic best-time lists.",
+  "keyRule": "Win the first 1.5 seconds or lose the viewer.",
+  "howTo": [
+    "Open with a visual hook in frame one.",
+    "Shoot native 9:16 vertical.",
+    "Add on-screen captions for muted viewing.",
+    "Post when insights show your audience is active."
+  ],
+  "proTip": "Motion in the opening frame beats a static title card.",
+  "commonMistake": "Stretching 16:9 into vertical instead of reframing.",
+  "slideRef": "slides_instagram_reels"
+}

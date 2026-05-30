@@ -1,0 +1,17 @@
+{
+  "id": "editing_luts",
+  "tab": "editing",
+  "type": "STATIC",
+  "title": "LUTs — What They Are and How to Use Them",
+  "description": "LUTs apply preset color transformations. They matter because they speed up grading.",
+  "guide": "Use technical LUTs to convert Log to Rec.709. Use creative LUTs for style. Apply LUTs early in the node tree. Adjust intensity to avoid over‑processing.",
+  "keyRule": "Use LUTs as a starting point, not the final grade.",
+  "howTo": [
+    "Add LUT in first node.",
+    "Adjust exposure.",
+    "Adjust contrast.",
+    "Refine color."
+  ],
+  "proTip": "Lower LUT opacity for subtlety.",
+  "commonMistake": "Relying on LUTs without adjusting anything else."
+}

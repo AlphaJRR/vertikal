@@ -1,0 +1,18 @@
+{
+  "id": "lighting_practical_motivated",
+  "tab": "lighting",
+  "type": "HTML_PRESENTATION",
+  "title": "Practical Motivated Light",
+  "description": "Motivated lighting uses practicals as the source of your key. It matters because it grounds your lighting in reality.",
+  "guide": "If a lamp is in the frame, your key should feel like it comes from that lamp. Use hidden lights to boost the practical's effect. Motivated lighting blends realism with control. It's the backbone of cinematic lighting.",
+  "keyRule": "Let practicals dictate your lighting direction.",
+  "howTo": [
+    "Identify the practical source.",
+    "Place key in the same direction.",
+    "Boost practical with hidden lights.",
+    "Match color temperature."
+  ],
+  "proTip": "Dim practicals to avoid clipping while keeping ambiance.",
+  "commonMistake": "Lighting from a direction that contradicts the practical.",
+  "slideRef": "slides_practical_motivated"
+}

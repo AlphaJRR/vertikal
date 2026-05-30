@@ -1,0 +1,48 @@
+{
+  "id": "slides_dialogue_cleanup",
+  "lessonId": "editing_dialogue_cleanup",
+  "title": "Dialogue Cleanup (Noise Reduction)",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "DIALOGUE CLEANUP",
+      "subheading": "Noise Reduction"
+    },
+    {
+      "type": "concept",
+      "heading": "WHY IT MATTERS",
+      "bullets": [
+        "Dialogue cleanup fixes location audio before anyone else hears it.",
+        "Noise reduction is not optional on client work.",
+        "Learn a noise profile from a room-tone snippet in RX or Fairlight.",
+        "De-plosive and de-ess lightly—over-processing sounds robotic."
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "NOISE PROFILE",
+      "image": "ava/common/placeholder.svg",
+      "caption": "Fix dialogue before you mix music."
+    },
+    {
+      "type": "steps",
+      "heading": "WORKFLOW",
+      "steps": [
+        "Learn noise profile from room tone.",
+        "De-plosive and de-ess lightly.",
+        "Cut distracting breaths by hand.",
+        "Keep unprocessed backups on muted tracks."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "PRO TIP",
+      "text": "Process a short section first—ears fatigue on long passes."
+    },
+    {
+      "type": "warning",
+      "heading": "COMMON MISTAKE",
+      "text": "Heavy NR that turns voices into underwater radio."
+    }
+  ]
+}

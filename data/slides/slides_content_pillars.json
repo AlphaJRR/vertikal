@@ -1,0 +1,47 @@
+{
+  "id": "slides_content_pillars",
+  "lessonId": "strategy_content_pillars",
+  "title": "Content Pillars — The System That Makes You Consistent",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "CONTENT PILLARS",
+      "subheading": "The System That Makes You Consistent"
+    },
+    {
+      "type": "concept",
+      "heading": "WHY IT MATTERS",
+      "bullets": [
+        "Choose 3–5 pillars that represent your identity, expertise, and audience needs.",
+        "Every piece of content should map to one pillar.",
+        "Pillars prevent burnout, eliminate decision fatigue, and keep your message coherent across platforms."
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "PILLAR GRID",
+      "image": "ava/strategy/content-pillars.svg",
+      "caption": "Every post must serve a pillar."
+    },
+    {
+      "type": "steps",
+      "heading": "HOW TO APPLY IT",
+      "steps": [
+        "Define 3–5 core pillars.",
+        "Map ideas to pillars.",
+        "Build weekly themes around them.",
+        "Review and refine monthly."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "PRO TIP",
+      "text": "Your strongest pillar should produce 50% of your content."
+    },
+    {
+      "type": "warning",
+      "heading": "COMMON MISTAKE",
+      "text": "Posting randomly without a strategic framework."
+    }
+  ]
+}

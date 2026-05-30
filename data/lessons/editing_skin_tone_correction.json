@@ -1,0 +1,13 @@
+{
+  "id": "editing_skin_tone_correction",
+  "tab": "editing",
+  "type": "HTML_PRESENTATION",
+  "title": "Skin Tone Correction",
+  "description": "Skin tones must look natural. They matter because viewers judge skin instantly.",
+  "guide": "Use the vectorscope to keep skin on the skin tone line. Adjust hue and saturation carefully. Use qualifiers to isolate skin if needed. Good skin tones elevate the entire grade.",
+  "keyRule": "",
+  "howTo": [],
+  "proTip": "",
+  "commonMistake": "",
+  "slideRef": "slides_skin_tone_correction"
+}

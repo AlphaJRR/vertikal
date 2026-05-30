@@ -1,0 +1,18 @@
+{
+  "id": "camera_aperture_depth",
+  "tab": "camera",
+  "type": "HTML_PRESENTATION",
+  "title": "Aperture & Depth of Field",
+  "description": "Aperture controls background blur and light.",
+  "guide": "Lower f‑stops blur backgrounds; higher f‑stops keep more in focus.",
+  "keyRule": "Lower f‑stop = shallower depth.",
+  "howTo": [
+    "Choose f‑stop based on subject.",
+    "Adjust shutter to maintain exposure.",
+    "Raise ISO last.",
+    "Check focus."
+  ],
+  "proTip": "Use f/2.8 or lower for cinematic separation.",
+  "commonMistake": "Shooting wide open without checking focus.",
+  "slideRef": "slides_aperture_depth"
+}

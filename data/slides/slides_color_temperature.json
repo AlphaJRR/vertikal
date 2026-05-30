@@ -1,0 +1,47 @@
+{
+  "id": "slides_color_temperature",
+  "lessonId": "lighting_color_temperature",
+  "title": "Color Temperature",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "COLOR TEMPERATURE",
+      "subheading": "Match all lights to one color temperature"
+    },
+    {
+      "type": "concept",
+      "heading": "WHY IT MATTERS",
+      "bullets": [
+        "Color temperature defines the warmth or coolness of light",
+        "Mixed temperatures ruin skin tones",
+        "Consistent color temperature makes grading easier and cleaner"
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "KELVIN SCALE",
+      "image": "ava/common/placeholder.svg",
+      "caption": "Daylight ~5600K; tungsten ~3200K — match your lights to the dominant source."
+    },
+    {
+      "type": "steps",
+      "heading": "HOW TO MATCH",
+      "steps": [
+        "Identify the dominant light source.",
+        "Set camera white balance to match.",
+        "Gel lights to match the environment.",
+        "Avoid mixing warm and cool sources."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "PRO TIP",
+      "text": "Use warm light for intimacy and cool light for tension."
+    },
+    {
+      "type": "warning",
+      "heading": "COMMON MISTAKE",
+      "text": "Ignoring practical lights that contaminate the scene."
+    }
+  ]
+}

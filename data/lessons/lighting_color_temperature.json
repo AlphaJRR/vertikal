@@ -1,0 +1,18 @@
+{
+  "id": "lighting_color_temperature",
+  "tab": "lighting",
+  "type": "HTML_PRESENTATION",
+  "title": "Color Temperature",
+  "description": "Color temperature defines the warmth or coolness of light. It matters because mixed temperatures ruin skin tones.",
+  "guide": "Daylight is around 5600K; tungsten is around 3200K. Match your lights to the dominant source. Use gels or camera white balance to correct mismatches. Consistent color temperature makes grading easier and cleaner.",
+  "keyRule": "Match all lights to one color temperature.",
+  "howTo": [
+    "Identify the dominant light source.",
+    "Set camera white balance to match.",
+    "Gel lights to match the environment.",
+    "Avoid mixing warm and cool sources."
+  ],
+  "proTip": "Use warm light for intimacy and cool light for tension.",
+  "commonMistake": "Ignoring practical lights that contaminate the scene.",
+  "slideRef": "slides_color_temperature"
+}

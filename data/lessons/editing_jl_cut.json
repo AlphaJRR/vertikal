@@ -1,0 +1,17 @@
+{
+  "id": "editing_jl_cut",
+  "tab": "editing",
+  "type": "STATIC",
+  "title": "J-Cut & L-Cut",
+  "description": "J-cuts and L-cuts offset audio and video edits. They matter because dialogue scenes feel natural instead of choppy.",
+  "guide": "In an L-cut, you hear the next scene before you see it—it builds anticipation. In a J-cut, you see the next scene while the previous audio finishes—it smooths the exit. Unlink audio and extend under B-roll for interviews. Do not J/L every line—the pattern becomes noticeable.",
+  "keyRule": "Let audio lead or trail video when it serves the story.",
+  "howTo": [
+    "L-cut: audio from next scene leads the picture.",
+    "J-cut: picture changes while audio continues.",
+    "Unlink audio and extend under B-roll.",
+    "Use sparingly—pattern every line feels edited."
+  ],
+  "proTip": "Question on camera, answer over B-roll—classic interview L-cut.",
+  "commonMistake": "J/L-cutting every line in a dialogue scene."
+}

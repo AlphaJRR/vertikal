@@ -1,0 +1,18 @@
+{
+  "id": "editing_node_structure",
+  "tab": "editing",
+  "type": "HTML_PRESENTATION",
+  "title": "Node Structure (Serial, Parallel, Layer)",
+  "description": "Node structure organizes your grade into repeatable steps. It matters because messy node trees break consistency.",
+  "guide": "Serial nodes stack in order. Parallel nodes split the image. Layer nodes combine passes. Build prep → look → skin → background so changes stay isolated and match cuts stay easier.",
+  "keyRule": "Structure nodes before you chase a look.",
+  "howTo": [
+    "Input transform and exposure normalize.",
+    "Spatial NR and exposure zones if needed.",
+    "Creative look node.",
+    "Dedicated skin and background nodes."
+  ],
+  "proTip": "Export node stills for match reference on long projects.",
+  "commonMistake": "One giant node that does everything.",
+  "slideRef": "slides_node_structure"
+}

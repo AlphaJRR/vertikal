@@ -1,0 +1,47 @@
+{
+  "id": "slides_aperture_depth",
+  "lessonId": "camera_aperture_depth",
+  "title": "Aperture & Depth of Field",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "APERTURE &amp; DEPTH OF FIELD",
+      "subheading": "Control Focus • Control Style"
+    },
+    {
+      "type": "concept",
+      "heading": "WHY IT MATTERS",
+      "bullets": [
+        "Affects background blur",
+        "Controls light entering the lens",
+        "Shapes the emotional tone of the shot"
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "DEPTH OF FIELD",
+      "image": "ava/camera/aperture-depth.svg",
+      "caption": "Lower f&#8209;stop = shallower depth."
+    },
+    {
+      "type": "steps",
+      "heading": "HOW TO USE IT",
+      "steps": [
+        "Choose f&#8209;stop based on subject.",
+        "Adjust shutter to maintain exposure.",
+        "Raise ISO only if needed.",
+        "Check focus carefully."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "PRO TIP",
+      "text": "Use f/2.8 or lower for cinematic separation."
+    },
+    {
+      "type": "warning",
+      "heading": "COMMON MISTAKE",
+      "text": "Shooting wide open without checking focus."
+    }
+  ]
+}

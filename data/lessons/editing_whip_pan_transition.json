@@ -1,0 +1,18 @@
+{
+  "id": "editing_whip_pan_transition",
+  "tab": "editing",
+  "type": "HTML_PRESENTATION",
+  "title": "Whip Pan Transition",
+  "description": "A whip pan transition connects scenes with blur and energy. It matters because motion hides the cut.",
+  "guide": "Shoot whip out and whip in at the same speed and direction on set. Cut at peak blur—neither frame should be sharp at the edit point. In post, directional blur 2–4 frames each side can fake the move. Sync to a whoosh SFX or music transient. Cap at two or three per minute—overuse feels like a template.",
+  "keyRule": "Match direction and speed—or the cut feels accidental.",
+  "howTo": [
+    "Shoot whip out and whip in on set.",
+    "Cut at peak blur on both sides.",
+    "Add directional blur in post if needed.",
+    "Sync to whoosh SFX or a music hit."
+  ],
+  "proTip": "Plan the exit and entry framing before the first whip.",
+  "commonMistake": "Mixing whip directions in the same sequence.",
+  "slideRef": "slides_whip_pan"
+}

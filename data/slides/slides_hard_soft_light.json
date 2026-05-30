@@ -1,0 +1,47 @@
+{
+  "id": "slides_hard_soft_light",
+  "lessonId": "lighting_hard_soft_light",
+  "title": "Hard vs Soft Light",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "HARD VS SOFT LIGHT",
+      "subheading": "Bigger source = softer light"
+    },
+    {
+      "type": "concept",
+      "heading": "WHY IT MATTERS",
+      "bullets": [
+        "Hard light creates sharp shadows; soft light creates smooth transitions",
+        "Hard light adds drama and texture; soft light flatters faces",
+        "Control hardness by changing source size or distance"
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "SOURCE SIZE",
+      "image": "ava/lighting/hard-soft-light.svg",
+      "caption": "Small direct source = hard; large diffused source = soft."
+    },
+    {
+      "type": "steps",
+      "heading": "HOW TO CONTROL IT",
+      "steps": [
+        "Move light closer for softness.",
+        "Add diffusion for smoother shadows.",
+        "Use bare bulbs or fresnels for hard light.",
+        "Shape shadows with flags."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "PRO TIP",
+      "text": "Soft light still needs direction—don't flatten it."
+    },
+    {
+      "type": "warning",
+      "heading": "COMMON MISTAKE",
+      "text": "Confusing soft light with low‑contrast lighting."
+    }
+  ]
+}

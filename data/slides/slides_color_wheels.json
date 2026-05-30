@@ -1,0 +1,48 @@
+{
+  "id": "slides_color_wheels",
+  "lessonId": "editing_color_wheels",
+  "title": "Color Wheels (Lift, Gamma, Gain)",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "COLOR WHEELS",
+      "subheading": "Lift, Gamma, Gain"
+    },
+    {
+      "type": "concept",
+      "heading": "WHY IT MATTERS",
+      "bullets": [
+        "Lift, Gamma, and Gain control shadows, midtones, and highlights.",
+        "They shape the entire tonal balance.",
+        "Lift adjusts shadows.",
+        "Gamma adjusts midtones."
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "LIFT · GAMMA · GAIN",
+      "image": "ava/editing/color-wheels-diagram.svg",
+      "caption": "Gain adjusts highlights. Use small adjustments to avoid breaking the image."
+    },
+    {
+      "type": "steps",
+      "heading": "WORKFLOW",
+      "steps": [
+        "Balance exposure with Lift/Gamma/Gain.",
+        "Adjust color balance.",
+        "Add contrast.",
+        "Refine skin tones."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "PRO TIP",
+      "text": "Use scopes, not your eyes alone."
+    },
+    {
+      "type": "warning",
+      "heading": "COMMON MISTAKE",
+      "text": "Crushing shadows too early."
+    }
+  ]
+}

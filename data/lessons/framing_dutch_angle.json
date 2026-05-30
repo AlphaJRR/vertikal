@@ -1,0 +1,17 @@
+{
+  "id": "framing_dutch_angle",
+  "tab": "framing",
+  "type": "STATIC",
+  "title": "Dutch Angle",
+  "description": "A Dutch angle tilts the horizon. It matters because it creates tension or unease.",
+  "guide": "Use Dutch angles sparingly—they're powerful but easy to overdo. Tilt the camera to show imbalance, chaos, or psychological tension. Works well in action, thrillers, or moments of emotional instability. Keep the tilt consistent within a sequence.",
+  "keyRule": "Tilt only when the story calls for it.",
+  "howTo": [
+    "Level your shot first.",
+    "Tilt slightly—10–20 degrees is enough.",
+    "Keep vertical lines intentional.",
+    "Match tilt direction across shots."
+  ],
+  "proTip": "A small tilt is more unsettling than an extreme one.",
+  "commonMistake": "Using Dutch angles as a stylistic crutch."
+}

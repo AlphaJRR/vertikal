@@ -1,0 +1,47 @@
+{
+  "id": "slides_rembrandt_lighting",
+  "lessonId": "lighting_rembrandt_lighting",
+  "title": "Rembrandt Lighting",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "REMBRANDT LIGHTING",
+      "subheading": "Aim for the signature triangle under the eye"
+    },
+    {
+      "type": "concept",
+      "heading": "WHY IT MATTERS",
+      "bullets": [
+        "Rembrandt lighting creates a triangle of light under the eye",
+        "It adds depth and drama",
+        "Works well for portraits and interviews"
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "THE TRIANGLE",
+      "image": "ava/lighting/rembrandt-triangle.svg",
+      "caption": "Key at 45° above eye level — nose shadow connects to cheek, leaving a lit triangle."
+    },
+    {
+      "type": "steps",
+      "heading": "HOW TO SET IT UP",
+      "steps": [
+        "Place key at 45°.",
+        "Raise it slightly above eye level.",
+        "Adjust angle until triangle forms.",
+        "Add fill sparingly."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "PRO TIP",
+      "text": "Use negative fill to deepen the shadow side."
+    },
+    {
+      "type": "warning",
+      "heading": "COMMON MISTAKE",
+      "text": "Letting the triangle get too large or too bright."
+    }
+  ]
+}

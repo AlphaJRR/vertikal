@@ -1,0 +1,17 @@
+{
+  "id": "editing_log_workflow",
+  "tab": "editing",
+  "type": "STATIC",
+  "title": "Shooting Log Footage — Why and How",
+  "description": "Log footage captures more dynamic range. It matters because it gives you more control in grading.",
+  "guide": "Log looks flat but holds detail. Expose slightly brighter to protect shadows. Use LUTs to preview the final look. Log is ideal for cinematic work.",
+  "keyRule": "Expose Log brighter than standard profiles.",
+  "howTo": [
+    "Enable Log profile.",
+    "Expose to protect shadows.",
+    "Use monitoring LUT.",
+    "Grade in Color page."
+  ],
+  "proTip": "ETTR (Expose To The Right) helps Log footage shine.",
+  "commonMistake": "Underexposing Log and getting noise."
+}

@@ -1,0 +1,17 @@
+{
+  "id": "strategy_client_communication",
+  "tab": "strategy",
+  "type": "STATIC",
+  "title": "Client Communication — Briefs, Contracts, Revisions",
+  "description": "Clear communication prevents scope creep. It matters because misunderstandings cost time and money.",
+  "guide": "Use briefs to define expectations. Use contracts to lock scope, payment, and timelines. Limit revisions and state them upfront. Good communication builds trust and repeat business.",
+  "keyRule": "Document everything before you start.",
+  "howTo": [
+    "Send a clear brief.",
+    "Sign a contract.",
+    "Define revision limits.",
+    "Update clients proactively."
+  ],
+  "proTip": "Use templates to speed up onboarding.",
+  "commonMistake": "Starting work without a signed agreement."
+}

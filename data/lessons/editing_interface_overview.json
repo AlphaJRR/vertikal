@@ -1,0 +1,18 @@
+{
+  "id": "editing_interface_overview",
+  "tab": "editing",
+  "type": "HTML_PRESENTATION",
+  "title": "Interface Overview",
+  "description": "DaVinci Resolve is divided into specialized pages. It matters because each page handles a different part of the workflow.",
+  "guide": "Cut is for fast edits. Edit is for detailed timeline work. Fusion handles VFX. Color is for grading. Fairlight is for audio. Deliver exports your final project. Knowing where tasks live speeds up your workflow.",
+  "keyRule": "Use each page for its intended purpose.",
+  "howTo": [
+    "Open project and navigate pages.",
+    "Use Cut for quick assembly.",
+    "Use Edit for precision.",
+    "Use Color and Fairlight for finishing."
+  ],
+  "proTip": "Keyboard shortcuts differ by page—learn them.",
+  "commonMistake": "Trying to do everything on the Edit page.",
+  "slideRef": "slides_interface_overview"
+}

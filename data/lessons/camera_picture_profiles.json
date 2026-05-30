@@ -1,0 +1,18 @@
+{
+  "id": "camera_picture_profiles",
+  "tab": "camera",
+  "type": "STATIC",
+  "title": "Picture Profiles",
+  "description": "In-camera color and gamma curves. Choose based on how much grade work you want.",
+  "guide": "",
+  "keyRule": "",
+  "howTo": [
+    "S-Log3 / V-Log / C-Log for maximum dynamic range — expose carefully",
+    "HLG for fast turnaround HDR delivery without heavy grading",
+    "Standard/rec709 for same-day social clips with minimal post",
+    "Set black level, knee, and saturation once — save as a custom profile",
+    "Never change picture profile mid-interview — match across all angles"
+  ],
+  "proTip": "",
+  "commonMistake": ""
+}

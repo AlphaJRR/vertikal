@@ -1,0 +1,17 @@
+{
+  "id": "lighting_split_light",
+  "tab": "lighting",
+  "type": "STATIC",
+  "title": "Split Lighting",
+  "description": "Split lighting divides the face into light and shadow. It matters because it creates intensity and mystery.",
+  "guide": "Place the key 90° to the side of the subject. One half of the face is lit; the other is dark. Great for dramatic or villainous looks. Works best with hard or semi‑hard light.",
+  "keyRule": "Keep the light exactly to the side.",
+  "howTo": [
+    "Place key at 90°.",
+    "Adjust height for clean split.",
+    "Add minimal fill if needed.",
+    "Control spill with flags."
+  ],
+  "proTip": "Split lighting works well with textured backgrounds.",
+  "commonMistake": "Letting light wrap too far around the face."
+}

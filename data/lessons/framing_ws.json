@@ -1,0 +1,17 @@
+{
+  "id": "framing_ws",
+  "tab": "framing",
+  "type": "STATIC",
+  "title": "Wide Shot",
+  "description": "Wide shots show the subject and their environment. They matter because they establish context.",
+  "guide": "Use wide shots to show relationships, movement, or setting. They're the backbone of visual storytelling. Keep the frame clean and intentional. Use depth layers to avoid flatness.",
+  "keyRule": "Use wides to answer \"where are we?\"",
+  "howTo": [
+    "Place subject clearly in the environment.",
+    "Use foreground for depth.",
+    "Keep horizon level.",
+    "Let the subject move through the space."
+  ],
+  "proTip": "Wides look best with strong lighting direction.",
+  "commonMistake": "Letting backgrounds get cluttered."
+}

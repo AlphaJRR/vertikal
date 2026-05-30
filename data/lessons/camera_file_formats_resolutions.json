@@ -1,0 +1,17 @@
+{
+  "id": "camera_file_formats_resolutions",
+  "tab": "camera",
+  "type": "STATIC",
+  "title": "File Formats & Resolutions",
+  "description": "File format and resolution determine detail and flexibility. They matter because delivery requirements vary.",
+  "guide": "Shoot 4K for flexibility. Use 1080p for speed. RAW offers maximum control but large files. Choose format based on project needs and storage.",
+  "keyRule": "Shoot higher resolution when reframing is needed.",
+  "howTo": [
+    "Choose resolution based on delivery.",
+    "Use RAW for heavy grading.",
+    "Use 4K for flexibility.",
+    "Use 1080p for speed."
+  ],
+  "proTip": "Shoot 4K even for 1080p delivery.",
+  "commonMistake": "Overshooting RAW without storage."
+}

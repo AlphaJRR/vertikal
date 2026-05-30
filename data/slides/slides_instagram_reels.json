@@ -1,0 +1,47 @@
+{
+  "id": "slides_instagram_reels",
+  "lessonId": "strategy_instagram_reels",
+  "title": "Instagram Reels — Hook, Pacing, Caption Strategy",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "INSTAGRAM REELS",
+      "subheading": "Hook, Pacing, Caption Strategy"
+    },
+    {
+      "type": "concept",
+      "heading": "WHY IT MATTERS",
+      "bullets": [
+        "Hook in frame one—face, action, or bold text before the swipe.",
+        "Shoot native 9:16 in camera, not stretched in post.",
+        "Burn captions on-screen—most viewers watch muted."
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "REELS FRAME FLOW",
+      "image": "ava/common/placeholder.svg",
+      "caption": "Win the first 1.5 seconds or lose the viewer."
+    },
+    {
+      "type": "steps",
+      "heading": "HOW TO APPLY IT",
+      "steps": [
+        "Open with a visual hook in frame one.",
+        "Shoot native 9:16 vertical.",
+        "Add on-screen captions for muted viewing.",
+        "Post when insights show your audience is active."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "PRO TIP",
+      "text": "Motion in the opening frame beats a static title card."
+    },
+    {
+      "type": "warning",
+      "heading": "COMMON MISTAKE",
+      "text": "Stretching 16:9 into vertical instead of reframing."
+    }
+  ]
+}

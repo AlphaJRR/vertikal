@@ -1,0 +1,17 @@
+{
+  "id": "camera_stabilization",
+  "tab": "camera",
+  "type": "STATIC",
+  "title": "Stabilization (IBIS, Gimbal, Tripod)",
+  "description": "Stabilization keeps footage smooth. It matters because shaky footage looks amateur.",
+  "guide": "IBIS stabilizes small movements. Gimbals stabilize walking shots. Tripods stabilize static shots. Choose stabilization based on movement and style.",
+  "keyRule": "Match stabilization tool to the shot.",
+  "howTo": [
+    "Use tripod for static shots.",
+    "Use gimbal for movement.",
+    "Use IBIS for handheld.",
+    "Avoid over‑stabilizing."
+  ],
+  "proTip": "Use warp stabilizer sparingly in post.",
+  "commonMistake": "Using gimbals for shots that should be locked off."
+}

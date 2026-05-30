@@ -1,0 +1,17 @@
+{
+  "id": "editing_importing",
+  "tab": "editing",
+  "type": "STATIC",
+  "title": "Importing & Organizing Footage",
+  "description": "Organization saves hours in post. It matters because messy timelines slow everything down.",
+  "guide": "Use bins for scenes, cameras, and audio. Rename clips clearly. Add markers and notes. Good organization makes editing faster and more creative.",
+  "keyRule": "Organize before you edit.",
+  "howTo": [
+    "Create bins by category.",
+    "Rename clips.",
+    "Add markers for key moments.",
+    "Sync audio early."
+  ],
+  "proTip": "Color‑code clips by camera.",
+  "commonMistake": "Dumping everything into one bin."
+}

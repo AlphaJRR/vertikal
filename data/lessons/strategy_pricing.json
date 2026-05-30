@@ -1,0 +1,17 @@
+{
+  "id": "strategy_pricing",
+  "tab": "strategy",
+  "type": "STATIC",
+  "title": "Pricing Your Work — Day Rates, Project Rates, Packages",
+  "description": "Pricing determines your sustainability and positioning. It matters because undercharging destroys margins and attracts the wrong clients.",
+  "guide": "Day rates work when you're selling time. Project rates work when you're selling outcomes. Packages work when you want recurring revenue and predictable scope. Anchor high, define deliverables clearly, and remove ambiguity. Pricing is not about what you're \"worth\"—it's about the value and clarity you deliver.",
+  "keyRule": "Price the outcome, not the hours.",
+  "howTo": [
+    "Define deliverables with absolute clarity.",
+    "Choose day rate, project rate, or package based on scope.",
+    "Anchor with your highest package first.",
+    "Set revision limits and payment terms upfront."
+  ],
+  "proTip": "Clients trust you more when your pricing is structured, not improvised.",
+  "commonMistake": "Charging hourly for creative work and losing leverage."
+}

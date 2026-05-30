@@ -1,0 +1,18 @@
+{
+  "id": "strategy_tiktok_native",
+  "tab": "strategy",
+  "type": "HTML_PRESENTATION",
+  "title": "TikTok — Native Feel, Trending Audio, Retention",
+  "description": "TikTok rewards native, lo-fi content and retention loops. It matters because over-produced ads get skipped.",
+  "guide": "Shoot lo-fi when the brand allows—polished reads as an ad. Match the end frame to the start for seamless loops—the algorithm rewards rewatches. Use trending audio inside your niche quickly—stale trends hurt reach. Reply to comments with video to double content and boost engagement. Put hook text in the first half-second and state the payoff immediately.",
+  "keyRule": "Native feel beats polished unless the brand demands polish.",
+  "howTo": [
+    "Match end frame to start for loops.",
+    "Use trending audio while it is still fresh.",
+    "Reply to comments with video.",
+    "State the payoff in the first 0.5 seconds."
+  ],
+  "proTip": "Lo-fi BTS often outperforms glossy hero edits on TikTok.",
+  "commonMistake": "Recycling Instagram polish without adapting pacing.",
+  "slideRef": "slides_tiktok_native"
+}

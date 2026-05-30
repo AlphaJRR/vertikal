@@ -1,0 +1,15 @@
+{
+  "lessonsWritten": 97,
+  "slidesWritten": 31,
+  "htmlWithoutSlideRef": [
+    "framing-depth-layers (depth)",
+    "framing-high-low-angle (camera-angles)",
+    "lighting-interview-setup (undefined)"
+  ],
+  "slideRefMissingJson": [],
+  "brokenDiagrams": [],
+  "extraHtmlNotInLinkingMap": [
+    "depth",
+    "camera-angles"
+  ]
+}

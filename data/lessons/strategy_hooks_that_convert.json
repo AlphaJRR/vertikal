@@ -1,0 +1,18 @@
+{
+  "id": "strategy_hooks_that_convert",
+  "tab": "strategy",
+  "type": "HTML_PRESENTATION",
+  "title": "Hooks That Convert — Specific Hook Types That Drive Action",
+  "description": "Hooks that convert push viewers toward action, not just attention. They matter because retention without action is wasted effort.",
+  "guide": "Use problem‑solution hooks to target pain points. Use \"myth‑busting\" hooks to challenge assumptions. Use \"here's what nobody tells you\" hooks to trigger curiosity. Use transformation hooks to show before/after value. Each hook type primes the viewer for a specific outcome.",
+  "keyRule": "Choose hook type based on the action you want the viewer to take.",
+  "howTo": [
+    "Identify the desired action.",
+    "Pick a hook type that aligns with it.",
+    "Write the hook before filming.",
+    "Deliver the payoff quickly."
+  ],
+  "proTip": "Myth‑busting hooks have the highest share rate.",
+  "commonMistake": "Using hooks that don't match the video's actual value.",
+  "slideRef": "slides_hooks_convert"
+}

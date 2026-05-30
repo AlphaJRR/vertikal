@@ -1,0 +1,18 @@
+{
+  "id": "camera_iso_noise",
+  "tab": "camera",
+  "type": "HTML_PRESENTATION",
+  "title": "ISO & Noise",
+  "description": "ISO increases sensor sensitivity but adds noise.",
+  "guide": "Use the lowest ISO possible. Noise appears first in shadows.",
+  "keyRule": "ISO is your last resort.",
+  "howTo": [
+    "Set aperture + shutter first.",
+    "Raise ISO only when needed.",
+    "Expose slightly brighter.",
+    "Fix noise in post."
+  ],
+  "proTip": "Expose to the right (ETTR).",
+  "commonMistake": "Using ISO as the main exposure tool.",
+  "slideRef": "slides_iso_noise"
+}

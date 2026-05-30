@@ -1,0 +1,17 @@
+{
+  "id": "lighting_practical_lights",
+  "tab": "lighting",
+  "type": "STATIC",
+  "title": "Practical Lights",
+  "description": "Practical lights are visible light sources in the frame. They matter because they add realism and depth.",
+  "guide": "Lamps, neon signs, candles—anything visible counts. Use them to motivate your lighting direction. Practical lights add color contrast and visual interest. They help hide lighting transitions and anchor your scene.",
+  "keyRule": "Let practicals motivate your key light direction.",
+  "howTo": [
+    "Place practicals where they make sense.",
+    "Dim or gel them for exposure.",
+    "Match your key light direction to the practical.",
+    "Use multiple practicals for depth."
+  ],
+  "proTip": "Warm practicals against cool ambient light create cinematic contrast.",
+  "commonMistake": "Letting practicals blow out highlights."
+}

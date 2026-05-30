@@ -1,0 +1,17 @@
+{
+  "id": "editing_match_cut_grade",
+  "tab": "editing",
+  "type": "STATIC",
+  "title": "Matching Shots in a Sequence",
+  "description": "Matching shots keeps cuts invisible. It matters because viewers notice color shifts before story gaps.",
+  "guide": "Match luminance first, then color balance, then saturation. Match skin before background—the eye reads faces first. Use Color Trace or manual wheel matching on shared neutral gray. Grade B-shots to your hero A-shot, not to a middle ground.",
+  "keyRule": "Match skin before you match the environment.",
+  "howTo": [
+    "Split-screen stills of both shots in the gallery.",
+    "Match luminance, then color balance, then saturation.",
+    "Use Color Trace or wheels on shared neutral gray.",
+    "Export a reference still from the hero shot."
+  ],
+  "proTip": "Fix exposure before you chase hue.",
+  "commonMistake": "Averaging two looks instead of matching to the hero."
+}

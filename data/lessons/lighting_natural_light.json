@@ -1,0 +1,17 @@
+{
+  "id": "lighting_natural_light",
+  "tab": "lighting",
+  "type": "STATIC",
+  "title": "Natural Light",
+  "description": "Natural light is sunlight and ambient outdoor light. It matters because it's free, beautiful, and constantly changing.",
+  "guide": "Use the sun as your key light and shape it with reflectors or diffusion. Golden hour gives soft, directional light; midday sun is harsh and contrasty. Clouds act as giant diffusers. Learn to read the sky like a lighting setup.",
+  "keyRule": "Work with the sun's direction, not against it.",
+  "howTo": [
+    "Position subject with sun at 45°.",
+    "Use diffusion to soften harsh light.",
+    "Use reflectors to fill shadows.",
+    "Move quickly—light changes fast."
+  ],
+  "proTip": "Backlit subjects with a reflector create cinematic skin tones.",
+  "commonMistake": "Shooting at noon without diffusion."
+}

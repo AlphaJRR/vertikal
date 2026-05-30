@@ -1,0 +1,17 @@
+{
+  "id": "strategy_portfolio",
+  "tab": "strategy",
+  "type": "STATIC",
+  "title": "Building a Portfolio — What to Show and How to Frame It",
+  "description": "Your portfolio is your proof of skill. It matters because clients judge you by what they see, not what you say.",
+  "guide": "Show only your best work, not all your work. Curate by style or industry. Add context—what problem you solved and what outcome you delivered. A strong portfolio tells a story about your capabilities.",
+  "keyRule": "Curate ruthlessly—quality beats quantity.",
+  "howTo": [
+    "Pick 6–12 strong pieces.",
+    "Add short project descriptions.",
+    "Organize by category.",
+    "Update quarterly."
+  ],
+  "proTip": "Lead with the work you want more of.",
+  "commonMistake": "Including outdated or off‑brand projects."
+}

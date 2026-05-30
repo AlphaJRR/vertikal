@@ -1,0 +1,17 @@
+{
+  "id": "lighting_outdoor_setup",
+  "tab": "lighting",
+  "type": "STATIC",
+  "title": "Outdoor Setup",
+  "description": "Outdoor lighting relies on sun control. It matters because the sun is powerful and unpredictable.",
+  "guide": "Use the sun as backlight for flattering skin. Use reflectors or diffusion to shape the key. Avoid shooting at noon unless diffused. Outdoor lighting is about positioning, not equipment.",
+  "keyRule": "Backlight with the sun and shape the front.",
+  "howTo": [
+    "Place sun behind subject.",
+    "Add reflector for key.",
+    "Add diffusion for harsh light.",
+    "Adjust angle as sun moves."
+  ],
+  "proTip": "Cloudy days are nature's softbox.",
+  "commonMistake": "Facing subjects directly into the sun."
+}

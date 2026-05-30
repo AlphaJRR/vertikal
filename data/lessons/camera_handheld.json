@@ -1,0 +1,18 @@
+{
+  "id": "camera_handheld",
+  "tab": "camera",
+  "type": "STATIC",
+  "title": "Handheld",
+  "description": "Organic energy. Works for doc, vérité, and grounded narrative.",
+  "guide": "",
+  "keyRule": "",
+  "howTo": [
+    "Breathe and tuck elbows — become a human steadicam, not a shaky phone",
+    "Use wider lenses (24–35mm) — micro-jitter reads less than on telephoto",
+    "Enable IBIS or lens OSS; add electronic stabilization only as last resort",
+    "Walk heel-to-toe for smoother push-ins — do not bounce on toes",
+    "Match handheld energy across the scene — one floaty B-cam breaks immersion"
+  ],
+  "proTip": "",
+  "commonMistake": ""
+}

@@ -1,0 +1,17 @@
+{
+  "id": "camera_autofocus_manual",
+  "tab": "camera",
+  "type": "STATIC",
+  "title": "Autofocus vs Manual Focus",
+  "description": "Autofocus is fast; manual focus is precise. It matters because focus determines clarity and professionalism.",
+  "guide": "Use autofocus for movement and run‑and‑gun. Use manual focus for controlled scenes. Focus peaking helps nail manual focus. Choose based on reliability and style.",
+  "keyRule": "Use manual focus when precision matters.",
+  "howTo": [
+    "Enable focus peaking.",
+    "Pull focus manually.",
+    "Use autofocus for tracking.",
+    "Recheck focus often."
+  ],
+  "proTip": "Use back‑button focus for control.",
+  "commonMistake": "Relying on autofocus in low light."
+}

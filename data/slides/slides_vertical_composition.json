@@ -1,0 +1,47 @@
+{
+  "id": "slides_vertical_composition",
+  "lessonId": "framing_vertical_composition",
+  "title": "Vertical Composition (9:16)",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "VERTICAL COMPOSITION",
+      "subheading": "Compose for 9:16 delivery from day one"
+    },
+    {
+      "type": "concept",
+      "heading": "WHY IT MATTERS",
+      "bullets": [
+        "Shooting 16:9 but delivering 9:16 requires planning the crop.",
+        "Place subjects on the center third—never the edges.",
+        "Vertical safe area keeps faces and text visible on mobile."
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "9:16 SAFE AREA",
+      "image": "ava/common/placeholder.svg",
+      "caption": "Native vertical beats stretched horizontal."
+    },
+    {
+      "type": "steps",
+      "heading": "HOW TO APPLY IT",
+      "steps": [
+        "Enable vertical safe-area guides on monitor or app.",
+        "Place subject on center third for 9:16 crop.",
+        "Keep faces and titles inside the safe zone.",
+        "Shoot native vertical when the platform is vertical-first."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "PRO TIP",
+      "text": "Frame for the crop before you roll—fixing in post costs resolution."
+    },
+    {
+      "type": "warning",
+      "heading": "COMMON MISTAKE",
+      "text": "Placing subjects on the edge of a horizontal frame you plan to crop."
+    }
+  ]
+}

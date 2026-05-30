@@ -1,0 +1,48 @@
+{
+  "id": "slides_interface_overview",
+  "lessonId": "editing_interface_overview",
+  "title": "Interface Overview",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "INTERFACE OVERVIEW",
+      "subheading": "Use each page for its intended purpose."
+    },
+    {
+      "type": "concept",
+      "heading": "WHY IT MATTERS",
+      "bullets": [
+        "DaVinci Resolve is divided into specialized pages.",
+        "Each page handles a different part of the workflow.",
+        "Cut is for fast edits.",
+        "Edit is for detailed timeline work."
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "RESOLVE PAGES",
+      "image": "ava/common/placeholder.svg",
+      "caption": "Fusion handles VFX. Color is for grading. Fairlight is for audio. Deliver exports your final project."
+    },
+    {
+      "type": "steps",
+      "heading": "WORKFLOW",
+      "steps": [
+        "Open project and navigate pages.",
+        "Use Cut for quick assembly.",
+        "Use Edit for precision.",
+        "Use Color and Fairlight for finishing."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "PRO TIP",
+      "text": "Keyboard shortcuts differ by page—learn them."
+    },
+    {
+      "type": "warning",
+      "heading": "COMMON MISTAKE",
+      "text": "Trying to do everything on the Edit page."
+    }
+  ]
+}

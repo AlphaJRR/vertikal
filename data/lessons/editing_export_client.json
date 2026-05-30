@@ -1,0 +1,17 @@
+{
+  "id": "editing_export_client",
+  "tab": "editing",
+  "type": "STATIC",
+  "title": "Client Delivery (ProRes, File Naming, Handoff)",
+  "description": "Client delivery packages masters, proxies, and paperwork. It matters because unclear handoffs create revision loops.",
+  "guide": "Ask deliverable specs upfront—codec, resolution, fps, aspect ratios. Deliver ProRes 422 HQ for archive and re-export. Include an H.264 review file with optional timecode burn-in. Split stems—dialogue, music, SFX—when the contract requires it. Confirm frame counts or checksums on long-form delivery.",
+  "keyRule": "Written spec before edit beats guessing at delivery.",
+  "howTo": [
+    "Confirm codec, resolution, fps, and aspects in writing.",
+    "Export ProRes 422 HQ master.",
+    "Deliver H.264 review with optional timecode.",
+    "Include stems and delivery confirmation when required."
+  ],
+  "proTip": "One delivery letter per version—what changed and what to review.",
+  "commonMistake": "Delivering only H.264 when the contract asked for ProRes."
+}

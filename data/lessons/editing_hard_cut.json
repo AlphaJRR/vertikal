@@ -1,0 +1,17 @@
+{
+  "id": "editing_hard_cut",
+  "tab": "editing",
+  "type": "STATIC",
+  "title": "Hard Cut",
+  "description": "The hard cut is the most powerful transition. It matters because it stays invisible when performance and composition align.",
+  "guide": "A hard cut is the default—no effect, just the next shot. Cut on movement so the edit hides in motion blur. Match eyeline and screen direction so geography makes sense. Let audio lead with J-cuts when dialogue needs to breathe. Hard cut to music downbeats so rhythm drives the story.",
+  "keyRule": "Cut with intention—on action, beat, or story reason.",
+  "howTo": [
+    "Cut on movement—not mid-blink unless intentional.",
+    "Match eyeline and screen direction.",
+    "Use audio lead-ins when video feels abrupt.",
+    "Sync major cuts to music downbeats when scoring."
+  ],
+  "proTip": "Audio hides harder video cuts than another transition.",
+  "commonMistake": "Cutting without rhythm—every line gets a cut."
+}

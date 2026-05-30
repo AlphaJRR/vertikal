@@ -1,0 +1,17 @@
+{
+  "id": "editing_export_youtube",
+  "tab": "editing",
+  "type": "STATIC",
+  "title": "YouTube Export Settings",
+  "description": "YouTube exports favor high bitrate 16:9 masters. They matter because the platform re-encodes everything you send.",
+  "guide": "Upload 4K when your source is 4K—YouTube re-encodes more generously at the 4K tier. Use H.264 high profile or H.265 for smaller files at similar quality. Target 35–45 Mbps for 4K30 and 50–68 for 4K60. Tag Rec.709 on export—untagged files shift color. Export a 1280×720 thumbnail still from the grade-final timeline.",
+  "keyRule": "Upload the highest quality master your timeline supports.",
+  "howTo": [
+    "Export 4K when source is 4K.",
+    "Use H.264 high or H.265 at recommended bitrates.",
+    "Tag Rec.709 on export.",
+    "Pull a 1280×720 thumbnail still."
+  ],
+  "proTip": "Add chapters in the description for 8+ minute videos.",
+  "commonMistake": "Untagged color—playback shifts on other devices."
+}

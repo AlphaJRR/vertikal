@@ -1,0 +1,17 @@
+{
+  "id": "camera_bitrate_codecs",
+  "tab": "camera",
+  "type": "STATIC",
+  "title": "Bitrate & Codecs",
+  "description": "Bitrate and codecs determine file quality and size. They matter because compression affects detail and color.",
+  "guide": "Higher bitrates preserve more information. Codecs like ProRes and DNx are easier to edit. H.264 and H.265 are efficient but harder on computers. Choose based on workflow and storage.",
+  "keyRule": "Use higher bitrates for heavy grading.",
+  "howTo": [
+    "Choose codec based on workflow.",
+    "Set bitrate high for action.",
+    "Use ProRes for editing.",
+    "Archive masters in high quality."
+  ],
+  "proTip": "Use ProRes LT for balance of quality and size.",
+  "commonMistake": "Shooting low bitrate for fast motion."
+}

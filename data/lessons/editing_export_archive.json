@@ -1,0 +1,17 @@
+{
+  "id": "editing_export_archive",
+  "tab": "editing",
+  "type": "STATIC",
+  "title": "Archive & Backup Strategy",
+  "description": "Archiving preserves projects for years. It matters because future-you needs to reopen the job in two years.",
+  "guide": "Archive flat video, separate audio, and the XML or DRP project. Use folders: Project, Media, Exports, Licenses, Documents. Export grade stills and node stills for match reference. Document LUTs, fonts, and plugins with version numbers. Keep a cold-storage copy on a second drive—one drive is not backup.",
+  "keyRule": "Archive the project file—not just the export.",
+  "howTo": [
+    "Save flat video, audio, and project file.",
+    "Use a consistent folder structure.",
+    "Export grade and node stills.",
+    "Mirror to cold storage on a second drive."
+  ],
+  "proTip": "Note Resolve version in the archive readme.",
+  "commonMistake": "Only keeping the H.264 export and deleting media."
+}

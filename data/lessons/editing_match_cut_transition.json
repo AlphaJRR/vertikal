@@ -1,0 +1,17 @@
+{
+  "id": "editing_match_cut_transition",
+  "tab": "editing",
+  "type": "STATIC",
+  "title": "Match Cut",
+  "description": "A match cut links two scenes through shape, color, or motion. It matters because continuity through form feels intentional.",
+  "guide": "Find similar geometry between shots—circle to circle, line to line. Pre-plan on set so size and position match in frame. Color-match unrelated scenes in grade before the cut. Motion match: subject exits frame right, new subject enters frame right. Hold the cut long enough for the audience to catch the link.",
+  "keyRule": "Match shape or motion—not just proximity in the timeline.",
+  "howTo": [
+    "Find similar geometry between shots.",
+    "Pre-plan size and position on set.",
+    "Color-match scenes before the cut.",
+    "Hold the match 12–24 frames so the link reads."
+  ],
+  "proTip": "Object match cuts need rehearsal—do not wing them in post.",
+  "commonMistake": "Cutting too fast—the audience misses the connection."
+}

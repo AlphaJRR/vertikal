@@ -1,0 +1,47 @@
+{
+  "id": "slides_three_point_lighting",
+  "lessonId": "lighting_three_point_lighting",
+  "title": "Three-Point Lighting",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "THREE-POINT LIGHTING",
+      "subheading": "Key, Fill, Backlight"
+    },
+    {
+      "type": "concept",
+      "heading": "WHY IT MATTERS",
+      "bullets": [
+        "Defines subject shape and depth",
+        "Separates subject from background",
+        "Works for interviews, portraits, and narrative"
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "BASIC LAYOUT",
+      "image": "ava/lighting/three-point-layout.svg",
+      "caption": "Key at 45°, fill opposite, backlight behind subject."
+    },
+    {
+      "type": "steps",
+      "heading": "HOW TO SET IT UP",
+      "steps": [
+        "Place key light at a 45° angle to the subject.",
+        "Add fill on the opposite side to control contrast.",
+        "Add backlight behind the subject for separation.",
+        "Adjust intensities to match the mood."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "PRO TIP",
+      "text": "Use negative fill instead of more lights when you want drama."
+    },
+    {
+      "type": "warning",
+      "heading": "COMMON MISTAKE",
+      "text": "Over-filling and flattening the face."
+    }
+  ]
+}

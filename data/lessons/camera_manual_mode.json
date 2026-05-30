@@ -1,0 +1,18 @@
+{
+  "id": "camera_manual_mode",
+  "tab": "camera",
+  "type": "STATIC",
+  "title": "Manual Mode",
+  "description": "Full control over ISO, aperture, and shutter. The standard for consistent cinematic work.",
+  "guide": "",
+  "keyRule": "",
+  "howTo": [
+    "Dial in shutter first (180° rule), then aperture for depth, then ISO for exposure",
+    "Use manual for interviews, narrative, and any multi-cam matching scenario",
+    "Assign custom buttons for quick ISO and WB access on Sony bodies",
+    "Review every setup on a calibrated monitor — phone screens lie",
+    "Manual does not mean slow — build a muscle-memory starting recipe per location type"
+  ],
+  "proTip": "",
+  "commonMistake": ""
+}

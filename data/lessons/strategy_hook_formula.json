@@ -1,0 +1,18 @@
+{
+  "id": "strategy_hook_formula",
+  "tab": "strategy",
+  "type": "HTML_PRESENTATION",
+  "title": "The Hook Formula — First 3 Seconds",
+  "description": "The hook formula stops the scroll in the first three seconds. It matters because viewers decide before they hear your story.",
+  "guide": "Use problem plus promise in two seconds—the viewer must know why to keep watching. Show the result first, then rewind to how with a visual hook. Controversy hooks work sparingly only when you deliver real value. Write ten hooks per idea and shoot the best two. The first frame needs a face or motion—static wide opens die.",
+  "keyRule": "State the payoff before you ask for attention.",
+  "howTo": [
+    "Write problem + promise in text and voice.",
+    "Show the result first, then rewind.",
+    "Draft ten hooks—shoot the best two.",
+    "Open with a face or moving object."
+  ],
+  "proTip": "Read the hook out loud—if it sounds like an ad, rewrite it.",
+  "commonMistake": "Slow intros that bury the promise after three seconds.",
+  "slideRef": "slides_hook_formula"
+}

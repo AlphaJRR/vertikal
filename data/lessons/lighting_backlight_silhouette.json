@@ -1,0 +1,17 @@
+{
+  "id": "lighting_backlight_silhouette",
+  "tab": "lighting",
+  "type": "STATIC",
+  "title": "Backlighting & Silhouette",
+  "description": "Backlighting separates subjects or creates silhouettes. It matters because it adds depth and drama.",
+  "guide": "Place a strong light behind the subject. For silhouettes, expose for the background. For separation, add minimal fill. Backlighting creates shape and atmosphere.",
+  "keyRule": "Expose for the background when creating silhouettes.",
+  "howTo": [
+    "Place light behind subject.",
+    "Decide silhouette or separation.",
+    "Adjust exposure accordingly.",
+    "Add haze for atmosphere."
+  ],
+  "proTip": "Backlight plus haze creates instant cinematic depth.",
+  "commonMistake": "Letting backlight flare the lens unintentionally."
+}

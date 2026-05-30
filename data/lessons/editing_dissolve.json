@@ -1,0 +1,17 @@
+{
+  "id": "editing_dissolve",
+  "tab": "editing",
+  "type": "STATIC",
+  "title": "Dissolve",
+  "description": "A dissolve blends one shot into the next. It matters because it signals time passing or a dreamlike shift.",
+  "guide": "Standard dissolves run 12–24 frames—longer feels dated unless intentional. Dissolve over black for act breaks and time jumps. Cross-dissolve dialogue only when the space is the same but time changes. Avoid dissolves when hard-cut energy is needed. Sound bridges under dissolves sell the transition.",
+  "keyRule": "Use dissolves for time or tone—not as a default.",
+  "howTo": [
+    "Set dissolve length—12–24 frames for most work.",
+    "Dissolve over black for act breaks.",
+    "Cross-dissolve dialogue only in same space.",
+    "Bridge audio under the dissolve."
+  ],
+  "proTip": "One dissolve per act feels cinematic—more feels like a montage.",
+  "commonMistake": "Dissolving action sequences that need hard-cut energy."
+}

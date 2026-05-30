@@ -52,6 +52,12 @@ export function avaDiagramPathForEntry(entry: AvaDiagramManifestEntry): string {
   return `ava/${entry.category}/${entry.file}`;
 }
 
+/** Canonical PNG path per Joshua's schema (kebab basename + `.png`). */
+export function avaDiagramPngPathForEntry(entry: AvaDiagramManifestEntry): string {
+  const base = entry.file.replace(/\.svg$/, "");
+  return `ava/${entry.category}/${base}.png`;
+}
+
 export function getAvaDiagramByHtmlSlideId(
   htmlSlideId: string,
 ): AvaDiagramManifestEntry | undefined {

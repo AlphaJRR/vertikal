@@ -1,0 +1,47 @@
+{
+  "id": "slides_skin_tone_correction",
+  "lessonId": "editing_skin_tone_correction",
+  "title": "Skin Tone Correction",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "SKIN TONE CORRECTION",
+      "subheading": "Natural, Consistent, Believable"
+    },
+    {
+      "type": "concept",
+      "heading": "WHY IT MATTERS",
+      "bullets": [
+        "Viewers judge skin instantly",
+        "Bad skin tones break trust",
+        "Good skin tones survive platform compression"
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "VECTORSCOPE SKIN LINE",
+      "image": "ava/editing/vectorscope-skin-line.svg",
+      "caption": "Keep skin values aligned with the skin tone line."
+    },
+    {
+      "type": "steps",
+      "heading": "WORKFLOW",
+      "steps": [
+        "Open the vectorscope and isolate the skin region.",
+        "Balance exposure before touching color.",
+        "Adjust hue and saturation in small increments.",
+        "Use qualifiers only when global adjustments fail."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "PRO TIP",
+      "text": "Check skin under multiple lighting angles—grading for one angle can break another."
+    },
+    {
+      "type": "warning",
+      "heading": "COMMON MISTAKE",
+      "text": "Oversaturating skin to 'make it pop'."
+    }
+  ]
+}

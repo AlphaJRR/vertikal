@@ -37,6 +37,7 @@ export const AVA_DIAGRAM_ASSETS: Record<string, number> = {
   "ava/strategy/hook-formula.svg": require("../assets/ava/strategy/hook-formula.svg"),
   "ava/strategy/content-pillars.svg": require("../assets/ava/strategy/content-pillars.svg"),
   "ava/strategy/batch-shooting-calendar.svg": require("../assets/ava/strategy/batch-shooting-calendar.svg"),
+  "ava/common/placeholder.svg": require("../assets/ava/common/placeholder.svg"),
 };
 
 const avaUriCache = new Map<string, string>();

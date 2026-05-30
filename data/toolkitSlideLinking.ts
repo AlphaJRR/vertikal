@@ -1,4 +1,9 @@
 import { LINKING_MAP, type SlideRef } from "./toolkitSlideTypes";
+import {
+  AVA_DIAGRAM_MANIFEST,
+  avaDiagramPathForEntry,
+  avaDiagramPngPathForEntry,
+} from "./avaDiagramManifest";
 
 /** Brand-repo root for AVA diagram PNGs (sibling repo, not bundled in Vertikal-App). */
 export const AVA_DIAGRAM_BRAND_ROOT =
@@ -18,7 +23,27 @@ export const AVA_DIAGRAM_CATEGORIES = [
 
 export type AvaDiagramCategory = (typeof AVA_DIAGRAM_CATEGORIES)[number];
 
-const AVA_DIAGRAM_PATH = /^ava\/([a-z-]+)\/([a-z0-9-]+\.svg)$/;
+/** Maps canonical `.png` schema paths → bundled SVG path on disk (until PNGs ship). */
+export const AVA_DIAGRAM_PNG_TO_BUNDLE: Record<string, string> = Object.fromEntries(
+  AVA_DIAGRAM_MANIFEST.map((entry) => [
+    avaDiagramPngPathForEntry(entry),
+    avaDiagramPathForEntry(entry),
+  ]),
+);
+AVA_DIAGRAM_PNG_TO_BUNDLE["ava/common/placeholder.png"] = "ava/common/placeholder.svg";
+
+/** Resolve slide JSON diagram path to bundled asset key (svg/png on disk). */
+export function resolveDiagramBundlePath(image: string): string {
+  if (image in AVA_DIAGRAM_PNG_TO_BUNDLE) {
+    return AVA_DIAGRAM_PNG_TO_BUNDLE[image];
+  }
+  if (image.endsWith(".svg") || image.endsWith(".png")) {
+    return image;
+  }
+  return "ava/common/placeholder.png";
+}
+
+const AVA_DIAGRAM_PATH = /^ava\/([a-z-]+)\/([a-z0-9-]+\.(?:svg|png))$/;
 
 export interface AvaDiagramPath {
   category: AvaDiagramCategory;
@@ -28,11 +53,12 @@ export interface AvaDiagramPath {
 }
 
 /**
- * Parse and resolve `ava/<category>/<file>.svg` diagram paths.
+ * Parse and resolve `ava/<category>/<file>.svg|png` diagram paths.
  * Returns null when the path does not match the canonical convention.
  */
 export function resolveAvaDiagramPath(image: string): AvaDiagramPath | null {
-  const match = AVA_DIAGRAM_PATH.exec(image);
+  const bundlePath = resolveDiagramBundlePath(image);
+  const match = AVA_DIAGRAM_PATH.exec(bundlePath);
   if (!match) return null;
 
   const category = match[1] as AvaDiagramCategory;

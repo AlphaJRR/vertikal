@@ -1,0 +1,17 @@
+{
+  "id": "camera_frame_rates",
+  "tab": "camera",
+  "type": "STATIC",
+  "title": "Frame Rate",
+  "description": "Frame rate affects motion style.",
+  "guide": "24fps = cinematic\n30fps = clean\n60fps = smooth / slow motion",
+  "keyRule": "Choose frame rate intentionally.",
+  "howTo": [
+    "Pick frame rate for mood.",
+    "Match shutter.",
+    "Adjust lighting.",
+    "Keep consistent."
+  ],
+  "proTip": "Shoot 60fps only when needed.",
+  "commonMistake": "Mixing frame rates randomly."
+}

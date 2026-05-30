@@ -1,0 +1,18 @@
+{
+  "id": "camera_exposure_triangle",
+  "tab": "camera",
+  "type": "HTML_PRESENTATION",
+  "title": "Exposure Triangle",
+  "description": "The exposure triangle controls brightness and creative style.",
+  "guide": "Aperture affects depth, shutter affects motion, ISO affects noise. They must be balanced together.",
+  "keyRule": "Balance all three — never adjust one in isolation.",
+  "howTo": [
+    "Set aperture for depth.",
+    "Set shutter for motion.",
+    "Raise ISO only when needed.",
+    "Rebalance exposure."
+  ],
+  "proTip": "Lock two settings and adjust the third.",
+  "commonMistake": "Using ISO as the main exposure tool.",
+  "slideRef": "slides_exposure_triangle"
+}

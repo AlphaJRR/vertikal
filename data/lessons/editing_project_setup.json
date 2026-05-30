@@ -1,0 +1,17 @@
+{
+  "id": "editing_project_setup",
+  "tab": "editing",
+  "type": "STATIC",
+  "title": "Project Setup (Resolution, Frame Rate, Proxy Workflow)",
+  "description": "Project setup defines your entire workflow. It matters because wrong settings cause major problems later.",
+  "guide": "Set resolution and frame rate before importing footage. Use proxies for heavy files. Match project settings to delivery requirements. Good setup prevents rework and timeline issues.",
+  "keyRule": "Set frame rate before importing anything.",
+  "howTo": [
+    "Create new project.",
+    "Set resolution and frame rate.",
+    "Enable proxy generation.",
+    "Import footage."
+  ],
+  "proTip": "Use 1080p proxies for smooth editing.",
+  "commonMistake": "Changing frame rate mid‑project."
+}

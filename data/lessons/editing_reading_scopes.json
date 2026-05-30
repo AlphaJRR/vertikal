@@ -1,0 +1,18 @@
+{
+  "id": "editing_reading_scopes",
+  "tab": "editing",
+  "type": "HTML_PRESENTATION",
+  "title": "Reading Waveforms & Scopes",
+  "description": "Waveforms and scopes show the truth about your image. They matter because monitors lie.",
+  "guide": "The waveform reads luminance. The RGB parade shows color balance. The vectorscope shows hue and saturation—especially the skin tone line on the yellow-red axis. Trust scopes over your eyes, especially on LOG footage and uncalibrated displays.",
+  "keyRule": "Grade with scopes, not the monitor.",
+  "howTo": [
+    "Read the waveform for exposure—skin sits ~50–70 IRE on Rec.709.",
+    "Check the parade for RGB balance on neutrals.",
+    "Use the vectorscope—keep skin on the skin tone line.",
+    "Calibrate your monitor annually—scopes do not lie."
+  ],
+  "proTip": "Histogram alone lies on LOG—use the waveform for exposure.",
+  "commonMistake": "Grading by eye on an uncalibrated display.",
+  "slideRef": "slides_scopes"
+}

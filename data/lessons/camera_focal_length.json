@@ -1,0 +1,17 @@
+{
+  "id": "camera_focal_length",
+  "tab": "camera",
+  "type": "STATIC",
+  "title": "Focal Length",
+  "description": "Focal length affects field of view and perspective.",
+  "guide": "Wide = exaggerated space / Telephoto = compression / Mid-range = natural",
+  "keyRule": "Choose focal length for perspective, not convenience.",
+  "howTo": [
+    "Pick lens for emotion.",
+    "Adjust distance.",
+    "Reframe.",
+    "Maintain continuity."
+  ],
+  "proTip": "35mm is the most natural storytelling lens.",
+  "commonMistake": "Zooming instead of moving."
+}

@@ -1,0 +1,48 @@
+{
+  "id": "slides_fairlight_basics",
+  "lessonId": "editing_fairlight_basics",
+  "title": "Fairlight Basics (EQ, Compression, Levels)",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "FAIRLIGHT BASICS",
+      "subheading": "EQ, Compression, Levels"
+    },
+    {
+      "type": "concept",
+      "heading": "WHY IT MATTERS",
+      "bullets": [
+        "Fairlight is Resolve's audio page for mix and delivery.",
+        "Bad audio kills good footage.",
+        "Normalize dialogue to -18 to -14 LUFS integrated for web.",
+        "High-pass at 80–100Hz on lavs to remove rumble."
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "DIALOGUE CHAIN",
+      "image": "ava/common/placeholder.svg",
+      "caption": "Dialogue clarity beats loud music every time."
+    },
+    {
+      "type": "steps",
+      "heading": "WORKFLOW",
+      "steps": [
+        "Normalize dialogue to web LUFS targets.",
+        "High-pass lavs at 80–100Hz.",
+        "Apply light compression on dialogue.",
+        "Limit the master bus to -1dB true peak."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "PRO TIP",
+      "text": "Mix with monitors at conversation level—not blasted."
+    },
+    {
+      "type": "warning",
+      "heading": "COMMON MISTAKE",
+      "text": "Over-compressing dialogue until it sounds robotic."
+    }
+  ]
+}

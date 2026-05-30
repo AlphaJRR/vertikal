@@ -1,0 +1,17 @@
+{
+  "id": "camera_histogram_zebras",
+  "tab": "camera",
+  "type": "STATIC",
+  "title": "Histogram & Zebras",
+  "description": "Histograms and zebras help you expose accurately. They matter because screens lie.",
+  "guide": "Histogram shows tonal distribution. Zebras show overexposure. Use both to protect highlights and maintain detail. Trust tools over your eyes.",
+  "keyRule": "Expose to protect highlights.",
+  "howTo": [
+    "Enable histogram.",
+    "Watch for clipping.",
+    "Use zebras for skin tones.",
+    "Adjust exposure."
+  ],
+  "proTip": "Set zebras to 70% for skin.",
+  "commonMistake": "Ignoring exposure tools."
+}

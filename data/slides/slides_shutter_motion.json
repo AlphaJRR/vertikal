@@ -1,0 +1,47 @@
+{
+  "id": "slides_shutter_motion",
+  "lessonId": "camera_shutter_motion",
+  "title": "Shutter Speed & Motion",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "Shutter Speed &amp; Motion",
+      "subheading": "Freeze • Blur • Stylize"
+    },
+    {
+      "type": "concept",
+      "heading": "Why It Matters",
+      "bullets": [
+        "Controls motion blur",
+        "Affects realism and style",
+        "Impacts exposure"
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "Motion Blur Levels",
+      "image": "ava/camera/shutter-motion.svg",
+      "caption": "Faster shutter = less blur."
+    },
+    {
+      "type": "steps",
+      "heading": "How To Use It",
+      "steps": [
+        "Set shutter to double your frame rate.",
+        "Increase shutter for action.",
+        "Lower shutter for stylized blur.",
+        "Rebalance exposure."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "Pro Tip",
+      "text": "Use high shutter speeds for crisp sports footage."
+    },
+    {
+      "type": "warning",
+      "heading": "Common Mistake",
+      "text": "Using fast shutter indoors and underexposing."
+    }
+  ]
+}

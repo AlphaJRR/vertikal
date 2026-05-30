@@ -1,0 +1,47 @@
+{
+  "id": "slides_rule_of_thirds",
+  "lessonId": "framing_rule_of_thirds",
+  "title": "Rule of Thirds",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "RULE OF THIRDS",
+      "subheading": "Place your subject on a third, not the center, unless you have a reason."
+    },
+    {
+      "type": "concept",
+      "heading": "WHY IT MATTERS",
+      "bullets": [
+        "The rule of thirds divides your frame into a 3×3 grid for natural balance.",
+        "Placing eyes, horizons, or key objects on the intersections creates tension and interest.",
+        "Use the opposite third for negative space to guide the viewer's eye."
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "THIRDS GRID",
+      "image": "ava/framing/rule-of-thirds.svg",
+      "caption": "Place eyes and key elements on grid intersections—not dead center by habit."
+    },
+    {
+      "type": "steps",
+      "heading": "HOW TO APPLY IT",
+      "steps": [
+        "Turn on your camera's grid.",
+        "Place the subject on a vertical third.",
+        "Place eyes on a horizontal third.",
+        "Break the rule only with intention."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "PRO TIP",
+      "text": "Use the opposite third for negative space to create direction."
+    },
+    {
+      "type": "warning",
+      "heading": "COMMON MISTAKE",
+      "text": "Centering everything out of habit."
+    }
+  ]
+}

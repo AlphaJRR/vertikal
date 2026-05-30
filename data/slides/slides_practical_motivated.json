@@ -1,0 +1,47 @@
+{
+  "id": "slides_practical_motivated",
+  "lessonId": "lighting_practical_motivated",
+  "title": "Practical Motivated Light",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "PRACTICAL MOTIVATED LIGHT",
+      "subheading": "Let practicals dictate your lighting direction"
+    },
+    {
+      "type": "concept",
+      "heading": "WHY IT MATTERS",
+      "bullets": [
+        "Motivated lighting uses practicals as the source of your key",
+        "It grounds your lighting in reality",
+        "Motivated lighting blends realism with control"
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "PRACTICAL + HIDDEN KEY",
+      "image": "ava/common/placeholder.svg",
+      "caption": "Key feels like it comes from the practical — hidden lights boost the same direction."
+    },
+    {
+      "type": "steps",
+      "heading": "HOW TO BUILD IT",
+      "steps": [
+        "Identify the practical source.",
+        "Place key in the same direction.",
+        "Boost practical with hidden lights.",
+        "Match color temperature."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "PRO TIP",
+      "text": "Dim practicals to avoid clipping while keeping ambiance."
+    },
+    {
+      "type": "warning",
+      "heading": "COMMON MISTAKE",
+      "text": "Lighting from a direction that contradicts the practical."
+    }
+  ]
+}

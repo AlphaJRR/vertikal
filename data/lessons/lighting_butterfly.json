@@ -1,0 +1,17 @@
+{
+  "id": "lighting_butterfly",
+  "tab": "lighting",
+  "type": "STATIC",
+  "title": "Butterfly/Paramount Lighting",
+  "description": "Butterfly lighting creates a shadow under the nose. It matters because it flatters symmetrical faces.",
+  "guide": "Place the key directly in front and above the subject. The shadow forms a butterfly shape under the nose. Great for beauty, fashion, and classic Hollywood looks. Works best with soft light.",
+  "keyRule": "Keep the key centered and elevated.",
+  "howTo": [
+    "Place key directly in front.",
+    "Raise it above eye level.",
+    "Add fill below if needed.",
+    "Keep background simple."
+  ],
+  "proTip": "Use a reflector under the chin for glamour.",
+  "commonMistake": "Placing the key too low and losing the butterfly shape."
+}

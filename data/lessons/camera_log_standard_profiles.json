@@ -1,0 +1,17 @@
+{
+  "id": "camera_log_standard_profiles",
+  "tab": "camera",
+  "type": "STATIC",
+  "title": "Log vs Standard Profiles",
+  "description": "Log profiles capture more dynamic range. It matters because Log gives you more control in grading.",
+  "guide": "Log looks flat but holds detail. Standard profiles look finished but limit flexibility. Use Log for cinematic work and standard for fast turnaround. Expose Log brighter to avoid noise.",
+  "keyRule": "Use Log when you plan to grade heavily.",
+  "howTo": [
+    "Enable Log profile.",
+    "Expose brighter than normal.",
+    "Use monitoring LUT.",
+    "Grade in post."
+  ],
+  "proTip": "ETTR helps Log footage shine.",
+  "commonMistake": "Underexposing Log and getting noise."
+}

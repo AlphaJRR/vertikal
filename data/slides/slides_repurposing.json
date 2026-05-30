@@ -1,0 +1,47 @@
+{
+  "id": "slides_repurposing",
+  "lessonId": "strategy_repurposing_content",
+  "title": "Repurposing Content — One Video, Five Platforms",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "REPURPOSING CONTENT",
+      "subheading": "One Video, Five Platforms"
+    },
+    {
+      "type": "concept",
+      "heading": "WHY IT MATTERS",
+      "bullets": [
+        "Turn long‑form YouTube videos into shorts, carousels, tweets, and LinkedIn posts.",
+        "Extract key insights and repackage them.",
+        "Keep platform tone and pacing in mind."
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "ONE → FIVE PLATFORMS",
+      "image": "ava/common/placeholder.svg",
+      "caption": "Adapt the message to the platform, not the other way around."
+    },
+    {
+      "type": "steps",
+      "heading": "HOW TO APPLY IT",
+      "steps": [
+        "Start with a long‑form anchor video.",
+        "Pull 5–10 short clips.",
+        "Convert insights into text posts.",
+        "Reformat visuals for each platform."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "PRO TIP",
+      "text": "Your best short‑form ideas usually come from long‑form content."
+    },
+    {
+      "type": "warning",
+      "heading": "COMMON MISTAKE",
+      "text": "Posting the same edit everywhere without adapting it."
+    }
+  ]
+}

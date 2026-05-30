@@ -1,0 +1,18 @@
+{
+  "id": "lighting_hard_soft_light",
+  "tab": "lighting",
+  "type": "HTML_PRESENTATION",
+  "title": "Hard vs Soft Light",
+  "description": "Hard light creates sharp shadows; soft light creates smooth transitions. It matters because shadow quality defines mood.",
+  "guide": "Hard light comes from small, direct sources. Soft light comes from large, diffused sources. Hard light adds drama and texture; soft light flatters faces. Control hardness by changing source size or distance. Light quality matters more than brightness.",
+  "keyRule": "Bigger source = softer light.",
+  "howTo": [
+    "Move light closer for softness.",
+    "Add diffusion for smoother shadows.",
+    "Use bare bulbs or fresnels for hard light.",
+    "Shape shadows with flags."
+  ],
+  "proTip": "Soft light still needs direction—don't flatten it.",
+  "commonMistake": "Confusing soft light with low‑contrast lighting.",
+  "slideRef": "slides_hard_soft_light"
+}
