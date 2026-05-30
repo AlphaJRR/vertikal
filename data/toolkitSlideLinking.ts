@@ -5,7 +5,7 @@ import {
   avaDiagramPngPathForEntry,
 } from "./avaDiagramManifest";
 
-/** Brand-repo root for AVA diagram PNGs (sibling repo, not bundled in Vertikal-App). */
+/** Brand-repo root for AVA diagram PNGs (sibling repo, not bundled in the AVA app). */
 export const AVA_DIAGRAM_BRAND_ROOT =
   "alpha-visual-artists-brand/creators-toolkit/assets/ava";
 
@@ -76,7 +76,7 @@ export function resolveAvaDiagramPath(image: string): AvaDiagramPath | null {
 }
 
 /**
- * Snake_case AVA lesson id → kebab-case Vertikal curriculum lesson id.
+ * Snake_case AVA lesson id → kebab-case AVA curriculum lesson id.
  * Only entries where the id differs from a naive snake→kebab transform are listed here.
  */
 export const KNOWN_LESSON_ID_MISMATCHES: Record<string, string> = {
@@ -119,7 +119,7 @@ export function getSlideIdForLesson(lessonSnakeId: string): SlideRef | undefined
   return LINKING_MAP[lessonSnakeId];
 }
 
-/** Resolve AVA snake_case lesson id to Vertikal curriculum kebab lesson id. */
+/** Resolve AVA snake_case lesson id to AVA curriculum kebab lesson id. */
 export function getCurriculumLessonId(lessonSnakeId: string): string | undefined {
   if (lessonSnakeId in KNOWN_LESSON_ID_MISMATCHES) {
     return KNOWN_LESSON_ID_MISMATCHES[lessonSnakeId];

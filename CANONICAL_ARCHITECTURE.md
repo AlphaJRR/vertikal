@@ -1,6 +1,6 @@
 # AVA Creator Toolkit — Canonical Data Architecture
 
-Joshua's canonical layout for Vertikal-App. **`data/lessons/*.json` and `data/slides/*.json` are the source of truth going forward.** `data/toolkitCurriculum.ts` remains for runtime compatibility until the app fully consumes JSON loaders.
+Joshua's canonical layout for the **AVA app** (repo folder: `Vertikal-App`, legacy name). **`data/lessons/*.json` and `data/slides/*.json` are the source of truth going forward.** `data/toolkitCurriculum.ts` remains for runtime compatibility until the app fully consumes JSON loaders.
 
 ## Folder structure
 

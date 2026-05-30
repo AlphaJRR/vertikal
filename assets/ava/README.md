@@ -1,4 +1,6 @@
-# AVA diagram assets (Vertikal-App)
+# AVA diagram assets (AVA app repo)
+
+> Bundled under `assets/ava/` in the AVA mobile app repository (folder on disk: `Vertikal-App`, legacy name).
 
 Drop PNG diagrams here. The app and HTML slide decks resolve paths as:
 

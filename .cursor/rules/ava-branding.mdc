@@ -1,0 +1,13 @@
+---
+description: AVA product naming — never use Vertikal in user-facing text
+alwaysApply: true
+---
+
+# AVA / Alpha Visual Artists branding
+
+This project is **Alpha Visual Artists (AVA)** — the official mobile app and Creator Toolkit.
+
+- **Never** refer to the product as "Vertikal" in user-facing docs, UI copy, READMEs, or comments meant for humans.
+- Use **AVA** or **Alpha Visual Artists** as the product name.
+- The repo folder may still be named `Vertikal-App` on disk (legacy). Keep literal paths when needed for developers; add *(legacy folder name)* where helpful.
+- Do **not** rename the git repo folder, package.json `name`, bundle IDs, git remotes, or import paths unless changing user-facing strings only.

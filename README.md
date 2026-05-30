@@ -1,7 +1,10 @@
-<<<<<<< HEAD
-# VERTIKAL Mobile App
+**Alpha Visual Artists (AVA)** — official mobile app repository
 
-> A premium social media platform for vertical cinema
+> Repo path on disk: `/Users/alphavisualartists/Vertikal-App` *(legacy folder name)*
+
+# AVA Mobile App
+
+> Alpha Visual Artists — premium mobile platform for vertical cinema
 
 [![Expo](https://img.shields.io/badge/Expo-~49.0.15-black.svg?style=flat-square&logo=expo)](https://expo.dev)
 [![React Native](https://img.shields.io/badge/React%20Native-0.72.6-blue.svg?style=flat-square&logo=react)](https://reactnative.dev)
@@ -9,9 +12,9 @@
 
 ## 📱 Overview
 
-VERTIKAL is a React Native mobile application built with Expo, featuring a premium design focused on vertical cinema content. The app includes advanced features like Vibe Mode (Danmaku-style comments), video playback, creator networks, and subscription management.
+**Alpha Visual Artists (AVA)** is a React Native mobile application built with Expo, featuring a premium design focused on vertical cinema content. The app includes advanced features like Vibe Mode (Danmaku-style comments), video playback, creator networks, and subscription management.
 
-### Visual Identity: "Vertikal Master 12.29"
+### Visual Identity: "AVA Master 12.29"
 - **Background**: Pure Black (#000000)
 - **Accents**: Premium Gold (#FFD700)
 - **Effects**: Glassmorphism throughout
@@ -41,7 +44,7 @@ VERTIKAL is a React Native mobile application built with Expo, featuring a premi
 
 1. **Clone and navigate to the project:**
    ```bash
-   cd Vertikal-App
+   cd Vertikal-App   # legacy folder name — this is the AVA app repo
    ```
 
 2. **Install dependencies:**
@@ -65,12 +68,12 @@ VERTIKAL is a React Native mobile application built with Expo, featuring a premi
    - Press `a` for Android Emulator
    - Scan QR code with Expo Go app (physical device)
 
-For detailed setup instructions, see [VERTIKAL_LAUNCH_GUIDE.md](./VERTIKAL_LAUNCH_GUIDE.md).
+For detailed setup instructions, see [VERTIKAL_LAUNCH_GUIDE.md](./VERTIKAL_LAUNCH_GUIDE.md) *(legacy filename)*.
 
 ## 📁 Project Structure
 
 ```
-Vertikal-App/
+Vertikal-App/   # legacy folder name — AVA app repo
 ├── App.tsx                 # Main app entry point
 ├── app.json                # Expo configuration
 ├── package.json            # Dependencies
@@ -163,7 +166,7 @@ npm run web        # Run in web browser
    npx expo prebuild --clean
    ```
 
-For more detailed troubleshooting, see [VERTIKAL_LAUNCH_GUIDE.md](./VERTIKAL_LAUNCH_GUIDE.md#step-7-handle-potential-issues).
+For more detailed troubleshooting, see [VERTIKAL_LAUNCH_GUIDE.md](./VERTIKAL_LAUNCH_GUIDE.md#step-7-handle-potential-issues) *(legacy filename)*.
 
 ## 📱 Building for Production
 
@@ -218,42 +221,8 @@ Private - All Rights Reserved
 
 ## 📞 Support
 
-For setup issues, refer to [VERTIKAL_LAUNCH_GUIDE.md](./VERTIKAL_LAUNCH_GUIDE.md).
+For setup issues, refer to [VERTIKAL_LAUNCH_GUIDE.md](./VERTIKAL_LAUNCH_GUIDE.md) *(legacy filename)*.
 
 ---
 
 **Built with ❤️ for vertical cinema creators**
-
-=======
-# VERTIKAL — Creator Media Network (v2.0)
-
-This repository contains:
-- The legacy HTML prototype (`Folder_App v.29/`)
-- Centralized structured data (`/src/data`)
-- The product design blueprint and UI reference (`/docs/prototype_reference.html`)
-- Preparing for migration into a full React/Next.js codebase with GitHub Copilot Workspace
-
-## Purpose
-This repo represents the foundation for the VERTIKAL app:
-- Creator profiles
-- Micro-series (vertical shows)
-- Video feeds
-- Monetization tools (tips, subscriptions)
-- Founding 50 program
-- Investor demo
-
-## Next Goals
-1. Convert the legacy prototype into a component-based React/Next.js app  
-2. Connect JSON data to UI components  
-3. Prepare backend API endpoints  
-4. Deploy staging and production builds to Netlify  
-
-## Tech Stack (Planned)
-- Next.js 15 (App Router)
-- TailwindCSS
-- TypeScript
-- Firebase or Supabase backend
-- Stripe Connect for payments
-
-## Folders
->>>>>>> 352c352205fcf043be93b9ab16c7022255d9c7a0

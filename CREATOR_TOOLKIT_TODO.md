@@ -79,9 +79,9 @@ All 31 canonical decks wired end-to-end as of this audit. Columns: **L** = lesso
 
 ## Canonical lessonId → slideRef mapping (Joshua)
 
-Snake_case keys are the source IDs in AVA Creator Toolkit content. In Vertikal-App, each maps to a **kebab-case lesson `id`** in `data/toolkitCurriculum.ts` and a **kebab `htmlSlideId`** (strip `slides_` prefix from slide ref).
+Snake_case keys are the source IDs in AVA Creator Toolkit content. In the AVA app repo (`Vertikal-App` on disk), each maps to a **kebab-case lesson `id`** in `data/toolkitCurriculum.ts` and a **kebab `htmlSlideId`** (strip `slides_` prefix from slide ref).
 
-| snake_case (source) | slide ref | htmlSlideId | Vertikal lesson id |
+| snake_case (source) | slide ref | htmlSlideId | AVA lesson id |
 |---|---|---|---|
 | `camera_exposure_triangle` | `slides_exposure_triangle` | `exposure-triangle` | `camera-exposure-triangle` |
 | `camera_aperture_depth` | `slides_aperture_depth` | `aperture-depth` | `camera-aperture` |

@@ -4,7 +4,7 @@
 **Format:** `ava/<category>/<file>.png` (16:9, dark bg, no text in image)  
 **Mirrors:**
 
-- `/Users/alphavisualartists/Vertikal-App/assets/ava/<category>/<file>.png`
+- `/Users/alphavisualartists/Vertikal-App/assets/ava/<category>/<file>.png` *(AVA app repo; legacy folder name)*
 - `/Users/alphavisualartists/alpha-visual-artists-brand/creators-toolkit/assets/ava/<category>/<file>.png`
 
 **Code source of truth:** `data/avaDiagramManifest.ts`
