@@ -1,0 +1,695 @@
+{
+  "version": "1.0",
+  "generatedFrom": "creators-toolkit/build_slides.py",
+  "brand": {
+    "primary": "#00d4ff",
+    "accent": "#E8000A",
+    "background": "#0a0a0a",
+    "card": "#111111",
+    "tagline": "CREATE WITHOUT LIMITS",
+    "phrase": "MADE FOR CREATORS BY CREATORS"
+  },
+  "categories": [
+    {
+      "id": "photography-composition",
+      "name": "Photography & Composition",
+      "icon": "grid-outline",
+      "color": "#E8000A",
+      "slideCount": 13
+    },
+    {
+      "id": "camera-motion",
+      "name": "Camera Motion",
+      "icon": "film-outline",
+      "color": "#3B82F6",
+      "slideCount": 4
+    },
+    {
+      "id": "davinci-resolve",
+      "name": "DaVinci Resolve",
+      "icon": "color-palette-outline",
+      "color": "#8B5CF6",
+      "slideCount": 9
+    },
+    {
+      "id": "lighting-exposure",
+      "name": "Lighting & Exposure",
+      "icon": "sunny-outline",
+      "color": "#FBBF24",
+      "slideCount": 2
+    },
+    {
+      "id": "framing-shots",
+      "name": "Framing & Shot Types",
+      "icon": "scan-outline",
+      "color": "#06B6D4",
+      "slideCount": 4
+    },
+    {
+      "id": "camera-on-set",
+      "name": "Camera & On-Set",
+      "icon": "camera-outline",
+      "color": "#ff006e",
+      "slideCount": 3
+    },
+    {
+      "id": "creator-mindset",
+      "name": "Creator Mindset",
+      "icon": "bulb-outline",
+      "color": "#06d6a0",
+      "slideCount": 2
+    }
+  ],
+  "slides": [
+    {
+      "id": "rule-of-thirds",
+      "title": "RULE OF THIRDS",
+      "categoryId": "photography-composition",
+      "category": "Photography & Composition",
+      "format": "carousel",
+      "num": "01",
+      "summary": "Place subjects on grid intersections for balance.",
+      "tip": "Place subjects on grid intersections for balance.",
+      "highlight": "intersections",
+      "htmlPath": "slides/photography-composition/rule-of-thirds.html"
+    },
+    {
+      "id": "symmetry",
+      "title": "SYMMETRY",
+      "categoryId": "photography-composition",
+      "category": "Photography & Composition",
+      "format": "carousel",
+      "num": "02",
+      "summary": "Center your subject for powerful, balanced frames.",
+      "tip": "Center your subject for powerful, balanced frames.",
+      "highlight": "balance",
+      "htmlPath": "slides/photography-composition/symmetry.html"
+    },
+    {
+      "id": "depth",
+      "title": "DEPTH",
+      "categoryId": "photography-composition",
+      "category": "Photography & Composition",
+      "format": "carousel",
+      "num": "03",
+      "summary": "Layer foreground, midground, and background for dimension. Focus on layers.",
+      "tip": "Layer foreground, midground, and background for dimension. Focus on layers.",
+      "highlight": "layers",
+      "htmlPath": "slides/photography-composition/depth.html"
+    },
+    {
+      "id": "framing",
+      "title": "FRAMING",
+      "categoryId": "photography-composition",
+      "category": "Photography & Composition",
+      "format": "carousel",
+      "num": "04",
+      "summary": "Use elements around your subject to create a natural frame.",
+      "tip": "Use elements around your subject to create a natural frame.",
+      "highlight": "natural",
+      "htmlPath": "slides/photography-composition/framing.html"
+    },
+    {
+      "id": "patterns",
+      "title": "PATTERNS",
+      "categoryId": "photography-composition",
+      "category": "Photography & Composition",
+      "format": "carousel",
+      "num": "05",
+      "summary": "Repeat shapes and textures to create visual rhythm.",
+      "tip": "Repeat shapes and textures to create visual rhythm.",
+      "highlight": "rhythm",
+      "htmlPath": "slides/photography-composition/patterns.html"
+    },
+    {
+      "id": "leading-lines",
+      "title": "LEADING LINES",
+      "categoryId": "photography-composition",
+      "category": "Photography & Composition",
+      "format": "carousel",
+      "num": "06",
+      "summary": "Use lines to guide the eye toward your subject. Focus on vanishing point.",
+      "tip": "Use lines to guide the eye toward your subject. Focus on vanishing point.",
+      "highlight": "vanishing point",
+      "htmlPath": "slides/photography-composition/leading-lines.html"
+    },
+    {
+      "id": "golden-spiral",
+      "title": "GOLDEN SPIRAL",
+      "categoryId": "photography-composition",
+      "category": "Photography & Composition",
+      "format": "carousel",
+      "num": "07",
+      "summary": "Arrange elements along the Fibonacci curve for flow.",
+      "tip": "Arrange elements along the Fibonacci curve for flow.",
+      "highlight": "flow",
+      "htmlPath": "slides/photography-composition/golden-spiral.html"
+    },
+    {
+      "id": "triangle",
+      "title": "TRIANGLE",
+      "categoryId": "photography-composition",
+      "category": "Photography & Composition",
+      "format": "carousel",
+      "num": "08",
+      "summary": "Group subjects in triangular formations for stability.",
+      "tip": "Group subjects in triangular formations for stability.",
+      "highlight": "stability",
+      "htmlPath": "slides/photography-composition/triangle.html"
+    },
+    {
+      "id": "contrast",
+      "title": "CONTRAST",
+      "categoryId": "photography-composition",
+      "category": "Photography & Composition",
+      "format": "carousel",
+      "num": "09",
+      "summary": "Light vs dark creates strong contrast and impact.",
+      "tip": "Light vs dark creates strong contrast and impact.",
+      "highlight": "strong contrast",
+      "htmlPath": "slides/photography-composition/contrast.html"
+    },
+    {
+      "id": "minimalism",
+      "title": "MINIMALISM",
+      "categoryId": "photography-composition",
+      "category": "Photography & Composition",
+      "format": "carousel",
+      "num": "10",
+      "summary": "Remove clutter. Let negative space carry the frame.",
+      "tip": "Remove clutter. Let negative space carry the frame.",
+      "highlight": "negative space",
+      "htmlPath": "slides/photography-composition/minimalism.html"
+    },
+    {
+      "id": "compound-curve",
+      "title": "COMPOUND CURVE",
+      "categoryId": "photography-composition",
+      "category": "Photography & Composition",
+      "format": "carousel",
+      "num": "11",
+      "summary": "Use S-curves and C-curves to lead the eye through the frame.",
+      "tip": "Use S-curves and C-curves to lead the eye through the frame.",
+      "highlight": "curves",
+      "htmlPath": "slides/photography-composition/compound-curve.html"
+    },
+    {
+      "id": "diagonal",
+      "title": "DIAGONAL",
+      "categoryId": "photography-composition",
+      "category": "Photography & Composition",
+      "format": "carousel",
+      "num": "12",
+      "summary": "Tilt the frame or use diagonal lines for dynamic energy.",
+      "tip": "Tilt the frame or use diagonal lines for dynamic energy.",
+      "highlight": "energy",
+      "htmlPath": "slides/photography-composition/diagonal.html"
+    },
+    {
+      "id": "figure-ground",
+      "title": "FIGURE TO GROUND",
+      "categoryId": "photography-composition",
+      "category": "Photography & Composition",
+      "format": "carousel",
+      "num": "13",
+      "summary": "Separate subject using contrast against the background.",
+      "tip": "Separate subject using contrast against the background.",
+      "highlight": "contrast",
+      "htmlPath": "slides/photography-composition/figure-ground.html"
+    },
+    {
+      "id": "slow-shutter",
+      "title": "SLOW SHUTTER",
+      "categoryId": "camera-motion",
+      "category": "Camera Motion",
+      "format": "story",
+      "num": "1",
+      "summary": "Drag shutter 1/15\u20131/4 sec Use ND filters in daylight Ideal for light trails and crowd blur.",
+      "tip": "Drag shutter 1/15\u20131/4 sec Use ND filters in daylight Ideal for light trails and crowd blur.",
+      "steps": [
+        "Drag shutter 1/15\u20131/4 sec",
+        "Use ND filters in daylight",
+        "Stabilize camera or embrace shake"
+      ],
+      "useCases": [
+        "Light trails",
+        "Crowd blur",
+        "Dreamy portraits"
+      ],
+      "mood": "Ethereal \u00b7 Ghostly \u00b7 Time collapsed",
+      "htmlPath": "slides/camera-motion/slow-shutter.html"
+    },
+    {
+      "id": "cinematic-motion",
+      "title": "CINEMATIC MOTION",
+      "categoryId": "camera-motion",
+      "category": "Camera Motion",
+      "format": "story",
+      "num": "2",
+      "summary": "24fps with 180\u00b0 shutter (1/48) Match shutter to frame rate Ideal for narrative film and brand films.",
+      "tip": "24fps with 180\u00b0 shutter (1/48) Match shutter to frame rate Ideal for narrative film and brand films.",
+      "steps": [
+        "24fps with 180\u00b0 shutter (1/48)",
+        "Match shutter to frame rate",
+        "Avoid staccato handheld at 1/1000"
+      ],
+      "useCases": [
+        "Narrative film",
+        "Brand films",
+        "Music videos"
+      ],
+      "mood": "Filmic \u00b7 Weighted \u00b7 Intentional",
+      "htmlPath": "slides/camera-motion/cinematic-motion.html"
+    },
+    {
+      "id": "slow-motion",
+      "title": "SLOW MOTION",
+      "categoryId": "camera-motion",
+      "category": "Camera Motion",
+      "format": "story",
+      "num": "3",
+      "summary": "60fps+ for 2.5\u00d7 slow at 24fps delivery 120fps+ for dramatic moments Ideal for action reveals and product beauty.",
+      "tip": "60fps+ for 2.5\u00d7 slow at 24fps delivery 120fps+ for dramatic moments Ideal for action reveals and product beauty.",
+      "steps": [
+        "60fps+ for 2.5\u00d7 slow at 24fps delivery",
+        "120fps+ for dramatic moments",
+        "Light it \u2014 you need more exposure"
+      ],
+      "useCases": [
+        "Action reveals",
+        "Product beauty",
+        "Emotional beats"
+      ],
+      "mood": "Suspended \u00b7 Heroic \u00b7 Detail revealed",
+      "htmlPath": "slides/camera-motion/slow-motion.html"
+    },
+    {
+      "id": "timelapse",
+      "title": "TIMELAPSE",
+      "categoryId": "camera-motion",
+      "category": "Camera Motion",
+      "format": "story",
+      "num": "4",
+      "summary": "Interval based on subject speed Manual exposure \u2014 no auto flicker Ideal for clouds and construction.",
+      "tip": "Interval based on subject speed Manual exposure \u2014 no auto flicker Ideal for clouds and construction.",
+      "steps": [
+        "Interval based on subject speed",
+        "Manual exposure \u2014 no auto flicker",
+        "Lock white balance"
+      ],
+      "useCases": [
+        "Clouds",
+        "Construction",
+        "Event energy"
+      ],
+      "mood": "Compressed time \u00b7 Epic scale \u00b7 Patience paid",
+      "htmlPath": "slides/camera-motion/timelapse.html"
+    },
+    {
+      "id": "surface-tracker",
+      "title": "SURFACE TRACKER",
+      "categoryId": "davinci-resolve",
+      "category": "DaVinci Resolve",
+      "format": "story",
+      "num": "",
+      "summary": "Attach graphics to moving surfaces in Fusion. Define Bounds around the surface Generate Mesh for deformation",
+      "tip": "Attach graphics to moving surfaces in Fusion.",
+      "steps": [
+        "Define Bounds around the surface",
+        "Generate Mesh for deformation",
+        "Track \u2014 refine Motion Range & Quality",
+        "View Result and composite"
+      ],
+      "htmlPath": "slides/davinci-resolve/surface-tracker.html"
+    },
+    {
+      "id": "speed-ramp",
+      "title": "SPEED RAMP",
+      "categoryId": "davinci-resolve",
+      "category": "DaVinci Resolve",
+      "format": "story",
+      "num": "",
+      "summary": "Control time with TimeStretcher in Fusion Spline. Add TimeStretcher to your clip Keyframe Source Time flat \u2192 steep \u2192 flat",
+      "tip": "Control time with TimeStretcher in Fusion Spline.",
+      "steps": [
+        "Add TimeStretcher to your clip",
+        "Keyframe Source Time flat \u2192 steep \u2192 flat",
+        "Smooth spline handles for cinematic ramp",
+        "Render at delivery frame rate"
+      ],
+      "htmlPath": "slides/davinci-resolve/speed-ramp.html"
+    },
+    {
+      "id": "skin-tones",
+      "title": "SKIN TONES",
+      "categoryId": "davinci-resolve",
+      "category": "DaVinci Resolve",
+      "format": "story",
+      "num": "",
+      "summary": "Isolate skin then compress hue with Color Compressor. Qualifier node: isolate skin (HSL) Add Color Compressor downstream",
+      "tip": "Isolate skin then compress hue with Color Compressor.",
+      "steps": [
+        "Qualifier node: isolate skin (HSL)",
+        "Add Color Compressor downstream",
+        "Align trace to skin tone line on vectorscope",
+        "Subtle saturation \u2014 protect highlights"
+      ],
+      "htmlPath": "slides/davinci-resolve/skin-tones.html"
+    },
+    {
+      "id": "hdr-zones",
+      "title": "HDR ZONES",
+      "categoryId": "davinci-resolve",
+      "category": "DaVinci Resolve",
+      "format": "story",
+      "num": "",
+      "summary": "Target luminance zones in HDR grading. Open HDR palette in Color page Set zone boundaries on the graph",
+      "tip": "Target luminance zones in HDR grading.",
+      "steps": [
+        "Open HDR palette in Color page",
+        "Set zone boundaries on the graph",
+        "Adjust Min Range and Falloff per zone",
+        "Protect speculars \u2014 grade shadows first"
+      ],
+      "htmlPath": "slides/davinci-resolve/hdr-zones.html"
+    },
+    {
+      "id": "custom-curves",
+      "title": "4TH POINT CURVES",
+      "categoryId": "davinci-resolve",
+      "category": "DaVinci Resolve",
+      "format": "story",
+      "num": "",
+      "summary": "Separate midtones for cinematic contrast. Open Curves \u2014 Custom Anchor black and white points",
+      "tip": "Separate midtones for cinematic contrast.",
+      "steps": [
+        "Open Curves \u2014 Custom",
+        "Anchor black and white points",
+        "Pull shadow point below diagonal",
+        "Lift 4th point above diagonal for highlight separation"
+      ],
+      "htmlPath": "slides/davinci-resolve/custom-curves.html"
+    },
+    {
+      "id": "color-warper",
+      "title": "COLOR WARPER",
+      "categoryId": "davinci-resolve",
+      "category": "DaVinci Resolve",
+      "format": "story",
+      "num": "",
+      "summary": "Sculpt hue and saturation on the color wheel. Select region on the wheel Drag hue/saturation handles",
+      "tip": "Sculpt hue and saturation on the color wheel.",
+      "steps": [
+        "Select region on the wheel",
+        "Drag hue/saturation handles",
+        "Use contrast and luminance rings",
+        "Compare before/after on still"
+      ],
+      "htmlPath": "slides/davinci-resolve/color-warper.html"
+    },
+    {
+      "id": "power-windows",
+      "title": "POWER WINDOWS",
+      "categoryId": "davinci-resolve",
+      "category": "DaVinci Resolve",
+      "format": "story",
+      "num": "",
+      "summary": "Target grades with shapes and tracking. Add serial node after balance Draw circle/curve window on subject",
+      "tip": "Target grades with shapes and tracking.",
+      "steps": [
+        "Add serial node after balance",
+        "Draw circle/curve window on subject",
+        "Track window to movement",
+        "Grade inside \u2014 spill outside untouched"
+      ],
+      "htmlPath": "slides/davinci-resolve/power-windows.html"
+    },
+    {
+      "id": "node-workflow",
+      "title": "NODE WORKFLOW",
+      "categoryId": "davinci-resolve",
+      "category": "DaVinci Resolve",
+      "format": "story",
+      "num": "",
+      "summary": "Build structured grades: prep \u2192 look \u2192 skin. Input transform (LOG \u2192 linear) Spatial NR and exposure zones",
+      "tip": "Build structured grades: prep \u2192 look \u2192 skin.",
+      "steps": [
+        "Input transform (LOG \u2192 linear)",
+        "Spatial NR and exposure zones",
+        "Creative look node",
+        "Dedicated skin + background nodes"
+      ],
+      "htmlPath": "slides/davinci-resolve/node-workflow.html"
+    },
+    {
+      "id": "vectorscope",
+      "title": "VECTORSCOPE",
+      "categoryId": "davinci-resolve",
+      "category": "DaVinci Resolve",
+      "format": "story",
+      "num": "",
+      "summary": "Read hue and saturation for accurate skin. Skin tone line: yellow-red axis Keep skin trace on the line",
+      "tip": "Read hue and saturation for accurate skin.",
+      "steps": [
+        "Skin tone line: yellow-red axis",
+        "Keep skin trace on the line",
+        "Watch saturation \u2014 avoid magenta shift",
+        "Use with scopes \u2014 not eyes alone"
+      ],
+      "htmlPath": "slides/davinci-resolve/vectorscope.html"
+    },
+    {
+      "id": "dramatic-portrait",
+      "title": "DRAMATIC PORTRAIT",
+      "categoryId": "lighting-exposure",
+      "category": "Lighting & Exposure",
+      "format": "carousel",
+      "num": "",
+      "summary": "High contrast key with cool separation.",
+      "tip": "High contrast key with cool separation.",
+      "setup": "3200K key \u00b7 12000K rim \u00b7 ceiling bounce",
+      "htmlPath": "slides/lighting-exposure/dramatic-portrait.html"
+    },
+    {
+      "id": "mirror-scene",
+      "title": "MIRROR SCENE",
+      "categoryId": "lighting-exposure",
+      "category": "Lighting & Exposure",
+      "format": "carousel",
+      "num": "",
+      "summary": "Warm rim against cool ambient for depth.",
+      "tip": "Warm rim against cool ambient for depth.",
+      "setup": "3200K hair \u00b7 12000K tubes \u00b7 profile camera",
+      "htmlPath": "slides/lighting-exposure/mirror-scene.html"
+    },
+    {
+      "id": "shot-types",
+      "title": "SHOT TYPES",
+      "categoryId": "framing-shots",
+      "category": "Framing & Shot Types",
+      "format": "carousel",
+      "num": "",
+      "summary": "Set location and context before the story.",
+      "tip": "Set location and context before the story.",
+      "panels": [
+        {
+          "label": "ESTABLISHING",
+          "description": "Set location and context before the story."
+        },
+        {
+          "label": "OVER THE SHOULDER",
+          "description": "Dialogue coverage with depth and POV."
+        },
+        {
+          "label": "TWO SHOT",
+          "description": "Both subjects in frame \u2014 relationship visible."
+        },
+        {
+          "label": "POINT OF VIEW",
+          "description": "What the character sees \u2014 audience in their eyes."
+        },
+        {
+          "label": "DUTCH ANGLE",
+          "description": "Tilted horizon for tension and unease."
+        }
+      ],
+      "htmlPath": "slides/framing-shots/shot-types.html"
+    },
+    {
+      "id": "camera-angles",
+      "title": "CAMERA ANGLES",
+      "categoryId": "framing-shots",
+      "category": "Framing & Shot Types",
+      "format": "carousel",
+      "num": "",
+      "summary": "Eye-level \u2014 neutral, documentary feel.",
+      "tip": "Eye-level \u2014 neutral, documentary feel.",
+      "panels": [
+        {
+          "label": "NORMAL",
+          "description": "Eye-level \u2014 neutral, documentary feel."
+        },
+        {
+          "label": "LOW ANGLE",
+          "description": "Camera below \u2014 subject feels powerful."
+        },
+        {
+          "label": "HIGH ANGLE",
+          "description": "Camera above \u2014 vulnerability or overview."
+        }
+      ],
+      "htmlPath": "slides/framing-shots/camera-angles.html"
+    },
+    {
+      "id": "grid-compositions",
+      "title": "GRID COMPOSITIONS",
+      "categoryId": "framing-shots",
+      "category": "Framing & Shot Types",
+      "format": "carousel",
+      "num": "",
+      "summary": "Subject dead center \u2014 formal and direct.",
+      "tip": "Subject dead center \u2014 formal and direct.",
+      "panels": [
+        {
+          "label": "CENTERED",
+          "description": "Subject dead center \u2014 formal and direct."
+        },
+        {
+          "label": "VERTICAL THIRDS",
+          "description": "Place subjects on left/right third lines."
+        },
+        {
+          "label": "HORIZONTAL THIRDS",
+          "description": "Horizon on upper or lower third."
+        },
+        {
+          "label": "DIAMOND",
+          "description": "Frame subject inside a diamond shape."
+        }
+      ],
+      "htmlPath": "slides/framing-shots/grid-compositions.html"
+    },
+    {
+      "id": "compositions-overview",
+      "title": "COMPOSITIONS OVERVIEW",
+      "categoryId": "framing-shots",
+      "category": "Framing & Shot Types",
+      "format": "carousel",
+      "num": "",
+      "summary": "Off-center balance.",
+      "tip": "Off-center balance.",
+      "panels": [
+        {
+          "label": "RULE OF THIRDS",
+          "description": "Off-center balance."
+        },
+        {
+          "label": "DIAGONAL",
+          "description": "Dynamic symmetry."
+        },
+        {
+          "label": "TRIANGLE",
+          "description": "Stable groupings."
+        },
+        {
+          "label": "LEADING LINES",
+          "description": "Depth to subject."
+        },
+        {
+          "label": "GOLDEN SPIRAL",
+          "description": "Natural flow."
+        },
+        {
+          "label": "FIGURE/GROUND",
+          "description": "Subject separation."
+        }
+      ],
+      "htmlPath": "slides/framing-shots/compositions-overview.html"
+    },
+    {
+      "id": "rule-thirds-grid",
+      "title": "RULE OF THIRDS GRID",
+      "categoryId": "camera-on-set",
+      "category": "Camera & On-Set",
+      "format": "carousel",
+      "num": "",
+      "summary": "Enable 3\u00d73 grid on monitor or remote app for live composition.",
+      "tip": "Enable 3\u00d73 grid on monitor or remote app for live composition.",
+      "htmlPath": "slides/camera-motion/rule-thirds-grid.html"
+    },
+    {
+      "id": "iris-control",
+      "title": "IRIS CONTROL",
+      "categoryId": "camera-on-set",
+      "category": "Camera & On-Set",
+      "format": "carousel",
+      "num": "",
+      "summary": "Manual iris at F5.6\u2013F8 for sharpness and controlled depth on set.",
+      "tip": "Manual iris at F5.6\u2013F8 for sharpness and controlled depth on set.",
+      "htmlPath": "slides/camera-motion/iris-control.html"
+    },
+    {
+      "id": "remote-monitor",
+      "title": "REMOTE MONITOR",
+      "categoryId": "camera-on-set",
+      "category": "Camera & On-Set",
+      "format": "carousel",
+      "num": "",
+      "summary": "Monitor REC, timecode, FPS, and remaining media from cart or director iPad.",
+      "tip": "Monitor REC, timecode, FPS, and remaining media from cart or director iPad.",
+      "htmlPath": "slides/camera-motion/remote-monitor.html"
+    },
+    {
+      "id": "work-speaks",
+      "title": "THE WORK SPEAKS FIRST",
+      "categoryId": "creator-mindset",
+      "category": "Creator Mindset",
+      "format": "carousel",
+      "num": "",
+      "summary": "Lead with the frame. Let quality earn the scroll-stop.",
+      "tip": "Lead with the frame. Let quality earn the scroll-stop.",
+      "htmlPath": "slides/creator-mindset/work-speaks.html"
+    },
+    {
+      "id": "create-limits",
+      "title": "CREATE WITHOUT LIMITS",
+      "categoryId": "creator-mindset",
+      "category": "Creator Mindset",
+      "format": "feed",
+      "num": "",
+      "summary": "Tools change. Taste and intention stay.",
+      "tip": "Tools change. Taste and intention stay.",
+      "htmlPath": "slides/creator-mindset/create-limits.html"
+    }
+  ],
+  "featuredTips": [
+    {
+      "id": "light-the-eyes",
+      "title": "Light The Eyes First",
+      "summary": "If your subject's eyes catch a small specular highlight, the whole frame reads alive. Place a soft key 30\u00b0 off-axis at eye level \u2014 adjust until you see a 2 o'clock catchlight.",
+      "slideId": "dramatic-portrait",
+      "categoryId": "lighting-exposure"
+    },
+    {
+      "id": "audio-is-70",
+      "title": "Audio Is 70% Of Video",
+      "summary": "A blurry shot with crisp audio plays. A sharp shot with bad audio dies in 3 seconds. Lav your subject, set levels at -12dB peaks, and always run a backup recorder.",
+      "slideId": "remote-monitor",
+      "categoryId": "camera-on-set"
+    },
+    {
+      "id": "shoot-cutaway",
+      "title": "Shoot The Cutaway",
+      "summary": "Every interview needs B-roll. Hands, environment, gear, gestures \u2014 anything. It saves your edit when you need to cut a stutter or cover a jump cut.",
+      "slideId": "shot-types",
+      "categoryId": "framing-shots"
+    },
+    {
+      "id": "frame-for-crop",
+      "title": "Frame For The Crop",
+      "summary": "Shooting in 16:9 but delivering 9:16? Compose with the vertical safe area in mind from day one. Place subjects on the center third \u2014 never the edges.",
+      "slideId": "grid-compositions",
+      "categoryId": "framing-shots"
+    }
+  ]
+}
