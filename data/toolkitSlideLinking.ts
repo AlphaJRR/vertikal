@@ -1,5 +1,54 @@
 import { LINKING_MAP, type SlideRef } from "./toolkitSlideTypes";
 
+/** Brand-repo root for AVA diagram PNGs (sibling repo, not bundled in Vertikal-App). */
+export const AVA_DIAGRAM_BRAND_ROOT =
+  "alpha-visual-artists-brand/creators-toolkit/assets/ava";
+
+/** App bundle root when PNGs are synced from the brand repo. */
+export const AVA_DIAGRAM_BUNDLE_ROOT = "assets/ava";
+
+/** Valid `ava/<category>/<file>.svg` categories for diagram slides. */
+export const AVA_DIAGRAM_CATEGORIES = [
+  "camera",
+  "lighting",
+  "framing",
+  "editing",
+  "strategy",
+] as const;
+
+export type AvaDiagramCategory = (typeof AVA_DIAGRAM_CATEGORIES)[number];
+
+const AVA_DIAGRAM_PATH = /^ava\/([a-z-]+)\/([a-z0-9-]+\.svg)$/;
+
+export interface AvaDiagramPath {
+  category: AvaDiagramCategory;
+  file: string;
+  brandPath: string;
+  bundlePath: string;
+}
+
+/**
+ * Parse and resolve `ava/<category>/<file>.svg` diagram paths.
+ * Returns null when the path does not match the canonical convention.
+ */
+export function resolveAvaDiagramPath(image: string): AvaDiagramPath | null {
+  const match = AVA_DIAGRAM_PATH.exec(image);
+  if (!match) return null;
+
+  const category = match[1] as AvaDiagramCategory;
+  if (!(AVA_DIAGRAM_CATEGORIES as readonly string[]).includes(category)) {
+    return null;
+  }
+
+  const file = match[2];
+  return {
+    category,
+    file,
+    brandPath: `${AVA_DIAGRAM_BRAND_ROOT}/${category}/${file}`,
+    bundlePath: `${AVA_DIAGRAM_BUNDLE_ROOT}/${category}/${file}`,
+  };
+}
+
 /**
  * Snake_case AVA lesson id → kebab-case Vertikal curriculum lesson id.
  * Only entries where the id differs from a naive snake→kebab transform are listed here.

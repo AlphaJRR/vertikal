@@ -768,7 +768,8 @@ body.ava-preview {
   min-height: 0;
 }
 
-.presentation-diagram-wrap svg {
+.presentation-diagram-wrap svg,
+.presentation-diagram-wrap .ava-diagram-img {
   width: 100%;
   max-height: 420px;
 }

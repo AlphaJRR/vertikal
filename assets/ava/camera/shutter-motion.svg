@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450">
+  <rect width="800" height="450" fill="#080808"/>
+
+  <rect x="60" y="100" width="200" height="250" fill="none" stroke="#1C1C1C" stroke-width="1"/>
+  <rect x="300" y="100" width="200" height="250" fill="none" stroke="#1C1C1C" stroke-width="1"/>
+  <rect x="540" y="100" width="200" height="250" fill="none" stroke="#1C1C1C" stroke-width="1"/>
+  <rect x="100" y="180" width="120" height="90" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="2"/>
+  <rect x="340" y="180" width="80" height="90" fill="#FFFFFF"/>
+  <rect x="420" y="180" width="40" height="90" fill="#888888" opacity="0.6"/>
+  <rect x="580" y="180" width="30" height="90" fill="#FFFFFF"/>
+  <rect x="610" y="180" width="30" height="90" fill="#888888" opacity="0.5"/>
+  <rect x="640" y="180" width="30" height="90" fill="#888888" opacity="0.3"/>
+  <rect x="670" y="180" width="30" height="90" fill="#888888" opacity="0.2"/>
+  <line x1="60" y1="380" x2="260" y2="380" stroke="#E8000A" stroke-width="2"/>
+  <line x1="300" y1="380" x2="500" y2="380" stroke="#888888" stroke-width="1"/>
+  <line x1="540" y1="380" x2="740" y2="380" stroke="#888888" stroke-width="1"/>
+
+</svg>

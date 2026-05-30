@@ -29,6 +29,8 @@ export interface ToolkitSlide {
   setup?: string;
   panels?: ToolkitPanel[];
   htmlPath: string;
+  /** Diagram PNG for HTML deck: `ava/<category>/<file>.png` */
+  diagramImage?: string;
 }
 
 export interface FeaturedTip {

@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Image, Text, View } from "react-native";
 import { creatorTrainingStyles as s } from "./creatorTrainingStyles";
 import { normalizeToolkitImagePath } from "../../utils/lessonContentParser";
+import {
+  isAvaDiagramAssetPath,
+  resolveAvaDiagramUri,
+} from "../../data/toolkitSlideAssets";
+import { resolveAvaDiagramPath } from "../../data/toolkitSlideLinking";
 
 interface LessonGuideImageProps {
   path: string;
@@ -14,7 +19,31 @@ interface LessonGuideImageProps {
  */
 export function LessonGuideImage({ path, alt }: LessonGuideImageProps) {
   const normalized = normalizeToolkitImagePath(path);
-  const source = resolveToolkitImageSource(normalized);
+  const avaResolved = resolveAvaDiagramPath(normalized);
+  const [avaUri, setAvaUri] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!avaResolved || !isAvaDiagramAssetPath(normalized)) {
+      setAvaUri(null);
+      return;
+    }
+    let cancelled = false;
+    resolveAvaDiagramUri(normalized)
+      .then((uri) => {
+        if (!cancelled) setAvaUri(uri);
+      })
+      .catch(() => {
+        if (!cancelled) setAvaUri(null);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [normalized, avaResolved]);
+
+  const source =
+    avaUri != null
+      ? { uri: avaUri }
+      : resolveToolkitImageSource(normalized);
 
   if (source) {
     return (

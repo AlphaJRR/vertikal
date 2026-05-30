@@ -85,7 +85,8 @@
       "summary": "The rule of thirds divides your frame into a 3x3 grid. It matters because placing subjects on these lines creates natural balance.",
       "tip": "Use the opposite third for negative space to create direction.",
       "highlight": "intersections",
-      "htmlPath": "slides/photography-composition/rule-of-thirds.html"
+      "htmlPath": "slides/photography-composition/rule-of-thirds.html",
+      "diagramImage": "ava/framing/rule-of-thirds.svg"
     },
     {
       "id": "symmetry",
@@ -109,7 +110,8 @@
       "summary": "Layer foreground, midground, and background for dimension. Focus on layers.",
       "tip": "Layer foreground, midground, and background for dimension. Focus on layers.",
       "highlight": "layers",
-      "htmlPath": "slides/photography-composition/depth.html"
+      "htmlPath": "slides/photography-composition/depth.html",
+      "diagramImage": "ava/framing/depth-layers.svg"
     },
     {
       "id": "framing",
@@ -145,7 +147,8 @@
       "summary": "Leading lines guide the viewer's eye through the frame. They matter because they create depth and visual flow.",
       "tip": "Diagonal lines add more energy than horizontal ones.",
       "highlight": "vanishing point",
-      "htmlPath": "slides/photography-composition/leading-lines.html"
+      "htmlPath": "slides/photography-composition/leading-lines.html",
+      "diagramImage": "ava/framing/leading-lines.svg"
     },
     {
       "id": "golden-spiral",
@@ -334,7 +337,8 @@
         "Add directional blur in post if needed.",
         "Sync to whoosh SFX or a music hit."
       ],
-      "htmlPath": "slides/camera-motion/whip-pan.html"
+      "htmlPath": "slides/camera-motion/whip-pan.html",
+      "diagramImage": "ava/editing/whip_pan.png"
     },
     {
       "id": "surface-tracker",
@@ -385,7 +389,8 @@
         "Adjust hue and saturation in small increments.",
         "Use qualifiers only when global adjustments fail."
       ],
-      "htmlPath": "slides/davinci-resolve/skin-tone-correction.html"
+      "htmlPath": "slides/davinci-resolve/skin-tone-correction.html",
+      "diagramImage": "ava/editing/vectorscope-skin-line.svg"
     },
     {
       "id": "hdr-zones",
@@ -436,7 +441,8 @@
         "Use RGB for color shifts.",
         "Check scopes."
       ],
-      "htmlPath": "slides/davinci-resolve/curves.html"
+      "htmlPath": "slides/davinci-resolve/curves.html",
+      "diagramImage": "ava/editing/rgb-curves.svg"
     },
     {
       "id": "color-warper",
@@ -487,7 +493,8 @@
         "Creative look node.",
         "Dedicated skin and background nodes."
       ],
-      "htmlPath": "slides/davinci-resolve/node-structure.html"
+      "htmlPath": "slides/davinci-resolve/node-structure.html",
+      "diagramImage": "ava/editing/node_structure.png"
     },
     {
       "id": "vectorscope",
@@ -521,7 +528,8 @@
         "Use the vectorscope\u2014keep skin on the skin tone line.",
         "Calibrate your monitor annually\u2014scopes do not lie."
       ],
-      "htmlPath": "slides/davinci-resolve/scopes.html"
+      "htmlPath": "slides/davinci-resolve/scopes.html",
+      "diagramImage": "ava/editing/scopes.png"
     },
     {
       "id": "interface-overview",
@@ -538,7 +546,8 @@
         "Use Edit for precision.",
         "Use Color and Fairlight for finishing."
       ],
-      "htmlPath": "slides/davinci-resolve/interface-overview.html"
+      "htmlPath": "slides/davinci-resolve/interface-overview.html",
+      "diagramImage": "ava/editing/interface_overview.png"
     },
     {
       "id": "color-wheels",
@@ -555,7 +564,8 @@
         "Add contrast.",
         "Refine skin tones."
       ],
-      "htmlPath": "slides/davinci-resolve/color-wheels.html"
+      "htmlPath": "slides/davinci-resolve/color-wheels.html",
+      "diagramImage": "ava/editing/color-wheels-diagram.svg"
     },
     {
       "id": "fairlight-basics",
@@ -572,7 +582,8 @@
         "Apply light compression on dialogue.",
         "Limit the master bus to -1dB true peak."
       ],
-      "htmlPath": "slides/davinci-resolve/fairlight-basics.html"
+      "htmlPath": "slides/davinci-resolve/fairlight-basics.html",
+      "diagramImage": "ava/editing/fairlight_basics.png"
     },
     {
       "id": "dialogue-cleanup",
@@ -589,7 +600,8 @@
         "Cut distracting breaths by hand.",
         "Keep unprocessed backups on muted tracks."
       ],
-      "htmlPath": "slides/davinci-resolve/dialogue-cleanup.html"
+      "htmlPath": "slides/davinci-resolve/dialogue-cleanup.html",
+      "diagramImage": "ava/editing/dialogue_cleanup.png"
     },
     {
       "id": "three-point-lighting",
@@ -606,7 +618,8 @@
         "Add backlight behind the subject for separation.",
         "Adjust intensities to match the mood."
       ],
-      "htmlPath": "slides/lighting-exposure/three-point-lighting.html"
+      "htmlPath": "slides/lighting-exposure/three-point-lighting.html",
+      "diagramImage": "ava/lighting/three-point-layout.svg"
     },
     {
       "id": "hard-soft-light",
@@ -616,14 +629,15 @@
       "format": "carousel",
       "num": "",
       "summary": "Small direct source = hard; large diffused source = soft.",
-      "tip": "Soft light still needs direction—don't flatten it.",
+      "tip": "Soft light still needs direction\u2014don't flatten it.",
       "steps": [
         "Move light closer for softness.",
         "Add diffusion for smoother shadows.",
         "Use bare bulbs or fresnels for hard light.",
         "Shape shadows with flags."
       ],
-      "htmlPath": "slides/lighting-exposure/hard-soft-light.html"
+      "htmlPath": "slides/lighting-exposure/hard-soft-light.html",
+      "diagramImage": "ava/lighting/hard-soft-light.svg"
     },
     {
       "id": "color-temperature",
@@ -632,7 +646,7 @@
       "category": "Lighting & Exposure",
       "format": "carousel",
       "num": "",
-      "summary": "Daylight ~5600K; tungsten ~3200K — match your lights to the dominant source.",
+      "summary": "Daylight ~5600K; tungsten ~3200K \u2014 match your lights to the dominant source.",
       "tip": "Use warm light for intimacy and cool light for tension.",
       "steps": [
         "Identify the dominant light source.",
@@ -640,7 +654,8 @@
         "Gel lights to match the environment.",
         "Avoid mixing warm and cool sources."
       ],
-      "htmlPath": "slides/lighting-exposure/color-temperature.html"
+      "htmlPath": "slides/lighting-exposure/color-temperature.html",
+      "diagramImage": "ava/lighting/color_temperature.png"
     },
     {
       "id": "cinematic-setup",
@@ -650,14 +665,15 @@
       "format": "carousel",
       "num": "",
       "summary": "Motivated key, negative fill for depth, warm vs cool separation.",
-      "tip": "Turn off overheads—they kill cinematic mood.",
+      "tip": "Turn off overheads\u2014they kill cinematic mood.",
       "steps": [
         "Choose a motivated key source.",
         "Add negative fill for contrast.",
         "Add backlight or edge light.",
         "Add color contrast subtly."
       ],
-      "htmlPath": "slides/lighting-exposure/cinematic-setup.html"
+      "htmlPath": "slides/lighting-exposure/cinematic-setup.html",
+      "diagramImage": "ava/lighting/cinematic_setup.png"
     },
     {
       "id": "rembrandt-lighting",
@@ -666,15 +682,16 @@
       "category": "Lighting & Exposure",
       "format": "carousel",
       "num": "",
-      "summary": "Key at 45° above eye level — nose shadow connects to cheek, leaving a lit triangle.",
+      "summary": "Key at 45\u00b0 above eye level \u2014 nose shadow connects to cheek, leaving a lit triangle.",
       "tip": "Use negative fill to deepen the shadow side.",
       "steps": [
-        "Place key at 45°.",
+        "Place key at 45\u00b0.",
         "Raise it slightly above eye level.",
         "Adjust angle until triangle forms.",
         "Add fill sparingly."
       ],
-      "htmlPath": "slides/lighting-exposure/rembrandt-lighting.html"
+      "htmlPath": "slides/lighting-exposure/rembrandt-lighting.html",
+      "diagramImage": "ava/lighting/rembrandt-triangle.svg"
     },
     {
       "id": "practical-motivated",
@@ -683,7 +700,7 @@
       "category": "Lighting & Exposure",
       "format": "carousel",
       "num": "",
-      "summary": "Key feels like it comes from the practical — hidden lights boost the same direction.",
+      "summary": "Key feels like it comes from the practical \u2014 hidden lights boost the same direction.",
       "tip": "Dim practicals to avoid clipping while keeping ambiance.",
       "steps": [
         "Identify the practical source.",
@@ -691,7 +708,8 @@
         "Boost practical with hidden lights.",
         "Match color temperature."
       ],
-      "htmlPath": "slides/lighting-exposure/practical-motivated.html"
+      "htmlPath": "slides/lighting-exposure/practical-motivated.html",
+      "diagramImage": "ava/lighting/practical_motivated.png"
     },
     {
       "id": "dramatic-portrait",
@@ -773,7 +791,8 @@
           "description": "Camera above \u2014 vulnerability or overview."
         }
       ],
-      "htmlPath": "slides/framing-shots/camera-angles.html"
+      "htmlPath": "slides/framing-shots/camera-angles.html",
+      "diagramImage": "ava/framing/high-low-angle.svg"
     },
     {
       "id": "exposure-triangle",
@@ -790,7 +809,8 @@
         "Raise ISO only when needed.",
         "Rebalance all three for proper exposure."
       ],
-      "htmlPath": "slides/camera-basics/exposure-triangle.html"
+      "htmlPath": "slides/camera-basics/exposure-triangle.html",
+      "diagramImage": "ava/camera/exposure-triangle.svg"
     },
     {
       "id": "shutter-motion",
@@ -807,7 +827,8 @@
         "Lower shutter for stylized blur.",
         "Rebalance exposure."
       ],
-      "htmlPath": "slides/camera-basics/shutter-motion.html"
+      "htmlPath": "slides/camera-basics/shutter-motion.html",
+      "diagramImage": "ava/camera/shutter-motion.svg"
     },
     {
       "id": "iso-noise",
@@ -824,7 +845,8 @@
         "Expose slightly brighter to reduce noise.",
         "Fix minor noise in post."
       ],
-      "htmlPath": "slides/camera-basics/iso-noise.html"
+      "htmlPath": "slides/camera-basics/iso-noise.html",
+      "diagramImage": "ava/camera/iso-noise.svg"
     },
     {
       "id": "grid-compositions",
@@ -863,8 +885,9 @@
       "format": "carousel",
       "num": "",
       "summary": "Headroom and nose room control breathing space around a subject. They matter because they affect comfort and direction.",
-      "tip": "Less nose room creates tension—use intentionally.",
-      "htmlPath": "slides/framing-shots/headroom-lookroom.html"
+      "tip": "Less nose room creates tension\u2014use intentionally.",
+      "htmlPath": "slides/framing-shots/headroom-lookroom.html",
+      "diagramImage": "ava/framing/headroom-noseroom.svg"
     },
     {
       "id": "vertical-composition",
@@ -874,8 +897,9 @@
       "format": "carousel",
       "num": "",
       "summary": "Shooting 16:9 but delivering 9:16? Compose with the vertical safe area in mind from day one.",
-      "tip": "Frame for the crop before you roll—fixing in post costs resolution.",
-      "htmlPath": "slides/framing-shots/vertical-composition.html"
+      "tip": "Frame for the crop before you roll\u2014fixing in post costs resolution.",
+      "htmlPath": "slides/framing-shots/vertical-composition.html",
+      "diagramImage": "ava/framing/vertical_composition.png"
     },
     {
       "id": "compositions-overview",
@@ -951,7 +975,8 @@
         "Raise ISO only if needed.",
         "Check focus carefully."
       ],
-      "htmlPath": "slides/camera-motion/aperture-depth.html"
+      "htmlPath": "slides/camera-motion/aperture-depth.html",
+      "diagramImage": "ava/camera/aperture-depth.svg"
     },
     {
       "id": "remote-monitor",
@@ -1001,7 +1026,8 @@
         "Add on-screen captions for muted viewing.",
         "Post when insights show your audience is active."
       ],
-      "htmlPath": "slides/strategy/instagram-reels.html"
+      "htmlPath": "slides/strategy/instagram-reels.html",
+      "diagramImage": "ava/strategy/instagram_reels.png"
     },
     {
       "id": "tiktok-native",
@@ -1018,7 +1044,8 @@
         "Reply to comments with video.",
         "State the payoff in the first 0.5 seconds."
       ],
-      "htmlPath": "slides/strategy/tiktok-native.html"
+      "htmlPath": "slides/strategy/tiktok-native.html",
+      "diagramImage": "ava/strategy/tiktok_native.png"
     },
     {
       "id": "youtube-titles-thumbs",
@@ -1031,11 +1058,12 @@
       "tip": "Design the thumbnail before you write the script.",
       "steps": [
         "Deliver the title promise in the first 30 seconds.",
-        "Pattern interrupt every 30–45 seconds.",
+        "Pattern interrupt every 30\u201345 seconds.",
         "Add chapters on 8+ minute videos.",
         "A/B test thumbnails before a wide push."
       ],
-      "htmlPath": "slides/strategy/youtube-titles-thumbs.html"
+      "htmlPath": "slides/strategy/youtube-titles-thumbs.html",
+      "diagramImage": "ava/strategy/youtube_titles_thumbs.png"
     },
     {
       "id": "batch-shooting",
@@ -1047,12 +1075,13 @@
       "summary": "Separate planning, shooting, and editing into distinct phases.",
       "tip": "Use consistent lighting and framing to speed up shooting.",
       "steps": [
-        "Write 10–15 scripts.",
-        "Shoot all A‑roll in one session.",
-        "Capture B‑roll in bulk.",
+        "Write 10\u201315 scripts.",
+        "Shoot all A\u2011roll in one session.",
+        "Capture B\u2011roll in bulk.",
         "Edit in batches."
       ],
-      "htmlPath": "slides/strategy/batch-shooting.html"
+      "htmlPath": "slides/strategy/batch-shooting.html",
+      "diagramImage": "ava/strategy/batch-shooting-calendar.svg"
     },
     {
       "id": "hook-formula",
@@ -1062,14 +1091,15 @@
       "format": "carousel",
       "num": "91",
       "summary": "State the payoff before you ask for attention.",
-      "tip": "Read the hook out loud—if it sounds like an ad, rewrite it.",
+      "tip": "Read the hook out loud\u2014if it sounds like an ad, rewrite it.",
       "steps": [
         "Write problem + promise in text and voice.",
         "Show the result first, then rewind.",
-        "Draft ten hooks—shoot the best two.",
+        "Draft ten hooks\u2014shoot the best two.",
         "Open with a face or moving object."
       ],
-      "htmlPath": "slides/strategy/hook-formula.html"
+      "htmlPath": "slides/strategy/hook-formula.html",
+      "diagramImage": "ava/strategy/hook-formula.svg"
     },
     {
       "id": "repurposing",
@@ -1079,14 +1109,15 @@
       "format": "carousel",
       "num": "92",
       "summary": "Adapt the message to the platform, not the other way around.",
-      "tip": "Your best short‑form ideas usually come from long‑form content.",
+      "tip": "Your best short\u2011form ideas usually come from long\u2011form content.",
       "steps": [
-        "Start with a long‑form anchor video.",
-        "Pull 5–10 short clips.",
+        "Start with a long\u2011form anchor video.",
+        "Pull 5\u201310 short clips.",
         "Convert insights into text posts.",
         "Reformat visuals for each platform."
       ],
-      "htmlPath": "slides/strategy/repurposing.html"
+      "htmlPath": "slides/strategy/repurposing.html",
+      "diagramImage": "ava/strategy/repurposing.png"
     },
     {
       "id": "content-pillars",
@@ -1098,12 +1129,13 @@
       "summary": "Every post must serve a pillar.",
       "tip": "Your strongest pillar should produce 50% of your content.",
       "steps": [
-        "Define 3–5 core pillars.",
+        "Define 3\u20135 core pillars.",
         "Map ideas to pillars.",
         "Build weekly themes around them.",
         "Review and refine monthly."
       ],
-      "htmlPath": "slides/strategy/content-pillars.html"
+      "htmlPath": "slides/strategy/content-pillars.html",
+      "diagramImage": "ava/strategy/content-pillars.svg"
     },
     {
       "id": "hooks-convert",
@@ -1113,14 +1145,15 @@
       "format": "carousel",
       "num": "95",
       "summary": "Choose hook type based on the action you want the viewer to take.",
-      "tip": "Myth‑busting hooks have the highest share rate.",
+      "tip": "Myth\u2011busting hooks have the highest share rate.",
       "steps": [
         "Identify the desired action.",
         "Pick a hook type that aligns with it.",
         "Write the hook before filming.",
         "Deliver the payoff quickly."
       ],
-      "htmlPath": "slides/strategy/hooks-convert.html"
+      "htmlPath": "slides/strategy/hooks-convert.html",
+      "diagramImage": "ava/strategy/hooks_convert.png"
     }
   ],
   "featuredTips": [
