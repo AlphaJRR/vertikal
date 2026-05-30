@@ -16,17 +16,17 @@ export const toolkitCategories: ToolkitCategory[] = [
         "category": "CAMERA BASICS",
         "title": "ISO & Noise",
         "type": "html_presentation",
-        "description": "ISO controls sensor sensitivity. It matters because high ISO introduces noise.",
-        "guide": "Use the lowest ISO possible for clean images. Raise ISO only when aperture and shutter can't compensate. Modern cameras handle moderate ISO well, but noise becomes visible in shadows.",
-        "keyRule": "ISO is your last resort for exposure.",
+        "description": "ISO increases sensor sensitivity but adds noise.",
+        "guide": "Use the lowest ISO possible. Noise appears first in shadows.",
+        "keyRule": "ISO is your last resort.",
         "steps": [
-          "Set aperture and shutter first.",
-          "Raise ISO only as needed.",
-          "Expose slightly brighter to reduce noise.",
-          "Fix minor noise in post."
+          "Set aperture + shutter first.",
+          "Raise ISO only when needed.",
+          "Expose slightly brighter.",
+          "Fix noise in post."
         ],
-        "proTip": "Expose to the right (ETTR) to minimize noise.",
-        "commonMistake": "Using ISO as the primary exposure tool.",
+        "proTip": "Expose to the right (ETTR).",
+        "commonMistake": "Using ISO as the main exposure tool.",
         "htmlSlidePath": "slides/camera-basics/iso-noise.html",
         "htmlSlideId": "iso-noise",
         "images": []
@@ -38,14 +38,14 @@ export const toolkitCategories: ToolkitCategory[] = [
         "category": "CAMERA BASICS",
         "title": "Aperture & Depth of Field",
         "type": "html_presentation",
-        "description": "Aperture controls how much light enters the lens and how much of the image is in focus. It matters because depth of field shapes your visual style.",
-        "guide": "Lower f‑stops create blurry backgrounds. Higher f‑stops keep more in focus. Aperture also affects exposure, so adjust shutter or ISO to compensate. Use shallow depth for portraits and deep depth for landscapes.",
-        "keyRule": "Lower f‑stop = shallower depth of field.",
+        "description": "Aperture controls background blur and light.",
+        "guide": "Lower f‑stops blur backgrounds; higher f‑stops keep more in focus.",
+        "keyRule": "Lower f‑stop = shallower depth.",
         "steps": [
           "Choose f‑stop based on subject.",
           "Adjust shutter to maintain exposure.",
-          "Raise ISO only if needed.",
-          "Check focus carefully."
+          "Raise ISO last.",
+          "Check focus."
         ],
         "proTip": "Use f/2.8 or lower for cinematic separation.",
         "commonMistake": "Shooting wide open without checking focus.",
@@ -60,66 +60,86 @@ export const toolkitCategories: ToolkitCategory[] = [
         "category": "CAMERA BASICS",
         "title": "Shutter Speed & Motion",
         "type": "html_presentation",
-        "description": "Shutter speed controls how motion appears. It matters because motion blur affects realism and style.",
-        "guide": "Use 1/50 for natural motion at 24fps. Faster shutter speeds freeze motion. Slower speeds add blur. Shutter also affects exposure, so adjust aperture or ISO accordingly.",
-        "keyRule": "Match shutter speed to frame rate for natural motion.",
+        "description": "Shutter speed controls motion blur.",
+        "guide": "Match shutter to frame rate for natural motion. Faster = crisp. Slower = blur.",
+        "keyRule": "Shutter ≈ 2× frame rate.",
         "steps": [
-          "Set shutter to double your frame rate.",
-          "Increase shutter for action.",
-          "Lower shutter for stylized blur.",
+          "Set shutter for motion style.",
+          "Increase for action.",
+          "Lower for blur.",
           "Rebalance exposure."
         ],
-        "proTip": "Use high shutter speeds for crisp sports footage.",
-        "commonMistake": "Using fast shutter indoors and underexposing.",
+        "proTip": "Use high shutter for sports.",
+        "commonMistake": "Fast shutter indoors causing underexposure.",
         "htmlSlidePath": "slides/camera-basics/shutter-motion.html",
         "htmlSlideId": "shutter-motion",
         "images": []
       },
       {
-        "id": "camera-white-balance",
+        "id": "camera-frame-rates",
         "number": "04",
+        "tab": "camera",
+        "category": "CAMERA BASICS",
+        "title": "Frame Rate",
+        "type": "static",
+        "description": "Frame rate affects motion style.",
+        "guide": "24fps = cinematic\n30fps = clean\n60fps = smooth / slow motion",
+        "keyRule": "Choose frame rate intentionally.",
+        "steps": [
+          "Pick frame rate for mood.",
+          "Match shutter.",
+          "Adjust lighting.",
+          "Keep consistent."
+        ],
+        "proTip": "Shoot 60fps only when needed.",
+        "commonMistake": "Mixing frame rates randomly.",
+        "images": []
+      },
+      {
+        "id": "camera-white-balance",
+        "number": "05",
         "tab": "camera",
         "category": "CAMERA BASICS",
         "title": "White Balance",
         "type": "static",
-        "description": "White balance controls color temperature. It matters because incorrect white balance ruins skin tones.",
-        "guide": "Match white balance to your lighting environment. Use presets or set Kelvin manually. Avoid auto white balance—it shifts mid‑shot. Consistent white balance makes grading easier.",
-        "keyRule": "Match white balance to the dominant light source.",
+        "description": "White balance controls color temperature and skin tone accuracy.",
+        "guide": "Match Kelvin to your lighting. Avoid auto WB.",
+        "keyRule": "Match WB to the dominant light source.",
         "steps": [
           "Identify lighting temperature.",
           "Set Kelvin manually.",
-          "Avoid mixing warm and cool lights.",
+          "Avoid mixed lighting.",
           "Check skin tones."
         ],
-        "proTip": "Use a gray card for perfect balance.",
-        "commonMistake": "Leaving white balance on auto.",
+        "proTip": "Use a gray card.",
+        "commonMistake": "Leaving WB on auto.",
         "images": []
       },
       {
         "id": "camera-exposure-triangle",
-        "number": "05",
+        "number": "06",
         "tab": "camera",
         "category": "CAMERA BASICS",
         "title": "Exposure Triangle",
         "type": "html_presentation",
-        "description": "The exposure triangle controls how bright or dark your image is. It matters because every shot depends on balancing these three settings.",
-        "guide": "Aperture controls depth of field. Shutter speed controls motion blur. ISO controls sensor sensitivity. Changing one affects the others. Mastering the triangle gives you full creative control.",
-        "keyRule": "Balance aperture, shutter, and ISO together—not independently.",
+        "description": "The exposure triangle controls brightness and creative style.",
+        "guide": "Aperture affects depth, shutter affects motion, ISO affects noise. They must be balanced together.",
+        "keyRule": "Balance all three — never adjust one in isolation.",
         "steps": [
-          "Set aperture for depth of field.",
-          "Set shutter speed for motion.",
-          "Raise ISO only as needed.",
-          "Rebalance all three for proper exposure."
+          "Set aperture for depth.",
+          "Set shutter for motion.",
+          "Raise ISO only when needed.",
+          "Rebalance exposure."
         ],
-        "proTip": "Lock two settings for your style and adjust the third for exposure.",
-        "commonMistake": "Using ISO as the primary exposure tool.",
+        "proTip": "Lock two settings and adjust the third.",
+        "commonMistake": "Using ISO as the main exposure tool.",
         "htmlSlidePath": "slides/camera-basics/exposure-triangle.html",
         "htmlSlideId": "exposure-triangle",
         "images": []
       },
       {
         "id": "camera-histogram-zebras",
-        "number": "06",
+        "number": "07",
         "tab": "camera",
         "category": "CAMERA BASICS",
         "title": "Histogram & Zebras",
@@ -139,87 +159,87 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "camera-nd-filters",
-        "number": "07",
+        "number": "08",
         "tab": "camera",
         "category": "CAMERA BASICS",
         "title": "ND Filters",
         "type": "static",
-        "description": "ND filters reduce light without changing color. They matter because they let you keep cinematic settings in bright conditions.",
-        "guide": "Use ND filters outdoors to maintain wide apertures and correct shutter speeds. Variable NDs offer flexibility. Fixed NDs offer consistency. ND filters are essential for cinematic control.",
-        "keyRule": "Use ND to control exposure—not shutter speed.",
+        "description": "ND filters reduce light so you can keep cinematic settings outdoors.",
+        "guide": "Use ND to maintain wide apertures and correct shutter speeds.",
+        "keyRule": "Use ND — not shutter — to control exposure.",
         "steps": [
-          "Set aperture and shutter.",
+          "Set aperture + shutter.",
           "Add ND to reduce light.",
           "Adjust ISO last.",
-          "Recheck white balance."
+          "Recheck WB."
         ],
         "proTip": "Use fixed NDs for color accuracy.",
-        "commonMistake": "Raising shutter speed instead of using ND.",
+        "commonMistake": "Raising shutter instead of using ND.",
         "images": []
       },
       {
         "id": "camera-focal-length",
-        "number": "08",
+        "number": "09",
         "tab": "camera",
         "category": "CAMERA BASICS",
         "title": "Focal Length",
         "type": "static",
-        "description": "Focal length affects field of view and perspective. It matters because lens choice shapes storytelling.",
-        "guide": "Wide lenses exaggerate space. Telephoto lenses compress distance. Mid‑range lenses feel natural. Choose focal length based on emotion and composition.",
+        "description": "Focal length affects field of view and perspective.",
+        "guide": "Wide = exaggerated space / Telephoto = compression / Mid-range = natural",
         "keyRule": "Choose focal length for perspective, not convenience.",
         "steps": [
-          "Pick lens based on scene.",
-          "Adjust distance to subject.",
-          "Reframe for composition.",
+          "Pick lens for emotion.",
+          "Adjust distance.",
+          "Reframe.",
           "Maintain continuity."
         ],
-        "proTip": "Use 35mm for natural storytelling.",
-        "commonMistake": "Standing still and zooming instead of moving.",
+        "proTip": "35mm is the most natural storytelling lens.",
+        "commonMistake": "Zooming instead of moving.",
         "images": []
       },
       {
         "id": "camera-prime-vs-zoom",
-        "number": "09",
+        "number": "10",
         "tab": "camera",
         "category": "CAMERA BASICS",
         "title": "Prime vs Zoom Lenses",
         "type": "static",
-        "description": "Prime lenses have fixed focal lengths; zooms are variable. It matters because each offers different creative advantages.",
-        "guide": "Primes are sharper and faster. Zooms are flexible and efficient. Use primes for controlled shoots and zooms for run‑and‑gun. Choose based on workflow and style.",
+        "description": "Primes are sharp and fast; zooms are flexible.",
+        "guide": "Use primes for controlled shoots; zooms for run‑and‑gun.",
         "keyRule": "Use primes for quality, zooms for speed.",
         "steps": [
-          "Choose lens based on shoot type.",
+          "Choose based on workflow.",
           "Use primes for low light.",
           "Use zooms for events.",
           "Match lenses for consistency."
         ],
-        "proTip": "A 24–70mm zoom covers most needs.",
+        "proTip": "A 24–70mm covers most needs.",
         "commonMistake": "Using primes when speed matters more.",
         "images": []
       },
       {
         "id": "camera-sensor-size",
-        "number": "10",
+        "number": "11",
         "tab": "camera",
         "category": "CAMERA BASICS",
         "title": "Sensor Size",
         "type": "static",
-        "description": "Sensor size affects depth of field and field of view. It matters because it changes how lenses behave.",
-        "guide": "Full‑frame sensors have shallower depth and wider views. APS‑C and Micro Four Thirds crop the image. Know your crop factor to predict framing. Sensor size influences style, not quality.",
-        "keyRule": "Know your crop factor for accurate framing.",
+        "description": "Sensor size affects depth and field of view.",
+        "guide": "Full-frame = shallow depth / APS‑C = crop / MFT = deeper depth",
+        "keyRule": "Know your crop factor.",
         "steps": [
           "Identify sensor size.",
           "Multiply focal length by crop factor.",
           "Adjust lens choice.",
-          "Reframe accordingly."
+          "Reframe."
         ],
-        "proTip": "Full‑frame gives the most flexibility.",
+        "proTip": "Full-frame gives the most flexibility.",
         "commonMistake": "Ignoring crop factor when switching cameras.",
         "images": []
       },
       {
         "id": "camera-log-standard-profiles",
-        "number": "11",
+        "number": "12",
         "tab": "camera",
         "category": "CAMERA BASICS",
         "title": "Log vs Standard Profiles",
@@ -239,7 +259,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "camera-bitrate-codecs",
-        "number": "12",
+        "number": "13",
         "tab": "camera",
         "category": "CAMERA BASICS",
         "title": "Bitrate & Codecs",
@@ -259,7 +279,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "camera-file-formats-resolutions",
-        "number": "13",
+        "number": "14",
         "tab": "camera",
         "category": "CAMERA BASICS",
         "title": "File Formats & Resolutions",
@@ -279,7 +299,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "camera-stabilization",
-        "number": "14",
+        "number": "15",
         "tab": "camera",
         "category": "CAMERA BASICS",
         "title": "Stabilization (IBIS, Gimbal, Tripod)",
@@ -299,7 +319,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "camera-autofocus-manual",
-        "number": "15",
+        "number": "16",
         "tab": "camera",
         "category": "CAMERA BASICS",
         "title": "Autofocus vs Manual Focus",
@@ -327,7 +347,7 @@ export const toolkitCategories: ToolkitCategory[] = [
     "lessons": [
       {
         "id": "camera-manual-mode",
-        "number": "16",
+        "number": "17",
         "tab": "camera",
         "category": "Shooting Modes",
         "title": "Manual Mode",
@@ -343,7 +363,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "camera-aperture-priority",
-        "number": "17",
+        "number": "18",
         "tab": "camera",
         "category": "Shooting Modes",
         "title": "Aperture Priority",
@@ -359,7 +379,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "camera-shutter-priority",
-        "number": "18",
+        "number": "19",
         "tab": "camera",
         "category": "Shooting Modes",
         "title": "Shutter Priority",
@@ -375,7 +395,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "camera-picture-profiles",
-        "number": "19",
+        "number": "20",
         "tab": "camera",
         "category": "Shooting Modes",
         "title": "Picture Profiles",
@@ -391,7 +411,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "camera-raw-vs-compressed",
-        "number": "20",
+        "number": "21",
         "tab": "camera",
         "category": "Shooting Modes",
         "title": "RAW vs Compressed",
@@ -415,7 +435,7 @@ export const toolkitCategories: ToolkitCategory[] = [
     "lessons": [
       {
         "id": "camera-handheld",
-        "number": "21",
+        "number": "22",
         "tab": "camera",
         "category": "Camera Movement",
         "title": "Handheld",
@@ -431,7 +451,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "camera-gimbal",
-        "number": "22",
+        "number": "23",
         "tab": "camera",
         "category": "Camera Movement",
         "title": "Gimbal",
@@ -447,7 +467,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "camera-static",
-        "number": "23",
+        "number": "24",
         "tab": "camera",
         "category": "Camera Movement",
         "title": "Static",
@@ -463,7 +483,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "camera-dolly-slider",
-        "number": "24",
+        "number": "25",
         "tab": "camera",
         "category": "Camera Movement",
         "title": "Dolly / Slider",
@@ -479,7 +499,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "camera-whip-pan",
-        "number": "25",
+        "number": "26",
         "tab": "camera",
         "category": "Camera Movement",
         "title": "Whip Pan",
@@ -503,7 +523,7 @@ export const toolkitCategories: ToolkitCategory[] = [
     "lessons": [
       {
         "id": "framing-rule-of-thirds",
-        "number": "26",
+        "number": "27",
         "tab": "framing",
         "category": "FOUNDATIONAL RULES",
         "title": "Rule of Thirds",
@@ -525,7 +545,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "framing-leading-lines",
-        "number": "27",
+        "number": "28",
         "tab": "framing",
         "category": "FOUNDATIONAL RULES",
         "title": "Leading Lines",
@@ -547,7 +567,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "framing-symmetry",
-        "number": "28",
+        "number": "29",
         "tab": "framing",
         "category": "FOUNDATIONAL RULES",
         "title": "Symmetry",
@@ -567,7 +587,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "framing-framing-within-frame",
-        "number": "29",
+        "number": "30",
         "tab": "framing",
         "category": "FOUNDATIONAL RULES",
         "title": "Framing Within a Frame",
@@ -587,7 +607,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "framing-negative-space",
-        "number": "30",
+        "number": "31",
         "tab": "framing",
         "category": "FOUNDATIONAL RULES",
         "title": "Negative Space",
@@ -615,7 +635,7 @@ export const toolkitCategories: ToolkitCategory[] = [
     "lessons": [
       {
         "id": "framing-depth-layers",
-        "number": "31",
+        "number": "32",
         "tab": "framing",
         "category": "ADVANCED COMPOSITION",
         "title": "Depth Layers (Foreground, Mid, Background)",
@@ -637,7 +657,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "framing-dutch-angle",
-        "number": "32",
+        "number": "33",
         "tab": "framing",
         "category": "ADVANCED COMPOSITION",
         "title": "Dutch Angle",
@@ -657,7 +677,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "framing-high-low-angle",
-        "number": "33",
+        "number": "34",
         "tab": "framing",
         "category": "ADVANCED COMPOSITION",
         "title": "High Angle vs Low Angle",
@@ -679,7 +699,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "framing-wide-vs-tight",
-        "number": "34",
+        "number": "35",
         "tab": "framing",
         "category": "ADVANCED COMPOSITION",
         "title": "Wide vs Tight — When to Use Each",
@@ -699,7 +719,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "framing-headroom-nose-room",
-        "number": "35",
+        "number": "36",
         "tab": "framing",
         "category": "ADVANCED COMPOSITION",
         "title": "Headroom & Nose Room",
@@ -721,7 +741,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "framing-vertical-composition",
-        "number": "35B",
+        "number": "36B",
         "tab": "framing",
         "category": "ADVANCED COMPOSITION",
         "title": "Vertical Composition (9:16)",
@@ -751,7 +771,7 @@ export const toolkitCategories: ToolkitCategory[] = [
     "lessons": [
       {
         "id": "framing-ews",
-        "number": "36",
+        "number": "37",
         "tab": "framing",
         "category": "SHOT TYPES",
         "title": "Extreme Wide Shot",
@@ -771,7 +791,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "framing-ws",
-        "number": "37",
+        "number": "38",
         "tab": "framing",
         "category": "SHOT TYPES",
         "title": "Wide Shot",
@@ -791,7 +811,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "framing-ms",
-        "number": "38",
+        "number": "39",
         "tab": "framing",
         "category": "SHOT TYPES",
         "title": "Medium Shot",
@@ -811,7 +831,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "framing-cu",
-        "number": "39",
+        "number": "40",
         "tab": "framing",
         "category": "SHOT TYPES",
         "title": "Close Up",
@@ -831,7 +851,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "framing-ecu",
-        "number": "40",
+        "number": "41",
         "tab": "framing",
         "category": "SHOT TYPES",
         "title": "Extreme Close Up",
@@ -859,7 +879,7 @@ export const toolkitCategories: ToolkitCategory[] = [
     "lessons": [
       {
         "id": "lighting-three-point",
-        "number": "41",
+        "number": "42",
         "tab": "lighting",
         "category": "LIGHTING BASICS",
         "title": "Three-Point Lighting",
@@ -881,7 +901,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "lighting-natural-light",
-        "number": "42",
+        "number": "43",
         "tab": "lighting",
         "category": "LIGHTING BASICS",
         "title": "Natural Light",
@@ -901,7 +921,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "lighting-hard-vs-soft",
-        "number": "43",
+        "number": "44",
         "tab": "lighting",
         "category": "LIGHTING BASICS",
         "title": "Hard vs Soft Light",
@@ -923,7 +943,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "lighting-color-temp",
-        "number": "44",
+        "number": "45",
         "tab": "lighting",
         "category": "LIGHTING BASICS",
         "title": "Color Temperature",
@@ -945,7 +965,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "lighting-practical-lights",
-        "number": "45",
+        "number": "46",
         "tab": "lighting",
         "category": "LIGHTING BASICS",
         "title": "Practical Lights",
@@ -973,7 +993,7 @@ export const toolkitCategories: ToolkitCategory[] = [
     "lessons": [
       {
         "id": "lighting-interview-setup",
-        "number": "46",
+        "number": "47",
         "tab": "lighting",
         "category": "LIGHTING SETUPS",
         "title": "Interview Setup",
@@ -993,7 +1013,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "lighting-portrait-setup",
-        "number": "47",
+        "number": "48",
         "tab": "lighting",
         "category": "LIGHTING SETUPS",
         "title": "Portrait Setup",
@@ -1013,7 +1033,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "lighting-cinematic-setup",
-        "number": "48",
+        "number": "49",
         "tab": "lighting",
         "category": "LIGHTING SETUPS",
         "title": "Cinematic Setup",
@@ -1035,7 +1055,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "lighting-low-budget-setup",
-        "number": "49",
+        "number": "50",
         "tab": "lighting",
         "category": "LIGHTING SETUPS",
         "title": "Low Budget Setup",
@@ -1055,7 +1075,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "lighting-outdoor-setup",
-        "number": "50",
+        "number": "51",
         "tab": "lighting",
         "category": "LIGHTING SETUPS",
         "title": "Outdoor Setup",
@@ -1083,7 +1103,7 @@ export const toolkitCategories: ToolkitCategory[] = [
     "lessons": [
       {
         "id": "lighting-rembrandt",
-        "number": "51",
+        "number": "52",
         "tab": "lighting",
         "category": "ADVANCED LIGHTING",
         "title": "Rembrandt Lighting",
@@ -1105,7 +1125,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "lighting-butterfly",
-        "number": "52",
+        "number": "53",
         "tab": "lighting",
         "category": "ADVANCED LIGHTING",
         "title": "Butterfly/Paramount Lighting",
@@ -1125,7 +1145,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "lighting-split-light",
-        "number": "53",
+        "number": "54",
         "tab": "lighting",
         "category": "ADVANCED LIGHTING",
         "title": "Split Lighting",
@@ -1145,7 +1165,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "lighting-backlight-silhouette",
-        "number": "54",
+        "number": "55",
         "tab": "lighting",
         "category": "ADVANCED LIGHTING",
         "title": "Backlighting & Silhouette",
@@ -1165,7 +1185,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "lighting-practical-motivated",
-        "number": "55",
+        "number": "56",
         "tab": "lighting",
         "category": "ADVANCED LIGHTING",
         "title": "Practical Motivated Light",
@@ -1195,7 +1215,7 @@ export const toolkitCategories: ToolkitCategory[] = [
     "lessons": [
       {
         "id": "editing-resolve-interface",
-        "number": "56",
+        "number": "57",
         "tab": "editing",
         "category": "GETTING STARTED",
         "title": "Interface Overview",
@@ -1217,7 +1237,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "editing-project-setup",
-        "number": "57",
+        "number": "58",
         "tab": "editing",
         "category": "GETTING STARTED",
         "title": "Project Setup (Resolution, Frame Rate, Proxy Workflow)",
@@ -1237,7 +1257,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "editing-importing",
-        "number": "58",
+        "number": "59",
         "tab": "editing",
         "category": "GETTING STARTED",
         "title": "Importing & Organizing Footage",
@@ -1257,7 +1277,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "editing-basic-cut",
-        "number": "59",
+        "number": "60",
         "tab": "editing",
         "category": "GETTING STARTED",
         "title": "Basic Cut (Razor Tool, Trim, Ripple Edit)",
@@ -1285,7 +1305,7 @@ export const toolkitCategories: ToolkitCategory[] = [
     "lessons": [
       {
         "id": "editing-color-wheels",
-        "number": "60",
+        "number": "61",
         "tab": "editing",
         "category": "COLOR GRADING",
         "title": "Color Wheels (Lift, Gamma, Gain)",
@@ -1307,7 +1327,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "editing-curves",
-        "number": "61",
+        "number": "62",
         "tab": "editing",
         "category": "COLOR GRADING",
         "title": "Curves (RGB and Luma)",
@@ -1329,7 +1349,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "editing-log-workflow",
-        "number": "62",
+        "number": "63",
         "tab": "editing",
         "category": "COLOR GRADING",
         "title": "Shooting Log Footage — Why and How",
@@ -1349,7 +1369,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "editing-luts",
-        "number": "63",
+        "number": "64",
         "tab": "editing",
         "category": "COLOR GRADING",
         "title": "LUTs — What They Are and How to Use Them",
@@ -1369,7 +1389,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "editing-skin-tone",
-        "number": "64",
+        "number": "65",
         "tab": "editing",
         "category": "COLOR GRADING",
         "title": "Skin Tone Correction",
@@ -1383,7 +1403,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "editing-scopes",
-        "number": "65",
+        "number": "66",
         "tab": "editing",
         "category": "COLOR GRADING",
         "title": "Reading Waveforms & Scopes",
@@ -1405,7 +1425,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "editing-nodes",
-        "number": "66",
+        "number": "67",
         "tab": "editing",
         "category": "COLOR GRADING",
         "title": "Node Structure (Serial, Parallel, Layer)",
@@ -1427,7 +1447,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "editing-match-cut-grade",
-        "number": "67",
+        "number": "68",
         "tab": "editing",
         "category": "COLOR GRADING",
         "title": "Matching Shots in a Sequence",
@@ -1455,7 +1475,7 @@ export const toolkitCategories: ToolkitCategory[] = [
     "lessons": [
       {
         "id": "editing-hard-cut",
-        "number": "68",
+        "number": "69",
         "tab": "editing",
         "category": "TRANSITIONS & EFFECTS",
         "title": "Hard Cut",
@@ -1475,7 +1495,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "editing-match-cut-transition",
-        "number": "69",
+        "number": "70",
         "tab": "editing",
         "category": "TRANSITIONS & EFFECTS",
         "title": "Match Cut",
@@ -1495,7 +1515,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "editing-dissolve",
-        "number": "70",
+        "number": "71",
         "tab": "editing",
         "category": "TRANSITIONS & EFFECTS",
         "title": "Dissolve",
@@ -1515,7 +1535,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "editing-whip-pan-transition",
-        "number": "71",
+        "number": "72",
         "tab": "editing",
         "category": "TRANSITIONS & EFFECTS",
         "title": "Whip Pan Transition",
@@ -1537,7 +1557,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "editing-jl-cut",
-        "number": "72",
+        "number": "73",
         "tab": "editing",
         "category": "TRANSITIONS & EFFECTS",
         "title": "J-Cut & L-Cut",
@@ -1557,7 +1577,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "editing-hand-draw-overlay",
-        "number": "73",
+        "number": "74",
         "tab": "editing",
         "category": "TRANSITIONS & EFFECTS",
         "title": "Hand-Draw Overlay Transition",
@@ -1585,7 +1605,7 @@ export const toolkitCategories: ToolkitCategory[] = [
     "lessons": [
       {
         "id": "editing-fairlight",
-        "number": "74",
+        "number": "75",
         "tab": "editing",
         "category": "AUDIO",
         "title": "Fairlight Basics (EQ, Compression, Levels)",
@@ -1607,7 +1627,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "editing-music-licensing",
-        "number": "75",
+        "number": "76",
         "tab": "editing",
         "category": "AUDIO",
         "title": "Music Licensing — Where to Get It Legally",
@@ -1627,7 +1647,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "editing-sound-design",
-        "number": "76",
+        "number": "77",
         "tab": "editing",
         "category": "AUDIO",
         "title": "Sound Design (Ambience, Foley, SFX)",
@@ -1647,7 +1667,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "editing-dialogue-cleanup",
-        "number": "77",
+        "number": "78",
         "tab": "editing",
         "category": "AUDIO",
         "title": "Dialogue Cleanup (Noise Reduction)",
@@ -1677,7 +1697,7 @@ export const toolkitCategories: ToolkitCategory[] = [
     "lessons": [
       {
         "id": "editing-export-social",
-        "number": "78",
+        "number": "79",
         "tab": "editing",
         "category": "EXPORT & DELIVERY",
         "title": "Instagram & TikTok Export Settings",
@@ -1697,7 +1717,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "editing-export-youtube",
-        "number": "79",
+        "number": "80",
         "tab": "editing",
         "category": "EXPORT & DELIVERY",
         "title": "YouTube Export Settings",
@@ -1717,7 +1737,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "editing-export-client",
-        "number": "80",
+        "number": "81",
         "tab": "editing",
         "category": "EXPORT & DELIVERY",
         "title": "Client Delivery (ProRes, File Naming, Handoff)",
@@ -1737,7 +1757,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "editing-export-archive",
-        "number": "81",
+        "number": "82",
         "tab": "editing",
         "category": "EXPORT & DELIVERY",
         "title": "Archive & Backup Strategy",
@@ -1765,7 +1785,7 @@ export const toolkitCategories: ToolkitCategory[] = [
     "lessons": [
       {
         "id": "strategy-reels",
-        "number": "82",
+        "number": "83",
         "tab": "strategy",
         "category": "PLATFORM MASTERY",
         "title": "Instagram Reels — Hook, Pacing, Caption Strategy",
@@ -1787,7 +1807,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "strategy-tiktok",
-        "number": "83",
+        "number": "84",
         "tab": "strategy",
         "category": "PLATFORM MASTERY",
         "title": "TikTok — Native Feel, Trending Audio, Retention",
@@ -1809,7 +1829,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "strategy-youtube",
-        "number": "84",
+        "number": "85",
         "tab": "strategy",
         "category": "PLATFORM MASTERY",
         "title": "YouTube — Titles, Thumbnails, Retention Arc",
@@ -1831,7 +1851,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "strategy-linkedin",
-        "number": "85",
+        "number": "86",
         "tab": "strategy",
         "category": "PLATFORM MASTERY",
         "title": "LinkedIn — Authority Content for B2B Creatives",
@@ -1859,7 +1879,7 @@ export const toolkitCategories: ToolkitCategory[] = [
     "lessons": [
       {
         "id": "strategy-pricing",
-        "number": "86",
+        "number": "87",
         "tab": "strategy",
         "category": "CREATOR BUSINESS",
         "title": "Pricing Your Work — Day Rates, Project Rates, Packages",
@@ -1879,7 +1899,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "strategy-client-communication",
-        "number": "87",
+        "number": "88",
         "tab": "strategy",
         "category": "CREATOR BUSINESS",
         "title": "Client Communication — Briefs, Contracts, Revisions",
@@ -1899,7 +1919,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "strategy-portfolio",
-        "number": "88",
+        "number": "89",
         "tab": "strategy",
         "category": "CREATOR BUSINESS",
         "title": "Building a Portfolio — What to Show and How to Frame It",
@@ -1919,7 +1939,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "strategy-niche-vs-identity",
-        "number": "89",
+        "number": "90",
         "tab": "strategy",
         "category": "CREATOR BUSINESS",
         "title": "Niche vs Identity — The 2026 Creator Positioning Shift",
@@ -1947,7 +1967,7 @@ export const toolkitCategories: ToolkitCategory[] = [
     "lessons": [
       {
         "id": "strategy-batch-shooting",
-        "number": "90",
+        "number": "91",
         "tab": "strategy",
         "category": "CONTENT SYSTEMS",
         "title": "Batch Shooting — One Day, 30 Days of Content",
@@ -1969,7 +1989,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "strategy-hook-formula",
-        "number": "91",
+        "number": "92",
         "tab": "strategy",
         "category": "CONTENT SYSTEMS",
         "title": "The Hook Formula — First 3 Seconds",
@@ -1991,7 +2011,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "strategy-repurposing",
-        "number": "92",
+        "number": "93",
         "tab": "strategy",
         "category": "CONTENT SYSTEMS",
         "title": "Repurposing Content — One Video, Five Platforms",
@@ -2013,7 +2033,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "strategy-content-pillars",
-        "number": "93",
+        "number": "94",
         "tab": "strategy",
         "category": "CONTENT SYSTEMS",
         "title": "Content Pillars — The System That Makes You Consistent",
@@ -2035,7 +2055,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "strategy-content-calendar",
-        "number": "94",
+        "number": "95",
         "tab": "strategy",
         "category": "CONTENT SYSTEMS",
         "title": "Content Calendar — Planning Without Losing Spontaneity",
@@ -2055,7 +2075,7 @@ export const toolkitCategories: ToolkitCategory[] = [
       },
       {
         "id": "strategy-hooks-that-convert",
-        "number": "95",
+        "number": "96",
         "tab": "strategy",
         "category": "CONTENT SYSTEMS",
         "type": "html_presentation",

@@ -1,7 +1,13 @@
 export type Slide =
   | { type: "title"; heading: string; subheading?: string }
   | { type: "concept"; heading: string; bullets: string[] }
-  | { type: "diagram"; heading: string; image: string; caption?: string }
+  | {
+      type: "diagram";
+      heading: string;
+      /** AVA asset path: `ava/<category>/<file>.png` */
+      image: string;
+      caption?: string;
+    }
   | { type: "steps"; heading: string; steps: string[] }
   | { type: "callout"; heading: string; text: string }
   | { type: "warning"; heading: string; text: string };
@@ -12,6 +18,21 @@ export interface SlideDeck {
   title: string;
   slides: Slide[];
 }
+
+export const QA_STEPS = [
+  "Open every HTML lesson",
+  "Verify slide deck loads",
+  "Swipe through all slides",
+  "Check diagram images load",
+  "Check callout + warning styling",
+  "Check deep linking",
+  "Check no console errors",
+  "Check no red screens",
+  "Check performance on low-end device",
+  "Check back navigation",
+  "Check scroll behavior",
+  "Check slideRef matches lessonId",
+] as const;
 
 /** Canonical slide deck ids grouped by Joshua's BLOCK_1..BLOCK_5 architecture */
 export const SLIDE_BLOCKS = {

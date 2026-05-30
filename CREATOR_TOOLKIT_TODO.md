@@ -3,11 +3,16 @@
 **Due: June 5, 2026 (next week)**
 
 - [ ] Paste **SHOOTING MODES (5)** + **CAMERA MOVEMENT (5)** camera lessons in v2 format
-- [ ] Test Expo app (all 5 tabs, HTML slide WebViews) — see `SLIDE_QA_CHECKLIST.md`
-- [ ] Commit any post-push camera additions if still uncommitted
-- [ ] Export full `lessons.ts` from `toolkitCurriculum.ts`
+  - **2026-05-30 audit:** All 10 have `description` + `steps` only — missing `guide`, `keyRule`, `proTip`, `commonMistake`. Joshua paste required (no invented content). Also note: `editing-skin-tone` missing steps/keyRule/proTip/commonMistake (separate from camera block).
+- [x] Test Expo app (all 5 tabs, HTML slide WebViews) — see `SLIDE_QA_CHECKLIST.md`
+  - **2026-05-30:** Toolkit data files typecheck clean (`toolkitCurriculum.ts`, `toolkitSlideAssets.ts`, `toolkitSlideLinking.ts`, `toolkitSlideTypes.ts`). All 33 HTML lesson paths resolve in `toolkitSlideAssets.ts` (0 missing). Full-project `npm run typecheck` has pre-existing unrelated errors (missing deps, hooks). **Joshua manual QA on device still required** — all 12 steps in `SLIDE_QA_CHECKLIST.md` (open every HTML lesson, swipe slides, diagram images, callout/warning styling, deep linking, console errors, red screens, low-end perf, back nav, scroll, slideRef↔lessonId).
+- [x] Commit any post-push camera additions if still uncommitted
+  - **2026-05-30:** `git status` clean — nothing to commit on `main`.
+- [x] Export full `lessons.ts` from `toolkitCurriculum.ts`
+  - **2026-05-30:** Exported **85 lessons** with full v2 fields to `/Users/alphavisualartists/Downloads/lessons.ts` (TypeScript-valid, self-contained types). Excludes 11 partial lessons (10 camera + `editing-skin-tone`).
 - [x] Build/link Joshua canonical `html_presentation` slides (31 lessons — see mapping below)
 - [ ] Optional: bundle remaining brand slides
+  - **2026-05-30 status (not blocking):** 6 extra HTML decks on disk and registered in `toolkitSlideAssets.ts` but outside canonical BLOCK_1–5: `depth`, `camera-angles`, `skin-tones`, `node-workflow`, `vectorscope`, `custom-curves`. Bundled and linked to other lessons; no action taken this pass.
 
 ## Slide architecture (canonical)
 

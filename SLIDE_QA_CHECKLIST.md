@@ -2,7 +2,7 @@
 
 Manual QA steps for all canonical HTML presentation lessons (BLOCK_1–BLOCK_5).
 
-Reference: `data/toolkitSlideTypes.ts` (`SLIDE_BLOCKS`, `LINKING_MAP`)
+Reference: `data/toolkitSlideTypes.ts` (`QA_STEPS`, `SLIDE_BLOCKS`, `LINKING_MAP`)
 
 ## QA Steps
 
