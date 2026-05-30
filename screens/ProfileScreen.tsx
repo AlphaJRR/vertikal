@@ -5,7 +5,7 @@
  */
 
 import React, { useState } from 'react';
-import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet, Dimensions, ActivityIndicator } from 'react-native';
+import { View, Text, Image, ScrollView, TouchableOpacity, StyleSheet, Dimensions, ActivityIndicator, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -75,7 +75,17 @@ export const ProfileScreen: React.FC = () => {
     <SafeAreaView style={styles.container} edges={['top']}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>@{currentUser?.username || 'guest'}</Text>
-        <TouchableOpacity onPress={() => navigation.navigate('Inbox' as never)} activeOpacity={0.7}>
+        <TouchableOpacity 
+          onPress={() => {
+            // Inbox is not registered in Tab navigator, show placeholder for now
+            Alert.alert(
+              'Inbox',
+              'Direct messages coming soon.',
+              [{ text: 'OK' }]
+            );
+          }} 
+          activeOpacity={0.7}
+        >
           <Ionicons name="mail-outline" size={28} color="#FFFFFF" />
         </TouchableOpacity>
       </View>

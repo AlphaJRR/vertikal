@@ -1,48 +1,87 @@
 {
   "expo": {
-    "name": "VERTIKAL",
-    "slug": "vertikal-mobile",
-    "version": "1.0.0",
+    "name": "Alpha Visual Artists",
+    "slug": "alpha-visual-artists",
+    "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "scheme": "ava",
     "userInterfaceStyle": "dark",
+    "newArchEnabled": true,
     "splash": {
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#000000"
+      "backgroundColor": "#0a0a0a"
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.vertikal.app",
+      "bundleIdentifier": "com.alphavisualartists.app",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
-      }
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": false,
+          "NSExceptionDomains": {
+            "alphavisualartists.com": {
+              "NSIncludesSubdomains": true,
+              "NSExceptionAllowsInsecureHTTPLoads": false,
+              "NSExceptionMinimumTLSVersion": "TLSv1.2",
+              "NSExceptionRequiresForwardSecrecy": true
+            }
+          }
+        }
+      },
+      "buildNumber": "2"
     },
     "android": {
+      "package": "com.alphavisualartists.app",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#000000"
+        "backgroundColor": "#0a0a0a"
       },
-      "package": "com.vertikal.app",
-      "permissions": [
-        "android.permission.RECORD_AUDIO",
-        "android.permission.MODIFY_AUDIO_SETTINGS"
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "alphavisualartists.com",
+              "pathPrefix": "/"
+            }
+          ],
+          "category": [
+            "BROWSABLE",
+            "DEFAULT"
+          ]
+        }
       ]
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/icon.png"
     },
     "plugins": [
-      "expo-av",
-      "expo-secure-store"
+      [
+        "expo-router",
+        {
+          "origin": "https://alphavisualartists.com/"
+        }
+      ],
+      "expo-font",
+      "expo-web-browser",
+      "expo-video"
     ],
-    "extra": {
-      "eas": {
-        "projectId": "de55a2bd-e36f-4ebd-b775-07527d498c21"
-      }
+    "experiments": {
+      "typedRoutes": true
     },
-    "owner": "vertikalapp"
+    "owner": "alpha_jrr",
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "39911e65-82a6-47ca-af2b-3769a15817df"
+      }
+    }
   }
 }

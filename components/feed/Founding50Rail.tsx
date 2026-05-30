@@ -8,6 +8,7 @@ import React from 'react';
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
 import { ChevronRight, Crown } from 'lucide-react-native';
 import { Founding50Creator } from '../../utils/dataLoader';
+import { BadgeOverlay } from '../ui/BadgeOverlay';
 
 interface Founding50RailProps {
   creators: Founding50Creator[];
@@ -32,11 +33,8 @@ export const Founding50Rail: React.FC<Founding50RailProps> = ({
       >
         <View style={[styles.avatarContainer, { borderColor, borderWidth }]}>
           <Image source={{ uri: item.avatar }} style={styles.avatar} />
-          {item.isFounding50 && (
-            <View style={styles.crownBadge}>
-              <Crown size={10} color="#000000" fill="#FFD700" />
-            </View>
-          )}
+          {/* ✅ IMAGE BADGE - Using BadgeOverlay component with PNG images */}
+          <BadgeOverlay creator={item} size="sm" />
         </View>
         <Text style={styles.creatorName} numberOfLines={1}>{item.name}</Text>
       </TouchableOpacity>

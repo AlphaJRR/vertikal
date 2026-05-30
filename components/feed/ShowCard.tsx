@@ -9,6 +9,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Play, Clock } from 'lucide-react-native';
 import { ShowData } from '../../utils/dataLoader';
 import { sanitizeShowData } from '../../utils/sanitization';
+import { PosterFallback } from '../ui/PosterFallback';
 
 interface ShowCardProps {
   show: ShowData;
@@ -30,7 +31,11 @@ export const ShowCard: React.FC<ShowCardProps> = React.memo(({ show, onPress, va
         onPress={onPress}
         activeOpacity={0.95}
       >
-        <Image source={{ uri: show.coverImage }} style={styles.heroImage} />
+        {show.coverImage ? (
+          <Image source={{ uri: show.coverImage }} style={styles.heroImage} />
+        ) : (
+          <PosterFallback title={show.title} height={500} />
+        )}
         <LinearGradient
           colors={['transparent', 'rgba(0,0,0,0.95)']}
           style={styles.heroGradient}
@@ -67,12 +72,14 @@ export const ShowCard: React.FC<ShowCardProps> = React.memo(({ show, onPress, va
       accessibilityRole="button"
       accessibilityLabel={`Watch ${safeShow.title}`}
     >
-      {safeShow.coverImage && (
+      {safeShow.coverImage ? (
         <Image 
           source={{ uri: safeShow.coverImage }} 
           style={imageStyle}
           accessibilityLabel={`${safeShow.title} cover image`}
         />
+      ) : (
+        <PosterFallback title={safeShow.title} height={isHorizontal ? 200 : 280} />
       )}
       <LinearGradient
         colors={['transparent', 'rgba(0,0,0,0.9)']}

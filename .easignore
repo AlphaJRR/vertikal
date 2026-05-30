@@ -1,0 +1,43 @@
+# Shrink EAS upload; not needed for iOS native build
+# Capacitor shells — force Expo prebuild for AVA native app
+ios/
+android/
+ios-capacitor-backup/
+android-capacitor-backup/
+src/
+_broken-web-toolkit-snapshot/
+artifacts/
+node_modules/
+.git/
+.expo/
+*.md
+*.mov
+*.mp4
+*.pdf
+*.pages
+playwright-report/
+test-results/
+dist/
+dist-beta/
+dist-creators/
+dist-investors/
+backend/
+prisma/
+supabase/
+netlify/
+docs/
+code-review-package/
+notion-command-center/
+team-audit/
+01 Admin/
+02 HR/
+AVA_APPAREL/
+CompanyRoot/
+Folder_App v.29/
+files (7)/
+Investor_Data_Room/
+playwright-report/
+test-results/
+*.backup
+*.new
+Icon?

@@ -11,6 +11,9 @@ import { getCreatorById, getShowsByCreator, Founding50Creator, ShowData } from '
 import { CloudflareIframeCard } from '../video/CloudflareIframeCard';
 import { DanmakuOverlay, DanmakuComment } from '../ui/DanmakuOverlay';
 import { getAVAVideoData } from '../../utils/avaVideoSeed';
+import { getJoshuaArgueVideoData } from '../../utils/joshuaArgueVideoSeed';
+import { BadgeOverlay } from '../ui/BadgeOverlay';
+import { PosterFallback } from '../ui/PosterFallback';
 
 interface CreatorProfileProps {
   creatorId: string;
@@ -34,9 +37,29 @@ export const CreatorProfile: React.FC<CreatorProfileProps> = ({
   const avaVideoData = getAVAVideoData(creatorId, creator?.id, creator?.name, undefined, creator?.name);
   const shouldShowAVAVideo = avaVideoData !== null;
   
+  // Check if Joshua Argue video should be shown (app-only, profile preview only)
+  const joshuaArgueVideoData = getJoshuaArgueVideoData(creatorId, creator?.id, creator?.name, undefined, creator?.name);
+  const shouldShowJoshuaArgueVideo = joshuaArgueVideoData !== null;
+  
+  // Determine which video to show (priority: AVA > Joshua Argue)
+  const profileVideoData = avaVideoData || joshuaArgueVideoData;
+  const shouldShowProfileVideo = shouldShowAVAVideo || shouldShowJoshuaArgueVideo;
+  
+  // DEBUG: Log video detection
+  if (__DEV__) {
+    console.log('[CreatorProfile] Video Check:', {
+      creatorId,
+      creatorName: creator?.name,
+      shouldShowAVAVideo,
+      shouldShowJoshuaArgueVideo,
+      shouldShowProfileVideo,
+      hasVideoData: !!profileVideoData
+    });
+  }
+  
   // Convert VIBE preset to DanmakuComment format
-  const vibeComments: DanmakuComment[] = avaVideoData?.vibePreset.map((preset, i) => ({
-    id: `ava-vibe-${i}`,
+  const vibeComments: DanmakuComment[] = profileVideoData?.vibePreset.map((preset, i) => ({
+    id: `${profileVideoData.id}-vibe-${i}`,
     text: `${preset.u}: ${preset.m}`,
     delay: preset.t * 1000, // Convert seconds to milliseconds
     topPosition: `${10 + (i * 12)}%`,
@@ -64,7 +87,11 @@ export const CreatorProfile: React.FC<CreatorProfileProps> = ({
         onPress={() => onShowPress?.(show)}
         activeOpacity={0.9}
       >
-        <Image source={{ uri: show.coverImage }} style={styles.showImage} />
+        {show.coverImage ? (
+          <Image source={{ uri: show.coverImage }} style={styles.showImage} />
+        ) : (
+          <PosterFallback title={show.title} height={200} />
+        )}
         <View style={styles.showOverlay}>
           <View style={styles.showInfo}>
             <Text style={styles.showType}>{show.type}</Text>
@@ -99,11 +126,8 @@ export const CreatorProfile: React.FC<CreatorProfileProps> = ({
       <View style={[styles.profileHeader, isCurrentUser && styles.profileHeaderCentered]}>
         <View style={[styles.avatarContainer, { borderColor, borderWidth }, isCurrentUser && styles.currentUserAvatarContainer]}>
           <Image source={{ uri: creator.avatar }} style={styles.avatar} />
-          {creator.isFounding50 && (
-            <View style={styles.founding50Badge}>
-              <Crown size={16} color="#000000" fill="#FFD700" />
-            </View>
-          )}
+          {/* ✅ IMAGE BADGE - Using BadgeOverlay component with PNG images */}
+          <BadgeOverlay creator={creator} size="md" />
         </View>
         <View style={styles.profileInfo}>
           <View style={styles.nameRow}>
@@ -200,14 +224,14 @@ export const CreatorProfile: React.FC<CreatorProfileProps> = ({
         })()}
       </View>
 
-      {/* AVA Video Preview - App-only, Alpha Visual Artists profile only */}
-      {shouldShowAVAVideo && avaVideoData && (
+      {/* Profile Video Preview - App-only, AVA or Joshua Argue profiles */}
+      {shouldShowProfileVideo && profileVideoData && (
         <View style={styles.videoSection}>
           <View style={styles.videoContainer}>
             <CloudflareIframeCard
-              iframeUrl={avaVideoData.cloudflare.iframe}
-              title={avaVideoData.title}
-              thumbnail={avaVideoData.cloudflare.thumbnail}
+              iframeUrl={profileVideoData.cloudflare.iframe}
+              title={profileVideoData.title}
+              thumbnail={profileVideoData.cloudflare.thumbnail}
             />
             {/* VIBE Overlay */}
             <DanmakuOverlay comments={vibeComments} enabled={true} />

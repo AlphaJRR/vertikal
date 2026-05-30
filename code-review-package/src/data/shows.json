@@ -1,0 +1,1451 @@
+[[
+  {
+    "id": "show_001",
+    "title": "Southside Nights",
+    "genre": ["drama", "urban"],
+    "type": "short-form series",
+    "creator_id": "creator_001",
+    "logline": "A fashion-forward filmmaker captures the struggles and style of Chicago’s youth through a gritty episodic lens.",
+    "thumbnail": "/images/shows/show_001.jpg"
+  },
+  {
+    "id": "show_002",
+    "title": "Heat Check",
+    "genre": ["sports", "docu-series"],
+    "type": "micro-short",
+    "creator_id": "creator_002",
+    "logline": "An emerging director follows rising hoopers chasing scholarships and purpose beyond the court.",
+    "thumbnail": "/images/shows/show_002.jpg"
+  },
+  {
+    "id": "show_003",
+    "title": "The Breakup Blueprint",
+    "genre": ["romance", "drama"],
+    "type": "short-form",
+    "creator_id": "creator_003",
+    "logline": "Through poetic visuals, a creator documents modern relationships and emotional rebirth.",
+    "thumbnail": "/images/shows/show_003.jpg"
+  },
+  {
+    "id": "show_004",
+    "title": "The Ledger",
+    "genre": ["crime", "thriller"],
+    "type": "micro-short",
+    "creator_id": "creator_004",
+    "logline": "A filmmaker dives into the psychological aftermath of a hustler trying to escape the streets.",
+    "thumbnail": "/images/shows/show_004.jpg"
+  },
+  {
+    "id": "show_005",
+    "title": "Voices in Bloom",
+    "genre": ["female-led", "drama"],
+    "type": "short-form",
+    "creator_id": "creator_005",
+    "logline": "Women reclaim their identities through beautifully shot monologues and mini-narratives.",
+    "thumbnail": "/images/shows/show_005.jpg"
+  },
+  {
+    "id": "show_006",
+    "title": "Run It Back",
+    "genre": ["sports", "documentary"],
+    "type": "micro-short",
+    "creator_id": "creator_006",
+    "logline": "An episodic look into high school football culture through the eyes of a passionate storyteller.",
+    "thumbnail": "/images/shows/show_006.jpg"
+  },
+  {
+    "id": "show_007",
+    "title": "Sneaker Saints",
+    "genre": ["culture", "fashion"],
+    "type": "short-form",
+    "creator_id": "creator_007",
+    "logline": "A deep dive into the hidden stories, rivalry, and craftsmanship behind sneaker culture.",
+    "thumbnail": "/images/shows/show_007.jpg"
+  },
+  {
+    "id": "show_008",
+    "title": "Sisterhood Psalms",
+    "genre": ["faith", "wellness"],
+    "type": "micro-short",
+    "creator_id": "creator_008",
+    "logline": "Women share vulnerable testimonies of healing and purpose through intimate visual storytelling.",
+    "thumbnail": "/images/shows/show_008.jpg"
+  },
+  {
+    "id": "show_009",
+    "title": "Street Frames",
+    "genre": ["photography", "documentary"],
+    "type": "short-form series",
+    "creator_id": "creator_009",
+    "logline": "A docu-creator captures Chicago’s rawest street moments, one frame at a time.",
+    "thumbnail": "/images/shows/show_009.jpg"
+  },
+  {
+    "id": "show_010",
+    "title": "Pulse",
+    "genre": ["thriller", "psychological"],
+    "type": "micro-short",
+    "creator_id": "creator_010",
+    "logline": "A suspense-driven micro-series following a woman who hears the future in fragmented visions.",
+    "thumbnail": "/images/shows/show_010.jpg"
+  }
+]
+    },
+  <<PASTE BLOCK 2 HERE>>
+]
+{
+  "id": "show_051",
+  "title": "Metro Pulse",
+  "creator_id": "cre_011",
+  "published_at": "2024-08-12",
+  "tags": ["urban", "culture", "mini-doc"],
+  "duration_seconds": 182,
+  "thumbnail": "/images/shows/show_051.jpg"
+},
+{
+  "id": "show_052",
+  "title": "Late Shift Diaries",
+  "creator_id": "cre_012",
+  "published_at": "2024-06-01",
+  "tags": ["drama", "nightlife", "cinematic"],
+  "duration_seconds": 244,
+  "thumbnail": "/images/shows/show_052.jpg"
+},
+{
+  "id": "show_053",
+  "title": "Ink & Motion",
+  "creator_id": "cre_013",
+  "published_at": "2024-03-19",
+  "tags": ["art", "street", "style"],
+  "duration_seconds": 305,
+  "thumbnail": "/images/shows/show_053.jpg"
+},
+{
+  "id": "show_054",
+  "title": "Corner Stories",
+  "creator_id": "cre_014",
+  "published_at": "2024-02-22",
+  "tags": ["community", "human-interest", "doc-series"],
+  "duration_seconds": 131,
+  "thumbnail": "/images/shows/show_054.jpg"
+},
+{
+  "id": "show_055",
+  "title": "Elevator Breakups",
+  "creator_id": "cre_015",
+  "published_at": "2024-07-09",
+  "tags": ["breakup", "romance", "micro-drama"],
+  "duration_seconds": 96,
+  "thumbnail": "/images/shows/show_055.jpg"
+},
+{
+  "id": "show_056",
+  "title": "Static Frequency",
+  "creator_id": "cre_016",
+  "published_at": "2024-05-13",
+  "tags": ["thriller", "glitch", "cyber"],
+  "duration_seconds": 187,
+  "thumbnail": "/images/shows/show_056.jpg"
+},
+{
+  "id": "show_057",
+  "title": "Between the Lines",
+  "creator_id": "cre_017",
+  "published_at": "2024-09-21",
+  "tags": ["literary", "poetic", "experimental"],
+  "duration_seconds": 227,
+  "thumbnail": "/images/shows/show_057.jpg"
+},
+{
+  "id": "show_058",
+  "title": "Heat Check",
+  "creator_id": "cre_018",
+  "published_at": "2024-01-15",
+  "tags": ["sports", "grind", "cinematic"],
+  "duration_seconds": 154,
+  "thumbnail": "/images/shows/show_058.jpg"
+},
+{
+  "id": "show_059",
+  "title": "Signal Lost",
+  "creator_id": "cre_019",
+  "published_at": "2024-04-18",
+  "tags": ["mystery", "surveillance", "urban"],
+  "duration_seconds": 203,
+  "thumbnail": "/images/shows/show_059.jpg"
+},
+{
+  "id": "show_060",
+  "title": "Run It Back",
+  "creator_id": "cre_020",
+  "published_at": "2024-10-06",
+  "tags": ["sports", "drama", "micro-series"],
+  "duration_seconds": 138,
+  "thumbnail": "/images/shows/show_060.jpg"
+},
+{
+  "id": "show_061",
+  "title": "Pulse Room",
+  "creator_id": "cre_021",
+  "published_at": "2024-02-12",
+  "tags": ["dance", "motion", "culture"],
+  "duration_seconds": 221,
+  "thumbnail": "/images/shows/show_061.jpg"
+},
+{
+  "id": "show_062",
+  "title": "Borrowed Time",
+  "creator_id": "cre_022",
+  "published_at": "2024-08-02",
+  "tags": ["sci-fi", "paradox", "suspense"],
+  "duration_seconds": 316,
+  "thumbnail": "/images/shows/show_062.jpg"
+},
+{
+  "id": "show_063",
+  "title": "Ten Floors Up",
+  "creator_id": "cre_023",
+  "published_at": "2024-04-25",
+  "tags": ["relationships", "comedy", "quick"],
+  "duration_seconds": 88,
+  "thumbnail": "/images/shows/show_063.jpg"
+},
+{
+  "id": "show_064",
+  "title": "Morning Shift",
+  "creator_id": "cre_024",
+  "published_at": "2024-05-05",
+  "tags": ["workplace", "slice-of-life", "soft drama"],
+  "duration_seconds": 167,
+  "thumbnail": "/images/shows/show_064.jpg"
+},
+{
+  "id": "show_065",
+  "title": "Off Grid",
+  "creator_id": "cre_025",
+  "published_at": "2024-07-17",
+  "tags": ["nature", "escape", "calming"],
+  "duration_seconds": 291,
+  "thumbnail": "/images/shows/show_065.jpg"
+},
+{
+  "id": "show_066",
+  "title": "Love Unmuted",
+  "creator_id": "cre_026",
+  "published_at": "2024-03-14",
+  "tags": ["romance", "modern", "texting"],
+  "duration_seconds": 129,
+  "thumbnail": "/images/shows/show_066.jpg"
+},
+{
+  "id": "show_067",
+  "title": "Crossed Wires",
+  "creator_id": "cre_027",
+  "published_at": "2024-02-16",
+  "tags": ["comedy", "chaos", "relationships"],
+  "duration_seconds": 94,
+  "thumbnail": "/images/shows/show_067.jpg"
+},
+{
+  "id": "show_068",
+  "title": "Break Point",
+  "creator_id": "cre_028",
+  "published_at": "2024-11-01",
+  "tags": ["sports", "psychology", "grit"],
+  "duration_seconds": 238,
+  "thumbnail": "/images/shows/show_068.jpg"
+},
+{
+  "id": "show_069",
+  "title": "Wired Hearts",
+  "creator_id": "cre_029",
+  "published_at": "2024-06-19",
+  "tags": ["romance", "digital-age", "drama"],
+  "duration_seconds": 176,
+  "thumbnail": "/images/shows/show_069.jpg"
+},
+{
+  "id": "show_070",
+  "title": "Static Noise",
+  "creator_id": "cre_030",
+  "published_at": "2024-10-10",
+  "tags": ["thriller", "audio", "mood"],
+  "duration_seconds": 202,
+  "thumbnail": "/images/shows/show_070.jpg"
+},
+{
+  "id": "show_071",
+  "title": "Glasshouse",
+  "creator_id": "cre_031",
+  "published_at": "2024-03-01",
+  "tags": ["drama", "family", "slow burn"],
+  "duration_seconds": 264,
+  "thumbnail": "/images/shows/show_071.jpg"
+},
+{
+  "id": "show_072",
+  "title": "Streetlight Magic",
+  "creator_id": "cre_032",
+  "published_at": "2024-07-27",
+  "tags": ["fantasy", "urban", "micro-series"],
+  "duration_seconds": 155,
+  "thumbnail": "/images/shows/show_072.jpg"
+},
+{
+  "id": "show_073",
+  "title": "Fade Out",
+  "creator_id": "cre_033",
+  "published_at": "2024-08-23",
+  "tags": ["mystery", "identity", "stylized"],
+  "duration_seconds": 193,
+  "thumbnail": "/images/shows/show_073.jpg"
+},
+{
+  "id": "show_074",
+  "title": "Heartline",
+  "creator_id": "cre_034",
+  "published_at": "2024-09-18",
+  "tags": ["romance", "healing", "emotional"],
+  "duration_seconds": 251,
+  "thumbnail": "/images/shows/show_074.jpg"
+},
+{
+  "id": "show_075",
+  "title": "The Mixer",
+  "creator_id": "cre_035",
+  "published_at": "2024-01-09",
+  "tags": ["comedy", "dating", "social"],
+  "duration_seconds": 102,
+  "thumbnail": "/images/shows/show_075.jpg"
+},
+{
+  "id": "show_076",
+  "title": "Gridlock",
+  "creator_id": "cre_036",
+  "published_at": "2024-04-29",
+  "tags": ["urban", "stress", "timelapse"],
+  "duration_seconds": 142,
+  "thumbnail": "/images/shows/show_076.jpg"
+},
+{
+  "id": "show_077",
+  "title": "Nightcode",
+  "creator_id": "cre_037",
+  "published_at": "2024-06-03",
+  "tags": ["tech", "thriller", "mystery"],
+  "duration_seconds": 212,
+  "thumbnail": "/images/shows/show_077.jpg"
+},
+{
+  "id": "show_078",
+  "title": "Paper Wings",
+  "creator_id": "cre_038",
+  "published_at": "2024-08-15",
+  "tags": ["wholesome", "imaginative", "youth"],
+  "duration_seconds": 119,
+  "thumbnail": "/images/shows/show_078.jpg"
+},
+{
+  "id": "show_079",
+  "title": "Heartbeat Loop",
+  "creator_id": "cre_039",
+  "published_at": "2024-11-19",
+  "tags": ["music", "romance", "vibe"],
+  "duration_seconds": 244,
+  "thumbnail": "/images/shows/show_079.jpg"
+},
+{
+  "id": "show_080",
+  "title": "Blocked",
+  "creator_id": "cre_040",
+  "published_at": "2024-02-01",
+  "tags": ["comedy", "modern life", "relatable"],
+  "duration_seconds": 98,
+  "thumbnail": "/images/shows/show_080.jpg"
+},
+{
+  "id": "show_081",
+  "title": "Dust Trails",
+  "creator_id": "cre_041",
+  "published_at": "2024-10-14",
+  "tags": ["travel", "documentary", "scenic"],
+  "duration_seconds": 317,
+  "thumbnail": "/images/shows/show_081.jpg"
+},
+{
+  "id": "show_082",
+  "title": "Charging Room",
+  "creator_id": "cre_042",
+  "published_at": "2024-03-11",
+  "tags": ["relationships", "conflict", "drama"],
+  "duration_seconds": 175,
+  "thumbnail": "/images/shows/show_082.jpg"
+},
+{
+  "id": "show_083",
+  "title": "Backspin",
+  "creator_id": "cre_043",
+  "published_at": "2024-07-03",
+  "tags": ["tennis", "sports", "cinematic"],
+  "duration_seconds": 209,
+  "thumbnail": "/images/shows/show_083.jpg"
+},
+{
+  "id": "show_084",
+  "title": "House Rules",
+  "creator_id": "cre_044",
+  "published_at": "2024-09-30",
+  "tags": ["family", "chaos", "comedy"],
+  "duration_seconds": 147,
+  "thumbnail": "/images/shows/show_084.jpg"
+},
+{
+  "id": "show_085",
+  "title": "Nightfall Journal",
+  "creator_id": "cre_045",
+  "published_at": "2024-01-28",
+  "tags": ["thriller", "psychology", "dark"],
+  "duration_seconds": 261,
+  "thumbnail": "/images/shows/show_085.jpg"
+},
+{
+  "id": "show_086",
+  "title": "After Hours",
+  "creator_id": "cre_046",
+  "published_at": "2024-02-19",
+  "tags": ["bartending", "nightlife", "mini-doc"],
+  "duration_seconds": 188,
+  "thumbnail": "/images/shows/show_086.jpg"
+},
+{
+  "id": "show_087",
+  "title": "Five Blocks Down",
+  "creator_id": "cre_047",
+  "published_at": "2024-05-22",
+  "tags": ["city", "perspective", "cinema"],
+  "duration_seconds": 232,
+  "thumbnail": "/images/shows/show_087.jpg"
+},
+{
+  "id": "show_088",
+  "title": "Love Scripted",
+  "creator_id": "cre_048",
+  "published_at": "2024-08-14",
+  "tags": ["romance", "storytelling", "dialogue"],
+  "duration_seconds": 194,
+  "thumbnail": "/images/shows/show_088.jpg"
+},
+{
+  "id": "show_089",
+  "title": "Focal Point",
+  "creator_id": "cre_049",
+  "published_at": "2024-06-04",
+  "tags": ["film", "visuals", "art"],
+  "duration_seconds": 286,
+  "thumbnail": "/images/shows/show_089.jpg"
+},
+{
+  "id": "show_090",
+  "title": "Frame Runner",
+  "creator_id": "cre_050",
+  "published_at": "2024-03-28",
+  "tags": ["camera", "cinematic", "workflow"],
+  "duration_seconds": 172,
+  "thumbnail": "/images/shows/show_090.jpg"
+},
+{
+  "id": "show_091",
+  "title": "Quiet Neon",
+  "creator_id": "cre_001",
+  "published_at": "2024-10-21",
+  "tags": ["urban", "night", "visual mood"],
+  "duration_seconds": 204,
+  "thumbnail": "/images/shows/show_091.jpg"
+},
+{
+  "id": "show_092",
+  "title": "Horizon Echo",
+  "creator_id": "cre_002",
+  "published_at": "2024-12-01",
+  "tags": ["drama", "introspective", "slow burn"],
+  "duration_seconds": 265,
+  "thumbnail": "/images/shows/show_092.jpg"
+},
+{
+  "id": "show_093",
+  "title": "Sidewalk Ghosts",
+  "creator_id": "cre_003",
+  "published_at": "2024-11-09",
+  "tags": ["mystery", "urban legends", "stylized"],
+  "duration_seconds": 231,
+  "thumbnail": "/images/shows/show_093.jpg"
+},
+{
+  "id": "show_094",
+  "title": "Knock Twice",
+  "creator_id": "cre_004",
+  "published_at": "2024-09-04",
+  "tags": ["horror", "minimalist", "short"],
+  "duration_seconds": 98,
+  "thumbnail": "/images/shows/show_094.jpg"
+},
+{
+  "id": "show_095",
+  "title": "Break the Loop",
+  "creator_id": "cre_005",
+  "published_at": "2024-07-29",
+  "tags": ["sci-fi", "time loop", "micro-short"],
+  "duration_seconds": 112,
+  "thumbnail": "/images/shows/show_095.jpg"
+},
+{
+  "id": "show_096",
+  "title": "Mirror Test",
+  "creator_id": "cre_006",
+  "published_at": "2024-10-17",
+  "tags": ["psychological", "self", "mood"],
+  "duration_seconds": 186,
+  "thumbnail": "/images/shows/show_096.jpg"
+},
+{
+  "id": "show_097",
+  "title": "Shift Work",
+  "creator_id": "cre_007",
+  "published_at": "2024-06-15",
+  "tags": ["night shift", "culture", "observational"],
+  "duration_seconds": 214,
+  "thumbnail": "/images/shows/show_097.jpg"
+},
+{
+  "id": "show_098",
+  "title": "Flash Fiction",
+  "creator_id": "cre_008",
+  "published_at": "2024-11-23",
+  "tags": ["storytelling", "creative", "voiceover"],
+  "duration_seconds": 133,
+  "thumbnail": "/images/shows/show_098.jpg"
+},
+{
+  "id": "show_099",
+  "title": "Vendor Lane",
+  "creator_id": "cre_009",
+  "published_at": "2024-04-10",
+  "tags": ["food", "culture", "travel"],
+  "duration_seconds": 259,
+  "thumbnail": "/images/shows/show_099.jpg"
+},
+{
+  "id": "show_100",
+  "title": "Bright Steps",
+  "creator_id": "cre_010",
+  "published_at": "2024-03-07",
+  "tags": ["kids", "family", "uplifting"],
+  "duration_seconds": 174,
+  "thumbnail": "/images/shows/show_100.jpg"
+}
+  },
+  <<PASTE BLOCK 3 HERE>>
+]
+{
+  "id": "show_101",
+  "title": "Skyline Breaths",
+  "creator_id": "cre_011",
+  "published_at": "2024-09-12",
+  "tags": ["urban", "romance", "visual poetry"],
+  "duration_seconds": 188,
+  "thumbnail": "/images/shows/show_101.jpg"
+},
+{
+  "id": "show_102",
+  "title": "Code of Silence",
+  "creator_id": "cre_012",
+  "published_at": "2024-11-05",
+  "tags": ["crime", "thriller", "minimalist"],
+  "duration_seconds": 247,
+  "thumbnail": "/images/shows/show_102.jpg"
+},
+{
+  "id": "show_103",
+  "title": "Streetlight Saints",
+  "creator_id": "cre_013",
+  "published_at": "2024-05-16",
+  "tags": ["faith", "community", "uplifting"],
+  "duration_seconds": 175,
+  "thumbnail": "/images/shows/show_103.jpg"
+},
+{
+  "id": "show_104",
+  "title": "After the Rain",
+  "creator_id": "cre_014",
+  "published_at": "2024-08-07",
+  "tags": ["healing", "family", "drama"],
+  "duration_seconds": 269,
+  "thumbnail": "/images/shows/show_104.jpg"
+},
+{
+  "id": "show_105",
+  "title": "Chasing Static",
+  "creator_id": "cre_015",
+  "published_at": "2024-03-30",
+  "tags": ["music", "sound design", "experimental"],
+  "duration_seconds": 156,
+  "thumbnail": "/images/shows/show_105.jpg"
+},
+{
+  "id": "show_106",
+  "title": "Blackbird Lane",
+  "creator_id": "cre_016",
+  "published_at": "2024-01-18",
+  "tags": ["mystery", "dark fiction", "urban noir"],
+  "duration_seconds": 201,
+  "thumbnail": "/images/shows/show_106.jpg"
+},
+{
+  "id": "show_107",
+  "title": "Glow Theory",
+  "creator_id": "cre_017",
+  "published_at": "2024-10-04",
+  "tags": ["beauty", "self-care", "stylized"],
+  "duration_seconds": 166,
+  "thumbnail": "/images/shows/show_107.jpg"
+},
+{
+  "id": "show_108",
+  "title": "Love Algorithm",
+  "creator_id": "cre_018",
+  "published_at": "2024-07-12",
+  "tags": ["romance", "tech-age", "dialogue-driven"],
+  "duration_seconds": 234,
+  "thumbnail": "/images/shows/show_108.jpg"
+},
+{
+  "id": "show_109",
+  "title": "Metro Blues",
+  "creator_id": "cre_019",
+  "published_at": "2024-02-14",
+  "tags": ["music", "culture", "vibe"],
+  "duration_seconds": 194,
+  "thumbnail": "/images/shows/show_109.jpg"
+},
+{
+  "id": "show_110",
+  "title": "Veil",
+  "creator_id": "cre_020",
+  "published_at": "2024-06-08",
+  "tags": ["suspense", "psychological", "minimal"],
+  "duration_seconds": 203,
+  "thumbnail": "/images/shows/show_110.jpg"
+},
+{
+  "id": "show_111",
+  "title": "Kicks & Canvas",
+  "creator_id": "cre_021",
+  "published_at": "2024-09-03",
+  "tags": ["fashion", "street art", "culture"],
+  "duration_seconds": 178,
+  "thumbnail": "/images/shows/show_111.jpg"
+},
+{
+  "id": "show_112",
+  "title": "Dissonance",
+  "creator_id": "cre_022",
+  "published_at": "2024-04-22",
+  "tags": ["music", "conflict", "drama"],
+  "duration_seconds": 246,
+  "thumbnail": "/images/shows/show_112.jpg"
+},
+{
+  "id": "show_113",
+  "title": "Sidelines",
+  "creator_id": "cre_023",
+  "published_at": "2024-11-11",
+  "tags": ["sports", "documentary", "youth"],
+  "duration_seconds": 218,
+  "thumbnail": "/images/shows/show_113.jpg"
+},
+{
+  "id": "show_114",
+  "title": "Hot Plate",
+  "creator_id": "cre_024",
+  "published_at": "2024-05-18",
+  "tags": ["food", "lifestyle", "travel"],
+  "duration_seconds": 159,
+  "thumbnail": "/images/shows/show_114.jpg"
+},
+{
+  "id": "show_115",
+  "title": "Thread Count",
+  "creator_id": "cre_025",
+  "published_at": "2024-08-29",
+  "tags": ["fashion", "design", "spotlight"],
+  "duration_seconds": 227,
+  "thumbnail": "/images/shows/show_115.jpg"
+},
+{
+  "id": "show_116",
+  "title": "Shadowboxing",
+  "creator_id": "cre_026",
+  "published_at": "2024-10-23",
+  "tags": ["boxing", "mental health", "grit"],
+  "duration_seconds": 251,
+  "thumbnail": "/images/shows/show_116.jpg"
+},
+{
+  "id": "show_117",
+  "title": "Tiny Truths",
+  "creator_id": "cre_027",
+  "published_at": "2024-11-02",
+  "tags": ["micro-story", "slice of life", "uplifting"],
+  "duration_seconds": 101,
+  "thumbnail": "/images/shows/show_117.jpg"
+},
+{
+  "id": "show_118",
+  "title": "Edge of Echoes",
+  "creator_id": "cre_028",
+  "published_at": "2024-09-27",
+  "tags": ["thriller", "soundscape", "suspense"],
+  "duration_seconds": 214,
+  "thumbnail": "/images/shows/show_118.jpg"
+},
+{
+  "id": "show_119",
+  "title": "Double Shift",
+  "creator_id": "cre_029",
+  "published_at": "2024-03-10",
+  "tags": ["drama", "family", "work-life"],
+  "duration_seconds": 268,
+  "thumbnail": "/images/shows/show_119.jpg"
+},
+{
+  "id": "show_120",
+  "title": "Half Moon Motel",
+  "creator_id": "cre_030",
+  "published_at": "2024-01-21",
+  "tags": ["mystery", "crime", "stylized"],
+  "duration_seconds": 207,
+  "thumbnail": "/images/shows/show_120.jpg"
+},
+{
+  "id": "show_121",
+  "title": "Signal Fire",
+  "creator_id": "cre_031",
+  "published_at": "2024-07-14",
+  "tags": ["relationships", "symbolism", "soft drama"],
+  "duration_seconds": 164,
+  "thumbnail": "/images/shows/show_121.jpg"
+},
+{
+  "id": "show_122",
+  "title": "Frame Rate",
+  "creator_id": "cre_032",
+  "published_at": "2024-10-09",
+  "tags": ["film", "behind the lens", "visual arts"],
+  "duration_seconds": 238,
+  "thumbnail": "/images/shows/show_122.jpg"
+},
+{
+  "id": "show_123",
+  "title": "Night Market",
+  "creator_id": "cre_033",
+  "published_at": "2024-02-07",
+  "tags": ["culture", "travel", "food"],
+  "duration_seconds": 192,
+  "thumbnail": "/images/shows/show_123.jpg"
+},
+{
+  "id": "show_124",
+  "title": "Love Frequency",
+  "creator_id": "cre_034",
+  "published_at": "2024-11-15",
+  "tags": ["romance", "voiceover", "cinematic"],
+  "duration_seconds": 177,
+  "thumbnail": "/images/shows/show_124.jpg"
+},
+{
+  "id": "show_125",
+  "title": "Two Flights Up",
+  "creator_id": "cre_035",
+  "published_at": "2024-04-01",
+  "tags": ["dating", "comedy", "situational"],
+  "duration_seconds": 109,
+  "thumbnail": "/images/shows/show_125.jpg"
+},
+{
+  "id": "show_126",
+  "title": "Good Grief",
+  "creator_id": "cre_036",
+  "published_at": "2024-01-30",
+  "tags": ["grief", "healing", "emotional"],
+  "duration_seconds": 263,
+  "thumbnail": "/images/shows/show_126.jpg"
+},
+{
+  "id": "show_127",
+  "title": "Blacktop Stories",
+  "creator_id": "cre_037",
+  "published_at": "2024-06-26",
+  "tags": ["basketball", "community", "documentary"],
+  "duration_seconds": 224,
+  "thumbnail": "/images/shows/show_127.jpg"
+},
+{
+  "id": "show_128",
+  "title": "Static Bloom",
+  "creator_id": "cre_038",
+  "published_at": "2024-10-30",
+  "tags": ["fashion", "conceptual", "visual"],
+  "duration_seconds": 189,
+  "thumbnail": "/images/shows/show_128.jpg"
+},
+{
+  "id": "show_129",
+  "title": "Cold Calls",
+  "creator_id": "cre_039",
+  "published_at": "2024-07-20",
+  "tags": ["comedy", "workplace", "chaos"],
+  "duration_seconds": 122,
+  "thumbnail": "/images/shows/show_129.jpg"
+},
+{
+  "id": "show_130",
+  "title": "Mind the Gap",
+  "creator_id": "cre_040",
+  "published_at": "2024-05-29",
+  "tags": ["travel", "city life", "observational"],
+  "duration_seconds": 216,
+  "thumbnail": "/images/shows/show_130.jpg"
+},
+{
+  "id": "show_131",
+  "title": "Canopy",
+  "creator_id": "cre_041",
+  "published_at": "2024-03-04",
+  "tags": ["nature", "quiet", "visual"],
+  "duration_seconds": 275,
+  "thumbnail": "/images/shows/show_131.jpg"
+},
+{
+  "id": "show_132",
+  "title": "Ink Therapy",
+  "creator_id": "cre_042",
+  "published_at": "2024-02-26",
+  "tags": ["tattoo", "identity", "culture"],
+  "duration_seconds": 198,
+  "thumbnail": "/images/shows/show_132.jpg"
+},
+{
+  "id": "show_133",
+  "title": "Heat Lightning",
+  "creator_id": "cre_043",
+  "published_at": "2024-09-25",
+  "tags": ["drama", "tension", "storm-night"],
+  "duration_seconds": 223,
+  "thumbnail": "/images/shows/show_133.jpg"
+},
+{
+  "id": "show_134",
+  "title": "Wandering Frame",
+  "creator_id": "cre_044",
+  "published_at": "2024-11-01",
+  "tags": ["cinema", "texture", "experimental"],
+  "duration_seconds": 247,
+  "thumbnail": "/images/shows/show_134.jpg"
+},
+{
+  "id": "show_135",
+  "title": "Angle of View",
+  "creator_id": "cre_045",
+  "published_at": "2024-06-12",
+  "tags": ["photography", "composition", "visual"],
+  "duration_seconds": 205,
+  "thumbnail": "/images/shows/show_135.jpg"
+},
+{
+  "id": "show_136",
+  "title": "Halfway Home",
+  "creator_id": "cre_046",
+  "published_at": "2024-07-28",
+  "tags": ["relationships", "healing", "drama"],
+  "duration_seconds": 266,
+  "thumbnail": "/images/shows/show_136.jpg"
+},
+{
+  "id": "show_137",
+  "title": "Night Transit",
+  "creator_id": "cre_047",
+  "published_at": "2024-04-14",
+  "tags": ["city", "motion", "cinematic"],
+  "duration_seconds": 183,
+  "thumbnail": "/images/shows/show_137.jpg"
+},
+{
+  "id": "show_138",
+  "title": "Pilot Light",
+  "creator_id": "cre_048",
+  "published_at": "2024-08-13",
+  "tags": ["faith", "relationships", "uplifting"],
+  "duration_seconds": 174,
+  "thumbnail": "/images/shows/show_138.jpg"
+},
+{
+  "id": "show_139",
+  "title": "Block Party",
+  "creator_id": "cre_049",
+  "published_at": "2024-09-09",
+  "tags": ["community", "black joy", "culture"],
+  "duration_seconds": 141,
+  "thumbnail": "/images/shows/show_139.jpg"
+},
+{
+  "id": "show_140",
+  "title": "Mixed Signals",
+  "creator_id": "cre_050",
+  "published_at": "2024-10-19",
+  "tags": ["romance", "modern", "micro-short"],
+  "duration_seconds": 116,
+  "thumbnail": "/images/shows/show_140.jpg"
+},
+{
+  "id": "show_141",
+  "title": "Cold Front",
+  "creator_id": "cre_001",
+  "published_at": "2024-11-27",
+  "tags": ["drama", "winter", "solo character"],
+  "duration_seconds": 236,
+  "thumbnail": "/images/shows/show_141.jpg"
+},
+{
+  "id": "show_142",
+  "title": "Flicker",
+  "creator_id": "cre_002",
+  "published_at": "2024-05-02",
+  "tags": ["vibes", "experimental", "visual poem"],
+  "duration_seconds": 168,
+  "thumbnail": "/images/shows/show_142.jpg"
+},
+{
+  "id": "show_143",
+  "title": "Vendor Stories",
+  "creator_id": "cre_003",
+  "published_at": "2024-06-21",
+  "tags": ["food carts", "culture", "mini-doc"],
+  "duration_seconds": 244,
+  "thumbnail": "/images/shows/show_143.jpg"
+},
+{
+  "id": "show_144",
+  "title": "Heart Reset",
+  "creator_id": "cre_004",
+  "published_at": "2024-03-17",
+  "tags": ["romance", "growth", "healing"],
+  "duration_seconds": 157,
+  "thumbnail": "/images/shows/show_144.jpg"
+},
+{
+  "id": "show_145",
+  "title": "Nine Lives",
+  "creator_id": "cre_005",
+  "published_at": "2024-01-26",
+  "tags": ["crime", "street drama", "stylized"],
+  "duration_seconds": 219,
+  "thumbnail": "/images/shows/show_145.jpg"
+},
+{
+  "id": "show_146",
+  "title": "Quiet Storm",
+  "creator_id": "cre_006",
+  "published_at": "2024-02-04",
+  "tags": ["mood", "cinematic", "abstract"],
+  "duration_seconds": 198,
+  "thumbnail": "/images/shows/show_146.jpg"
+},
+{
+  "id": "show_147",
+  "title": "Youth Cycle",
+  "creator_id": "cre_007",
+  "published_at": "2024-07-01",
+  "tags": ["bikes", "community", "energy"],
+  "duration_seconds": 172,
+  "thumbnail": "/images/shows/show_147.jpg"
+},
+{
+  "id": "show_148",
+  "title": "Borrowed Voices",
+  "creator_id": "cre_008",
+  "published_at": "2024-05-11",
+  "tags": ["spoken word", "identity", "storytelling"],
+  "duration_seconds": 206,
+  "thumbnail": "/images/shows/show_148.jpg"
+},
+{
+  "id": "show_149",
+  "title": "Off Script",
+  "creator_id": "cre_009",
+  "published_at": "2024-09-13",
+  "tags": ["comedy", "improv", "quick bits"],
+  "duration_seconds": 121,
+  "thumbnail": "/images/shows/show_149.jpg"
+},
+{
+  "id": "show_150",
+  "title": "Golden Hour",
+  "creator_id": "cre_010",
+  "published_at": "2024-04-09",
+  "tags": ["cinema", "sunset", "visual"],
+  "duration_seconds": 255,
+  "thumbnail": "/images/shows/show_150.jpg"
+},
+  <<PASTE BLOCK 4 HERE>>
+]
+{
+  "id": "show_151",
+  "title": "Back Alley Blues",
+  "creator_id": "cre_011",
+  "published_at": "2024-03-03",
+  "tags": ["music", "urban", "grit"],
+  "duration_seconds": 214,
+  "thumbnail": "/images/shows/show_151.jpg"
+},
+{
+  "id": "show_152",
+  "title": "Soft Landing",
+  "creator_id": "cre_012",
+  "published_at": "2024-01-14",
+  "tags": ["romance", "healing", "minimal"],
+  "duration_seconds": 178,
+  "thumbnail": "/images/shows/show_152.jpg"
+},
+{
+  "id": "show_153",
+  "title": "Whisper Line",
+  "creator_id": "cre_013",
+  "published_at": "2024-10-02",
+  "tags": ["mystery", "urban legend", "slow burn"],
+  "duration_seconds": 237,
+  "thumbnail": "/images/shows/show_153.jpg"
+},
+{
+  "id": "show_154",
+  "title": "The Binding",
+  "creator_id": "cre_014",
+  "published_at": "2024-08-19",
+  "tags": ["horror", "ritual", "narrative"],
+  "duration_seconds": 159,
+  "thumbnail": "/images/shows/show_154.jpg"
+},
+{
+  "id": "show_155",
+  "title": "Golden Thread",
+  "creator_id": "cre_015",
+  "published_at": "2024-02-27",
+  "tags": ["fashion", "inspiration", "design"],
+  "duration_seconds": 201,
+  "thumbnail": "/images/shows/show_155.jpg"
+},
+{
+  "id": "show_156",
+  "title": "Quiet Dive",
+  "creator_id": "cre_016",
+  "published_at": "2024-04-09",
+  "tags": ["introspective", "visual poetry", "calm"],
+  "duration_seconds": 168,
+  "thumbnail": "/images/shows/show_156.jpg"
+},
+{
+  "id": "show_157",
+  "title": "Faultline",
+  "creator_id": "cre_017",
+  "published_at": "2024-06-30",
+  "tags": ["drama", "fractured relationships", "tense"],
+  "duration_seconds": 276,
+  "thumbnail": "/images/shows/show_157.jpg"
+},
+{
+  "id": "show_158",
+  "title": "Soundcheck",
+  "creator_id": "cre_018",
+  "published_at": "2024-05-12",
+  "tags": ["music", "behind the scenes", "energy"],
+  "duration_seconds": 188,
+  "thumbnail": "/images/shows/show_158.jpg"
+},
+{
+  "id": "show_159",
+  "title": "Lumen",
+  "creator_id": "cre_019",
+  "published_at": "2024-09-16",
+  "tags": ["experimental", "light", "visual"],
+  "duration_seconds": 202,
+  "thumbnail": "/images/shows/show_159.jpg"
+},
+{
+  "id": "show_160",
+  "title": "Between Notes",
+  "creator_id": "cre_020",
+  "published_at": "2024-07-26",
+  "tags": ["music", "emotion", "micro-doc"],
+  "duration_seconds": 149,
+  "thumbnail": "/images/shows/show_160.jpg"
+},
+{
+  "id": "show_161",
+  "title": "Five Minutes Late",
+  "creator_id": "cre_021",
+  "published_at": "2024-06-06",
+  "tags": ["comedy", "slice-of-life", "awkward"],
+  "duration_seconds": 111,
+  "thumbnail": "/images/shows/show_161.jpg"
+},
+{
+  "id": "show_162",
+  "title": "Daydream Blvd",
+  "creator_id": "cre_022",
+  "published_at": "2024-05-21",
+  "tags": ["visual poem", "romance", "stylized"],
+  "duration_seconds": 196,
+  "thumbnail": "/images/shows/show_162.jpg"
+},
+{
+  "id": "show_163",
+  "title": "Marching Orders",
+  "creator_id": "cre_023",
+  "published_at": "2024-03-25",
+  "tags": ["sports", "discipline", "youth"],
+  "duration_seconds": 251,
+  "thumbnail": "/images/shows/show_163.jpg"
+},
+{
+  "id": "show_164",
+  "title": "Evergreen",
+  "creator_id": "cre_024",
+  "published_at": "2024-11-08",
+  "tags": ["nature", "wellness", "visual"],
+  "duration_seconds": 282,
+  "thumbnail": "/images/shows/show_164.jpg"
+},
+{
+  "id": "show_165",
+  "title": "Honeycomb",
+  "creator_id": "cre_025",
+  "published_at": "2024-08-03",
+  "tags": ["romance", "warm tone", "nostalgia"],
+  "duration_seconds": 172,
+  "thumbnail": "/images/shows/show_165.jpg"
+},
+{
+  "id": "show_166",
+  "title": "Cut Scene",
+  "creator_id": "cre_026",
+  "published_at": "2024-10-28",
+  "tags": ["film", "editing", "behind the scenes"],
+  "duration_seconds": 238,
+  "thumbnail": "/images/shows/show_166.jpg"
+},
+{
+  "id": "show_167",
+  "title": "Outside the Lines",
+  "creator_id": "cre_027",
+  "published_at": "2024-07-19",
+  "tags": ["youth", "creativity", "community"],
+  "duration_seconds": 207,
+  "thumbnail": "/images/shows/show_167.jpg"
+},
+{
+  "id": "show_168",
+  "title": "Long Way Home",
+  "creator_id": "cre_028",
+  "published_at": "2024-02-08",
+  "tags": ["family", "reconciliation", "drama"],
+  "duration_seconds": 266,
+  "thumbnail": "/images/shows/show_168.jpg"
+},
+{
+  "id": "show_169",
+  "title": "Heatwave",
+  "creator_id": "cre_029",
+  "published_at": "2024-08-25",
+  "tags": ["summer", "drama", "visual"],
+  "duration_seconds": 184,
+  "thumbnail": "/images/shows/show_169.jpg"
+},
+{
+  "id": "show_170",
+  "title": "Off the Record",
+  "creator_id": "cre_030",
+  "published_at": "2024-09-05",
+  "tags": ["music", "confessions", "intimate"],
+  "duration_seconds": 243,
+  "thumbnail": "/images/shows/show_170.jpg"
+},
+{
+  "id": "show_171",
+  "title": "Chalk Line",
+  "creator_id": "cre_031",
+  "published_at": "2024-06-28",
+  "tags": ["crime", "human interest", "docu-series"],
+  "duration_seconds": 252,
+  "thumbnail": "/images/shows/show_171.jpg"
+},
+{
+  "id": "show_172",
+  "title": "Stargazer",
+  "creator_id": "cre_032",
+  "published_at": "2024-05-01",
+  "tags": ["fantasy", "wonder", "micro-short"],
+  "duration_seconds": 143,
+  "thumbnail": "/images/shows/show_172.jpg"
+},
+{
+  "id": "show_173",
+  "title": "Slipstream",
+  "creator_id": "cre_033",
+  "published_at": "2024-03-16",
+  "tags": ["motion", "speed", "visual"],
+  "duration_seconds": 198,
+  "thumbnail": "/images/shows/show_173.jpg"
+},
+{
+  "id": "show_174",
+  "title": "Half Truth",
+  "creator_id": "cre_034",
+  "published_at": "2024-07-08",
+  "tags": ["drama", "secrets", "dialogue"],
+  "duration_seconds": 211,
+  "thumbnail": "/images/shows/show_174.jpg"
+},
+{
+  "id": "show_175",
+  "title": "Love Voltage",
+  "creator_id": "cre_035",
+  "published_at": "2024-04-19",
+  "tags": ["romance", "tech", "modern"],
+  "duration_seconds": 167,
+  "thumbnail": "/images/shows/show_175.jpg"
+},
+{
+  "id": "show_176",
+  "title": "True North",
+  "creator_id": "cre_036",
+  "published_at": "2024-01-11",
+  "tags": ["adventure", "self-discovery", "visual"],
+  "duration_seconds": 283,
+  "thumbnail": "/images/shows/show_176.jpg"
+},
+{
+  "id": "show_177",
+  "title": "Crossfade",
+  "creator_id": "cre_037",
+  "published_at": "2024-02-23",
+  "tags": ["music", "transition", "style"],
+  "duration_seconds": 164,
+  "thumbnail": "/images/shows/show_177.jpg"
+},
+{
+  "id": "show_178",
+  "title": "Southbound",
+  "creator_id": "cre_038",
+  "published_at": "2024-03-06",
+  "tags": ["travel", "culture", "journey"],
+  "duration_seconds": 254,
+  "thumbnail": "/images/shows/show_178.jpg"
+},
+{
+  "id": "show_179",
+  "title": "Blue Hour",
+  "creator_id": "cre_039",
+  "published_at": "2024-07-23",
+  "tags": ["visual", "romance", "vibes"],
+  "duration_seconds": 187,
+  "thumbnail": "/images/shows/show_179.jpg"
+},
+{
+  "id": "show_180",
+  "title": "Chasing Lions",
+  "creator_id": "cre_040",
+  "published_at": "2024-10-07",
+  "tags": ["sports", "ambition", "youth"],
+  "duration_seconds": 231,
+  "thumbnail": "/images/shows/show_180.jpg"
+},
+{
+  "id": "show_181",
+  "title": "Split Screen",
+  "creator_id": "cre_041",
+  "published_at": "2024-03-12",
+  "tags": ["visual", "parallel stories", "experimental"],
+  "duration_seconds": 216,
+  "thumbnail": "/images/shows/show_181.jpg"
+},
+{
+  "id": "show_182",
+  "title": "Sidecar Dreams",
+  "creator_id": "cre_042",
+  "published_at": "2024-05-09",
+  "tags": ["motorcycle", "freedom", "cinematic"],
+  "duration_seconds": 244,
+  "thumbnail": "/images/shows/show_182.jpg"
+},
+{
+  "id": "show_183",
+  "title": "Backtrack",
+  "creator_id": "cre_043",
+  "published_at": "2024-06-10",
+  "tags": ["mystery", "past choices", "thriller"],
+  "duration_seconds": 259,
+  "thumbnail": "/images/shows/show_183.jpg"
+},
+{
+  "id": "show_184",
+  "title": "Velvet Sky",
+  "creator_id": "cre_044",
+  "published_at": "2024-11-12",
+  "tags": ["romance", "stylized", "visual mood"],
+  "duration_seconds": 204,
+  "thumbnail": "/images/shows/show_184.jpg"
+},
+{
+  "id": "show_185",
+  "title": "Chance Encounter",
+  "creator_id": "cre_045",
+  "published_at": "2024-02-02",
+  "tags": ["romance", "fate", "minimal"],
+  "duration_seconds": 121,
+  "thumbnail": "/images/shows/show_185.jpg"
+},
+{
+  "id": "show_186",
+  "title": "High Tide",
+  "creator_id": "cre_046",
+  "published_at": "2024-07-30",
+  "tags": ["summer", "youth", "beach vibes"],
+  "duration_seconds": 142,
+  "thumbnail": "/images/shows/show_186.jpg"
+},
+{
+  "id": "show_187",
+  "title": "Understudy",
+  "creator_id": "cre_047",
+  "published_at": "2024-09-14",
+  "tags": ["acting", "ambition", "drama"],
+  "duration_seconds": 269,
+  "thumbnail": "/images/shows/show_187.jpg"
+},
+{
+  "id": "show_188",
+  "title": "Golden Mile",
+  "creator_id": "cre_048",
+  "published_at": "2024-08-06",
+  "tags": ["travel", "stories", "inspiration"],
+  "duration_seconds": 258,
+  "thumbnail": "/images/shows/show_188.jpg"
+},
+{
+  "id": "show_189",
+  "title": "Half Steps",
+  "creator_id": "cre_049",
+  "published_at": "2024-01-29",
+  "tags": ["dance", "training", "visual"],
+  "duration_seconds": 213,
+  "thumbnail": "/images/shows/show_189.jpg"
+},
+{
+  "id": "show_190",
+  "title": "Curveball",
+  "creator_id": "cre_050",
+  "published_at": "2024-03-27",
+  "tags": ["sports", "baseball", "youth"],
+  "duration_seconds": 173,
+  "thumbnail": "/images/shows/show_190.jpg"
+},
+{
+  "id": "show_191",
+  "title": "In Overtime",
+  "creator_id": "cre_001",
+  "published_at": "2024-04-04",
+  "tags": ["sports", "pressure", "narrative"],
+  "duration_seconds": 248,
+  "thumbnail": "/images/shows/show_191.jpg"
+},
+{
+  "id": "show_192",
+  "title": "Quiet Flood",
+  "creator_id": "cre_002",
+  "published_at": "2024-06-18",
+  "tags": ["mood", "abstract", "visual"],
+  "duration_seconds": 199,
+  "thumbnail": "/images/shows/show_192.jpg"
+},
+{
+  "id": "show_193",
+  "title": "Crossroads",
+  "creator_id": "cre_003",
+  "published_at": "2024-05-27",
+  "tags": ["life decisions", "family", "drama"],
+  "duration_seconds": 262,
+  "thumbnail": "/images/shows/show_193.jpg"
+},
+{
+  "id": "show_194",
+  "title": "North Star",
+  "creator_id": "cre_004",
+  "published_at": "2024-07-11",
+  "tags": ["inspiration", "struggle", "uplifting"],
+  "duration_seconds": 218,
+  "thumbnail": "/images/shows/show_194.jpg"
+},
+{
+  "id": "show_195",
+  "title": "Downbeat",
+  "creator_id": "cre_005",
+  "published_at": "2024-02-15",
+  "tags": ["music", "rhythm", "energy"],
+  "duration_seconds": 144,
+  "thumbnail": "/images/shows/show_195.jpg"
+},
+{
+  "id": "show_196",
+  "title": "Overcast",
+  "creator_id": "cre_006",
+  "published_at": "2024-01-04",
+  "tags": ["visual poem", "winter", "quiet"],
+  "duration_seconds": 192,
+  "thumbnail": "/images/shows/show_196.jpg"
+},
+{
+  "id": "show_197",
+  "title": "Steel Strings",
+  "creator_id": "cre_007",
+  "published_at": "2024-09-01",
+  "tags": ["music", "grit", "craft"],
+  "duration_seconds": 223,
+  "thumbnail": "/images/shows/show_197.jpg"
+},
+{
+  "id": "show_198",
+  "title": "Lifeline",
+  "creator_id": "cre_008",
+  "published_at": "2024-03-09",
+  "tags": ["relationships", "healing", "uplifting"],
+  "duration_seconds": 187,
+  "thumbnail": "/images/shows/show_198.jpg"
+},
+{
+  "id": "show_199",
+  "title": "Crash Course",
+  "creator_id": "cre_009",
+  "published_at": "2024-09-22",
+  "tags": ["learning", "funny", "chaotic"],
+  "duration_seconds": 126,
+  "thumbnail": "/images/shows/show_199.jpg"
+},
+{
+  "id": "show_200",
+  "title": "Skybridge",
+  "creator_id": "cre_010",
+  "published_at": "2024-11-29",
+  "tags": ["drama", "city life", "character study"],
+  "duration_seconds": 241,
+  "thumbnail": "/images/shows/show_200.jpg"
+}
+

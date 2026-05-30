@@ -15,7 +15,7 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "camera",
         "category": "CAMERA BASICS",
         "title": "ISO & Noise",
-        "type": "static",
+        "type": "html_presentation",
         "description": "ISO controls sensor sensitivity. It matters because high ISO introduces noise.",
         "guide": "Use the lowest ISO possible for clean images. Raise ISO only when aperture and shutter can't compensate. Modern cameras handle moderate ISO well, but noise becomes visible in shadows.",
         "keyRule": "ISO is your last resort for exposure.",
@@ -27,6 +27,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Expose to the right (ETTR) to minimize noise.",
         "commonMistake": "Using ISO as the primary exposure tool.",
+        "htmlSlidePath": "slides/camera-basics/iso-noise.html",
+        "htmlSlideId": "iso-noise",
         "images": []
       },
       {
@@ -35,7 +37,7 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "camera",
         "category": "CAMERA BASICS",
         "title": "Aperture & Depth of Field",
-        "type": "static",
+        "type": "html_presentation",
         "description": "Aperture controls how much light enters the lens and how much of the image is in focus. It matters because depth of field shapes your visual style.",
         "guide": "Lower f‑stops create blurry backgrounds. Higher f‑stops keep more in focus. Aperture also affects exposure, so adjust shutter or ISO to compensate. Use shallow depth for portraits and deep depth for landscapes.",
         "keyRule": "Lower f‑stop = shallower depth of field.",
@@ -47,6 +49,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Use f/2.8 or lower for cinematic separation.",
         "commonMistake": "Shooting wide open without checking focus.",
+        "htmlSlidePath": "slides/camera-motion/aperture-depth.html",
+        "htmlSlideId": "aperture-depth",
         "images": []
       },
       {
@@ -55,7 +59,7 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "camera",
         "category": "CAMERA BASICS",
         "title": "Shutter Speed & Motion",
-        "type": "static",
+        "type": "html_presentation",
         "description": "Shutter speed controls how motion appears. It matters because motion blur affects realism and style.",
         "guide": "Use 1/50 for natural motion at 24fps. Faster shutter speeds freeze motion. Slower speeds add blur. Shutter also affects exposure, so adjust aperture or ISO accordingly.",
         "keyRule": "Match shutter speed to frame rate for natural motion.",
@@ -67,6 +71,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Use high shutter speeds for crisp sports footage.",
         "commonMistake": "Using fast shutter indoors and underexposing.",
+        "htmlSlidePath": "slides/camera-basics/shutter-motion.html",
+        "htmlSlideId": "shutter-motion",
         "images": []
       },
       {
@@ -95,7 +101,7 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "camera",
         "category": "CAMERA BASICS",
         "title": "Exposure Triangle",
-        "type": "static",
+        "type": "html_presentation",
         "description": "The exposure triangle controls how bright or dark your image is. It matters because every shot depends on balancing these three settings.",
         "guide": "Aperture controls depth of field. Shutter speed controls motion blur. ISO controls sensor sensitivity. Changing one affects the others. Mastering the triangle gives you full creative control.",
         "keyRule": "Balance aperture, shutter, and ISO together—not independently.",
@@ -107,6 +113,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Lock two settings for your style and adjust the third for exposure.",
         "commonMistake": "Using ISO as the primary exposure tool.",
+        "htmlSlidePath": "slides/camera-basics/exposure-triangle.html",
+        "htmlSlideId": "exposure-triangle",
         "images": []
       },
       {
@@ -499,7 +507,7 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "framing",
         "category": "FOUNDATIONAL RULES",
         "title": "Rule of Thirds",
-        "type": "static",
+        "type": "html_presentation",
         "description": "The rule of thirds divides your frame into a 3x3 grid. It matters because placing subjects on these lines creates natural balance.",
         "guide": "Humans read images in patterns, and the thirds grid aligns with those patterns. Placing eyes, horizons, or key objects on the intersections creates tension and interest. Centering works too, but thirds give you a reliable starting point. Use it to guide the viewer's eye without shouting for attention.",
         "keyRule": "Place your subject on a third, not the center, unless you have a reason.",
@@ -521,7 +529,7 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "framing",
         "category": "FOUNDATIONAL RULES",
         "title": "Leading Lines",
-        "type": "static",
+        "type": "html_presentation",
         "description": "Leading lines guide the viewer's eye through the frame. They matter because they create depth and visual flow.",
         "guide": "Roads, rails, hallways, shadows—anything can be a leading line. Use them to point toward your subject or pull the viewer deeper into the scene. Strong lines add structure and intention. They're especially powerful in wide shots.",
         "keyRule": "Use lines to direct attention, not distract from it.",
@@ -533,6 +541,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Diagonal lines add more energy than horizontal ones.",
         "commonMistake": "Letting lines lead out of the frame instead of toward the subject.",
+        "htmlSlidePath": "slides/photography-composition/leading-lines.html",
+        "htmlSlideId": "leading-lines",
         "images": []
       },
       {
@@ -693,7 +703,7 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "framing",
         "category": "ADVANCED COMPOSITION",
         "title": "Headroom & Nose Room",
-        "type": "static",
+        "type": "html_presentation",
         "description": "Headroom and nose room control breathing space around a subject. They matter because they affect comfort and direction.",
         "guide": "Too much headroom feels amateur; too little feels cramped. Nose room gives space in the direction the subject faces. Use these to guide viewer attention and maintain balance. Small adjustments make big differences.",
         "keyRule": "Give subjects space in the direction they're looking.",
@@ -705,6 +715,30 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Less nose room creates tension—use intentionally.",
         "commonMistake": "Centering the head vertically.",
+        "htmlSlidePath": "slides/framing-shots/headroom-lookroom.html",
+        "htmlSlideId": "headroom-lookroom",
+        "images": []
+      },
+      {
+        "id": "framing-vertical-composition",
+        "number": "35B",
+        "tab": "framing",
+        "category": "ADVANCED COMPOSITION",
+        "title": "Vertical Composition (9:16)",
+        "type": "html_presentation",
+        "description": "Vertical composition plans for 9:16 delivery. It matters because cropping horizontal footage destroys framing and resolution.",
+        "guide": "Shooting 16:9 but delivering 9:16? Compose with the vertical safe area in mind from day one. Place subjects on the center third—never the edges. Keep faces and titles inside the safe zone so mobile crops do not clip your story.",
+        "keyRule": "Native vertical beats stretched horizontal.",
+        "steps": [
+          "Enable vertical safe-area guides on monitor or app.",
+          "Place subject on center third for 9:16 crop.",
+          "Keep faces and titles inside the safe zone.",
+          "Shoot native vertical when the platform is vertical-first."
+        ],
+        "proTip": "Frame for the crop before you roll—fixing in post costs resolution.",
+        "commonMistake": "Placing subjects on the edge of a horizontal frame you plan to crop.",
+        "htmlSlidePath": "slides/framing-shots/vertical-composition.html",
+        "htmlSlideId": "vertical-composition",
         "images": []
       }
     ]
@@ -883,6 +917,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Soft light still needs direction—don't flatten it.",
         "commonMistake": "Confusing soft light with low‑contrast lighting.",
+        "htmlSlidePath": "slides/lighting-exposure/hard-soft-light.html",
+        "htmlSlideId": "hard-soft-light",
         "images": []
       },
       {
@@ -903,6 +939,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Use warm light for intimacy and cool light for tension.",
         "commonMistake": "Ignoring practical lights that contaminate the scene.",
+        "htmlSlidePath": "slides/lighting-exposure/color-temperature.html",
+        "htmlSlideId": "color-temperature",
         "images": []
       },
       {
@@ -991,6 +1029,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Turn off overheads—they kill cinematic mood.",
         "commonMistake": "Over‑lighting and losing direction.",
+        "htmlSlidePath": "slides/lighting-exposure/cinematic-setup.html",
+        "htmlSlideId": "cinematic-setup",
         "images": []
       },
       {
@@ -1047,7 +1087,7 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "lighting",
         "category": "ADVANCED LIGHTING",
         "title": "Rembrandt Lighting",
-        "type": "static",
+        "type": "html_presentation",
         "description": "Rembrandt lighting creates a triangle of light under the eye. It matters because it adds depth and drama.",
         "guide": "Place the key at 45° and slightly above eye level. The shadow from the nose should connect with the cheek shadow, leaving a small lit triangle. It's flattering and cinematic. Works well for portraits and interviews.",
         "keyRule": "Aim for the signature triangle under the eye.",
@@ -1059,6 +1099,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Use negative fill to deepen the shadow side.",
         "commonMistake": "Letting the triangle get too large or too bright.",
+        "htmlSlidePath": "slides/lighting-exposure/rembrandt-lighting.html",
+        "htmlSlideId": "rembrandt-lighting",
         "images": []
       },
       {
@@ -1127,7 +1169,7 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "lighting",
         "category": "ADVANCED LIGHTING",
         "title": "Practical Motivated Light",
-        "type": "static",
+        "type": "html_presentation",
         "description": "Motivated lighting uses practicals as the source of your key. It matters because it grounds your lighting in reality.",
         "guide": "If a lamp is in the frame, your key should feel like it comes from that lamp. Use hidden lights to boost the practical's effect. Motivated lighting blends realism with control. It's the backbone of cinematic lighting.",
         "keyRule": "Let practicals dictate your lighting direction.",
@@ -1139,6 +1181,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Dim practicals to avoid clipping while keeping ambiance.",
         "commonMistake": "Lighting from a direction that contradicts the practical.",
+        "htmlSlidePath": "slides/lighting-exposure/practical-motivated.html",
+        "htmlSlideId": "practical-motivated",
         "images": []
       }
     ]
@@ -1167,6 +1211,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Keyboard shortcuts differ by page—learn them.",
         "commonMistake": "Trying to do everything on the Edit page.",
+        "htmlSlidePath": "slides/davinci-resolve/interface-overview.html",
+        "htmlSlideId": "interface-overview",
         "images": []
       },
       {
@@ -1255,6 +1301,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Use scopes, not your eyes alone.",
         "commonMistake": "Crushing shadows too early.",
+        "htmlSlidePath": "slides/davinci-resolve/color-wheels.html",
+        "htmlSlideId": "color-wheels",
         "images": []
       },
       {
@@ -1275,8 +1323,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "S‑curves add cinematic contrast.",
         "commonMistake": "Over‑bending curves and creating artifacts.",
-        "htmlSlidePath": "slides/davinci-resolve/custom-curves.html",
-        "htmlSlideId": "custom-curves",
+        "htmlSlidePath": "slides/davinci-resolve/curves.html",
+        "htmlSlideId": "curves",
         "images": []
       },
       {
@@ -1329,8 +1377,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         "description": "Skin tones must look natural. They matter because viewers judge skin instantly.",
         "guide": "Use the vectorscope to keep skin on the skin tone line. Adjust hue and saturation carefully. Use qualifiers to isolate skin if needed. Good skin tones elevate the entire grade.",
         "steps": [],
-        "htmlSlidePath": "slides/davinci-resolve/skin-tones.html",
-        "htmlSlideId": "skin-tones",
+        "htmlSlidePath": "slides/davinci-resolve/skin-tone-correction.html",
+        "htmlSlideId": "skin-tone-correction",
         "images": []
       },
       {
@@ -1351,8 +1399,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Histogram alone lies on LOG—use the waveform for exposure.",
         "commonMistake": "Grading by eye on an uncalibrated display.",
-        "htmlSlidePath": "slides/davinci-resolve/vectorscope.html",
-        "htmlSlideId": "vectorscope",
+        "htmlSlidePath": "slides/davinci-resolve/scopes.html",
+        "htmlSlideId": "scopes",
         "images": []
       },
       {
@@ -1373,8 +1421,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Export node stills for match reference on long projects.",
         "commonMistake": "One giant node that does everything.",
-        "htmlSlidePath": "slides/davinci-resolve/node-workflow.html",
-        "htmlSlideId": "node-workflow",
+        "htmlSlidePath": "slides/davinci-resolve/node-structure.html",
+        "htmlSlideId": "node-structure",
         "images": []
       },
       {
@@ -1483,6 +1531,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Plan the exit and entry framing before the first whip.",
         "commonMistake": "Mixing whip directions in the same sequence.",
+        "htmlSlidePath": "slides/camera-motion/whip-pan.html",
+        "htmlSlideId": "whip-pan",
         "images": []
       },
       {
@@ -1551,6 +1601,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Mix with monitors at conversation level—not blasted.",
         "commonMistake": "Over-compressing dialogue until it sounds robotic.",
+        "htmlSlidePath": "slides/davinci-resolve/fairlight-basics.html",
+        "htmlSlideId": "fairlight-basics",
         "images": []
       },
       {
@@ -1599,7 +1651,7 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "editing",
         "category": "AUDIO",
         "title": "Dialogue Cleanup (Noise Reduction)",
-        "type": "static",
+        "type": "html_presentation",
         "description": "Dialogue cleanup fixes location audio before anyone else hears it. It matters because noise reduction is not optional on client work.",
         "guide": "Learn a noise profile from a room-tone snippet in RX or Fairlight. De-plosive and de-ess lightly—over-processing sounds robotic. Cut distracting breaths manually; do not remove all breath or speech feels uncanny. Align multicam audio to a single master lav. Keep original tracks muted but unprocessed as backup.",
         "keyRule": "Fix dialogue before you mix music.",
@@ -1611,6 +1663,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Process a short section first—ears fatigue on long passes.",
         "commonMistake": "Heavy NR that turns voices into underwater radio.",
+        "htmlSlidePath": "slides/davinci-resolve/dialogue-cleanup.html",
+        "htmlSlideId": "dialogue-cleanup",
         "images": []
       }
     ]
@@ -1715,7 +1769,7 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "strategy",
         "category": "PLATFORM MASTERY",
         "title": "Instagram Reels — Hook, Pacing, Caption Strategy",
-        "type": "static",
+        "type": "html_presentation",
         "description": "Instagram Reels reward hooks, pacing, and captions in the first seconds. They matter because the scroll decision happens instantly.",
         "guide": "Hook in frame one—face, action, or bold text before the swipe. Shoot native 9:16 in camera, not stretched in post. Burn captions on-screen—most viewers watch muted. Keep most reels in the 15–30 second sweet spot for completion. Post when your audience is active according to insights, not generic best-time lists.",
         "keyRule": "Win the first 1.5 seconds or lose the viewer.",
@@ -1727,6 +1781,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Motion in the opening frame beats a static title card.",
         "commonMistake": "Stretching 16:9 into vertical instead of reframing.",
+        "htmlSlidePath": "slides/strategy/instagram-reels.html",
+        "htmlSlideId": "instagram-reels",
         "images": []
       },
       {
@@ -1735,7 +1791,7 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "strategy",
         "category": "PLATFORM MASTERY",
         "title": "TikTok — Native Feel, Trending Audio, Retention",
-        "type": "static",
+        "type": "html_presentation",
         "description": "TikTok rewards native, lo-fi content and retention loops. It matters because over-produced ads get skipped.",
         "guide": "Shoot lo-fi when the brand allows—polished reads as an ad. Match the end frame to the start for seamless loops—the algorithm rewards rewatches. Use trending audio inside your niche quickly—stale trends hurt reach. Reply to comments with video to double content and boost engagement. Put hook text in the first half-second and state the payoff immediately.",
         "keyRule": "Native feel beats polished unless the brand demands polish.",
@@ -1747,6 +1803,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Lo-fi BTS often outperforms glossy hero edits on TikTok.",
         "commonMistake": "Recycling Instagram polish without adapting pacing.",
+        "htmlSlidePath": "slides/strategy/tiktok-native.html",
+        "htmlSlideId": "tiktok-native",
         "images": []
       },
       {
@@ -1755,7 +1813,7 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "strategy",
         "category": "PLATFORM MASTERY",
         "title": "YouTube — Titles, Thumbnails, Retention Arc",
-        "type": "static",
+        "type": "html_presentation",
         "description": "YouTube is won in the thumbnail, title, and retention graph. They matter because click-through and watch time drive distribution.",
         "guide": "Deliver the title promise in the first thirty seconds. Pattern interrupt every thirty to forty-five seconds—B-roll, graphics, angle changes. Add chapters on videos over eight minutes for session time and snippets. One clear end-screen CTA in the last twenty seconds—not three competing links. A/B test thumbnails—swap if CTR stays under 4% after forty-eight hours.",
         "keyRule": "Thumbnail and title must promise what the video delivers.",
@@ -1767,6 +1825,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Design the thumbnail before you write the script.",
         "commonMistake": "Clickbait titles with slow payoffs—retention collapses.",
+        "htmlSlidePath": "slides/strategy/youtube-titles-thumbs.html",
+        "htmlSlideId": "youtube-titles-thumbs",
         "images": []
       },
       {
@@ -1891,7 +1951,7 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "strategy",
         "category": "CONTENT SYSTEMS",
         "title": "Batch Shooting — One Day, 30 Days of Content",
-        "type": "static",
+        "type": "html_presentation",
         "description": "Batch shooting compresses production into focused sessions. It matters because consistency beats intensity.",
         "guide": "Plan 10–15 scripts or outlines ahead of time. Shoot all A‑roll in one block. Capture B‑roll in another. Edit in batches. This system removes daily friction and keeps output steady.",
         "keyRule": "Separate planning, shooting, and editing into distinct phases.",
@@ -1903,6 +1963,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Use consistent lighting and framing to speed up shooting.",
         "commonMistake": "Trying to plan and shoot on the same day.",
+        "htmlSlidePath": "slides/strategy/batch-shooting.html",
+        "htmlSlideId": "batch-shooting",
         "images": []
       },
       {
@@ -1911,7 +1973,7 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "strategy",
         "category": "CONTENT SYSTEMS",
         "title": "The Hook Formula — First 3 Seconds",
-        "type": "static",
+        "type": "html_presentation",
         "description": "The hook formula stops the scroll in the first three seconds. It matters because viewers decide before they hear your story.",
         "guide": "Use problem plus promise in two seconds—the viewer must know why to keep watching. Show the result first, then rewind to how with a visual hook. Controversy hooks work sparingly only when you deliver real value. Write ten hooks per idea and shoot the best two. The first frame needs a face or motion—static wide opens die.",
         "keyRule": "State the payoff before you ask for attention.",
@@ -1923,6 +1985,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Read the hook out loud—if it sounds like an ad, rewrite it.",
         "commonMistake": "Slow intros that bury the promise after three seconds.",
+        "htmlSlidePath": "slides/strategy/hook-formula.html",
+        "htmlSlideId": "hook-formula",
         "images": []
       },
       {
@@ -1931,7 +1995,7 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "strategy",
         "category": "CONTENT SYSTEMS",
         "title": "Repurposing Content — One Video, Five Platforms",
-        "type": "static",
+        "type": "html_presentation",
         "description": "Repurposing multiplies your reach without multiplying your workload. It matters because every platform rewards different formats.",
         "guide": "Turn long‑form YouTube videos into shorts, carousels, tweets, and LinkedIn posts. Extract key insights and repackage them. Keep platform tone and pacing in mind. Repurposing is about reframing, not recycling.",
         "keyRule": "Adapt the message to the platform, not the other way around.",
@@ -1943,6 +2007,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Your best short‑form ideas usually come from long‑form content.",
         "commonMistake": "Posting the same edit everywhere without adapting it.",
+        "htmlSlidePath": "slides/strategy/repurposing.html",
+        "htmlSlideId": "repurposing",
         "images": []
       },
       {
@@ -1951,7 +2017,7 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "strategy",
         "category": "CONTENT SYSTEMS",
         "title": "Content Pillars — The System That Makes You Consistent",
-        "type": "static",
+        "type": "html_presentation",
         "description": "Content pillars give your brand structure. They matter because consistency builds trust and accelerates growth.",
         "guide": "Choose 3–5 pillars that represent your identity, expertise, and audience needs. Every piece of content should map to one pillar. Pillars prevent burnout, eliminate decision fatigue, and keep your message coherent across platforms.",
         "keyRule": "Every post must serve a pillar.",
@@ -1963,6 +2029,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Your strongest pillar should produce 50% of your content.",
         "commonMistake": "Posting randomly without a strategic framework.",
+        "htmlSlidePath": "slides/strategy/content-pillars.html",
+        "htmlSlideId": "content-pillars",
         "images": []
       },
       {
@@ -1990,7 +2058,7 @@ export const toolkitCategories: ToolkitCategory[] = [
         "number": "95",
         "tab": "strategy",
         "category": "CONTENT SYSTEMS",
-        "type": "static",
+        "type": "html_presentation",
         "title": "Hooks That Convert — Specific Hook Types That Drive Action",
         "description": "Hooks that convert push viewers toward action, not just attention. They matter because retention without action is wasted effort.",
         "guide": "Use problem‑solution hooks to target pain points. Use \"myth‑busting\" hooks to challenge assumptions. Use \"here's what nobody tells you\" hooks to trigger curiosity. Use transformation hooks to show before/after value. Each hook type primes the viewer for a specific outcome.",
@@ -2003,6 +2071,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Myth‑busting hooks have the highest share rate.",
         "commonMistake": "Using hooks that don't match the video's actual value.",
+        "htmlSlidePath": "slides/strategy/hooks-convert.html",
+        "htmlSlideId": "hooks-convert",
         "images": []
       }
     ]
@@ -2027,7 +2097,7 @@ export function getLessonById(id: string): ToolkitLesson | undefined {
 
 export const lessonCountByTab: Record<ToolkitTab, number> = {
   "camera": 25,
-  "framing": 15,
+  "framing": 16,
   "lighting": 15,
   "editing": 26,
   "strategy": 14

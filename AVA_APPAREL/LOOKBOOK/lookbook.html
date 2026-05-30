@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVA Apparel Drop 001 - Lookbook</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #000;
+            color: #fff;
+        }
+        .page {
+            width: 100vw;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            page-break-after: always;
+        }
+        .cover {
+            background: #0A0A0F;
+            text-align: center;
+        }
+        .cover h1 {
+            font-size: 72px;
+            font-weight: 900;
+            margin-bottom: 16px;
+            color: #FFD700;
+        }
+        .cover .subtitle {
+            font-size: 24px;
+            color: #cccccc;
+        }
+        .line-page {
+            background: #0A0A0F;
+        }
+        .line-page img {
+            max-width: 80%;
+            max-height: 60vh;
+            object-fit: contain;
+            margin-bottom: 32px;
+        }
+        .line-title {
+            font-size: 64px;
+            font-weight: 900;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+        }
+        .one-liner {
+            font-size: 28px;
+            font-style: italic;
+            color: #aaaaaa;
+            margin-bottom: 32px;
+        }
+        .line-desc {
+            font-size: 18px;
+            color: #cccccc;
+            max-width: 600px;
+            text-align: center;
+            line-height: 1.8;
+        }
+        .visionary { color: #FFD700; }
+        .creator { color: #FF6B6B; }
+        .alpha-krew { color: #8B5CF6; }
+        .storyteller { color: #10B981; }
+        .collection-page {
+            background: #0A0A0F;
+            text-align: center;
+        }
+        .collection-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            max-width: 1000px;
+            margin: 40px 0;
+        }
+        .collection-item {
+            text-align: center;
+        }
+        .collection-item h3 {
+            font-size: 32px;
+            margin-top: 16px;
+        }
+        .close-page {
+            background: #0A0A0F;
+            text-align: center;
+        }
+        .close-page h2 {
+            font-size: 48px;
+            margin-bottom: 24px;
+        }
+        .close-page p {
+            font-size: 18px;
+            color: #aaaaaa;
+            margin: 8px 0;
+        }
+        @media print {
+            .page { page-break-after: always; }
+        }
+    </style>
+</head>
+<body>
+    <!-- COVER -->
+    <div class="page cover">
+        <h1>AVA Apparel</h1>
+        <p class="subtitle">Drop 001</p>
+    </div>
+
+    <!-- VISIONARY PAGE 1 -->
+    <div class="page line-page">
+        <img src="../MOCKUPS/VISIONARY/visionary-hero.jpg" alt="Visionary">
+        <h2 class="line-title visionary">VISIONARY</h2>
+        <p class="one-liner">"Visionary by nature."</p>
+    </div>
+
+    <!-- VISIONARY PAGE 2 -->
+    <div class="page line-page">
+        <img src="../MOCKUPS/VISIONARY/visionary-detail.jpg" alt="Visionary Detail">
+        <p class="line-desc">Minimal. Premium. Future-forward. For leaders who build in silence.</p>
+    </div>
+
+    <!-- CREATOR PAGE 1 -->
+    <div class="page line-page">
+        <img src="../MOCKUPS/CREATOR/creator-hero.jpg" alt="Creator">
+        <h2 class="line-title creator">CREATOR</h2>
+        <p class="one-liner">"Create the culture."</p>
+    </div>
+
+    <!-- CREATOR PAGE 2 -->
+    <div class="page line-page">
+        <img src="../MOCKUPS/CREATOR/creator-detail.jpg" alt="Creator Detail">
+        <p class="line-desc">Bold. Fast. Expressive. For creators who move fast.</p>
+    </div>
+
+    <!-- ALPHA KREW PAGE 1 -->
+    <div class="page line-page">
+        <img src="../MOCKUPS/ALPHA_KREW/alpha-krew-hero.jpg" alt="Alpha Krew">
+        <h2 class="line-title alpha-krew">ALPHA KREW</h2>
+        <p class="one-liner">"Alpha by design."</p>
+    </div>
+
+    <!-- ALPHA KREW PAGE 2 -->
+    <div class="page line-page">
+        <img src="../MOCKUPS/ALPHA_KREW/alpha-krew-detail.jpg" alt="Alpha Krew Detail">
+        <p class="line-desc">Authority. Unity. Dominance. For teams who build together.</p>
+    </div>
+
+    <!-- STORYTELLER PAGE 1 -->
+    <div class="page line-page">
+        <img src="../MOCKUPS/STORYTELLER/storyteller-hero.jpg" alt="Storyteller">
+        <h2 class="line-title storyteller">STORYTELLER</h2>
+        <p class="one-liner">"Storyteller by craft."</p>
+    </div>
+
+    <!-- STORYTELLER PAGE 2 -->
+    <div class="page line-page">
+        <img src="../MOCKUPS/STORYTELLER/storyteller-detail.jpg" alt="Storyteller Detail">
+        <p class="line-desc">Human. Authentic. Narrative. For those who capture truth.</p>
+    </div>
+
+    <!-- COLLECTION OVERVIEW -->
+    <div class="page collection-page">
+        <h2>Drop 001</h2>
+        <p class="line-desc">Limited release. Premium quality.</p>
+        <div class="collection-grid">
+            <div class="collection-item">
+                <h3 class="visionary">VISIONARY</h3>
+            </div>
+            <div class="collection-item">
+                <h3 class="creator">CREATOR</h3>
+            </div>
+            <div class="collection-item">
+                <h3 class="alpha-krew">ALPHA KREW</h3>
+            </div>
+            <div class="collection-item">
+                <h3 class="storyteller">STORYTELLER</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- CLOSE -->
+    <div class="page close-page">
+        <h2>AVA Apparel</h2>
+        <p>alphavisualartists.com</p>
+        <p>@avamedia</p>
+        <p>Drop 001</p>
+    </div>
+</body>
+</html>

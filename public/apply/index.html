@@ -76,13 +76,14 @@
                 <textarea id="message" name="why" placeholder="Tell us about your vision for vertical cinema..." required></textarea>
             </div>
 
+            <div class="error-message" style="display:none;"></div>
+            <div class="success-message" style="display:none;"></div>
+            
             <button type="submit" class="btn">Submit Application</button>
         </form>
     </div>
-
-    <div class="error-message" style="display:none;background:#ff3333;color:#fff;padding:16px;border-radius:8px;margin-bottom:20px;"></div>
-    <div class="success-message" style="display:none;background:#00ff00;color:#000;padding:16px;border-radius:8px;margin-bottom:20px;"></div>
     
+    <script src="/assets/js/zapierForms.js"></script>
     <script type="module" src="/assets/js/applyForm.js"></script>
     <script>
         // Set role from URL parameter or default to creator

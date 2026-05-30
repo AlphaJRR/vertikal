@@ -1,0 +1,8 @@
+:8080
+root * /Users/alphavisualartists/Vertikal-App/dist
+encode gzip zstd
+
+# SPA fallback (React Router)
+try_files {path} /index.html
+file_server
+

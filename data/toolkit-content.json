@@ -22,21 +22,28 @@
       "name": "Camera Motion",
       "icon": "film-outline",
       "color": "#3B82F6",
-      "slideCount": 4
+      "slideCount": 5
+    },
+    {
+      "id": "camera-basics",
+      "name": "Camera Basics",
+      "icon": "aperture-outline",
+      "color": "#ff006e",
+      "slideCount": 3
     },
     {
       "id": "davinci-resolve",
       "name": "DaVinci Resolve",
       "icon": "color-palette-outline",
       "color": "#8B5CF6",
-      "slideCount": 9
+      "slideCount": 15
     },
     {
       "id": "lighting-exposure",
       "name": "Lighting & Exposure",
       "icon": "sunny-outline",
       "color": "#FBBF24",
-      "slideCount": 2
+      "slideCount": 8
     },
     {
       "id": "framing-shots",
@@ -50,7 +57,7 @@
       "name": "Camera & On-Set",
       "icon": "camera-outline",
       "color": "#ff006e",
-      "slideCount": 3
+      "slideCount": 4
     },
     {
       "id": "creator-mindset",
@@ -58,6 +65,13 @@
       "icon": "bulb-outline",
       "color": "#06d6a0",
       "slideCount": 2
+    },
+    {
+      "id": "strategy",
+      "name": "Strategy",
+      "icon": "rocket-outline",
+      "color": "#F97316",
+      "slideCount": 8
     }
   ],
   "slides": [
@@ -68,8 +82,8 @@
       "category": "Photography & Composition",
       "format": "carousel",
       "num": "01",
-      "summary": "Place subjects on grid intersections for balance.",
-      "tip": "Place subjects on grid intersections for balance.",
+      "summary": "The rule of thirds divides your frame into a 3x3 grid. It matters because placing subjects on these lines creates natural balance.",
+      "tip": "Use the opposite third for negative space to create direction.",
       "highlight": "intersections",
       "htmlPath": "slides/photography-composition/rule-of-thirds.html"
     },
@@ -128,8 +142,8 @@
       "category": "Photography & Composition",
       "format": "carousel",
       "num": "06",
-      "summary": "Use lines to guide the eye toward your subject. Focus on vanishing point.",
-      "tip": "Use lines to guide the eye toward your subject. Focus on vanishing point.",
+      "summary": "Leading lines guide the viewer's eye through the frame. They matter because they create depth and visual flow.",
+      "tip": "Diagonal lines add more energy than horizontal ones.",
       "highlight": "vanishing point",
       "htmlPath": "slides/photography-composition/leading-lines.html"
     },
@@ -306,6 +320,23 @@
       "htmlPath": "slides/camera-motion/timelapse.html"
     },
     {
+      "id": "whip-pan",
+      "title": "WHIP PAN TRANSITION",
+      "categoryId": "camera-motion",
+      "category": "Camera Motion",
+      "format": "carousel",
+      "num": "",
+      "summary": "A whip pan transition connects scenes with blur and energy.",
+      "tip": "Plan the exit and entry framing before the first whip.",
+      "steps": [
+        "Shoot whip out and whip in on set.",
+        "Cut at peak blur on both sides.",
+        "Add directional blur in post if needed.",
+        "Sync to whoosh SFX or a music hit."
+      ],
+      "htmlPath": "slides/camera-motion/whip-pan.html"
+    },
+    {
       "id": "surface-tracker",
       "title": "SURFACE TRACKER",
       "categoryId": "davinci-resolve",
@@ -340,7 +371,7 @@
       "htmlPath": "slides/davinci-resolve/speed-ramp.html"
     },
     {
-      "id": "skin-tones",
+      "id": "skin-tone-correction",
       "title": "SKIN TONE CORRECTION",
       "categoryId": "davinci-resolve",
       "category": "DaVinci Resolve",
@@ -354,7 +385,7 @@
         "Adjust hue and saturation in small increments.",
         "Use qualifiers only when global adjustments fail."
       ],
-      "htmlPath": "slides/davinci-resolve/skin-tones.html"
+      "htmlPath": "slides/davinci-resolve/skin-tone-correction.html"
     },
     {
       "id": "hdr-zones",
@@ -391,6 +422,23 @@
       "htmlPath": "slides/davinci-resolve/custom-curves.html"
     },
     {
+      "id": "curves",
+      "title": "CURVES (RGB AND LUMA)",
+      "categoryId": "davinci-resolve",
+      "category": "DaVinci Resolve",
+      "format": "carousel",
+      "num": "",
+      "summary": "Curves give precise control over contrast and color.",
+      "tip": "S\u2011curves add cinematic contrast.",
+      "steps": [
+        "Add anchor points.",
+        "Adjust luma for contrast.",
+        "Use RGB for color shifts.",
+        "Check scopes."
+      ],
+      "htmlPath": "slides/davinci-resolve/curves.html"
+    },
+    {
       "id": "color-warper",
       "title": "COLOR WARPER",
       "categoryId": "davinci-resolve",
@@ -425,21 +473,21 @@
       "htmlPath": "slides/davinci-resolve/power-windows.html"
     },
     {
-      "id": "node-workflow",
-      "title": "NODE WORKFLOW",
+      "id": "node-structure",
+      "title": "NODE STRUCTURE",
       "categoryId": "davinci-resolve",
       "category": "DaVinci Resolve",
-      "format": "story",
+      "format": "carousel",
       "num": "",
-      "summary": "Build structured grades: prep \u2192 look \u2192 skin. Input transform (LOG \u2192 linear) Spatial NR and exposure zones",
-      "tip": "Build structured grades: prep \u2192 look \u2192 skin.",
+      "summary": "Node structure organizes your grade into repeatable steps.",
+      "tip": "Export node stills for match reference on long projects.",
       "steps": [
-        "Input transform (LOG \u2192 linear)",
-        "Spatial NR and exposure zones",
-        "Creative look node",
-        "Dedicated skin + background nodes"
+        "Input transform and exposure normalize.",
+        "Spatial NR and exposure zones if needed.",
+        "Creative look node.",
+        "Dedicated skin and background nodes."
       ],
-      "htmlPath": "slides/davinci-resolve/node-workflow.html"
+      "htmlPath": "slides/davinci-resolve/node-structure.html"
     },
     {
       "id": "vectorscope",
@@ -459,6 +507,91 @@
       "htmlPath": "slides/davinci-resolve/vectorscope.html"
     },
     {
+      "id": "scopes",
+      "title": "READING SCOPES",
+      "categoryId": "davinci-resolve",
+      "category": "DaVinci Resolve",
+      "format": "carousel",
+      "num": "",
+      "summary": "Waveforms and scopes show the truth about your image.",
+      "tip": "Histogram alone lies on LOG\u2014use the waveform for exposure.",
+      "steps": [
+        "Read the waveform for exposure\u2014skin sits ~50\u201370 IRE on Rec.709.",
+        "Check the parade for RGB balance on neutrals.",
+        "Use the vectorscope\u2014keep skin on the skin tone line.",
+        "Calibrate your monitor annually\u2014scopes do not lie."
+      ],
+      "htmlPath": "slides/davinci-resolve/scopes.html"
+    },
+    {
+      "id": "interface-overview",
+      "title": "INTERFACE OVERVIEW",
+      "categoryId": "davinci-resolve",
+      "category": "DaVinci Resolve",
+      "format": "carousel",
+      "num": "",
+      "summary": "DaVinci Resolve is divided into specialized pages.",
+      "tip": "Keyboard shortcuts differ by page\u2014learn them.",
+      "steps": [
+        "Open project and navigate pages.",
+        "Use Cut for quick assembly.",
+        "Use Edit for precision.",
+        "Use Color and Fairlight for finishing."
+      ],
+      "htmlPath": "slides/davinci-resolve/interface-overview.html"
+    },
+    {
+      "id": "color-wheels",
+      "title": "COLOR WHEELS",
+      "categoryId": "davinci-resolve",
+      "category": "DaVinci Resolve",
+      "format": "carousel",
+      "num": "",
+      "summary": "Lift, Gamma, and Gain control shadows, midtones, and highlights.",
+      "tip": "Use scopes, not your eyes alone.",
+      "steps": [
+        "Balance exposure with Lift/Gamma/Gain.",
+        "Adjust color balance.",
+        "Add contrast.",
+        "Refine skin tones."
+      ],
+      "htmlPath": "slides/davinci-resolve/color-wheels.html"
+    },
+    {
+      "id": "fairlight-basics",
+      "title": "FAIRLIGHT BASICS",
+      "categoryId": "davinci-resolve",
+      "category": "DaVinci Resolve",
+      "format": "carousel",
+      "num": "",
+      "summary": "Fairlight is Resolve's audio page for mix and delivery.",
+      "tip": "Mix with monitors at conversation level\u2014not blasted.",
+      "steps": [
+        "Normalize dialogue to web LUFS targets.",
+        "High-pass lavs at 80\u2013100Hz.",
+        "Apply light compression on dialogue.",
+        "Limit the master bus to -1dB true peak."
+      ],
+      "htmlPath": "slides/davinci-resolve/fairlight-basics.html"
+    },
+    {
+      "id": "dialogue-cleanup",
+      "title": "DIALOGUE CLEANUP",
+      "categoryId": "davinci-resolve",
+      "category": "DaVinci Resolve",
+      "format": "carousel",
+      "num": "",
+      "summary": "Dialogue cleanup fixes location audio before anyone else hears it.",
+      "tip": "Process a short section first\u2014ears fatigue on long passes.",
+      "steps": [
+        "Learn noise profile from room tone.",
+        "De-plosive and de-ess lightly.",
+        "Cut distracting breaths by hand.",
+        "Keep unprocessed backups on muted tracks."
+      ],
+      "htmlPath": "slides/davinci-resolve/dialogue-cleanup.html"
+    },
+    {
       "id": "three-point-lighting",
       "title": "THREE-POINT LIGHTING",
       "categoryId": "lighting-exposure",
@@ -474,6 +607,91 @@
         "Adjust intensities to match the mood."
       ],
       "htmlPath": "slides/lighting-exposure/three-point-lighting.html"
+    },
+    {
+      "id": "hard-soft-light",
+      "title": "HARD VS SOFT LIGHT",
+      "categoryId": "lighting-exposure",
+      "category": "Lighting & Exposure",
+      "format": "carousel",
+      "num": "",
+      "summary": "Small direct source = hard; large diffused source = soft.",
+      "tip": "Soft light still needs direction—don't flatten it.",
+      "steps": [
+        "Move light closer for softness.",
+        "Add diffusion for smoother shadows.",
+        "Use bare bulbs or fresnels for hard light.",
+        "Shape shadows with flags."
+      ],
+      "htmlPath": "slides/lighting-exposure/hard-soft-light.html"
+    },
+    {
+      "id": "color-temperature",
+      "title": "COLOR TEMPERATURE",
+      "categoryId": "lighting-exposure",
+      "category": "Lighting & Exposure",
+      "format": "carousel",
+      "num": "",
+      "summary": "Daylight ~5600K; tungsten ~3200K — match your lights to the dominant source.",
+      "tip": "Use warm light for intimacy and cool light for tension.",
+      "steps": [
+        "Identify the dominant light source.",
+        "Set camera white balance to match.",
+        "Gel lights to match the environment.",
+        "Avoid mixing warm and cool sources."
+      ],
+      "htmlPath": "slides/lighting-exposure/color-temperature.html"
+    },
+    {
+      "id": "cinematic-setup",
+      "title": "CINEMATIC SETUP",
+      "categoryId": "lighting-exposure",
+      "category": "Lighting & Exposure",
+      "format": "carousel",
+      "num": "",
+      "summary": "Motivated key, negative fill for depth, warm vs cool separation.",
+      "tip": "Turn off overheads—they kill cinematic mood.",
+      "steps": [
+        "Choose a motivated key source.",
+        "Add negative fill for contrast.",
+        "Add backlight or edge light.",
+        "Add color contrast subtly."
+      ],
+      "htmlPath": "slides/lighting-exposure/cinematic-setup.html"
+    },
+    {
+      "id": "rembrandt-lighting",
+      "title": "REMBRANDT LIGHTING",
+      "categoryId": "lighting-exposure",
+      "category": "Lighting & Exposure",
+      "format": "carousel",
+      "num": "",
+      "summary": "Key at 45° above eye level — nose shadow connects to cheek, leaving a lit triangle.",
+      "tip": "Use negative fill to deepen the shadow side.",
+      "steps": [
+        "Place key at 45°.",
+        "Raise it slightly above eye level.",
+        "Adjust angle until triangle forms.",
+        "Add fill sparingly."
+      ],
+      "htmlPath": "slides/lighting-exposure/rembrandt-lighting.html"
+    },
+    {
+      "id": "practical-motivated",
+      "title": "PRACTICAL MOTIVATED LIGHT",
+      "categoryId": "lighting-exposure",
+      "category": "Lighting & Exposure",
+      "format": "carousel",
+      "num": "",
+      "summary": "Key feels like it comes from the practical — hidden lights boost the same direction.",
+      "tip": "Dim practicals to avoid clipping while keeping ambiance.",
+      "steps": [
+        "Identify the practical source.",
+        "Place key in the same direction.",
+        "Boost practical with hidden lights.",
+        "Match color temperature."
+      ],
+      "htmlPath": "slides/lighting-exposure/practical-motivated.html"
     },
     {
       "id": "dramatic-portrait",
@@ -558,6 +776,57 @@
       "htmlPath": "slides/framing-shots/camera-angles.html"
     },
     {
+      "id": "exposure-triangle",
+      "title": "EXPOSURE TRIANGLE",
+      "categoryId": "camera-basics",
+      "category": "Camera Basics",
+      "format": "carousel",
+      "num": "",
+      "summary": "Aperture, shutter speed, and ISO work together.",
+      "tip": "Lock two settings for your style and adjust the third.",
+      "steps": [
+        "Set aperture for depth of field.",
+        "Set shutter speed for motion.",
+        "Raise ISO only when needed.",
+        "Rebalance all three for proper exposure."
+      ],
+      "htmlPath": "slides/camera-basics/exposure-triangle.html"
+    },
+    {
+      "id": "shutter-motion",
+      "title": "SHUTTER SPEED & MOTION",
+      "categoryId": "camera-basics",
+      "category": "Camera Basics",
+      "format": "carousel",
+      "num": "",
+      "summary": "Faster shutter = less blur.",
+      "tip": "Use high shutter speeds for crisp sports footage.",
+      "steps": [
+        "Set shutter to double your frame rate.",
+        "Increase shutter for action.",
+        "Lower shutter for stylized blur.",
+        "Rebalance exposure."
+      ],
+      "htmlPath": "slides/camera-basics/shutter-motion.html"
+    },
+    {
+      "id": "iso-noise",
+      "title": "ISO & NOISE",
+      "categoryId": "camera-basics",
+      "category": "Camera Basics",
+      "format": "carousel",
+      "num": "",
+      "summary": "Higher ISO = more noise.",
+      "tip": "Expose to the right (ETTR) to minimize noise.",
+      "steps": [
+        "Set aperture and shutter first.",
+        "Raise ISO only as needed.",
+        "Expose slightly brighter to reduce noise.",
+        "Fix minor noise in post."
+      ],
+      "htmlPath": "slides/camera-basics/iso-noise.html"
+    },
+    {
       "id": "grid-compositions",
       "title": "GRID COMPOSITIONS",
       "categoryId": "framing-shots",
@@ -585,6 +854,28 @@
         }
       ],
       "htmlPath": "slides/framing-shots/grid-compositions.html"
+    },
+    {
+      "id": "headroom-lookroom",
+      "title": "HEADROOM & NOSE ROOM",
+      "categoryId": "framing-shots",
+      "category": "Framing & Shot Types",
+      "format": "carousel",
+      "num": "",
+      "summary": "Headroom and nose room control breathing space around a subject. They matter because they affect comfort and direction.",
+      "tip": "Less nose room creates tension—use intentionally.",
+      "htmlPath": "slides/framing-shots/headroom-lookroom.html"
+    },
+    {
+      "id": "vertical-composition",
+      "title": "VERTICAL COMPOSITION",
+      "categoryId": "framing-shots",
+      "category": "Framing & Shot Types",
+      "format": "carousel",
+      "num": "",
+      "summary": "Shooting 16:9 but delivering 9:16? Compose with the vertical safe area in mind from day one.",
+      "tip": "Frame for the crop before you roll—fixing in post costs resolution.",
+      "htmlPath": "slides/framing-shots/vertical-composition.html"
     },
     {
       "id": "compositions-overview",
@@ -646,6 +937,23 @@
       "htmlPath": "slides/camera-motion/iris-control.html"
     },
     {
+      "id": "aperture-depth",
+      "title": "APERTURE & DEPTH OF FIELD",
+      "categoryId": "camera-on-set",
+      "category": "Camera & On-Set",
+      "format": "carousel",
+      "num": "",
+      "summary": "Lower f\u2011stop = shallower depth of field.",
+      "tip": "Use f/2.8 or lower for cinematic separation.",
+      "steps": [
+        "Choose f\u2011stop based on subject.",
+        "Adjust shutter to maintain exposure.",
+        "Raise ISO only if needed.",
+        "Check focus carefully."
+      ],
+      "htmlPath": "slides/camera-motion/aperture-depth.html"
+    },
+    {
       "id": "remote-monitor",
       "title": "REMOTE MONITOR",
       "categoryId": "camera-on-set",
@@ -677,6 +985,142 @@
       "summary": "Tools change. Taste and intention stay.",
       "tip": "Tools change. Taste and intention stay.",
       "htmlPath": "slides/creator-mindset/create-limits.html"
+    },
+    {
+      "id": "instagram-reels",
+      "title": "INSTAGRAM REELS",
+      "categoryId": "strategy",
+      "category": "Strategy",
+      "format": "carousel",
+      "num": "82",
+      "summary": "Win the first 1.5 seconds or lose the viewer.",
+      "tip": "Motion in the opening frame beats a static title card.",
+      "steps": [
+        "Open with a visual hook in frame one.",
+        "Shoot native 9:16 vertical.",
+        "Add on-screen captions for muted viewing.",
+        "Post when insights show your audience is active."
+      ],
+      "htmlPath": "slides/strategy/instagram-reels.html"
+    },
+    {
+      "id": "tiktok-native",
+      "title": "TIKTOK NATIVE",
+      "categoryId": "strategy",
+      "category": "Strategy",
+      "format": "carousel",
+      "num": "83",
+      "summary": "Native feel beats polished unless the brand demands polish.",
+      "tip": "Lo-fi BTS often outperforms glossy hero edits on TikTok.",
+      "steps": [
+        "Match end frame to start for loops.",
+        "Use trending audio while it is still fresh.",
+        "Reply to comments with video.",
+        "State the payoff in the first 0.5 seconds."
+      ],
+      "htmlPath": "slides/strategy/tiktok-native.html"
+    },
+    {
+      "id": "youtube-titles-thumbs",
+      "title": "YOUTUBE TITLES & THUMBS",
+      "categoryId": "strategy",
+      "category": "Strategy",
+      "format": "carousel",
+      "num": "84",
+      "summary": "Thumbnail and title must promise what the video delivers.",
+      "tip": "Design the thumbnail before you write the script.",
+      "steps": [
+        "Deliver the title promise in the first 30 seconds.",
+        "Pattern interrupt every 30–45 seconds.",
+        "Add chapters on 8+ minute videos.",
+        "A/B test thumbnails before a wide push."
+      ],
+      "htmlPath": "slides/strategy/youtube-titles-thumbs.html"
+    },
+    {
+      "id": "batch-shooting",
+      "title": "BATCH SHOOTING",
+      "categoryId": "strategy",
+      "category": "Strategy",
+      "format": "carousel",
+      "num": "90",
+      "summary": "Separate planning, shooting, and editing into distinct phases.",
+      "tip": "Use consistent lighting and framing to speed up shooting.",
+      "steps": [
+        "Write 10–15 scripts.",
+        "Shoot all A‑roll in one session.",
+        "Capture B‑roll in bulk.",
+        "Edit in batches."
+      ],
+      "htmlPath": "slides/strategy/batch-shooting.html"
+    },
+    {
+      "id": "hook-formula",
+      "title": "THE HOOK FORMULA",
+      "categoryId": "strategy",
+      "category": "Strategy",
+      "format": "carousel",
+      "num": "91",
+      "summary": "State the payoff before you ask for attention.",
+      "tip": "Read the hook out loud—if it sounds like an ad, rewrite it.",
+      "steps": [
+        "Write problem + promise in text and voice.",
+        "Show the result first, then rewind.",
+        "Draft ten hooks—shoot the best two.",
+        "Open with a face or moving object."
+      ],
+      "htmlPath": "slides/strategy/hook-formula.html"
+    },
+    {
+      "id": "repurposing",
+      "title": "REPURPOSING CONTENT",
+      "categoryId": "strategy",
+      "category": "Strategy",
+      "format": "carousel",
+      "num": "92",
+      "summary": "Adapt the message to the platform, not the other way around.",
+      "tip": "Your best short‑form ideas usually come from long‑form content.",
+      "steps": [
+        "Start with a long‑form anchor video.",
+        "Pull 5–10 short clips.",
+        "Convert insights into text posts.",
+        "Reformat visuals for each platform."
+      ],
+      "htmlPath": "slides/strategy/repurposing.html"
+    },
+    {
+      "id": "content-pillars",
+      "title": "CONTENT PILLARS",
+      "categoryId": "strategy",
+      "category": "Strategy",
+      "format": "carousel",
+      "num": "93",
+      "summary": "Every post must serve a pillar.",
+      "tip": "Your strongest pillar should produce 50% of your content.",
+      "steps": [
+        "Define 3–5 core pillars.",
+        "Map ideas to pillars.",
+        "Build weekly themes around them.",
+        "Review and refine monthly."
+      ],
+      "htmlPath": "slides/strategy/content-pillars.html"
+    },
+    {
+      "id": "hooks-convert",
+      "title": "HOOKS THAT CONVERT",
+      "categoryId": "strategy",
+      "category": "Strategy",
+      "format": "carousel",
+      "num": "95",
+      "summary": "Choose hook type based on the action you want the viewer to take.",
+      "tip": "Myth‑busting hooks have the highest share rate.",
+      "steps": [
+        "Identify the desired action.",
+        "Pick a hook type that aligns with it.",
+        "Write the hook before filming.",
+        "Deliver the payoff quickly."
+      ],
+      "htmlPath": "slides/strategy/hooks-convert.html"
     }
   ],
   "featuredTips": [

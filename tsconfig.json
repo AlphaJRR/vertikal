@@ -5,7 +5,35 @@
     "baseUrl": ".",
     "resolveJsonModule": true,
     "paths": {
-      "@/*": ["./*"]
+      "@/*": [
+        "./*"
+      ]
     }
-  }
+  },
+  "exclude": [
+    "node_modules",
+    "src",
+    "ios",
+    "android",
+    "dist",
+    "artifacts",
+    "_broken-web-toolkit-snapshot",
+    "code-review-package",
+    "App.tsx",
+    "capacitor.config.ts",
+    "components/feed",
+    "components/profile",
+    "components/auth",
+    "components/layout",
+    "components/ui",
+    "components/video",
+    "components/DevRoleSwitcher.tsx",
+    "components/Featured.tsx"
+  ],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts"
+  ]
 }

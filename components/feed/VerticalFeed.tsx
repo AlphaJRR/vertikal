@@ -13,6 +13,28 @@ import { CategoryRails, Category } from './CategoryRails';
 import { DanmakuLayer, DanmakuComment } from '../ui/DanmakuLayer';
 import { DanmakuOverlay } from '../ui/DanmakuOverlay';
 import { getFounding50Creators, getShows, Founding50Creator, ShowData } from '../../utils/dataLoader';
+import { CloudflareIframeCard } from '../video/CloudflareIframeCard';
+
+// ✅ HARD-LOCKED: Joshua Argue's Best Burgers video for hero autoplay
+const JOSHUA_ARGUE_HERO_VIDEO = {
+  id: "cf_9d3d0efed36b71e5f75c7b5e218809d7",
+  title: "ARGUEably the Best Burgers",
+  cloudflare: {
+    uid: "9d3d0efed36b71e5f75c7b5e218809d7",
+    iframe: "https://customer-fyh68ijrcuys7ag8.cloudflarestream.com/9d3d0efed36b71e5f75c7b5e218809d7/iframe",
+    thumbnail: "https://customer-fyh68ijrcuys7ag8.cloudflarestream.com/9d3d0efed36b71e5f75c7b5e218809d7/thumbnails/thumbnail.jpg",
+  },
+  vibePreset: [
+    { t: 2.5, u: "AVA_Member", m: "This intro is CRAZY 🔥" },
+    { t: 6.0, u: "Founder50", m: "Vertical cinema is rotating. Not dying." },
+    { t: 9.2, u: "BlackAwe", m: "Argue don't miss 🎬" },
+    { t: 13.0, u: "KelFan", m: "That pacing is clean 😮‍💨" },
+    { t: 18.5, u: "Showrunner", m: "This looks premium." },
+    { t: 25.0, u: "Network", m: "We need Episode 1 ASAP." },
+    { t: 33.0, u: "Creator", m: "The vibe overlay is the sauce." },
+    { t: 45.0, u: "Viewer", m: "Okay… I'm locked in." },
+  ],
+};
 
 interface VerticalFeedProps {
   onCreatorPress?: (creator: Founding50Creator) => void;
@@ -40,8 +62,22 @@ function VerticalFeed({
     return () => clearTimeout(timer);
   }, []);
   const creators = getFounding50Creators();
-  const shows = getShows();
-  const featuredShow = shows[0];
+  const allShows = getShows();
+  
+  // ✅ HARD-LOCKED: Joshua Argue's Best Burgers video is ALWAYS the hero (UID: 9d3d0efed36b71e5f75c7b5e218809d7)
+  // ✅ AUTOPLAY: Use CloudflareIframeCard for autoplay video
+  const HERO_VIDEO_UID = "9d3d0efed36b71e5f75c7b5e218809d7";
+  const shows = allShows.filter(s => 
+    !s.title?.includes('Beyond the Bases') && 
+    !s.title?.includes('BTB')
+  ); // Remove BTB from hero eligibility
+  const heroShow = shows.find(s => 
+    s.id?.includes(HERO_VIDEO_UID) || 
+    s.videoUrl?.includes(HERO_VIDEO_UID) ||
+    (s.title?.includes('ARGUEably') || (s.title?.includes('Best Burgers') && !s.title?.includes('Beyond')))
+  ) || shows[0]; // Fallback to first if not found
+  const featuredShow = heroShow;
+  const useJoshuaArgueHeroVideo = true; // ✅ ALWAYS use Joshua Argue's video for hero autoplay
   const continueWatching = shows.filter(s => s.progress > 0);
   const [currentVideoTime, setCurrentVideoTime] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState<string>('for-you');
@@ -106,24 +142,25 @@ function VerticalFeed({
       snapToInterval={1}
       decelerationRate="fast"
     >
-      {/* Hero Featured Show */}
-      {featuredShow && (
+      {/* Hero Featured Show - Joshua Argue's Best Burgers (AUTOPLAY) */}
+      {useJoshuaArgueHeroVideo && (
         <View style={styles.heroSection}>
           <View style={styles.heroContainer}>
-            <ShowCard
-              show={featuredShow}
-              variant="hero"
-              onPress={() => onShowPress?.(featuredShow)}
+            {/* ✅ AUTOPLAY: Cloudflare iframe with autoplay enabled */}
+            <CloudflareIframeCard
+              iframeUrl={JOSHUA_ARGUE_HERO_VIDEO.cloudflare.iframe}
+              title={JOSHUA_ARGUE_HERO_VIDEO.title}
+              thumbnail={JOSHUA_ARGUE_HERO_VIDEO.cloudflare.thumbnail}
             />
             {/* 🔥 DAUNT EFFECT OVERLAY 🔥 */}
-            {/* ✅ PHASE 1: Only enable VIBE overlays after delay AND user preference */}
+            {/* ✅ VIBE comments from Joshua Argue video preset */}
             <DanmakuOverlay
-              comments={danmakuComments.map((comment, index) => ({
-                id: comment.id,
-                text: comment.text,
-                delay: index * 1500,
-                topPosition: `${10 + (index % 5) * 15}%`,
-                color: comment.color,
+              comments={JOSHUA_ARGUE_HERO_VIDEO.vibePreset.map((preset, index) => ({
+                id: `joshua-hero-${index}`,
+                text: `${preset.u}: ${preset.m}`,
+                delay: preset.t * 1000, // Convert seconds to milliseconds
+                topPosition: `${10 + (index % 7) * 12}%`,
+                color: '#FFD700',
               }))}
               enabled={vibeModeEnabled && vibeReady}
             />

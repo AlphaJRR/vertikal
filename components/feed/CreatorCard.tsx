@@ -9,6 +9,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Crown, Users, Film } from 'lucide-react-native';
 import { Founding50Creator } from '../../utils/dataLoader';
 import { sanitizeCreatorData } from '../../utils/sanitization';
+import { BadgeOverlay } from '../ui/BadgeOverlay';
 
 interface CreatorCardProps {
   creator: Founding50Creator;
@@ -37,11 +38,8 @@ export const CreatorCard: React.FC<CreatorCardProps> = React.memo(({ creator, on
             accessibilityLabel={`${safeCreator.name} avatar`}
           />
         )}
-        {safeCreator.isFounding50 && (
-          <View style={styles.founding50Badge}>
-            <Crown size={14} color="#000000" fill="#FFD700" />
-          </View>
-        )}
+        {/* ✅ IMAGE BADGE - Using BadgeOverlay component with PNG images */}
+        <BadgeOverlay creator={safeCreator} size="sm" />
       </View>
       
       <View style={styles.content}>

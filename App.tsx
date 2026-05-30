@@ -1,4 +1,5 @@
 // App.tsx - VERTIKAL Brand Identity UI
+import { BRAND } from './src/config/brand';
 import React, { useEffect, useState, useRef } from 'react';
 import { 
   View, Text, ActivityIndicator, StyleSheet, 
@@ -62,7 +63,7 @@ const Tab = createBottomTabNavigator();
 const LoadingScreen: React.FC<{ message?: string }> = ({ message }) => (
   <View style={styles.centerContainer}>
     <ActivityIndicator size="large" color="#FFD700" />
-    <Text style={styles.loadingText}>{message || 'Loading VERTIKAL...'}</Text>
+    <Text style={styles.loadingText}>{message || `Loading ${BRAND.name}...`}</Text>
   </View>
 );
 
@@ -208,9 +209,28 @@ const SeriesTab: React.FC = () => {
   if (error) return <ErrorScreen error={error as Error} retry={refetch} />;
 
   const handleViewSeries = (series: FeaturedSeries) => {
-    // TODO: Check if route exists: /series/${series.slug}
-    // For now, show modal with series details
-    setSelectedSeries(series);
+    // ✅ FIXED: Navigate to show detail if video exists, otherwise show modal
+    const { getShows } = require('./utils/dataLoader');
+    const allShows = getShows();
+    
+    // Find show matching the series title
+    const matchingShow = allShows.find((show: any) => 
+      show.title?.toLowerCase().includes(series.title.toLowerCase()) ||
+      show.title?.toLowerCase().includes(series.slug.toLowerCase())
+    );
+    
+    if (matchingShow && matchingShow.videoUrl) {
+      // Navigate to show detail if video exists
+      setSelectedShowId(matchingShow.id);
+      Sentry.addBreadcrumb({
+        category: 'navigation',
+        message: `Viewing series: ${series.title}`,
+        level: 'info',
+      });
+    } else {
+      // Show modal if no video available
+      setSelectedSeries(series);
+    }
   };
 
   const handleCloseModal = () => {
@@ -489,7 +509,7 @@ const AppContent: React.FC = () => {
 
   // ✅ PHASE 1: Hard guard - show loading until app ready
   if (!appReady) {
-    return <LoadingScreen message="Loading VERTIKAL, LLC...." />;
+    return <LoadingScreen message={`Loading ${BRAND.name}...`} />;
   }
 
   // ✅ PROFILE GATE: Auto-routes to CreateProfile if profile missing
