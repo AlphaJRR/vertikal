@@ -1,39 +1,58 @@
-# AVA diagram asset manifest (31 canonical decks)
+# AVA diagram asset manifest (31 canonical BLOCK decks)
 
-Path format in JSON and slide specs: `ava/<category>/<file>.png`
+**Generated:** 2026-05-30  
+**Format:** `ava/<category>/<file>.png` (16:9, dark bg, no text in image)  
+**Mirrors:**
 
-| Category | HTML slide id | Expected PNG |
-|----------|---------------|--------------|
-| camera | exposure-triangle | `exposure_triangle.png` |
-| camera | aperture-depth | `depth_of_field.png` |
-| camera | shutter-motion | `motion_blur.png` |
-| camera | iso-noise | `iso_noise.png` |
-| framing | rule-of-thirds | `rule_of_thirds.png` |
-| framing | leading-lines | `leading_lines.png` |
-| framing | headroom-lookroom | `headroom_lookroom.png` |
-| framing | vertical-composition | `vertical_composition.png` |
-| lighting | three-point-lighting | `three_point_layout.png` |
-| lighting | hard-soft-light | `hard_soft_light.png` |
-| lighting | color-temperature | `color_temperature.png` |
-| lighting | cinematic-setup | `cinematic_setup.png` |
-| lighting | rembrandt-lighting | `rembrandt_lighting.png` |
-| lighting | practical-motivated | `practical_motivated.png` |
-| editing | interface-overview | `interface_overview.png` |
-| editing | color-wheels | `color_wheels.png` |
-| editing | curves | `curves.png` |
-| editing | skin-tone-correction | `vectorscope_skin_line.png` |
-| editing | scopes | `scopes.png` |
-| editing | node-structure | `node_structure.png` |
-| editing | whip-pan | `whip_pan.png` |
-| editing | fairlight-basics | `fairlight_basics.png` |
-| editing | dialogue-cleanup | `dialogue_cleanup.png` |
-| strategy | instagram-reels | `instagram_reels.png` |
-| strategy | tiktok-native | `tiktok_native.png` |
-| strategy | youtube-titles-thumbs | `youtube_titles_thumbs.png` |
-| strategy | hook-formula | `hook_formula.png` |
-| strategy | hooks-convert | `hooks_convert.png` |
-| strategy | batch-shooting | `batch_shooting.png` |
-| strategy | repurposing | `repurposing.png` |
-| strategy | content-pillars | `content_pillars.png` |
+- `/Users/alphavisualartists/Vertikal-App/assets/ava/<category>/<file>.png`
+- `/Users/alphavisualartists/alpha-visual-artists-brand/creators-toolkit/assets/ava/<category>/<file>.png`
 
-Source of truth in code: `data/avaDiagramManifest.ts`.
+**Code source of truth:** `data/avaDiagramManifest.ts`
+
+> Release notes v1.0 cite **28** core diagram definitions (Joshua’s kebab SVG set). This manifest covers **31** PNGs for all `SLIDE_BLOCKS` decks (camera BLOCK_1 + full strategy). Extra Joshua-only assets (e.g. `white-balance`, `dutch-angle`) are not in this pass.
+
+| Category | Filename | Diagram subject | Slide ref | HTML slide id |
+|----------|----------|-----------------|-----------|---------------|
+| camera | `exposure_triangle.png` | Exposure triangle — aperture, shutter, ISO | `slides_exposure_triangle` | exposure-triangle |
+| camera | `depth_of_field.png` | Depth of field — shallow vs deep | `slides_aperture_depth` | aperture-depth |
+| camera | `motion_blur.png` | Motion blur levels | `slides_shutter_motion` | shutter-motion |
+| camera | `iso_noise.png` | ISO noise comparison | `slides_iso_noise` | iso-noise |
+| framing | `rule_of_thirds.png` | Rule of thirds grid | `slides_rule_of_thirds` | rule-of-thirds |
+| framing | `leading_lines.png` | Leading lines to subject | `slides_leading_lines` | leading-lines |
+| framing | `headroom_lookroom.png` | Headroom and look room | `slides_headroom_lookroom` | headroom-lookroom |
+| framing | `vertical_composition.png` | Vertical 9:16 composition | `slides_vertical_composition` | vertical-composition |
+| lighting | `three_point_layout.png` | Three-point lighting layout | `slides_three_point_lighting` | three-point-lighting |
+| lighting | `hard_soft_light.png` | Hard vs soft light | `slides_hard_soft_light` | hard-soft-light |
+| lighting | `color_temperature.png` | Color temperature scale | `slides_color_temperature` | color-temperature |
+| lighting | `cinematic_setup.png` | Cinematic lighting setup | `slides_cinematic_setup` | cinematic-setup |
+| lighting | `rembrandt_lighting.png` | Rembrandt triangle | `slides_rembrandt_lighting` | rembrandt-lighting |
+| lighting | `practical_motivated.png` | Practical motivated light | `slides_practical_motivated` | practical-motivated |
+| editing | `interface_overview.png` | Resolve page workflow | `slides_interface_overview` | interface-overview |
+| editing | `color_wheels.png` | Lift / gamma / gain wheels | `slides_color_wheels` | color-wheels |
+| editing | `curves.png` | Luma and RGB curves | `slides_curves` | curves |
+| editing | `vectorscope_skin_line.png` | Vectorscope skin line | `slides_skin_tone_correction` | skin-tone-correction |
+| editing | `scopes.png` | Waveform + vectorscope | `slides_scopes` | scopes |
+| editing | `node_structure.png` | Node tree workflow | `slides_node_structure` | node-structure |
+| editing | `whip_pan.png` | Whip pan transition | `slides_whip_pan` | whip-pan |
+| editing | `fairlight_basics.png` | Fairlight EQ / dynamics | `slides_fairlight_basics` | fairlight-basics |
+| editing | `dialogue_cleanup.png` | Dialogue NR waveform | `slides_dialogue_cleanup` | dialogue-cleanup |
+| strategy | `instagram_reels.png` | Reels safe zones | `slides_instagram_reels` | instagram-reels |
+| strategy | `tiktok_native.png` | TikTok loop retention | `slides_tiktok_native` | tiktok-native |
+| strategy | `youtube_titles_thumbs.png` | YouTube thumb layout | `slides_youtube_titles_thumbs` | youtube-titles-thumbs |
+| strategy | `hook_formula.png` | Hook formula timeline | `slides_hook_formula` | hook-formula |
+| strategy | `hooks_convert.png` | Conversion hook funnel | `slides_hooks_convert` | hooks-convert |
+| strategy | `batch_shooting.png` | Batch shooting calendar | `slides_batch_shooting` | batch-shooting |
+| strategy | `repurposing.png` | Repurposing hub | `slides_repurposing` | repurposing |
+| strategy | `content_pillars.png` | Content pillars | `slides_content_pillars` | content-pillars |
+
+## Joshua 28-kebab set (not generated this pass)
+
+These appear in older SVG specs but are outside the 31-deck BLOCK map:
+
+| Category | Kebab asset | Notes |
+|----------|-------------|-------|
+| camera | `white-balance`, `frame-rates` | Extra camera lessons |
+| framing | `dutch-angle`, `high-low-angle`, `depth-layers` | Extra framing lessons |
+| lighting | `butterfly-lighting`, `split-lighting`, `interview-setup`, `outdoor-fill-setup` | Not in BLOCK_3 slide refs |
+| editing | `log-vs-graded`, `j-cut-l-cut` | Extra editing topics |
+| strategy | (3 only in kebab set) | Subset of BLOCK_5; full strategy block has 8 PNGs above |

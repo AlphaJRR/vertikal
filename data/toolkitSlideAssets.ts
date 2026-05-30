@@ -5,39 +5,41 @@ import {
 } from "./avaDiagramManifest";
 
 /**
- * Metro `require()` map for AVA diagram SVGs under `assets/ava/`.
- * One entry per SVG in AVA_DIAGRAM_MANIFEST (Metro requires static paths).
+ * Metro `require()` map for AVA diagram PNGs under `assets/ava/`.
+ * One entry per PNG in AVA_DIAGRAM_MANIFEST (Metro requires static paths).
  */
 export const AVA_DIAGRAM_ASSETS: Record<string, number> = {
-  "ava/camera/exposure-triangle.svg": require("../assets/ava/camera/exposure-triangle.svg"),
-  "ava/camera/aperture-depth.svg": require("../assets/ava/camera/aperture-depth.svg"),
-  "ava/camera/shutter-motion.svg": require("../assets/ava/camera/shutter-motion.svg"),
-  "ava/camera/white-balance.svg": require("../assets/ava/camera/white-balance.svg"),
-  "ava/camera/frame-rates.svg": require("../assets/ava/camera/frame-rates.svg"),
-  "ava/camera/iso-noise.svg": require("../assets/ava/camera/iso-noise.svg"),
-  "ava/framing/rule-of-thirds.svg": require("../assets/ava/framing/rule-of-thirds.svg"),
-  "ava/framing/leading-lines.svg": require("../assets/ava/framing/leading-lines.svg"),
-  "ava/framing/dutch-angle.svg": require("../assets/ava/framing/dutch-angle.svg"),
-  "ava/framing/high-low-angle.svg": require("../assets/ava/framing/high-low-angle.svg"),
-  "ava/framing/depth-layers.svg": require("../assets/ava/framing/depth-layers.svg"),
-  "ava/framing/headroom-noseroom.svg": require("../assets/ava/framing/headroom-noseroom.svg"),
-  "ava/lighting/three-point-layout.svg": require("../assets/ava/lighting/three-point-layout.svg"),
-  "ava/lighting/hard-soft-light.svg": require("../assets/ava/lighting/hard-soft-light.svg"),
-  "ava/lighting/rembrandt-triangle.svg": require("../assets/ava/lighting/rembrandt-triangle.svg"),
-  "ava/lighting/butterfly-lighting.svg": require("../assets/ava/lighting/butterfly-lighting.svg"),
-  "ava/lighting/split-lighting.svg": require("../assets/ava/lighting/split-lighting.svg"),
-  "ava/lighting/interview-setup.svg": require("../assets/ava/lighting/interview-setup.svg"),
-  "ava/lighting/outdoor-fill-setup.svg": require("../assets/ava/lighting/outdoor-fill-setup.svg"),
-  "ava/editing/color-wheels-diagram.svg": require("../assets/ava/editing/color-wheels-diagram.svg"),
-  "ava/editing/rgb-curves.svg": require("../assets/ava/editing/rgb-curves.svg"),
-  "ava/editing/node-workflow.svg": require("../assets/ava/editing/node-workflow.svg"),
-  "ava/editing/log-vs-graded.svg": require("../assets/ava/editing/log-vs-graded.svg"),
-  "ava/editing/j-cut-l-cut.svg": require("../assets/ava/editing/j-cut-l-cut.svg"),
-  "ava/editing/vectorscope-skin-line.svg": require("../assets/ava/editing/vectorscope-skin-line.svg"),
-  "ava/strategy/hook-formula.svg": require("../assets/ava/strategy/hook-formula.svg"),
-  "ava/strategy/content-pillars.svg": require("../assets/ava/strategy/content-pillars.svg"),
-  "ava/strategy/batch-shooting-calendar.svg": require("../assets/ava/strategy/batch-shooting-calendar.svg"),
-  "ava/common/placeholder.svg": require("../assets/ava/common/placeholder.svg"),
+  "ava/camera/exposure_triangle.png": require("../assets/ava/camera/exposure_triangle.png"),
+  "ava/camera/depth_of_field.png": require("../assets/ava/camera/depth_of_field.png"),
+  "ava/camera/motion_blur.png": require("../assets/ava/camera/motion_blur.png"),
+  "ava/camera/iso_noise.png": require("../assets/ava/camera/iso_noise.png"),
+  "ava/framing/rule_of_thirds.png": require("../assets/ava/framing/rule_of_thirds.png"),
+  "ava/framing/leading_lines.png": require("../assets/ava/framing/leading_lines.png"),
+  "ava/framing/headroom_lookroom.png": require("../assets/ava/framing/headroom_lookroom.png"),
+  "ava/framing/vertical_composition.png": require("../assets/ava/framing/vertical_composition.png"),
+  "ava/lighting/three_point_layout.png": require("../assets/ava/lighting/three_point_layout.png"),
+  "ava/lighting/hard_soft_light.png": require("../assets/ava/lighting/hard_soft_light.png"),
+  "ava/lighting/color_temperature.png": require("../assets/ava/lighting/color_temperature.png"),
+  "ava/lighting/cinematic_setup.png": require("../assets/ava/lighting/cinematic_setup.png"),
+  "ava/lighting/rembrandt_lighting.png": require("../assets/ava/lighting/rembrandt_lighting.png"),
+  "ava/lighting/practical_motivated.png": require("../assets/ava/lighting/practical_motivated.png"),
+  "ava/editing/interface_overview.png": require("../assets/ava/editing/interface_overview.png"),
+  "ava/editing/color_wheels.png": require("../assets/ava/editing/color_wheels.png"),
+  "ava/editing/curves.png": require("../assets/ava/editing/curves.png"),
+  "ava/editing/vectorscope_skin_line.png": require("../assets/ava/editing/vectorscope_skin_line.png"),
+  "ava/editing/scopes.png": require("../assets/ava/editing/scopes.png"),
+  "ava/editing/node_structure.png": require("../assets/ava/editing/node_structure.png"),
+  "ava/editing/whip_pan.png": require("../assets/ava/editing/whip_pan.png"),
+  "ava/editing/fairlight_basics.png": require("../assets/ava/editing/fairlight_basics.png"),
+  "ava/editing/dialogue_cleanup.png": require("../assets/ava/editing/dialogue_cleanup.png"),
+  "ava/strategy/instagram_reels.png": require("../assets/ava/strategy/instagram_reels.png"),
+  "ava/strategy/tiktok_native.png": require("../assets/ava/strategy/tiktok_native.png"),
+  "ava/strategy/youtube_titles_thumbs.png": require("../assets/ava/strategy/youtube_titles_thumbs.png"),
+  "ava/strategy/hook_formula.png": require("../assets/ava/strategy/hook_formula.png"),
+  "ava/strategy/hooks_convert.png": require("../assets/ava/strategy/hooks_convert.png"),
+  "ava/strategy/batch_shooting.png": require("../assets/ava/strategy/batch_shooting.png"),
+  "ava/strategy/repurposing.png": require("../assets/ava/strategy/repurposing.png"),
+  "ava/strategy/content_pillars.png": require("../assets/ava/strategy/content_pillars.png"),
 };
 
 const avaUriCache = new Map<string, string>();
@@ -46,7 +48,7 @@ export function isAvaDiagramAssetPath(avaPath: string): boolean {
   return avaPath in AVA_DIAGRAM_ASSETS;
 }
 
-/** Resolve `ava/<category>/<file>.svg` to a local file:// URI when bundled. */
+/** Resolve `ava/<category>/<file>.png` to a local file:// URI when bundled. */
 export async function resolveAvaDiagramUri(
   avaPath: string,
 ): Promise<string | null> {

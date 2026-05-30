@@ -84,7 +84,9 @@ export type SlideRef = (typeof SLIDE_BLOCKS)[SlideBlockKey][number];
 
 /**
  * Maps AVA Creator Toolkit snake_case lesson ids to canonical slide deck refs.
- * Includes camera entries (BLOCK_1) plus the original 27-lesson linking map.
+ * Joshua's core map: lighting (6) + framing (4) + editing (9) + strategy (8) = 27.
+ * Camera BLOCK_1 entries (4) are appended below for 31 total.
+ * @see SLIDE_SCHEMA.md
  */
 export const LINKING_MAP: Record<string, SlideRef> = {
   camera_exposure_triangle: "slides_exposure_triangle",
