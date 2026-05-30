@@ -691,6 +691,152 @@ body.ava-preview {
   max-width: 90%;
 }
 
+/* ─── Lesson presentation deck (multi-slide HTML) ─── */
+.presentation-slide {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 48px 48px 80px;
+}
+
+.presentation-topic {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--alpha-red);
+  text-transform: uppercase;
+}
+
+.presentation-heading {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 8vw, 72px);
+  letter-spacing: 0.05em;
+  line-height: 0.95;
+  margin-top: 8px;
+}
+
+.presentation-subheading {
+  font-size: 20px;
+  color: var(--text-secondary);
+  font-weight: 300;
+  margin-top: 16px;
+  line-height: 1.5;
+}
+
+.presentation-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 0;
+  margin-top: 24px;
+}
+
+.presentation-bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.presentation-bullets li {
+  font-size: 22px;
+  line-height: 1.45;
+  color: var(--pure-white);
+  font-weight: 300;
+  padding-left: 28px;
+  position: relative;
+}
+
+.presentation-bullets li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--alpha-red);
+  font-weight: 500;
+}
+
+.presentation-diagram-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--graphite);
+  border: 1px solid var(--border-gray);
+  padding: 28px;
+  min-height: 0;
+}
+
+.presentation-diagram-wrap svg {
+  width: 100%;
+  max-height: 420px;
+}
+
+.presentation-caption {
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 300;
+  margin-top: 20px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.presentation-steps {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  flex: 1;
+  align-content: center;
+}
+
+.presentation-steps .davinci-step {
+  min-height: 100px;
+}
+
+.presentation-steps .davinci-step p {
+  font-size: 14px;
+}
+
+.presentation-callout,
+.presentation-warning {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 32px 36px;
+  border: 1px solid var(--border-gray);
+  background: var(--graphite);
+}
+
+.presentation-callout {
+  border-left: 4px solid var(--alpha-red);
+}
+
+.presentation-warning {
+  border-left: 4px solid var(--orange);
+}
+
+.presentation-callout .presentation-label,
+.presentation-warning .presentation-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.presentation-callout .presentation-label { color: var(--alpha-red); }
+.presentation-warning .presentation-label { color: var(--orange); }
+
+.presentation-callout p,
+.presentation-warning p {
+  font-size: 26px;
+  line-height: 1.5;
+  color: var(--pure-white);
+  font-weight: 300;
+}
+
 /* ─── Index page ─── */
 .catalog-page {
   background: var(--ava-black);

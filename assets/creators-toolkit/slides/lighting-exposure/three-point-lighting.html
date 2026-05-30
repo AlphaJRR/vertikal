@@ -2,17 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>AVA — SKIN TONE CORRECTION</title>
+  <title>AVA — THREE-POINT LIGHTING</title>
   <link rel="stylesheet" href="../../css/ava-toolkit.css">
 </head>
 <body class="ava-preview">
 
 <!-- Slide 1: Title -->
-<article class="slide format-carousel scale-preview" id="skin-tones" data-slide="title">
+<article class="slide format-carousel scale-preview" id="three-point-lighting" data-slide="title">
   <div class="presentation-slide">
-    <span class="presentation-topic">AVA CREATORS TOOLKIT · COLOR GRADING</span>
-    <h1 class="presentation-heading">SKIN TONE CORRECTION</h1>
-    <p class="presentation-subheading">Natural, Consistent, Believable</p>
+    <span class="presentation-topic">AVA CREATORS TOOLKIT · LIGHTING</span>
+    <h1 class="presentation-heading">THREE-POINT LIGHTING</h1>
+    <p class="presentation-subheading">Key, Fill, Backlight</p>
   </div>
   <footer class="slide-footer">
     <span class="slide-tagline">CREATE WITHOUT LIMITS</span>
@@ -23,13 +23,13 @@
 <!-- Slide 2: Concept -->
 <article class="slide format-carousel scale-preview" data-slide="concept">
   <div class="presentation-slide">
-    <span class="presentation-topic">SKIN TONE CORRECTION</span>
+    <span class="presentation-topic">LIGHTING BASICS</span>
     <h2 class="presentation-heading">WHY IT MATTERS</h2>
     <div class="presentation-body">
       <ul class="presentation-bullets">
-        <li>Viewers judge skin instantly</li>
-        <li>Bad skin tones break trust</li>
-        <li>Good skin tones survive platform compression</li>
+        <li>Defines subject shape and depth</li>
+        <li>Separates subject from background</li>
+        <li>Works for interviews, portraits, and narrative</li>
       </ul>
     </div>
   </div>
@@ -42,28 +42,27 @@
 <!-- Slide 3: Diagram -->
 <article class="slide format-carousel scale-preview" data-slide="diagram">
   <div class="presentation-slide">
-    <span class="presentation-topic">SKIN TONE CORRECTION</span>
-    <h2 class="presentation-heading">VECTORSCOPE SKIN LINE</h2>
+    <span class="presentation-topic">LIGHTING BASICS</span>
+    <h2 class="presentation-heading">BASIC LAYOUT</h2>
     <div class="presentation-body">
       <div class="presentation-diagram-wrap">
-        <svg viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg" aria-label="Vectorscope skin tone line diagram">
-          <circle cx="120" cy="120" r="95" fill="none" stroke="#1C1C1C" stroke-width="2"/>
-          <circle cx="120" cy="120" r="70" fill="none" stroke="#1C1C1C" stroke-width="1" stroke-dasharray="4 4"/>
-          <circle cx="120" cy="120" r="40" fill="none" stroke="#1C1C1C" stroke-width="1" stroke-dasharray="4 4"/>
-          <line x1="120" y1="25" x2="120" y2="215" stroke="#333" stroke-width="1"/>
-          <line x1="25" y1="120" x2="215" y2="120" stroke="#333" stroke-width="1"/>
-          <text x="120" y="18" text-anchor="middle" fill="#555" font-size="8" font-family="monospace">Y</text>
-          <text x="222" y="124" fill="#555" font-size="8" font-family="monospace">R</text>
-          <text x="120" y="232" text-anchor="middle" fill="#555" font-size="8" font-family="monospace">B</text>
-          <text x="14" y="124" fill="#555" font-size="8" font-family="monospace">G</text>
-          <line x1="120" y1="120" x2="72" y2="58" stroke="#E8000A" stroke-width="2.5"/>
-          <text x="58" y="48" fill="#E8000A" font-size="9" font-family="monospace">SKIN LINE</text>
-          <ellipse cx="82" cy="72" rx="18" ry="12" fill="#E8000A" opacity="0.25"/>
-          <circle cx="82" cy="72" r="5" fill="#E8000A" opacity="0.85"/>
-          <circle cx="95" cy="88" r="4" fill="#E8000A" opacity="0.55"/>
-          <circle cx="70" cy="65" r="3" fill="#E8000A" opacity="0.4"/>
+        <svg viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg" aria-label="Three-point lighting layout diagram">
+          <rect x="10" y="10" width="280" height="160" fill="none" stroke="#1C1C1C"/>
+          <circle cx="150" cy="95" r="18" fill="#333" stroke="#fff" stroke-width="1.5"/>
+          <text x="150" y="99" text-anchor="middle" fill="#888" font-size="7" font-family="monospace">SUBJECT</text>
+          <rect x="30" y="55" width="36" height="10" fill="#FBBF24" opacity="0.85" rx="2"/>
+          <line x1="48" y1="65" x2="132" y2="88" stroke="#FBBF24" stroke-width="2" opacity="0.7"/>
+          <text x="20" y="50" fill="#FBBF24" font-size="7" font-family="monospace">KEY 45°</text>
+          <rect x="230" y="70" width="28" height="8" fill="#06B6D4" opacity="0.5" rx="2"/>
+          <line x1="244" y1="78" x2="168" y2="92" stroke="#06B6D4" stroke-width="1.5" opacity="0.5"/>
+          <text x="228" y="65" fill="#06B6D4" font-size="7" font-family="monospace">FILL</text>
+          <rect x="138" y="18" width="24" height="8" fill="#E8000A" opacity="0.7" rx="2"/>
+          <line x1="150" y1="26" x2="150" y2="77" stroke="#E8000A" stroke-width="2" opacity="0.6"/>
+          <text x="168" y="24" fill="#E8000A" font-size="7" font-family="monospace">BACK</text>
+          <polygon points="150,155 145,165 155,165" fill="#555"/>
+          <text x="150" y="178" text-anchor="middle" fill="#555" font-size="7" font-family="monospace">CAMERA</text>
         </svg>
-        <p class="presentation-caption">Keep skin values aligned with the skin tone line.</p>
+        <p class="presentation-caption">Key at 45°, fill opposite, backlight behind subject.</p>
       </div>
     </div>
   </div>
@@ -76,25 +75,25 @@
 <!-- Slide 4: Steps -->
 <article class="slide format-carousel scale-preview" data-slide="steps">
   <div class="presentation-slide">
-    <span class="presentation-topic">SKIN TONE CORRECTION</span>
-    <h2 class="presentation-heading">WORKFLOW</h2>
+    <span class="presentation-topic">LIGHTING BASICS</span>
+    <h2 class="presentation-heading">HOW TO SET IT UP</h2>
     <div class="presentation-body">
       <div class="presentation-steps">
         <div class="davinci-step">
           <span class="davinci-step-num">STEP 1</span>
-          <p>Open the vectorscope and isolate the skin region.</p>
+          <p>Place key light at a 45° angle to the subject.</p>
         </div>
         <div class="davinci-step">
           <span class="davinci-step-num">STEP 2</span>
-          <p>Balance exposure before touching color.</p>
+          <p>Add fill on the opposite side to control contrast.</p>
         </div>
         <div class="davinci-step">
           <span class="davinci-step-num">STEP 3</span>
-          <p>Adjust hue and saturation in small increments.</p>
+          <p>Add backlight behind the subject for separation.</p>
         </div>
         <div class="davinci-step">
           <span class="davinci-step-num">STEP 4</span>
-          <p>Use qualifiers only when global adjustments fail.</p>
+          <p>Adjust intensities to match the mood.</p>
         </div>
       </div>
     </div>
@@ -108,12 +107,12 @@
 <!-- Slide 5: Callout -->
 <article class="slide format-carousel scale-preview" data-slide="callout">
   <div class="presentation-slide">
-    <span class="presentation-topic">SKIN TONE CORRECTION</span>
+    <span class="presentation-topic">LIGHTING BASICS</span>
     <h2 class="presentation-heading">PRO TIP</h2>
     <div class="presentation-body">
       <div class="presentation-callout">
         <span class="presentation-label">Pro Tip</span>
-        <p>Check skin under multiple lighting angles—grading for one angle can break another.</p>
+        <p>Use negative fill instead of more lights when you want drama.</p>
       </div>
     </div>
   </div>
@@ -126,12 +125,12 @@
 <!-- Slide 6: Warning -->
 <article class="slide format-carousel scale-preview" data-slide="warning">
   <div class="presentation-slide">
-    <span class="presentation-topic">SKIN TONE CORRECTION</span>
+    <span class="presentation-topic">LIGHTING BASICS</span>
     <h2 class="presentation-heading">COMMON MISTAKE</h2>
     <div class="presentation-body">
       <div class="presentation-warning">
         <span class="presentation-label">Watch Out</span>
-        <p>Oversaturating skin to 'make it pop'.</p>
+        <p>Over-filling and flattening the face.</p>
       </div>
     </div>
   </div>

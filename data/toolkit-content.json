@@ -341,18 +341,18 @@
     },
     {
       "id": "skin-tones",
-      "title": "SKIN TONES",
+      "title": "SKIN TONE CORRECTION",
       "categoryId": "davinci-resolve",
       "category": "DaVinci Resolve",
-      "format": "story",
+      "format": "carousel",
       "num": "",
-      "summary": "Isolate skin then compress hue with Color Compressor. Qualifier node: isolate skin (HSL) Add Color Compressor downstream",
-      "tip": "Isolate skin then compress hue with Color Compressor.",
+      "summary": "Keep skin values aligned with the skin tone line on the vectorscope.",
+      "tip": "Check skin under multiple lighting angles\u2014grading for one angle can break another.",
       "steps": [
-        "Qualifier node: isolate skin (HSL)",
-        "Add Color Compressor downstream",
-        "Align trace to skin tone line on vectorscope",
-        "Subtle saturation \u2014 protect highlights"
+        "Open the vectorscope and isolate the skin region.",
+        "Balance exposure before touching color.",
+        "Adjust hue and saturation in small increments.",
+        "Use qualifiers only when global adjustments fail."
       ],
       "htmlPath": "slides/davinci-resolve/skin-tones.html"
     },
@@ -457,6 +457,23 @@
         "Use with scopes \u2014 not eyes alone"
       ],
       "htmlPath": "slides/davinci-resolve/vectorscope.html"
+    },
+    {
+      "id": "three-point-lighting",
+      "title": "THREE-POINT LIGHTING",
+      "categoryId": "lighting-exposure",
+      "category": "Lighting & Exposure",
+      "format": "carousel",
+      "num": "",
+      "summary": "Key at 45\u00b0, fill opposite, backlight behind subject.",
+      "tip": "Use negative fill instead of more lights when you want drama.",
+      "steps": [
+        "Place key light at a 45\u00b0 angle to the subject.",
+        "Add fill on the opposite side to control contrast.",
+        "Add backlight behind the subject for separation.",
+        "Adjust intensities to match the mood."
+      ],
+      "htmlPath": "slides/lighting-exposure/three-point-lighting.html"
     },
     {
       "id": "dramatic-portrait",
