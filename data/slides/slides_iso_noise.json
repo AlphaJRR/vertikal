@@ -20,7 +20,7 @@
     {
       "type": "diagram",
       "heading": "ISO vs Noise",
-      "image": "ava/camera/iso-noise.svg",
+      "image": "ava/camera/iso_noise.png",
       "caption": "Higher ISO = more noise."
     },
     {

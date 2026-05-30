@@ -30,6 +30,8 @@ export interface ToolkitLesson {
   htmlSlidePath?: string;
   /** Slide id for app/slide/[id] and toolkit-content.json */
   htmlSlideId?: string;
+  /** Canonical slide deck id in data/slides/ (snake_case, e.g. slides_depth_layers) */
+  slideRef?: string;
   /** Parsed or author-supplied guided links (optional; also parsed inline) */
   guidedLinks?: { label: string; href: string }[];
   /** Single image path shown after THE GUIDE (from /public/assets/toolkit/ or assets/) */

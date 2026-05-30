@@ -1,0 +1,47 @@
+{
+  "id": "slides_interview_setup",
+  "lessonId": "lighting_interview_setup",
+  "title": "Interview Setup",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "INTERVIEW SETUP",
+      "subheading": "Light the subject brighter than the background."
+    },
+    {
+      "type": "concept",
+      "heading": "WHY IT MATTERS",
+      "bullets": [
+        "Interview lighting prioritizes clarity and flattering skin—interviews are unforgiving.",
+        "Use a soft key at 45°, a gentle fill, and a subtle backlight.",
+        "Keep the background slightly darker than the subject."
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "INTERVIEW LAYOUT",
+      "image": "ava/lighting/interview-setup.svg",
+      "caption": "Soft key at 45°, fill to taste, backlight for separation, practicals for depth."
+    },
+    {
+      "type": "steps",
+      "heading": "HOW TO LIGHT IT",
+      "steps": [
+        "Place soft key at 45°.",
+        "Add fill to taste.",
+        "Add backlight for separation.",
+        "Shape background with practicals."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "PRO TIP",
+      "text": "Use negative fill on the far side for dimension."
+    },
+    {
+      "type": "warning",
+      "heading": "COMMON MISTAKE",
+      "text": "Lighting the background brighter than the subject."
+    }
+  ]
+}

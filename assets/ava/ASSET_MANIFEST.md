@@ -45,14 +45,17 @@
 | strategy | `repurposing.png` | Repurposing hub | `slides_repurposing` | repurposing |
 | strategy | `content_pillars.png` | Content pillars | `slides_content_pillars` | content-pillars |
 
-## Joshua 28-kebab set (not generated this pass)
+## Joshua 28-kebab SVG set (on disk)
 
-These appear in older SVG specs but are outside the 31-deck BLOCK map:
+**Location:** `assets/ava/<category>/<name>.svg` (mirrored to brand repo)  
+**Spec:** viewBox `0 0 800 450`, bg `#080808`, brand colors only, no text in SVG.
 
-| Category | Kebab asset | Notes |
-|----------|-------------|-------|
-| camera | `white-balance`, `frame-rates` | Extra camera lessons |
-| framing | `dutch-angle`, `high-low-angle`, `depth-layers` | Extra framing lessons |
-| lighting | `butterfly-lighting`, `split-lighting`, `interview-setup`, `outdoor-fill-setup` | Not in BLOCK_3 slide refs |
-| editing | `log-vs-graded`, `j-cut-l-cut` | Extra editing topics |
-| strategy | (3 only in kebab set) | Subset of BLOCK_5; full strategy block has 8 PNGs above |
+| Category | Files (28) |
+|----------|------------|
+| camera | `exposure-triangle`, `aperture-depth`, `shutter-motion`, `iso-noise`, `white-balance`, `frame-rates` |
+| framing | `rule-of-thirds`, `leading-lines`, `headroom-noseroom`, `dutch-angle`, `high-low-angle`, `depth-layers` |
+| lighting | `three-point-layout`, `hard-soft-light`, `rembrandt-triangle`, `butterfly-lighting`, `split-lighting`, `interview-setup`, `outdoor-fill-setup` |
+| editing | `color-wheels-diagram`, `rgb-curves`, `node-workflow`, `vectorscope-skin-line`, `log-vs-graded`, `j-cut-l-cut` |
+| strategy | `hook-formula`, `batch-shooting-calendar`, `content-pillars` |
+
+Slide decks `slides_depth_layers`, `slides_high_low_angle`, and `slides_interview_setup` wire the framing/lighting kebab SVGs above into HTML presentation diagram slides.

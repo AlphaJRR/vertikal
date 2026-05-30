@@ -95,6 +95,7 @@ const BUNDLED_HTML_SLIDES: Record<string, number> = {
   "slides/lighting-exposure/cinematic-setup.html": require("../assets/creators-toolkit/slides/lighting-exposure/cinematic-setup.html"),
   "slides/lighting-exposure/color-temperature.html": require("../assets/creators-toolkit/slides/lighting-exposure/color-temperature.html"),
   "slides/lighting-exposure/hard-soft-light.html": require("../assets/creators-toolkit/slides/lighting-exposure/hard-soft-light.html"),
+  "slides/lighting-exposure/interview-setup.html": require("../assets/creators-toolkit/slides/lighting-exposure/interview-setup.html"),
   "slides/lighting-exposure/practical-motivated.html": require("../assets/creators-toolkit/slides/lighting-exposure/practical-motivated.html"),
   "slides/lighting-exposure/rembrandt-lighting.html": require("../assets/creators-toolkit/slides/lighting-exposure/rembrandt-lighting.html"),
   "slides/lighting-exposure/three-point-lighting.html": require("../assets/creators-toolkit/slides/lighting-exposure/three-point-lighting.html"),

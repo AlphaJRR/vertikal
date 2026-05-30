@@ -20,7 +20,7 @@
     {
       "type": "diagram",
       "heading": "BATCH WORKFLOW",
-      "image": "ava/strategy/batch-shooting-calendar.svg",
+      "image": "ava/strategy/batch_shooting.png",
       "caption": "Separate planning, shooting, and editing into distinct phases."
     },
     {

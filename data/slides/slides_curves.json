@@ -21,7 +21,7 @@
     {
       "type": "diagram",
       "heading": "LUMA + RGB",
-      "image": "ava/editing/rgb-curves.svg",
+      "image": "ava/editing/curves.png",
       "caption": "Use curves to refine, not replace, basic grading."
     },
     {

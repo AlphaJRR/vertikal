@@ -7,7 +7,7 @@ import * as path from "path";
 import { toolkitCategories } from "../data/toolkitCurriculum";
 import {
   KNOWN_LESSON_ID_MISMATCHES,
-  slideRefToHtmlSlideId,
+  htmlSlideIdForSlideRef,
 } from "../data/toolkitSlideLinking";
 import { LINKING_MAP, type Slide, type SlideDeck } from "../data/toolkitSlideTypes";
 import { getAvaDiagramBySlideRef } from "../data/avaDiagramManifest";
@@ -22,7 +22,7 @@ const PLACEHOLDER = "ava/common/placeholder.png";
 /** htmlSlideId → snake_case lesson id (LINKING_MAP keys) */
 const HTML_TO_SNAKE: Record<string, string> = {};
 for (const [snake, slideRef] of Object.entries(LINKING_MAP)) {
-  HTML_TO_SNAKE[slideRefToHtmlSlideId(slideRef)] = snake;
+  HTML_TO_SNAKE[htmlSlideIdForSlideRef(slideRef)] = snake;
 }
 
 /** curriculum kebab id → snake_case lesson id */
@@ -48,7 +48,7 @@ function resolveSnakeId(curriculumId: string, htmlSlideId?: string): string {
 }
 
 function resolveDiagramPath(rawPath: string, slideRef?: string): string {
-  const normalized = rawPath.replace(/^\.\.\/+/, "").replace(/^assets\//, "");
+  const normalized = rawPath.replace(/^(\.\.\/)+/, "").replace(/^assets\//, "");
   let avaPath = normalized.startsWith("ava/") ? normalized : `ava/${normalized}`;
 
   // Prefer manifest SVG when slideRef known
@@ -188,7 +188,7 @@ function main() {
 
   // Generate slide decks from LINKING_MAP (31 canonical)
   for (const [lessonSnake, slideRef] of Object.entries(LINKING_MAP)) {
-    const htmlSlideId = slideRefToHtmlSlideId(slideRef);
+    const htmlSlideId = htmlSlideIdForSlideRef(slideRef);
     let htmlPath: string | undefined;
     let title = slideRef.replace(/^slides_/, "").replace(/_/g, " ");
 

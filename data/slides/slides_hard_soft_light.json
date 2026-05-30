@@ -20,7 +20,7 @@
     {
       "type": "diagram",
       "heading": "SOURCE SIZE",
-      "image": "ava/lighting/hard-soft-light.svg",
+      "image": "ava/lighting/hard_soft_light.png",
       "caption": "Small direct source = hard; large diffused source = soft."
     },
     {

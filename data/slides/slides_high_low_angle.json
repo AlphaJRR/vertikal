@@ -1,0 +1,47 @@
+{
+  "id": "slides_high_low_angle",
+  "lessonId": "framing_high_low_angle",
+  "title": "High Angle vs Low Angle",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "HIGH ANGLE VS LOW ANGLE",
+      "subheading": "Choose angle based on the character's emotional state."
+    },
+    {
+      "type": "concept",
+      "heading": "WHY IT MATTERS",
+      "bullets": [
+        "High angles diminish subjects; low angles empower them—angle changes meaning.",
+        "A high angle makes a subject look small, vulnerable, or overwhelmed.",
+        "A low angle makes them look strong, dominant, or heroic."
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "ANGLE MEANING",
+      "image": "ava/framing/high-low-angle.svg",
+      "caption": "Raise or lower the camera to reinforce power, vulnerability, or neutrality."
+    },
+    {
+      "type": "steps",
+      "heading": "HOW TO CHOOSE ANGLE",
+      "steps": [
+        "Decide what the scene says about the subject.",
+        "Raise or lower the camera accordingly.",
+        "Keep vertical lines straight.",
+        "Rebalance composition after changing angle."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "PRO TIP",
+      "text": "Low angles with wide lenses exaggerate power."
+    },
+    {
+      "type": "warning",
+      "heading": "COMMON MISTAKE",
+      "text": "Using eye level for every shot."
+    }
+  ]
+}

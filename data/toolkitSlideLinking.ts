@@ -102,6 +102,18 @@ export function slideRefToHtmlSlideId(slideRef: SlideRef | string): string {
   return slideRef.replace(/^slides_/, "").replace(/_/g, "-");
 }
 
+/** When slideRef kebab id differs from legacy toolkit-content htmlSlideId */
+export const SLIDE_REF_HTML_SLIDE_ID: Partial<Record<SlideRef, string>> = {
+  slides_depth_layers: "depth",
+  slides_high_low_angle: "camera-angles",
+  slides_interview_setup: "interview-setup",
+};
+
+/** Resolve slide deck ref to toolkit-content / curriculum htmlSlideId */
+export function htmlSlideIdForSlideRef(slideRef: SlideRef | string): string {
+  return SLIDE_REF_HTML_SLIDE_ID[slideRef as SlideRef] ?? slideRefToHtmlSlideId(slideRef);
+}
+
 /** Resolve AVA snake_case lesson id to canonical slide deck ref (e.g. slides_exposure_triangle). */
 export function getSlideIdForLesson(lessonSnakeId: string): SlideRef | undefined {
   return LINKING_MAP[lessonSnakeId];
@@ -121,5 +133,5 @@ export function getCurriculumLessonId(lessonSnakeId: string): string | undefined
 /** Resolve AVA snake_case lesson id to toolkit-content.json / htmlSlideId kebab id. */
 export function getHtmlSlideIdForLesson(lessonSnakeId: string): string | undefined {
   const slideRef = getSlideIdForLesson(lessonSnakeId);
-  return slideRef ? slideRefToHtmlSlideId(slideRef) : undefined;
+  return slideRef ? htmlSlideIdForSlideRef(slideRef) : undefined;
 }

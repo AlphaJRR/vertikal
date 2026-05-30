@@ -32,6 +32,9 @@ import l27 from "./slides_tiktok_native.json";
 import l28 from "./slides_vertical_composition.json";
 import l29 from "./slides_whip_pan.json";
 import l30 from "./slides_youtube_titles_thumbs.json";
+import l31 from "./slides_depth_layers.json";
+import l32 from "./slides_high_low_angle.json";
+import l33 from "./slides_interview_setup.json";
 
 /** Canonical lesson ids — JSON files under data/lessons/ are source of truth. */
 export const SLIDE_DECK_IDS = [
@@ -66,6 +69,9 @@ export const SLIDE_DECK_IDS = [
   "slides_vertical_composition",
   "slides_whip_pan",
   "slides_youtube_titles_thumbs",
+  "slides_depth_layers",
+  "slides_high_low_angle",
+  "slides_interview_setup",
 ] as const;
 
 export type SlideDeckId = (typeof SLIDE_DECK_IDS)[number];
@@ -102,6 +108,9 @@ const SLIDE_DECK_MAP = {
   "slides_vertical_composition": l28,
   "slides_whip_pan": l29,
   "slides_youtube_titles_thumbs": l30,
+  "slides_depth_layers": l31,
+  "slides_high_low_angle": l32,
+  "slides_interview_setup": l33,
 } as Record<SlideDeckId, SlideDeck>;
 
 export function getSlideDeck(id: string): SlideDeck | undefined {

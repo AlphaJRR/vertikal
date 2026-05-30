@@ -21,7 +21,7 @@
     {
       "type": "diagram",
       "heading": "NODE TREE",
-      "image": "ava/common/placeholder.svg",
+      "image": "ava/editing/node_structure.png",
       "caption": "Layer nodes combine passes. Build prep → look → skin → background so changes stay isolated."
     },
     {

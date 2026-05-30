@@ -20,7 +20,7 @@
     {
       "type": "diagram",
       "heading": "Triangle Relationship",
-      "image": "ava/camera/exposure-triangle.svg",
+      "image": "ava/camera/exposure_triangle.png",
       "caption": "Aperture, shutter speed, and ISO work together."
     },
     {

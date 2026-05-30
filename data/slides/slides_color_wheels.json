@@ -21,7 +21,7 @@
     {
       "type": "diagram",
       "heading": "LIFT · GAMMA · GAIN",
-      "image": "ava/editing/color-wheels-diagram.svg",
+      "image": "ava/editing/color_wheels.png",
       "caption": "Gain adjusts highlights. Use small adjustments to avoid breaking the image."
     },
     {

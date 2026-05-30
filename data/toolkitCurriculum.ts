@@ -653,6 +653,7 @@ export const toolkitCategories: ToolkitCategory[] = [
         "commonMistake": "Shooting everything from eye level with no layers.",
         "htmlSlidePath": "slides/photography-composition/depth.html",
         "htmlSlideId": "depth",
+        "slideRef": "slides_depth_layers",
         "images": []
       },
       {
@@ -695,6 +696,7 @@ export const toolkitCategories: ToolkitCategory[] = [
         "commonMistake": "Using eye level for every shot.",
         "htmlSlidePath": "slides/framing-shots/camera-angles.html",
         "htmlSlideId": "camera-angles",
+        "slideRef": "slides_high_low_angle",
         "images": []
       },
       {
@@ -1009,6 +1011,9 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Use negative fill on the far side for dimension.",
         "commonMistake": "Lighting the background brighter than the subject.",
+        "htmlSlidePath": "slides/lighting-exposure/interview-setup.html",
+        "htmlSlideId": "interview-setup",
+        "slideRef": "slides_interview_setup",
         "images": []
       },
       {

@@ -47,6 +47,8 @@ export const SLIDE_BLOCKS = {
     "slides_leading_lines",
     "slides_headroom_lookroom",
     "slides_vertical_composition",
+    "slides_depth_layers",
+    "slides_high_low_angle",
   ],
   BLOCK_3: [
     "slides_three_point_lighting",
@@ -55,6 +57,7 @@ export const SLIDE_BLOCKS = {
     "slides_cinematic_setup",
     "slides_rembrandt_lighting",
     "slides_practical_motivated",
+    "slides_interview_setup",
   ],
   BLOCK_4: [
     "slides_interface_overview",
@@ -105,6 +108,10 @@ export const LINKING_MAP: Record<string, SlideRef> = {
   framing_leading_lines: "slides_leading_lines",
   framing_headroom_lookroom: "slides_headroom_lookroom",
   framing_vertical_composition: "slides_vertical_composition",
+  framing_depth_layers: "slides_depth_layers",
+  framing_high_low_angle: "slides_high_low_angle",
+
+  lighting_interview_setup: "slides_interview_setup",
 
   editing_interface_overview: "slides_interface_overview",
   editing_color_wheels: "slides_color_wheels",

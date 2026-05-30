@@ -676,6 +676,24 @@
       "diagramImage": "ava/lighting/cinematic_setup.png"
     },
     {
+      "id": "interview-setup",
+      "title": "INTERVIEW SETUP",
+      "categoryId": "lighting-exposure",
+      "category": "Lighting & Exposure",
+      "format": "carousel",
+      "num": "",
+      "summary": "Soft key at 45°, fill to taste, backlight for separation.",
+      "tip": "Use negative fill on the far side for dimension.",
+      "steps": [
+        "Place soft key at 45°.",
+        "Add fill to taste.",
+        "Add backlight for separation.",
+        "Shape background with practicals."
+      ],
+      "htmlPath": "slides/lighting-exposure/interview-setup.html",
+      "diagramImage": "ava/lighting/interview-setup.svg"
+    },
+    {
       "id": "rembrandt-lighting",
       "title": "REMBRANDT LIGHTING",
       "categoryId": "lighting-exposure",

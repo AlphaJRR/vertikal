@@ -20,7 +20,7 @@
     {
       "type": "diagram",
       "heading": "Motion Blur Levels",
-      "image": "ava/camera/shutter-motion.svg",
+      "image": "ava/camera/motion_blur.png",
       "caption": "Faster shutter = less blur."
     },
     {

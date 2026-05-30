@@ -20,7 +20,7 @@
     {
       "type": "diagram",
       "heading": "HOOK TYPE → ACTION",
-      "image": "ava/common/placeholder.svg",
+      "image": "ava/strategy/hooks_convert.png",
       "caption": "Choose hook type based on the action you want the viewer to take."
     },
     {

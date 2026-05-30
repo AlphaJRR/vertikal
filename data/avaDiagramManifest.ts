@@ -258,6 +258,11 @@ export function avaDiagramPathForEntry(entry: AvaDiagramManifestEntry): string {
   return `ava/${entry.category}/${entry.file}`;
 }
 
+/** Canonical PNG path for slide JSON schema (maps to bundled SVG via AVA_DIAGRAM_PNG_TO_BUNDLE). */
+export function avaDiagramPngPathForEntry(entry: AvaDiagramManifestEntry): string {
+  return avaDiagramPathForEntry(entry);
+}
+
 export function getAvaDiagramByHtmlSlideId(
   htmlSlideId: string,
 ): AvaDiagramManifestEntry | undefined {
