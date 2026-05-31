@@ -1,46 +1,47 @@
 {
   "id": "slides_manual_mode",
-  "lessonId": "manual-mode",
+  "lessonId": "camera_manual_mode",
   "title": "Manual Mode",
   "slides": [
     {
       "type": "title",
       "heading": "Manual Mode",
-      "subheading": "Full Creative Control"
+      "subheading": "You control all three exposure variables — nothing changes unless you change it."
     },
     {
       "type": "concept",
       "heading": "Why It Matters",
       "bullets": [
-        "You control aperture, shutter, and ISO",
-        "No unexpected exposure shifts",
-        "Consistent look across shots"
+        "Manual Mode gives you full control over exposure.",
+        "It matters because nothing shifts automatically — your creative intent stays locked.",
+        "You set aperture, shutter speed, and ISO yourself."
       ]
     },
     {
       "type": "diagram",
-      "heading": "Exposure Control",
-      "image": "ava/camera/exposure_triangle.png"
+      "heading": "Visual Guide",
+      "image": "ava/camera/manual_mode.png",
+      "caption": "You set aperture, shutter speed, and ISO yourself."
     },
     {
       "type": "steps",
-      "heading": "How To Use It",
+      "heading": "How To",
       "steps": [
-        "Set aperture for depth of field",
-        "Set shutter for motion",
-        "Raise ISO only when needed",
-        "Balance exposure using histogram"
+        "Set aperture for depth of field.",
+        "Set shutter for motion.",
+        "Raise ISO only as needed.",
+        "Rebalance exposure until histogram is centered."
       ]
     },
     {
       "type": "callout",
       "heading": "Pro Tip",
-      "text": "Lock two settings for your style and adjust the third"
+      "text": "Lock two settings for your style and adjust the third for exposure."
     },
     {
       "type": "warning",
       "heading": "Common Mistake",
-      "text": "Letting ISO drift too high"
+      "text": "Forgetting ISO is still part of the triangle and letting it drift too high."
     }
   ]
 }

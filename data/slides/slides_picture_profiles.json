@@ -1,46 +1,47 @@
 {
   "id": "slides_picture_profiles",
-  "lessonId": "picture-profiles",
+  "lessonId": "camera_picture_profiles",
   "title": "Picture Profiles",
   "slides": [
     {
       "type": "title",
       "heading": "Picture Profiles",
-      "subheading": "Color • Contrast • Dynamic Range"
+      "subheading": "Choose profiles based on grading needs — not habit."
     },
     {
       "type": "concept",
       "heading": "Why It Matters",
       "bullets": [
-        "Defines your in-camera look",
-        "Affects grading flexibility",
-        "Log preserves more detail"
+        "Picture profiles define the look of your footage in‑camera.",
+        "They matter because they affect contrast, color, and dynamic range.",
+        "Standard profiles look finished but limit grading."
       ]
     },
     {
       "type": "diagram",
-      "heading": "Profile Comparison",
-      "image": "ava/camera/picture_profile_comparison.png"
+      "heading": "Visual Guide",
+      "image": "ava/camera/picture_profiles.png",
+      "caption": "Standard profiles look finished but limit grading."
     },
     {
       "type": "steps",
-      "heading": "How To Use It",
+      "heading": "How To",
       "steps": [
-        "Choose Standard for fast delivery",
-        "Choose Log for cinematic grading",
-        "Use monitoring LUTs",
-        "Expose Log brighter"
+        "Pick Standard for fast delivery.",
+        "Pick Log for cinematic grading.",
+        "Use monitoring LUTs for Log.",
+        "Expose Log brighter to avoid noise."
       ]
     },
     {
       "type": "callout",
       "heading": "Pro Tip",
-      "text": "Use Log only when you plan to grade intentionally"
+      "text": "Use Log only when you plan to grade intentionally."
     },
     {
       "type": "warning",
       "heading": "Common Mistake",
-      "text": "Underexposing Log footage"
+      "text": "Underexposing Log and creating noisy shadows."
     }
   ]
 }

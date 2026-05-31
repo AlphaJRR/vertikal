@@ -153,12 +153,58 @@ function escapeHtml(text: string): string {
     .replace(/"/g, "&quot;");
 }
 
-function loadDeckFromJson(spec: CameraSlideSpec): SlideDeck {
-  const jsonPath = path.join(SLIDES_DIR, `${spec.slideRef}.json`);
-  if (!fs.existsSync(jsonPath)) {
-    throw new Error(`Missing slide deck JSON: ${jsonPath}`);
-  }
-  return JSON.parse(fs.readFileSync(jsonPath, "utf8")) as SlideDeck;
+function buildDeck(spec: CameraSlideSpec): SlideDeck {
+  const lesson = findLesson(spec.curriculumId);
+  const steps = lesson.steps ?? [];
+  const bullets = conceptBullets(
+    lesson.description,
+    lesson.guide ?? "",
+    lesson.keyRule ?? "",
+  );
+  const diagramImage = diagramPngPath(spec.slideRef);
+  const caption =
+    lesson.guide?.split(/(?<=[.!?])\s+/)[0]?.trim() ?? lesson.description;
+
+  const slides: Slide[] = [
+    {
+      type: "title",
+      heading: lesson.title,
+      subheading: lesson.keyRule,
+    },
+    {
+      type: "concept",
+      heading: "Why It Matters",
+      bullets,
+    },
+    {
+      type: "diagram",
+      heading: "Visual Guide",
+      image: diagramImage,
+      caption,
+    },
+    {
+      type: "steps",
+      heading: "How To",
+      steps,
+    },
+    {
+      type: "callout",
+      heading: "Pro Tip",
+      text: lesson.proTip ?? "",
+    },
+    {
+      type: "warning",
+      heading: "Common Mistake",
+      text: lesson.commonMistake ?? "",
+    },
+  ];
+
+  return {
+    id: spec.slideRef,
+    lessonId: spec.lessonSnake,
+    title: lesson.title,
+    slides,
+  };
 }
 
 function slideArticle(
@@ -295,7 +341,9 @@ ${articles}
 function main() {
   fs.mkdirSync(SLIDES_DIR, { recursive: true });
   for (const spec of SPECS) {
-    const deck = loadDeckFromJson(spec);
+    const deck = buildDeck(spec);
+    const jsonPath = path.join(SLIDES_DIR, `${spec.slideRef}.json`);
+    fs.writeFileSync(jsonPath, JSON.stringify(deck, null, 2) + "\n");
 
     const htmlDir = path.join(HTML_ROOT, "slides", spec.htmlSubdir);
     fs.mkdirSync(htmlDir, { recursive: true });

@@ -1,46 +1,47 @@
 {
   "id": "slides_static_locked",
-  "lessonId": "static-locked",
-  "title": "Static / Locked-Off Shots",
+  "lessonId": "camera_static",
+  "title": "Static",
   "slides": [
     {
       "type": "title",
-      "heading": "Static / Locked-Off",
-      "subheading": "Stable • Intentional • Clean"
+      "heading": "Static",
+      "subheading": "If the camera doesn't move, the composition must be perfect."
     },
     {
       "type": "concept",
       "heading": "Why It Matters",
       "bullets": [
-        "Feels professional",
-        "Lets subject drive motion",
-        "Creates visual contrast"
+        "Locked-off shots create stability and focus.",
+        "They matter because they feel intentional and professional.",
+        "Use a tripod or solid surface."
       ]
     },
     {
       "type": "diagram",
-      "heading": "Tripod Setup",
-      "image": "ava/camera/tripod_setup.png"
+      "heading": "Visual Guide",
+      "image": "ava/camera/static_locked.png",
+      "caption": "Use a tripod or solid surface."
     },
     {
       "type": "steps",
-      "heading": "How To Shoot",
+      "heading": "How To",
       "steps": [
-        "Level the tripod",
-        "Frame precisely",
-        "Lock all adjustments",
-        "Avoid touching the camera"
+        "Level the tripod.",
+        "Frame with purpose.",
+        "Lock all adjustments.",
+        "Avoid touching the camera during takes."
       ]
     },
     {
       "type": "callout",
       "heading": "Pro Tip",
-      "text": "Use static shots to contrast dynamic sequences"
+      "text": "Use static shots to contrast dynamic sequences."
     },
     {
       "type": "warning",
       "heading": "Common Mistake",
-      "text": "Crooked horizons"
+      "text": "Crooked horizons or sloppy framing."
     }
   ]
 }

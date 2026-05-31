@@ -1,46 +1,47 @@
 {
   "id": "slides_shutter_priority",
-  "lessonId": "shutter-priority",
+  "lessonId": "camera_shutter_priority",
   "title": "Shutter Priority",
   "slides": [
     {
       "type": "title",
       "heading": "Shutter Priority",
-      "subheading": "Motion First"
+      "subheading": "You control motion — the camera controls depth."
     },
     {
       "type": "concept",
       "heading": "Why It Matters",
       "bullets": [
-        "You control motion blur",
-        "Camera adjusts aperture",
-        "Ideal for sports and action"
+        "Shutter Priority locks motion style while the camera adjusts aperture.",
+        "You choose shutter speed; the camera sets aperture.",
+        "You control motion — the camera controls depth."
       ]
     },
     {
       "type": "diagram",
-      "heading": "Motion Blur Levels",
-      "image": "ava/camera/shutter_motion_blur.png"
+      "heading": "Visual Guide",
+      "image": "ava/camera/shutter_priority.png",
+      "caption": "You choose shutter speed; the camera sets aperture."
     },
     {
       "type": "steps",
-      "heading": "How To Use It",
+      "heading": "How To",
       "steps": [
-        "Set shutter for motion style",
-        "Monitor aperture limits",
-        "Raise ISO if aperture maxes out",
-        "Use exposure compensation"
+        "Set shutter based on motion needs.",
+        "Monitor aperture to avoid underexposure.",
+        "Raise ISO if aperture maxes out.",
+        "Use exposure compensation to fine‑tune."
       ]
     },
     {
       "type": "callout",
       "heading": "Pro Tip",
-      "text": "Use outdoors for fast-moving subjects"
+      "text": "Use Shutter Priority for fast-moving subjects outdoors."
     },
     {
       "type": "warning",
       "heading": "Common Mistake",
-      "text": "Underexposure when aperture hits its limit"
+      "text": "Forgetting aperture may hit its limit and cause underexposure."
     }
   ]
 }
