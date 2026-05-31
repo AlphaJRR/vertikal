@@ -108,6 +108,7 @@ import l103 from "./production_producer.json";
 import l104 from "./production_set_etiquette.json";
 import l105 from "./production_breaking_in.json";
 import l106 from "./production_rates_invoicing.json";
+import l107 from "./production_contracts_kill_fees.json";
 
 /** Canonical lesson ids — JSON files under data/lessons/ are source of truth. */
 export const LESSON_IDS = [
@@ -218,6 +219,7 @@ export const LESSON_IDS = [
   "production_set_etiquette",
   "production_breaking_in",
   "production_rates_invoicing",
+  "production_contracts_kill_fees",
 ] as const;
 
 export type LessonId = (typeof LESSON_IDS)[number];
@@ -330,6 +332,7 @@ const LESSON_MAP = {
   "production_set_etiquette": l104,
   "production_breaking_in": l105,
   "production_rates_invoicing": l106,
+  "production_contracts_kill_fees": l107,
 } as Record<LessonId, CanonicalLesson>;
 
 export function getLessonById(id: string): CanonicalLesson | undefined {
