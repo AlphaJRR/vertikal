@@ -156,7 +156,7 @@ const isProLesson = (id: string): boolean => {
 // LESSONS
 // ─────────────────────────────────────────
 // Exported 2026-05-31 from Vertikal-App/data/toolkitCurriculum.ts
-// 107 lessons · 107 with full v2 content (description, guide, keyRule, steps, proTip, commonMistake)
+// 108 lessons · 108 with full v2 content (description, guide, keyRule, steps, proTip, commonMistake)
 
 export const TOOLKIT_LESSONS: ToolkitLesson[] = [
 {
@@ -527,7 +527,7 @@ export const TOOLKIT_LESSONS: ToolkitLesson[] = [
     tab: 'camera',
     category: 'camera-shooting-modes',
     title: 'Manual Mode',
-    type: 'STATIC',
+    type: 'HTML_PRESENTATION',
     isPro: true,
     description: `Manual Mode gives you full control over exposure. It matters because nothing shifts automatically — your creative intent stays locked.`,
     guide: `You set aperture, shutter speed, and ISO yourself. This removes unpredictability and ensures consistent results across shots.`,
@@ -540,6 +540,8 @@ export const TOOLKIT_LESSONS: ToolkitLesson[] = [
     ],
     proTip: 'Lock two settings for your style and adjust the third for exposure.',
     commonMistake: 'Forgetting ISO is still part of the triangle and letting it drift too high.',
+    htmlSlidePath: 'slides/camera-shooting-modes/manual-mode.html',
+    htmlSlideId: 'manual-mode',
     images: [],
   },
 
@@ -549,7 +551,7 @@ export const TOOLKIT_LESSONS: ToolkitLesson[] = [
     tab: 'camera',
     category: 'camera-shooting-modes',
     title: 'Aperture Priority',
-    type: 'STATIC',
+    type: 'HTML_PRESENTATION',
     isPro: true,
     description: `Aperture Priority lets you control depth of field while the camera sets shutter speed automatically.`,
     guide: `You choose the f‑stop; the camera adjusts shutter to maintain exposure. Great for portraits, interviews, and controlled depth.`,
@@ -562,6 +564,8 @@ export const TOOLKIT_LESSONS: ToolkitLesson[] = [
     ],
     proTip: `Use Aperture Priority when lighting changes quickly but depth must stay consistent.`,
     commonMistake: 'Letting shutter drop too low and introducing motion blur.',
+    htmlSlidePath: 'slides/camera-shooting-modes/aperture-priority.html',
+    htmlSlideId: 'aperture-priority',
     images: [],
   },
 
@@ -571,7 +575,7 @@ export const TOOLKIT_LESSONS: ToolkitLesson[] = [
     tab: 'camera',
     category: 'camera-shooting-modes',
     title: 'Shutter Priority',
-    type: 'STATIC',
+    type: 'HTML_PRESENTATION',
     isPro: true,
     description: 'Shutter Priority locks motion style while the camera adjusts aperture.',
     guide: `You choose shutter speed; the camera sets aperture. Ideal for sports, action, or stylized motion blur.`,
@@ -584,6 +588,8 @@ export const TOOLKIT_LESSONS: ToolkitLesson[] = [
     ],
     proTip: 'Use Shutter Priority for fast-moving subjects outdoors.',
     commonMistake: 'Forgetting aperture may hit its limit and cause underexposure.',
+    htmlSlidePath: 'slides/camera-shooting-modes/shutter-priority.html',
+    htmlSlideId: 'shutter-priority',
     images: [],
   },
 
@@ -593,7 +599,7 @@ export const TOOLKIT_LESSONS: ToolkitLesson[] = [
     tab: 'camera',
     category: 'camera-shooting-modes',
     title: 'Picture Profiles',
-    type: 'STATIC',
+    type: 'HTML_PRESENTATION',
     isPro: true,
     description: `Picture profiles define the look of your footage in‑camera. They matter because they affect contrast, color, and dynamic range.`,
     guide: `Standard profiles look finished but limit grading. Log profiles look flat but preserve detail. Choose based on workflow and turnaround time.`,
@@ -606,6 +612,8 @@ export const TOOLKIT_LESSONS: ToolkitLesson[] = [
     ],
     proTip: 'Use Log only when you plan to grade intentionally.',
     commonMistake: 'Underexposing Log and creating noisy shadows.',
+    htmlSlidePath: 'slides/camera-shooting-modes/picture-profiles.html',
+    htmlSlideId: 'picture-profiles',
     images: [],
   },
 
@@ -615,7 +623,7 @@ export const TOOLKIT_LESSONS: ToolkitLesson[] = [
     tab: 'camera',
     category: 'camera-shooting-modes',
     title: 'RAW vs Compressed',
-    type: 'STATIC',
+    type: 'HTML_PRESENTATION',
     isPro: true,
     description: `RAW captures maximum sensor data; compressed formats save space. It matters because workflow and storage change dramatically.`,
     guide: `RAW gives flexibility but requires heavy processing. Compressed formats are efficient but limit recovery in post.`,
@@ -628,6 +636,8 @@ export const TOOLKIT_LESSONS: ToolkitLesson[] = [
     ],
     proTip: 'ProRes RAW or BRAW offer a strong balance of flexibility and workflow.',
     commonMistake: 'Overshooting RAW without enough storage or processing power.',
+    htmlSlidePath: 'slides/camera-shooting-modes/raw-vs-compressed.html',
+    htmlSlideId: 'raw-vs-compressed',
     images: [],
   },
 
@@ -637,7 +647,7 @@ export const TOOLKIT_LESSONS: ToolkitLesson[] = [
     tab: 'camera',
     category: 'camera-camera-movement',
     title: 'Handheld',
-    type: 'STATIC',
+    type: 'HTML_PRESENTATION',
     isPro: true,
     description: `Handheld shooting adds energy and realism. It matters because it creates an immersive, human feel.`,
     guide: `Use controlled micro-movements, stable posture, and intentional motion. Handheld should feel organic, not sloppy.`,
@@ -650,6 +660,8 @@ export const TOOLKIT_LESSONS: ToolkitLesson[] = [
     ],
     proTip: `Use a wider lens to hide micro‑shake.`,
     commonMistake: `Over‑shaking the camera and calling it "handheld style."`,
+    htmlSlidePath: 'slides/camera-movement/handheld.html',
+    htmlSlideId: 'handheld',
     images: [],
   },
 
@@ -659,7 +671,7 @@ export const TOOLKIT_LESSONS: ToolkitLesson[] = [
     tab: 'camera',
     category: 'camera-camera-movement',
     title: 'Gimbal',
-    type: 'STATIC',
+    type: 'HTML_PRESENTATION',
     isPro: true,
     description: `Gimbals create smooth, floating movement. They matter because they add polish and cinematic motion.`,
     guide: `Balance the camera, walk heel‑to‑toe, and keep movements slow and intentional. Let the gimbal do the stabilization — not your arms.`,
@@ -672,6 +684,8 @@ export const TOOLKIT_LESSONS: ToolkitLesson[] = [
     ],
     proTip: 'Use "follow" mode for natural movement and "lock" mode for precision.',
     commonMistake: 'Running with a gimbal and creating bounce.',
+    htmlSlidePath: 'slides/camera-movement/gimbal.html',
+    htmlSlideId: 'gimbal',
     images: [],
   },
 
@@ -681,7 +695,7 @@ export const TOOLKIT_LESSONS: ToolkitLesson[] = [
     tab: 'camera',
     category: 'camera-camera-movement',
     title: 'Static',
-    type: 'STATIC',
+    type: 'HTML_PRESENTATION',
     isPro: true,
     description: `Locked-off shots create stability and focus. They matter because they feel intentional and professional.`,
     guide: `Use a tripod or solid surface. Frame precisely. Let the subject or scene provide the motion.`,
@@ -694,6 +708,8 @@ export const TOOLKIT_LESSONS: ToolkitLesson[] = [
     ],
     proTip: 'Use static shots to contrast dynamic sequences.',
     commonMistake: 'Crooked horizons or sloppy framing.',
+    htmlSlidePath: 'slides/camera-movement/static-locked.html',
+    htmlSlideId: 'static-locked',
     images: [],
   },
 
@@ -703,7 +719,7 @@ export const TOOLKIT_LESSONS: ToolkitLesson[] = [
     tab: 'camera',
     category: 'camera-camera-movement',
     title: 'Dolly / Slider',
-    type: 'STATIC',
+    type: 'HTML_PRESENTATION',
     isPro: true,
     description: `Dolly and slider moves add controlled, cinematic motion. They matter because they feel intentional and smooth.`,
     guide: 'Use slow, consistent movement. Dolly reveals space; sliders add subtle parallax.',
@@ -716,6 +732,8 @@ export const TOOLKIT_LESSONS: ToolkitLesson[] = [
     ],
     proTip: `Use sliders for micro‑moves that elevate simple shots.`,
     commonMistake: 'Moving too fast and losing cinematic feel.',
+    htmlSlidePath: 'slides/camera-movement/dolly-slider.html',
+    htmlSlideId: 'dolly-slider',
     images: [],
   },
 
@@ -725,7 +743,7 @@ export const TOOLKIT_LESSONS: ToolkitLesson[] = [
     tab: 'camera',
     category: 'camera-camera-movement',
     title: 'Whip Pan',
-    type: 'STATIC',
+    type: 'HTML_PRESENTATION',
     isPro: true,
     description: `Whip pans create fast, energetic transitions. They matter because they add momentum and hide cuts.`,
     guide: `Start and end with a fast horizontal motion. Match direction and speed between shots for seamless transitions.`,
@@ -738,6 +756,8 @@ export const TOOLKIT_LESSONS: ToolkitLesson[] = [
     ],
     proTip: 'Shoot at a higher shutter speed to keep the blur clean.',
     commonMistake: 'Whipping too slowly and revealing the cut.',
+    htmlSlidePath: 'slides/camera-movement/camera-whip-pan.html',
+    htmlSlideId: 'camera-whip-pan',
     images: [],
   },
 
@@ -2582,6 +2602,28 @@ export const TOOLKIT_LESSONS: ToolkitLesson[] = [
     commonMistake: 'Accepting vague verbal agreements.',
     images: [],
   },
+
+{
+    id: 'production-contracts-kill-fees',
+    number: '107',
+    tab: 'production',
+    category: 'production-getting-paid',
+    title: 'Contracts & Kill Fees',
+    type: 'STATIC',
+    isPro: true,
+    description: `Written contracts define scope, payment, and what happens when a job is canceled. Kill fees protect your income when clients pull a shoot after you have reserved time and turned down other work.`,
+    guide: `Before any paid work, agree on rate, hours, deliverables, revision limits, payment schedule, and kill-fee percentage if the client cancels within a defined window. Put it in writing — email plus signed agreement or clear proposal acceptance counts.`,
+    keyRule: `No contract, no shoot — kill fees belong in writing before day one.`,
+    steps: [
+      'Define scope, rate, and payment terms in writing.',
+      'State kill-fee percentage and cancellation notice window.',
+      'Require a deposit or booking fee when possible.',
+      'Invoice kill fees promptly if a job is canceled.',
+    ],
+    proTip: `Use the same contract template as your invoicing lesson — one doc for rate, kill fee, and overtime.`,
+    commonMistake: 'Starting without kill-fee language and hoping verbal promises hold.',
+    images: [],
+  },
 ]
 
 // ─────────────────────────────────────────
@@ -2609,7 +2651,7 @@ export const lessonCountByTab: Record<TabId, number> = {
   'lighting': 15,
   'editing': 26,
   'strategy': 14,
-  'production': 10,
+  'production': 11,
 }
 
 // JRE Command · May 2026 · THE WORK SPEAKS FIRST
