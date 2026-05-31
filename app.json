@@ -33,7 +33,7 @@
           }
         }
       },
-      "buildNumber": "2"
+      "buildNumber": "4"
     },
     "android": {
       "package": "com.alphavisualartists.app",
@@ -71,7 +71,8 @@
       ],
       "expo-font",
       "expo-web-browser",
-      "expo-video"
+      "expo-video",
+      "expo-updates"
     ],
     "experiments": {
       "typedRoutes": true

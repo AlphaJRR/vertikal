@@ -20,6 +20,8 @@ on:
       - 'lib/**'
       - 'hooks/**'
       - 'constants/**'
+      - 'utils/**'
+      - 'types/**'
 
 jobs:
   check-native-changes:
