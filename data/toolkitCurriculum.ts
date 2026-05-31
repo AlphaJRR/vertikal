@@ -1399,9 +1399,17 @@ export const toolkitCategories: ToolkitCategory[] = [
         "category": "COLOR GRADING",
         "title": "Skin Tone Correction",
         "type": "html_presentation",
-        "description": "Skin tones must look natural. They matter because viewers judge skin instantly.",
-        "guide": "Use the vectorscope to keep skin on the skin tone line. Adjust hue and saturation carefully. Use qualifiers to isolate skin if needed. Good skin tones elevate the entire grade.",
-        "steps": [],
+        "description": "Skin tones must look natural and consistent. They matter because viewers judge skin instantly and unforgivingly.",
+        "guide": "Use the vectorscope to keep skin aligned with the skin‑tone line. Adjust hue and saturation in small increments to avoid plastic or alien tones. Qualify skin only when necessary—broad adjustments usually look more natural. Always balance exposure before touching color. Skin tone correction is subtle work, not heavy lifting.",
+        "keyRule": "Keep skin on the skin‑tone line—never chase \"perfect,\" chase natural.",
+        "steps": [
+          "Open vectorscope and isolate skin region.",
+          "Adjust hue/sat until skin sits on the line.",
+          "Balance exposure before refining color.",
+          "Use qualifiers only when global adjustments fail."
+        ],
+        "proTip": "Check skin under multiple lighting conditions—grading for one angle can break another.",
+        "commonMistake": "Oversaturating skin to \"make it pop.\"",
         "htmlSlidePath": "slides/davinci-resolve/skin-tone-correction.html",
         "htmlSlideId": "skin-tone-correction",
         "images": []
