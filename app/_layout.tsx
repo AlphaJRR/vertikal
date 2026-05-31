@@ -84,6 +84,7 @@ function RootLayoutNav() {
   return (
     <Stack screenOptions={{ headerBackTitle: "Back" }}>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack.Screen name="lesson/[id]" options={{ headerShown: false }} />
       <Stack.Screen name="slide/[id]" options={{ headerShown: false, presentation: "modal" }} />
     </Stack>
   );

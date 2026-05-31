@@ -44,9 +44,7 @@ export function TrainingModule({ onBack }: ModuleProps) {
       <Pressable onPress={onBack} style={{ paddingHorizontal: 20, marginBottom: 4 }}>
         <Text style={s.backTxt}>← Toolkit</Text>
       </Pressable>
-      <View style={{ flex: 1 }}>
-        <DeferredCreatorTraining />
-      </View>
+      <DeferredCreatorTraining />
     </View>
   );
 }
