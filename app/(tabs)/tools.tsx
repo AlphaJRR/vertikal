@@ -7,6 +7,7 @@ import { CreatorTraining } from "../../components/toolkit/CreatorTraining";
 import { ProductionChecklistsSection } from "../../components/toolkit/ProductionChecklistsSection";
 import { PresetsManager } from "../../components/toolkit/PresetsManager";
 import { SonyShootingModes } from "../../components/toolkit/SonyShootingModes";
+import { RateCalculator } from "../../components/toolkit/RateCalculator";
 import { ShootCalculator } from "../../components/toolkit/ShootCalculator";
 import { ShortcutsModule } from "../../components/toolkit/ToolkitModules";
 import { menuItems, ToolkitMenuId } from "../../components/toolkit/ToolkitNavigator";
@@ -38,6 +39,9 @@ export default function ToolsScreen() {
   if (subScreen === "calculator") {
     return <ShootCalculator onBack={goMain} />;
   }
+  if (subScreen === "rate-calculator") {
+    return <RateCalculator onBack={goMain} />;
+  }
   if (subScreen === "presets") {
     return <PresetsManager onBack={goMain} />;
   }
@@ -49,7 +53,8 @@ export default function ToolsScreen() {
   }
 
   const moreTools = menuItems.filter(
-    (item) => !["training", "checklists", "invoice"].includes(item.id),
+    (item) =>
+      !["training", "checklists", "invoice", "rate-calculator"].includes(item.id),
   );
 
   return (
@@ -63,6 +68,28 @@ export default function ToolsScreen() {
       showsVerticalScrollIndicator={false}
     >
       <CreatorTraining />
+
+      <View style={styles.section}>
+        <Text style={styles.eyebrow}>Rate Calculator</Text>
+        <Text style={styles.sectionTitle}>Quote Builder</Text>
+        <Text style={styles.sectionDesc}>
+          Build a professional quote in 5 steps — skill level baselines, national
+          averages, IRS mileage at $0.67/mi, and Pro-gated Send Quote.
+        </Text>
+        <Pressable
+          onPress={() => setSubScreen("rate-calculator")}
+          style={styles.moreCard}
+        >
+          <View style={[styles.moreIcon, { backgroundColor: "rgba(232,0,10,0.13)" }]}>
+            <Ionicons name="cash-outline" size={20} color={brandColors.alphaRed} />
+          </View>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.moreTitle}>Open Rate Calculator</Text>
+            <Text style={styles.moreDesc}>5-step quote builder</Text>
+          </View>
+          <Ionicons name="chevron-forward" size={18} color={brandColors.inactiveTab} />
+        </Pressable>
+      </View>
 
       <View style={styles.section}>
         <Text style={styles.eyebrow}>Invoice Builder</Text>

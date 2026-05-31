@@ -6,6 +6,7 @@ import { toolkitStyles as s } from "./toolkitStyles";
 
 export type ToolkitMenuId =
   | "calculator"
+  | "rate-calculator"
   | "training"
   | "checklists"
   | "shortcuts"
@@ -30,6 +31,13 @@ export const menuItems: ToolkitMenuItem[] = [
     description: "Aspect ratios and storage estimates",
     icon: "calculator-outline",
     color: "#00d4ff",
+  },
+  {
+    id: "rate-calculator",
+    title: "Rate Calculator",
+    description: "5-step quote builder with national rate baselines",
+    icon: "cash-outline",
+    color: "#E8000A",
   },
   {
     id: "presets",
