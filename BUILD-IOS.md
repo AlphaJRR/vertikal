@@ -10,7 +10,7 @@ Open the **Shell** tab in Replit, then:
 
 ### 1. Login to Expo (one-time)
 ```bash
-cd artifacts/ava-mobile
+cd /path/to/Vertikal-App
 pnpm exec eas login
 ```
 > Sign up free at expo.dev if you don't have an account. Note your username.

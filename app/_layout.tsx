@@ -109,13 +109,37 @@ export default function RootLayout() {
       return;
     }
 
-    console.log("[EAS Update]", {
-      updateId: Updates.updateId,
-      runtimeVersion: Updates.runtimeVersion,
-      channel: Updates.channel,
-      isEmbeddedLaunch: Updates.isEmbeddedLaunch,
-      createdAt: Updates.createdAt?.toISOString() ?? null,
-    });
+    async function fetchProductionUpdate() {
+      if (!Updates.isEnabled) {
+        console.log("[EAS Update] updates disabled for this build");
+        return;
+      }
+
+      console.log("[EAS Update]", {
+        updateId: Updates.updateId,
+        runtimeVersion: Updates.runtimeVersion,
+        channel: Updates.channel,
+        isEmbeddedLaunch: Updates.isEmbeddedLaunch,
+        createdAt: Updates.createdAt?.toISOString() ?? null,
+      });
+
+      try {
+        const result = await Updates.checkForUpdateAsync();
+        if (!result.isAvailable) {
+          console.log("[EAS Update] app is on the latest published update");
+          return;
+        }
+
+        console.log("[EAS Update] downloading update…");
+        await Updates.fetchUpdateAsync();
+        console.log("[EAS Update] update downloaded, reloading");
+        await Updates.reloadAsync();
+      } catch (error) {
+        console.warn("[EAS Update] check/fetch failed", error);
+      }
+    }
+
+    void fetchProductionUpdate();
   }, []);
 
   useEffect(() => {
