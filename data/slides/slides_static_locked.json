@@ -1,0 +1,47 @@
+{
+  "id": "slides_static_locked",
+  "lessonId": "camera_static",
+  "title": "Static",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "Static",
+      "subheading": "If the camera doesn't move, the composition must be perfect."
+    },
+    {
+      "type": "concept",
+      "heading": "Why It Matters",
+      "bullets": [
+        "Locked-off shots create stability and focus.",
+        "They matter because they feel intentional and professional.",
+        "Use a tripod or solid surface."
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "Visual Guide",
+      "image": "ava/camera/static_locked.png",
+      "caption": "Use a tripod or solid surface."
+    },
+    {
+      "type": "steps",
+      "heading": "How To",
+      "steps": [
+        "Level the tripod.",
+        "Frame with purpose.",
+        "Lock all adjustments.",
+        "Avoid touching the camera during takes."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "Pro Tip",
+      "text": "Use static shots to contrast dynamic sequences."
+    },
+    {
+      "type": "warning",
+      "heading": "Common Mistake",
+      "text": "Crooked horizons or sloppy framing."
+    }
+  ]
+}

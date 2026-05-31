@@ -351,7 +351,7 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "camera",
         "category": "Shooting Modes",
         "title": "Manual Mode",
-        "type": "static",
+        "type": "html_presentation",
         "description": "Manual Mode gives you full control over exposure. It matters because nothing shifts automatically — your creative intent stays locked.",
         "guide": "You set aperture, shutter speed, and ISO yourself. This removes unpredictability and ensures consistent results across shots.",
         "keyRule": "You control all three exposure variables — nothing changes unless you change it.",
@@ -363,6 +363,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Lock two settings for your style and adjust the third for exposure.",
         "commonMistake": "Forgetting ISO is still part of the triangle and letting it drift too high.",
+        "htmlSlidePath": "slides/camera-shooting-modes/manual-mode.html",
+        "htmlSlideId": "manual-mode",
         "images": []
       },
       {
@@ -371,7 +373,7 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "camera",
         "category": "Shooting Modes",
         "title": "Aperture Priority",
-        "type": "static",
+        "type": "html_presentation",
         "description": "Aperture Priority lets you control depth of field while the camera sets shutter speed automatically.",
         "guide": "You choose the f‑stop; the camera adjusts shutter to maintain exposure. Great for portraits, interviews, and controlled depth.",
         "keyRule": "You control depth — the camera controls motion.",
@@ -383,6 +385,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Use Aperture Priority when lighting changes quickly but depth must stay consistent.",
         "commonMistake": "Letting shutter drop too low and introducing motion blur.",
+        "htmlSlidePath": "slides/camera-shooting-modes/aperture-priority.html",
+        "htmlSlideId": "aperture-priority",
         "images": []
       },
       {
@@ -391,7 +395,7 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "camera",
         "category": "Shooting Modes",
         "title": "Shutter Priority",
-        "type": "static",
+        "type": "html_presentation",
         "description": "Shutter Priority locks motion style while the camera adjusts aperture.",
         "guide": "You choose shutter speed; the camera sets aperture. Ideal for sports, action, or stylized motion blur.",
         "keyRule": "You control motion — the camera controls depth.",
@@ -403,6 +407,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Use Shutter Priority for fast-moving subjects outdoors.",
         "commonMistake": "Forgetting aperture may hit its limit and cause underexposure.",
+        "htmlSlidePath": "slides/camera-shooting-modes/shutter-priority.html",
+        "htmlSlideId": "shutter-priority",
         "images": []
       },
       {
@@ -411,7 +417,7 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "camera",
         "category": "Shooting Modes",
         "title": "Picture Profiles",
-        "type": "static",
+        "type": "html_presentation",
         "description": "Picture profiles define the look of your footage in‑camera. They matter because they affect contrast, color, and dynamic range.",
         "guide": "Standard profiles look finished but limit grading. Log profiles look flat but preserve detail. Choose based on workflow and turnaround time.",
         "keyRule": "Choose profiles based on grading needs — not habit.",
@@ -423,6 +429,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Use Log only when you plan to grade intentionally.",
         "commonMistake": "Underexposing Log and creating noisy shadows.",
+        "htmlSlidePath": "slides/camera-shooting-modes/picture-profiles.html",
+        "htmlSlideId": "picture-profiles",
         "images": []
       },
       {
@@ -431,7 +439,7 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "camera",
         "category": "Shooting Modes",
         "title": "RAW vs Compressed",
-        "type": "static",
+        "type": "html_presentation",
         "description": "RAW captures maximum sensor data; compressed formats save space. It matters because workflow and storage change dramatically.",
         "guide": "RAW gives flexibility but requires heavy processing. Compressed formats are efficient but limit recovery in post.",
         "keyRule": "Use RAW for maximum control — compressed for speed.",
@@ -443,6 +451,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "ProRes RAW or BRAW offer a strong balance of flexibility and workflow.",
         "commonMistake": "Overshooting RAW without enough storage or processing power.",
+        "htmlSlidePath": "slides/camera-shooting-modes/raw-vs-compressed.html",
+        "htmlSlideId": "raw-vs-compressed",
         "images": []
       }
     ]
@@ -459,7 +469,7 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "camera",
         "category": "Camera Movement",
         "title": "Handheld",
-        "type": "static",
+        "type": "html_presentation",
         "description": "Handheld shooting adds energy and realism. It matters because it creates an immersive, human feel.",
         "guide": "Use controlled micro-movements, stable posture, and intentional motion. Handheld should feel organic, not sloppy.",
         "keyRule": "Stability first — movement second.",
@@ -471,6 +481,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Use a wider lens to hide micro‑shake.",
         "commonMistake": "Over‑shaking the camera and calling it \"handheld style.\"",
+        "htmlSlidePath": "slides/camera-movement/handheld.html",
+        "htmlSlideId": "handheld",
         "images": []
       },
       {
@@ -479,7 +491,7 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "camera",
         "category": "Camera Movement",
         "title": "Gimbal",
-        "type": "static",
+        "type": "html_presentation",
         "description": "Gimbals create smooth, floating movement. They matter because they add polish and cinematic motion.",
         "guide": "Balance the camera, walk heel‑to‑toe, and keep movements slow and intentional. Let the gimbal do the stabilization — not your arms.",
         "keyRule": "Smooth steps = smooth footage.",
@@ -491,6 +503,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Use \"follow\" mode for natural movement and \"lock\" mode for precision.",
         "commonMistake": "Running with a gimbal and creating bounce.",
+        "htmlSlidePath": "slides/camera-movement/gimbal.html",
+        "htmlSlideId": "gimbal",
         "images": []
       },
       {
@@ -499,7 +513,7 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "camera",
         "category": "Camera Movement",
         "title": "Static",
-        "type": "static",
+        "type": "html_presentation",
         "description": "Locked-off shots create stability and focus. They matter because they feel intentional and professional.",
         "guide": "Use a tripod or solid surface. Frame precisely. Let the subject or scene provide the motion.",
         "keyRule": "If the camera doesn't move, the composition must be perfect.",
@@ -511,6 +525,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Use static shots to contrast dynamic sequences.",
         "commonMistake": "Crooked horizons or sloppy framing.",
+        "htmlSlidePath": "slides/camera-movement/static-locked.html",
+        "htmlSlideId": "static-locked",
         "images": []
       },
       {
@@ -519,7 +535,7 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "camera",
         "category": "Camera Movement",
         "title": "Dolly / Slider",
-        "type": "static",
+        "type": "html_presentation",
         "description": "Dolly and slider moves add controlled, cinematic motion. They matter because they feel intentional and smooth.",
         "guide": "Use slow, consistent movement. Dolly reveals space; sliders add subtle parallax.",
         "keyRule": "Movement must serve the story — not distract.",
@@ -531,6 +547,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Use sliders for micro‑moves that elevate simple shots.",
         "commonMistake": "Moving too fast and losing cinematic feel.",
+        "htmlSlidePath": "slides/camera-movement/dolly-slider.html",
+        "htmlSlideId": "dolly-slider",
         "images": []
       },
       {
@@ -539,7 +557,7 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "camera",
         "category": "Camera Movement",
         "title": "Whip Pan",
-        "type": "static",
+        "type": "html_presentation",
         "description": "Whip pans create fast, energetic transitions. They matter because they add momentum and hide cuts.",
         "guide": "Start and end with a fast horizontal motion. Match direction and speed between shots for seamless transitions.",
         "keyRule": "Motion blur hides the cut.",
@@ -551,6 +569,8 @@ export const toolkitCategories: ToolkitCategory[] = [
         ],
         "proTip": "Shoot at a higher shutter speed to keep the blur clean.",
         "commonMistake": "Whipping too slowly and revealing the cut.",
+        "htmlSlidePath": "slides/camera-movement/camera-whip-pan.html",
+        "htmlSlideId": "camera-whip-pan",
         "images": []
       }
     ]

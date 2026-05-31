@@ -1,7 +1,7 @@
 {
   "id": "camera_handheld",
   "tab": "camera",
-  "type": "STATIC",
+  "type": "HTML_PRESENTATION",
   "title": "Handheld",
   "description": "Handheld shooting adds energy and realism. It matters because it creates an immersive, human feel.",
   "guide": "Use controlled micro-movements, stable posture, and intentional motion. Handheld should feel organic, not sloppy.",
@@ -13,5 +13,6 @@
     "Add subtle motion to avoid static shake."
   ],
   "proTip": "Use a wider lens to hide micro‑shake.",
-  "commonMistake": "Over‑shaking the camera and calling it \"handheld style.\""
+  "commonMistake": "Over‑shaking the camera and calling it \"handheld style.\"",
+  "slideRef": "slides_handheld"
 }

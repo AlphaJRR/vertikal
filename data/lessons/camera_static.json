@@ -1,7 +1,7 @@
 {
   "id": "camera_static",
   "tab": "camera",
-  "type": "STATIC",
+  "type": "HTML_PRESENTATION",
   "title": "Static",
   "description": "Locked-off shots create stability and focus. They matter because they feel intentional and professional.",
   "guide": "Use a tripod or solid surface. Frame precisely. Let the subject or scene provide the motion.",
@@ -13,5 +13,6 @@
     "Avoid touching the camera during takes."
   ],
   "proTip": "Use static shots to contrast dynamic sequences.",
-  "commonMistake": "Crooked horizons or sloppy framing."
+  "commonMistake": "Crooked horizons or sloppy framing.",
+  "slideRef": "slides_static_locked"
 }

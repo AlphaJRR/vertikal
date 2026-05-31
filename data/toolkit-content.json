@@ -241,10 +241,10 @@
       "category": "Camera Motion",
       "format": "story",
       "num": "1",
-      "summary": "Drag shutter 1/15\u20131/4 sec Use ND filters in daylight Ideal for light trails and crowd blur.",
-      "tip": "Drag shutter 1/15\u20131/4 sec Use ND filters in daylight Ideal for light trails and crowd blur.",
+      "summary": "Drag shutter 1/15–1/4 sec Use ND filters in daylight Ideal for light trails and crowd blur.",
+      "tip": "Drag shutter 1/15–1/4 sec Use ND filters in daylight Ideal for light trails and crowd blur.",
       "steps": [
-        "Drag shutter 1/15\u20131/4 sec",
+        "Drag shutter 1/15–1/4 sec",
         "Use ND filters in daylight",
         "Stabilize camera or embrace shake"
       ],
@@ -253,7 +253,7 @@
         "Crowd blur",
         "Dreamy portraits"
       ],
-      "mood": "Ethereal \u00b7 Ghostly \u00b7 Time collapsed",
+      "mood": "Ethereal · Ghostly · Time collapsed",
       "htmlPath": "slides/camera-motion/slow-shutter.html"
     },
     {
@@ -263,10 +263,10 @@
       "category": "Camera Motion",
       "format": "story",
       "num": "2",
-      "summary": "24fps with 180\u00b0 shutter (1/48) Match shutter to frame rate Ideal for narrative film and brand films.",
-      "tip": "24fps with 180\u00b0 shutter (1/48) Match shutter to frame rate Ideal for narrative film and brand films.",
+      "summary": "24fps with 180° shutter (1/48) Match shutter to frame rate Ideal for narrative film and brand films.",
+      "tip": "24fps with 180° shutter (1/48) Match shutter to frame rate Ideal for narrative film and brand films.",
       "steps": [
-        "24fps with 180\u00b0 shutter (1/48)",
+        "24fps with 180° shutter (1/48)",
         "Match shutter to frame rate",
         "Avoid staccato handheld at 1/1000"
       ],
@@ -275,7 +275,7 @@
         "Brand films",
         "Music videos"
       ],
-      "mood": "Filmic \u00b7 Weighted \u00b7 Intentional",
+      "mood": "Filmic · Weighted · Intentional",
       "htmlPath": "slides/camera-motion/cinematic-motion.html"
     },
     {
@@ -285,19 +285,19 @@
       "category": "Camera Motion",
       "format": "story",
       "num": "3",
-      "summary": "60fps+ for 2.5\u00d7 slow at 24fps delivery 120fps+ for dramatic moments Ideal for action reveals and product beauty.",
-      "tip": "60fps+ for 2.5\u00d7 slow at 24fps delivery 120fps+ for dramatic moments Ideal for action reveals and product beauty.",
+      "summary": "60fps+ for 2.5× slow at 24fps delivery 120fps+ for dramatic moments Ideal for action reveals and product beauty.",
+      "tip": "60fps+ for 2.5× slow at 24fps delivery 120fps+ for dramatic moments Ideal for action reveals and product beauty.",
       "steps": [
-        "60fps+ for 2.5\u00d7 slow at 24fps delivery",
+        "60fps+ for 2.5× slow at 24fps delivery",
         "120fps+ for dramatic moments",
-        "Light it \u2014 you need more exposure"
+        "Light it — you need more exposure"
       ],
       "useCases": [
         "Action reveals",
         "Product beauty",
         "Emotional beats"
       ],
-      "mood": "Suspended \u00b7 Heroic \u00b7 Detail revealed",
+      "mood": "Suspended · Heroic · Detail revealed",
       "htmlPath": "slides/camera-motion/slow-motion.html"
     },
     {
@@ -307,11 +307,11 @@
       "category": "Camera Motion",
       "format": "story",
       "num": "4",
-      "summary": "Interval based on subject speed Manual exposure \u2014 no auto flicker Ideal for clouds and construction.",
-      "tip": "Interval based on subject speed Manual exposure \u2014 no auto flicker Ideal for clouds and construction.",
+      "summary": "Interval based on subject speed Manual exposure — no auto flicker Ideal for clouds and construction.",
+      "tip": "Interval based on subject speed Manual exposure — no auto flicker Ideal for clouds and construction.",
       "steps": [
         "Interval based on subject speed",
-        "Manual exposure \u2014 no auto flicker",
+        "Manual exposure — no auto flicker",
         "Lock white balance"
       ],
       "useCases": [
@@ -319,7 +319,7 @@
         "Construction",
         "Event energy"
       ],
-      "mood": "Compressed time \u00b7 Epic scale \u00b7 Patience paid",
+      "mood": "Compressed time · Epic scale · Patience paid",
       "htmlPath": "slides/camera-motion/timelapse.html"
     },
     {
@@ -352,7 +352,7 @@
       "steps": [
         "Define Bounds around the surface",
         "Generate Mesh for deformation",
-        "Track \u2014 refine Motion Range & Quality",
+        "Track — refine Motion Range & Quality",
         "View Result and composite"
       ],
       "htmlPath": "slides/davinci-resolve/surface-tracker.html"
@@ -364,11 +364,11 @@
       "category": "DaVinci Resolve",
       "format": "story",
       "num": "",
-      "summary": "Control time with TimeStretcher in Fusion Spline. Add TimeStretcher to your clip Keyframe Source Time flat \u2192 steep \u2192 flat",
+      "summary": "Control time with TimeStretcher in Fusion Spline. Add TimeStretcher to your clip Keyframe Source Time flat → steep → flat",
       "tip": "Control time with TimeStretcher in Fusion Spline.",
       "steps": [
         "Add TimeStretcher to your clip",
-        "Keyframe Source Time flat \u2192 steep \u2192 flat",
+        "Keyframe Source Time flat → steep → flat",
         "Smooth spline handles for cinematic ramp",
         "Render at delivery frame rate"
       ],
@@ -382,7 +382,7 @@
       "format": "carousel",
       "num": "",
       "summary": "Keep skin values aligned with the skin tone line on the vectorscope.",
-      "tip": "Check skin under multiple lighting angles\u2014grading for one angle can break another.",
+      "tip": "Check skin under multiple lighting angles—grading for one angle can break another.",
       "steps": [
         "Open the vectorscope and isolate the skin region.",
         "Balance exposure before touching color.",
@@ -405,7 +405,7 @@
         "Open HDR palette in Color page",
         "Set zone boundaries on the graph",
         "Adjust Min Range and Falloff per zone",
-        "Protect speculars \u2014 grade shadows first"
+        "Protect speculars — grade shadows first"
       ],
       "htmlPath": "slides/davinci-resolve/hdr-zones.html"
     },
@@ -416,10 +416,10 @@
       "category": "DaVinci Resolve",
       "format": "story",
       "num": "",
-      "summary": "Separate midtones for cinematic contrast. Open Curves \u2014 Custom Anchor black and white points",
+      "summary": "Separate midtones for cinematic contrast. Open Curves — Custom Anchor black and white points",
       "tip": "Separate midtones for cinematic contrast.",
       "steps": [
-        "Open Curves \u2014 Custom",
+        "Open Curves — Custom",
         "Anchor black and white points",
         "Pull shadow point below diagonal",
         "Lift 4th point above diagonal for highlight separation"
@@ -434,7 +434,7 @@
       "format": "carousel",
       "num": "",
       "summary": "Curves give precise control over contrast and color.",
-      "tip": "S\u2011curves add cinematic contrast.",
+      "tip": "S‑curves add cinematic contrast.",
       "steps": [
         "Add anchor points.",
         "Adjust luma for contrast.",
@@ -474,7 +474,7 @@
         "Add serial node after balance",
         "Draw circle/curve window on subject",
         "Track window to movement",
-        "Grade inside \u2014 spill outside untouched"
+        "Grade inside — spill outside untouched"
       ],
       "htmlPath": "slides/davinci-resolve/power-windows.html"
     },
@@ -508,8 +508,8 @@
       "steps": [
         "Skin tone line: yellow-red axis",
         "Keep skin trace on the line",
-        "Watch saturation \u2014 avoid magenta shift",
-        "Use with scopes \u2014 not eyes alone"
+        "Watch saturation — avoid magenta shift",
+        "Use with scopes — not eyes alone"
       ],
       "htmlPath": "slides/davinci-resolve/vectorscope.html"
     },
@@ -521,12 +521,12 @@
       "format": "carousel",
       "num": "",
       "summary": "Waveforms and scopes show the truth about your image.",
-      "tip": "Histogram alone lies on LOG\u2014use the waveform for exposure.",
+      "tip": "Histogram alone lies on LOG—use the waveform for exposure.",
       "steps": [
-        "Read the waveform for exposure\u2014skin sits ~50\u201370 IRE on Rec.709.",
+        "Read the waveform for exposure—skin sits ~50–70 IRE on Rec.709.",
         "Check the parade for RGB balance on neutrals.",
-        "Use the vectorscope\u2014keep skin on the skin tone line.",
-        "Calibrate your monitor annually\u2014scopes do not lie."
+        "Use the vectorscope—keep skin on the skin tone line.",
+        "Calibrate your monitor annually—scopes do not lie."
       ],
       "htmlPath": "slides/davinci-resolve/scopes.html",
       "diagramImage": "ava/editing/scopes.png"
@@ -539,7 +539,7 @@
       "format": "carousel",
       "num": "",
       "summary": "DaVinci Resolve is divided into specialized pages.",
-      "tip": "Keyboard shortcuts differ by page\u2014learn them.",
+      "tip": "Keyboard shortcuts differ by page—learn them.",
       "steps": [
         "Open project and navigate pages.",
         "Use Cut for quick assembly.",
@@ -575,10 +575,10 @@
       "format": "carousel",
       "num": "",
       "summary": "Fairlight is Resolve's audio page for mix and delivery.",
-      "tip": "Mix with monitors at conversation level\u2014not blasted.",
+      "tip": "Mix with monitors at conversation level—not blasted.",
       "steps": [
         "Normalize dialogue to web LUFS targets.",
-        "High-pass lavs at 80\u2013100Hz.",
+        "High-pass lavs at 80–100Hz.",
         "Apply light compression on dialogue.",
         "Limit the master bus to -1dB true peak."
       ],
@@ -593,7 +593,7 @@
       "format": "carousel",
       "num": "",
       "summary": "Dialogue cleanup fixes location audio before anyone else hears it.",
-      "tip": "Process a short section first\u2014ears fatigue on long passes.",
+      "tip": "Process a short section first—ears fatigue on long passes.",
       "steps": [
         "Learn noise profile from room tone.",
         "De-plosive and de-ess lightly.",
@@ -610,10 +610,10 @@
       "category": "Lighting & Exposure",
       "format": "carousel",
       "num": "",
-      "summary": "Key at 45\u00b0, fill opposite, backlight behind subject.",
+      "summary": "Key at 45°, fill opposite, backlight behind subject.",
       "tip": "Use negative fill instead of more lights when you want drama.",
       "steps": [
-        "Place key light at a 45\u00b0 angle to the subject.",
+        "Place key light at a 45° angle to the subject.",
         "Add fill on the opposite side to control contrast.",
         "Add backlight behind the subject for separation.",
         "Adjust intensities to match the mood."
@@ -629,7 +629,7 @@
       "format": "carousel",
       "num": "",
       "summary": "Small direct source = hard; large diffused source = soft.",
-      "tip": "Soft light still needs direction\u2014don't flatten it.",
+      "tip": "Soft light still needs direction—don't flatten it.",
       "steps": [
         "Move light closer for softness.",
         "Add diffusion for smoother shadows.",
@@ -646,7 +646,7 @@
       "category": "Lighting & Exposure",
       "format": "carousel",
       "num": "",
-      "summary": "Daylight ~5600K; tungsten ~3200K \u2014 match your lights to the dominant source.",
+      "summary": "Daylight ~5600K; tungsten ~3200K — match your lights to the dominant source.",
       "tip": "Use warm light for intimacy and cool light for tension.",
       "steps": [
         "Identify the dominant light source.",
@@ -665,7 +665,7 @@
       "format": "carousel",
       "num": "",
       "summary": "Motivated key, negative fill for depth, warm vs cool separation.",
-      "tip": "Turn off overheads\u2014they kill cinematic mood.",
+      "tip": "Turn off overheads—they kill cinematic mood.",
       "steps": [
         "Choose a motivated key source.",
         "Add negative fill for contrast.",
@@ -700,10 +700,10 @@
       "category": "Lighting & Exposure",
       "format": "carousel",
       "num": "",
-      "summary": "Key at 45\u00b0 above eye level \u2014 nose shadow connects to cheek, leaving a lit triangle.",
+      "summary": "Key at 45° above eye level — nose shadow connects to cheek, leaving a lit triangle.",
       "tip": "Use negative fill to deepen the shadow side.",
       "steps": [
-        "Place key at 45\u00b0.",
+        "Place key at 45°.",
         "Raise it slightly above eye level.",
         "Adjust angle until triangle forms.",
         "Add fill sparingly."
@@ -718,7 +718,7 @@
       "category": "Lighting & Exposure",
       "format": "carousel",
       "num": "",
-      "summary": "Key feels like it comes from the practical \u2014 hidden lights boost the same direction.",
+      "summary": "Key feels like it comes from the practical — hidden lights boost the same direction.",
       "tip": "Dim practicals to avoid clipping while keeping ambiance.",
       "steps": [
         "Identify the practical source.",
@@ -738,7 +738,7 @@
       "num": "",
       "summary": "High contrast key with cool separation.",
       "tip": "High contrast key with cool separation.",
-      "setup": "3200K key \u00b7 12000K rim \u00b7 ceiling bounce",
+      "setup": "3200K key · 12000K rim · ceiling bounce",
       "htmlPath": "slides/lighting-exposure/dramatic-portrait.html"
     },
     {
@@ -750,7 +750,7 @@
       "num": "",
       "summary": "Warm rim against cool ambient for depth.",
       "tip": "Warm rim against cool ambient for depth.",
-      "setup": "3200K hair \u00b7 12000K tubes \u00b7 profile camera",
+      "setup": "3200K hair · 12000K tubes · profile camera",
       "htmlPath": "slides/lighting-exposure/mirror-scene.html"
     },
     {
@@ -773,11 +773,11 @@
         },
         {
           "label": "TWO SHOT",
-          "description": "Both subjects in frame \u2014 relationship visible."
+          "description": "Both subjects in frame — relationship visible."
         },
         {
           "label": "POINT OF VIEW",
-          "description": "What the character sees \u2014 audience in their eyes."
+          "description": "What the character sees — audience in their eyes."
         },
         {
           "label": "DUTCH ANGLE",
@@ -793,20 +793,20 @@
       "category": "Framing & Shot Types",
       "format": "carousel",
       "num": "",
-      "summary": "Eye-level \u2014 neutral, documentary feel.",
-      "tip": "Eye-level \u2014 neutral, documentary feel.",
+      "summary": "Eye-level — neutral, documentary feel.",
+      "tip": "Eye-level — neutral, documentary feel.",
       "panels": [
         {
           "label": "NORMAL",
-          "description": "Eye-level \u2014 neutral, documentary feel."
+          "description": "Eye-level — neutral, documentary feel."
         },
         {
           "label": "LOW ANGLE",
-          "description": "Camera below \u2014 subject feels powerful."
+          "description": "Camera below — subject feels powerful."
         },
         {
           "label": "HIGH ANGLE",
-          "description": "Camera above \u2014 vulnerability or overview."
+          "description": "Camera above — vulnerability or overview."
         }
       ],
       "htmlPath": "slides/framing-shots/camera-angles.html",
@@ -867,18 +867,198 @@
       "diagramImage": "ava/camera/iso-noise.svg"
     },
     {
+      "id": "manual-mode",
+      "title": "MANUAL MODE",
+      "categoryId": "camera-shooting-modes",
+      "category": "Shooting Modes",
+      "format": "carousel",
+      "num": "",
+      "summary": "You set aperture, shutter speed, and ISO yourself.",
+      "tip": "Lock two settings for your style and adjust the third for exposure.",
+      "steps": [
+        "Set aperture for depth of field.",
+        "Set shutter for motion.",
+        "Raise ISO only as needed.",
+        "Rebalance exposure until histogram is centered."
+      ],
+      "htmlPath": "slides/camera-shooting-modes/manual-mode.html",
+      "diagramImage": "ava/camera/manual_mode.svg"
+    },
+    {
+      "id": "aperture-priority",
+      "title": "APERTURE PRIORITY",
+      "categoryId": "camera-shooting-modes",
+      "category": "Shooting Modes",
+      "format": "carousel",
+      "num": "",
+      "summary": "You choose the f‑stop; the camera adjusts shutter to maintain exposure.",
+      "tip": "Use Aperture Priority when lighting changes quickly but depth must stay consistent.",
+      "steps": [
+        "Set your desired f‑stop.",
+        "Watch shutter speed to avoid motion blur.",
+        "Adjust exposure compensation if needed.",
+        "Keep ISO low for clean images."
+      ],
+      "htmlPath": "slides/camera-shooting-modes/aperture-priority.html",
+      "diagramImage": "ava/camera/aperture_priority.svg"
+    },
+    {
+      "id": "shutter-priority",
+      "title": "SHUTTER PRIORITY",
+      "categoryId": "camera-shooting-modes",
+      "category": "Shooting Modes",
+      "format": "carousel",
+      "num": "",
+      "summary": "You choose shutter speed; the camera sets aperture.",
+      "tip": "Use Shutter Priority for fast-moving subjects outdoors.",
+      "steps": [
+        "Set shutter based on motion needs.",
+        "Monitor aperture to avoid underexposure.",
+        "Raise ISO if aperture maxes out.",
+        "Use exposure compensation to fine‑tune."
+      ],
+      "htmlPath": "slides/camera-shooting-modes/shutter-priority.html",
+      "diagramImage": "ava/camera/shutter_priority.svg"
+    },
+    {
+      "id": "picture-profiles",
+      "title": "PICTURE PROFILES",
+      "categoryId": "camera-shooting-modes",
+      "category": "Shooting Modes",
+      "format": "carousel",
+      "num": "",
+      "summary": "Standard profiles look finished but limit grading.",
+      "tip": "Use Log only when you plan to grade intentionally.",
+      "steps": [
+        "Pick Standard for fast delivery.",
+        "Pick Log for cinematic grading.",
+        "Use monitoring LUTs for Log.",
+        "Expose Log brighter to avoid noise."
+      ],
+      "htmlPath": "slides/camera-shooting-modes/picture-profiles.html",
+      "diagramImage": "ava/camera/picture_profiles.svg"
+    },
+    {
+      "id": "raw-vs-compressed",
+      "title": "RAW VS COMPRESSED",
+      "categoryId": "camera-shooting-modes",
+      "category": "Shooting Modes",
+      "format": "carousel",
+      "num": "",
+      "summary": "RAW gives flexibility but requires heavy processing.",
+      "tip": "ProRes RAW or BRAW offer a strong balance of flexibility and workflow.",
+      "steps": [
+        "Use RAW for high-end or cinematic work.",
+        "Use compressed for social content or fast edits.",
+        "Ensure storage can handle RAW.",
+        "Match codec to your editing machine."
+      ],
+      "htmlPath": "slides/camera-shooting-modes/raw-vs-compressed.html",
+      "diagramImage": "ava/camera/raw_vs_compressed.svg"
+    },
+    {
+      "id": "handheld",
+      "title": "HANDHELD",
+      "categoryId": "camera-movement",
+      "category": "Camera Movement",
+      "format": "carousel",
+      "num": "",
+      "summary": "Use controlled micro-movements, stable posture, and intentional motion.",
+      "tip": "Use a wider lens to hide micro‑shake.",
+      "steps": [
+        "Tuck elbows in.",
+        "Use your body as a shock absorber.",
+        "Move intentionally, not randomly.",
+        "Add subtle motion to avoid static shake."
+      ],
+      "htmlPath": "slides/camera-movement/handheld.html",
+      "diagramImage": "ava/camera/handheld.svg"
+    },
+    {
+      "id": "gimbal",
+      "title": "GIMBAL",
+      "categoryId": "camera-movement",
+      "category": "Camera Movement",
+      "format": "carousel",
+      "num": "",
+      "summary": "Balance the camera, walk heel‑to‑toe, and keep movements slow and intentional.",
+      "tip": "Use \"follow\" mode for natural movement and \"lock\" mode for precision.",
+      "steps": [
+        "Balance the gimbal perfectly.",
+        "Use slow, controlled movements.",
+        "Keep horizon level.",
+        "Avoid sudden pans or tilts."
+      ],
+      "htmlPath": "slides/camera-movement/gimbal.html",
+      "diagramImage": "ava/camera/gimbal.svg"
+    },
+    {
+      "id": "static-locked",
+      "title": "STATIC",
+      "categoryId": "camera-movement",
+      "category": "Camera Movement",
+      "format": "carousel",
+      "num": "",
+      "summary": "Use a tripod or solid surface.",
+      "tip": "Use static shots to contrast dynamic sequences.",
+      "steps": [
+        "Level the tripod.",
+        "Frame with purpose.",
+        "Lock all adjustments.",
+        "Avoid touching the camera during takes."
+      ],
+      "htmlPath": "slides/camera-movement/static-locked.html",
+      "diagramImage": "ava/camera/static_locked.svg"
+    },
+    {
+      "id": "dolly-slider",
+      "title": "DOLLY / SLIDER",
+      "categoryId": "camera-movement",
+      "category": "Camera Movement",
+      "format": "carousel",
+      "num": "",
+      "summary": "Use slow, consistent movement.",
+      "tip": "Use sliders for micro‑moves that elevate simple shots.",
+      "steps": [
+        "Set a slow, steady pace.",
+        "Keep subject distance consistent.",
+        "Use foreground elements for parallax.",
+        "Avoid speed changes mid‑move."
+      ],
+      "htmlPath": "slides/camera-movement/dolly-slider.html",
+      "diagramImage": "ava/camera/dolly_slider.svg"
+    },
+    {
+      "id": "camera-whip-pan",
+      "title": "WHIP PAN",
+      "categoryId": "camera-movement",
+      "category": "Camera Movement",
+      "format": "carousel",
+      "num": "",
+      "summary": "Start and end with a fast horizontal motion.",
+      "tip": "Shoot at a higher shutter speed to keep the blur clean.",
+      "steps": [
+        "Start with a clean frame.",
+        "Whip quickly left or right.",
+        "Match the direction on the next shot.",
+        "Cut at peak blur."
+      ],
+      "htmlPath": "slides/camera-movement/camera-whip-pan.html",
+      "diagramImage": "ava/camera/camera_whip_pan.svg"
+    },
+    {
       "id": "grid-compositions",
       "title": "GRID COMPOSITIONS",
       "categoryId": "framing-shots",
       "category": "Framing & Shot Types",
       "format": "carousel",
       "num": "",
-      "summary": "Subject dead center \u2014 formal and direct.",
-      "tip": "Subject dead center \u2014 formal and direct.",
+      "summary": "Subject dead center — formal and direct.",
+      "tip": "Subject dead center — formal and direct.",
       "panels": [
         {
           "label": "CENTERED",
-          "description": "Subject dead center \u2014 formal and direct."
+          "description": "Subject dead center — formal and direct."
         },
         {
           "label": "VERTICAL THIRDS",
@@ -903,7 +1083,7 @@
       "format": "carousel",
       "num": "",
       "summary": "Headroom and nose room control breathing space around a subject. They matter because they affect comfort and direction.",
-      "tip": "Less nose room creates tension\u2014use intentionally.",
+      "tip": "Less nose room creates tension—use intentionally.",
       "htmlPath": "slides/framing-shots/headroom-lookroom.html",
       "diagramImage": "ava/framing/headroom-noseroom.svg"
     },
@@ -915,7 +1095,7 @@
       "format": "carousel",
       "num": "",
       "summary": "Shooting 16:9 but delivering 9:16? Compose with the vertical safe area in mind from day one.",
-      "tip": "Frame for the crop before you roll\u2014fixing in post costs resolution.",
+      "tip": "Frame for the crop before you roll—fixing in post costs resolution.",
       "htmlPath": "slides/framing-shots/vertical-composition.html",
       "diagramImage": "ava/framing/vertical_composition.png"
     },
@@ -963,8 +1143,8 @@
       "category": "Camera & On-Set",
       "format": "carousel",
       "num": "",
-      "summary": "Enable 3\u00d73 grid on monitor or remote app for live composition.",
-      "tip": "Enable 3\u00d73 grid on monitor or remote app for live composition.",
+      "summary": "Enable 3×3 grid on monitor or remote app for live composition.",
+      "tip": "Enable 3×3 grid on monitor or remote app for live composition.",
       "htmlPath": "slides/camera-motion/rule-thirds-grid.html"
     },
     {
@@ -974,8 +1154,8 @@
       "category": "Camera & On-Set",
       "format": "carousel",
       "num": "",
-      "summary": "Manual iris at F5.6\u2013F8 for sharpness and controlled depth on set.",
-      "tip": "Manual iris at F5.6\u2013F8 for sharpness and controlled depth on set.",
+      "summary": "Manual iris at F5.6–F8 for sharpness and controlled depth on set.",
+      "tip": "Manual iris at F5.6–F8 for sharpness and controlled depth on set.",
       "htmlPath": "slides/camera-motion/iris-control.html"
     },
     {
@@ -985,10 +1165,10 @@
       "category": "Camera & On-Set",
       "format": "carousel",
       "num": "",
-      "summary": "Lower f\u2011stop = shallower depth of field.",
+      "summary": "Lower f‑stop = shallower depth of field.",
       "tip": "Use f/2.8 or lower for cinematic separation.",
       "steps": [
-        "Choose f\u2011stop based on subject.",
+        "Choose f‑stop based on subject.",
         "Adjust shutter to maintain exposure.",
         "Raise ISO only if needed.",
         "Check focus carefully."
@@ -1076,7 +1256,7 @@
       "tip": "Design the thumbnail before you write the script.",
       "steps": [
         "Deliver the title promise in the first 30 seconds.",
-        "Pattern interrupt every 30\u201345 seconds.",
+        "Pattern interrupt every 30–45 seconds.",
         "Add chapters on 8+ minute videos.",
         "A/B test thumbnails before a wide push."
       ],
@@ -1093,9 +1273,9 @@
       "summary": "Separate planning, shooting, and editing into distinct phases.",
       "tip": "Use consistent lighting and framing to speed up shooting.",
       "steps": [
-        "Write 10\u201315 scripts.",
-        "Shoot all A\u2011roll in one session.",
-        "Capture B\u2011roll in bulk.",
+        "Write 10–15 scripts.",
+        "Shoot all A‑roll in one session.",
+        "Capture B‑roll in bulk.",
         "Edit in batches."
       ],
       "htmlPath": "slides/strategy/batch-shooting.html",
@@ -1109,11 +1289,11 @@
       "format": "carousel",
       "num": "91",
       "summary": "State the payoff before you ask for attention.",
-      "tip": "Read the hook out loud\u2014if it sounds like an ad, rewrite it.",
+      "tip": "Read the hook out loud—if it sounds like an ad, rewrite it.",
       "steps": [
         "Write problem + promise in text and voice.",
         "Show the result first, then rewind.",
-        "Draft ten hooks\u2014shoot the best two.",
+        "Draft ten hooks—shoot the best two.",
         "Open with a face or moving object."
       ],
       "htmlPath": "slides/strategy/hook-formula.html",
@@ -1127,10 +1307,10 @@
       "format": "carousel",
       "num": "92",
       "summary": "Adapt the message to the platform, not the other way around.",
-      "tip": "Your best short\u2011form ideas usually come from long\u2011form content.",
+      "tip": "Your best short‑form ideas usually come from long‑form content.",
       "steps": [
-        "Start with a long\u2011form anchor video.",
-        "Pull 5\u201310 short clips.",
+        "Start with a long‑form anchor video.",
+        "Pull 5–10 short clips.",
         "Convert insights into text posts.",
         "Reformat visuals for each platform."
       ],
@@ -1147,7 +1327,7 @@
       "summary": "Every post must serve a pillar.",
       "tip": "Your strongest pillar should produce 50% of your content.",
       "steps": [
-        "Define 3\u20135 core pillars.",
+        "Define 3–5 core pillars.",
         "Map ideas to pillars.",
         "Build weekly themes around them.",
         "Review and refine monthly."
@@ -1163,7 +1343,7 @@
       "format": "carousel",
       "num": "95",
       "summary": "Choose hook type based on the action you want the viewer to take.",
-      "tip": "Myth\u2011busting hooks have the highest share rate.",
+      "tip": "Myth‑busting hooks have the highest share rate.",
       "steps": [
         "Identify the desired action.",
         "Pick a hook type that aligns with it.",
@@ -1178,7 +1358,7 @@
     {
       "id": "light-the-eyes",
       "title": "Light The Eyes First",
-      "summary": "If your subject's eyes catch a small specular highlight, the whole frame reads alive. Place a soft key 30\u00b0 off-axis at eye level \u2014 adjust until you see a 2 o'clock catchlight.",
+      "summary": "If your subject's eyes catch a small specular highlight, the whole frame reads alive. Place a soft key 30° off-axis at eye level — adjust until you see a 2 o'clock catchlight.",
       "slideId": "dramatic-portrait",
       "categoryId": "lighting-exposure"
     },
@@ -1192,14 +1372,14 @@
     {
       "id": "shoot-cutaway",
       "title": "Shoot The Cutaway",
-      "summary": "Every interview needs B-roll. Hands, environment, gear, gestures \u2014 anything. It saves your edit when you need to cut a stutter or cover a jump cut.",
+      "summary": "Every interview needs B-roll. Hands, environment, gear, gestures — anything. It saves your edit when you need to cut a stutter or cover a jump cut.",
       "slideId": "shot-types",
       "categoryId": "framing-shots"
     },
     {
       "id": "frame-for-crop",
       "title": "Frame For The Crop",
-      "summary": "Shooting in 16:9 but delivering 9:16? Compose with the vertical safe area in mind from day one. Place subjects on the center third \u2014 never the edges.",
+      "summary": "Shooting in 16:9 but delivering 9:16? Compose with the vertical safe area in mind from day one. Place subjects on the center third — never the edges.",
       "slideId": "grid-compositions",
       "categoryId": "framing-shots"
     }
