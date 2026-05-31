@@ -9,7 +9,10 @@
     "ios": "expo start --ios",
     "typecheck": "tsc --noEmit",
     "build:web": "vite build",
-    "build:ios": "eas build --platform ios --profile production"
+    "build:ios": "eas build --platform ios --profile production",
+    "web": "serve public -l 3000",
+    "test:e2e": "playwright test",
+    "test:web": "playwright test"
   },
   "dependencies": {
     "@expo-google-fonts/bebas-neue": "^0.4.1",
@@ -53,8 +56,10 @@
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
+    "@playwright/test": "^1.60.0",
     "@types/react": "~19.1.10",
     "eas-cli": "^18.11.0",
+    "serve": "^14.2.6",
     "typescript": "~5.9.2"
   }
 }
