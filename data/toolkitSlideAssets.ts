@@ -1,5 +1,5 @@
 import { Asset } from "expo-asset";
-import * as FileSystem from "expo-file-system";
+import { readAsStringAsync } from "expo-file-system/legacy";
 
 export { isBundledHtmlSlidePath } from "./toolkitSlidePaths";
 
@@ -69,7 +69,7 @@ async function readBundledAssetText(moduleId: number): Promise<string | null> {
   await asset.downloadAsync();
   const uri = asset.localUri ?? asset.uri;
   if (!uri) return null;
-  return FileSystem.readAsStringAsync(uri);
+  return readAsStringAsync(uri);
 }
 
 

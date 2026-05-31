@@ -5,9 +5,10 @@
   "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "typecheck": "tsc --noEmit",
+    "verify:cheatsheets": "tsx scripts/verify-cheat-sheets.ts",
     "build:web": "vite build",
     "build:ios": "eas build --platform ios --profile production",
     "web": "serve public -l 3000",

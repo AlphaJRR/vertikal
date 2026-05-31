@@ -1,7 +1,5 @@
-import { Image } from "expo-image";
-import React, { useEffect, useMemo, useState } from "react";
+import React from "react";
 import {
-  ActivityIndicator,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -11,70 +9,21 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { brandColors, brandFonts } from "../../constants/theme";
 import type { ToolkitLesson } from "../../data/toolkitCurriculumTypes";
-import {
-  avaDiagramPathForEntry,
-  getAvaDiagramByHtmlSlideId,
-} from "../../data/avaDiagramManifest";
-import { readToolkitSlideHtmlRaw } from "../../data/toolkitSlideAssets";
-import { resolveAvaDiagramUri } from "../../data/toolkitDiagramAssets";
-import {
-  parseToolkitSlideHtml,
-  type CheatSheetCard,
-} from "../../utils/parseToolkitSlideHtml";
+import type { CheatSheetCard } from "../../utils/parseToolkitSlideHtml";
 import { toPlainLessonText } from "../../utils/plainLessonText";
 
-interface ToolkitNativeCheatSheetViewProps {
-  htmlPath: string;
-  htmlSlideId?: string;
-  title?: string;
+interface ToolkitCheatSheetContentProps {
+  cards: CheatSheetCard[];
+  title: string;
   fallbackLesson?: ToolkitLesson;
   onBack: () => void;
 }
 
-function CheatSheetDiagram({ htmlSlideId }: { htmlSlideId?: string }) {
-  const entry = htmlSlideId ? getAvaDiagramByHtmlSlideId(htmlSlideId) : undefined;
-  const [uri, setUri] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!entry) {
-      setUri(null);
-      return;
-    }
-    let cancelled = false;
-    resolveAvaDiagramUri(avaDiagramPathForEntry(entry))
-      .then((resolved) => {
-        if (!cancelled) setUri(resolved);
-      })
-      .catch(() => {
-        if (!cancelled) setUri(null);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [entry, htmlSlideId]);
-
-  if (!uri) return null;
-
-  return (
-    <View style={styles.diagramWrap}>
-      <Image
-        source={{ uri }}
-        style={styles.diagram}
-        contentFit="contain"
-        transition={0}
-        accessibilityLabel={entry?.subject ?? "Cheat sheet diagram"}
-      />
-    </View>
-  );
-}
-
 function CheatSheetCardView({
   card,
-  htmlSlideId,
   isFirst,
 }: {
   card: CheatSheetCard;
-  htmlSlideId?: string;
   isFirst: boolean;
 }) {
   return (
@@ -84,8 +33,6 @@ function CheatSheetCardView({
       {card.subheading ? (
         <Text style={styles.subheading}>{card.subheading}</Text>
       ) : null}
-
-      {card.hasDiagram ? <CheatSheetDiagram htmlSlideId={htmlSlideId} /> : null}
       {card.caption ? <Text style={styles.caption}>{card.caption}</Text> : null}
 
       {card.bullets.map((bullet, index) => (
@@ -167,40 +114,15 @@ function LessonFallback({ lesson }: { lesson: ToolkitLesson }) {
   );
 }
 
-export function ToolkitNativeCheatSheetView({
-  htmlPath,
-  htmlSlideId,
+/** Pure native cheat sheet — no WebView, FileSystem, or asset requires. */
+export function ToolkitCheatSheetContent({
+  cards,
   title,
   fallbackLesson,
   onBack,
-}: ToolkitNativeCheatSheetViewProps) {
+}: ToolkitCheatSheetContentProps) {
   const insets = useSafeAreaInsets();
-  const [rawHtml, setRawHtml] = useState<string | null>(null);
-  const [loadError, setLoadError] = useState(false);
-
-  useEffect(() => {
-    let cancelled = false;
-    readToolkitSlideHtmlRaw(htmlPath)
-      .then((html) => {
-        if (!cancelled) {
-          setRawHtml(html);
-          setLoadError(html == null);
-        }
-      })
-      .catch(() => {
-        if (!cancelled) setLoadError(true);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [htmlPath]);
-
-  const cards = useMemo(
-    () => (rawHtml ? parseToolkitSlideHtml(rawHtml) : []),
-    [rawHtml],
-  );
-
-  const showFallback = loadError || cards.length === 0;
+  const showFallback = cards.length === 0;
 
   return (
     <View style={[styles.screen, { paddingTop: insets.top }]}>
@@ -208,49 +130,34 @@ export function ToolkitNativeCheatSheetView({
         <Pressable onPress={onBack} hitSlop={8}>
           <Text style={styles.back}>← Back</Text>
         </Pressable>
-        {title ? (
-          <Text style={styles.toolbarTitle} numberOfLines={1}>
-            {title}
-          </Text>
-        ) : null}
+        <Text style={styles.toolbarTitle} numberOfLines={1}>
+          {title}
+        </Text>
       </View>
 
-      {rawHtml == null && !loadError ? (
-        <View style={styles.centered}>
-          <ActivityIndicator color={brandColors.alphaRed} />
-        </View>
-      ) : (
-        <ScrollView
-          style={styles.scroll}
-          contentContainerStyle={[
-            styles.content,
-            { paddingBottom: insets.bottom + 32 },
-          ]}
-          showsVerticalScrollIndicator={false}
-        >
-          <Text style={styles.cheatLabel}>Cheat Sheet</Text>
-          {title ? <Text style={styles.title}>{title}</Text> : null}
+      <ScrollView
+        style={styles.scroll}
+        contentContainerStyle={[
+          styles.content,
+          { paddingBottom: insets.bottom + 32 },
+        ]}
+        showsVerticalScrollIndicator={false}
+      >
+        <Text style={styles.cheatLabel}>Cheat Sheet</Text>
+        <Text style={styles.title}>{title}</Text>
 
-          {showFallback ? (
-            fallbackLesson ? (
-              <LessonFallback lesson={fallbackLesson} />
-            ) : (
-              <Text style={styles.fallbackBody}>
-                This cheat sheet could not be loaded.
-              </Text>
-            )
-          ) : (
-            cards.map((card, index) => (
-              <CheatSheetCardView
-                key={`card-${index}-${card.heading ?? card.subheading ?? index}`}
-                card={card}
-                htmlSlideId={htmlSlideId}
-                isFirst={index === 0}
-              />
-            ))
-          )}
-        </ScrollView>
-      )}
+        {showFallback && fallbackLesson ? (
+          <LessonFallback lesson={fallbackLesson} />
+        ) : (
+          cards.map((card, index) => (
+            <CheatSheetCardView
+              key={`card-${index}-${card.heading ?? card.subheading ?? index}`}
+              card={card}
+              isFirst={index === 0}
+            />
+          ))
+        )}
+      </ScrollView>
     </View>
   );
 }
@@ -283,11 +190,6 @@ const styles = StyleSheet.create({
   scroll: { flex: 1 },
   content: {
     paddingHorizontal: 20,
-  },
-  centered: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
   },
   cheatLabel: {
     fontFamily: brandFonts.mono,
@@ -337,16 +239,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: brandColors.secondaryText,
     marginBottom: 12,
-  },
-  diagramWrap: {
-    marginVertical: 12,
-    borderRadius: 8,
-    overflow: "hidden",
-    backgroundColor: "#111111",
-  },
-  diagram: {
-    width: "100%",
-    height: 220,
   },
   caption: {
     fontFamily: brandFonts.body,

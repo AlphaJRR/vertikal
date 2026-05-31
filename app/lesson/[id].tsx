@@ -36,7 +36,6 @@ export default function LessonScreen() {
   const hasSlide =
     lesson.type === "html_presentation" &&
     (lesson.htmlSlideId != null || lesson.htmlSlidePath != null);
-  const slideId = lesson.htmlSlideId ?? lesson.id;
 
   return (
     <View style={[styles.root, { paddingTop: insets.top }]}>
@@ -57,7 +56,7 @@ export default function LessonScreen() {
 
         {hasSlide ? (
           <Pressable
-            onPress={() => router.push(`/slide/${slideId}` as Href)}
+            onPress={() => router.push(`/cheatsheet/${lesson.id}` as Href)}
             style={styles.slideBtn}
           >
             <Ionicons name="easel-outline" size={18} color={brandColors.pureWhite} />

@@ -1,47 +1,31 @@
 import React from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ErrorBoundary } from "../../components/ErrorBoundary";
-import { ToolkitNativeCheatSheetView } from "../../components/toolkit/ToolkitNativeCheatSheetView";
+import { ToolkitCheatSheetContent } from "../../components/toolkit/ToolkitCheatSheetContent";
 import { ToolkitSlideView } from "../../components/toolkit/ToolkitSlideView";
+import { brandColors, brandFonts } from "../../constants/theme";
+import { getCheatSheetCards } from "../../data/toolkitCheatSheetCards";
 import { getSlideById } from "../../data/toolkitContent";
 import { getLessonByHtmlSlideId } from "../../data/toolkitCurriculum";
-import { isBundledHtmlSlidePath } from "../../data/toolkitSlidePaths";
 
 export default function SlideDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
-  const slide = id ? getSlideById(id) : undefined;
-  const curriculumLesson = id ? getLessonByHtmlSlideId(id) : undefined;
+  const insets = useSafeAreaInsets();
+  const slideId = id ?? "";
+  const cards = slideId ? getCheatSheetCards(slideId) : undefined;
+  const curriculumLesson = slideId ? getLessonByHtmlSlideId(slideId) : undefined;
+  const legacySlide = slideId ? getSlideById(slideId) : undefined;
 
-  if (slide) {
-    if (slide.htmlPath && isBundledHtmlSlidePath(slide.htmlPath)) {
-      return (
-        <ErrorBoundary>
-          <ToolkitNativeCheatSheetView
-            htmlPath={slide.htmlPath}
-            htmlSlideId={slide.id}
-            title={slide.title}
-            fallbackLesson={curriculumLesson}
-            onBack={() => router.back()}
-          />
-        </ErrorBoundary>
-      );
-    }
-
-    return <ToolkitSlideView slide={slide} onBack={() => router.back()} />;
-  }
-
-  if (
-    curriculumLesson?.htmlSlidePath &&
-    isBundledHtmlSlidePath(curriculumLesson.htmlSlidePath)
-  ) {
+  if (cards?.length) {
+    const title = curriculumLesson?.title ?? legacySlide?.title ?? "Cheat Sheet";
     return (
       <ErrorBoundary>
-        <ToolkitNativeCheatSheetView
-          htmlPath={curriculumLesson.htmlSlidePath}
-          htmlSlideId={curriculumLesson.htmlSlideId ?? id}
-          title={curriculumLesson.title}
+        <ToolkitCheatSheetContent
+          cards={cards}
+          title={title}
           fallbackLesson={curriculumLesson}
           onBack={() => router.back()}
         />
@@ -49,8 +33,12 @@ export default function SlideDetailScreen() {
     );
   }
 
+  if (legacySlide) {
+    return <ToolkitSlideView slide={legacySlide} onBack={() => router.back()} />;
+  }
+
   return (
-    <View style={styles.missing}>
+    <View style={[styles.missing, { paddingTop: insets.top }]}>
       <Text style={styles.missingTitle}>Slide not found</Text>
       <Pressable onPress={() => router.back()}>
         <Text style={styles.back}>← Go back</Text>
@@ -62,11 +50,20 @@ export default function SlideDetailScreen() {
 const styles = StyleSheet.create({
   missing: {
     flex: 1,
-    backgroundColor: "#0a0a0a",
+    backgroundColor: brandColors.avaBlack,
     alignItems: "center",
     justifyContent: "center",
     padding: 24,
   },
-  missingTitle: { color: "#fff", fontSize: 18, fontWeight: "700", marginBottom: 12 },
-  back: { color: "#00d4ff", fontSize: 15, fontWeight: "600" },
+  missingTitle: {
+    fontFamily: brandFonts.display,
+    fontSize: 24,
+    color: brandColors.pureWhite,
+    marginBottom: 12,
+  },
+  back: {
+    fontFamily: brandFonts.bodyMedium,
+    fontSize: 14,
+    color: brandColors.alphaRed,
+  },
 });
