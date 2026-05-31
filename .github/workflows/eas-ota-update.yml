@@ -1,0 +1,108 @@
+# Automated EAS OTA for JS-only changes on main.
+#
+# Required GitHub secret: EXPO_TOKEN
+# Create at https://expo.dev/accounts/[account]/settings/access-tokens
+# Repo → Settings → Secrets and variables → Actions → New repository secret
+#
+# If EXPO_TOKEN is missing, the publish step is skipped (workflow still succeeds).
+
+name: EAS OTA Update
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'app/**'
+      - 'components/**'
+      - 'data/**'
+      - 'assets/**'
+      - 'lib/**'
+      - 'hooks/**'
+      - 'constants/**'
+
+jobs:
+  check-native-changes:
+    name: Detect native changes
+    runs-on: ubuntu-latest
+    outputs:
+      native_changed: ${{ steps.native.outputs.changed }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Check for native-impacting files
+        id: native
+        run: |
+          set -euo pipefail
+          BEFORE="${{ github.event.before }}"
+          AFTER="${{ github.sha }}"
+
+          if [ "$BEFORE" = "0000000000000000000000000000000000000000" ]; then
+            CHANGED=$(git diff-tree --no-commit-id --name-only -r "$AFTER")
+          else
+            CHANGED=$(git diff --name-only "$BEFORE" "$AFTER")
+          fi
+
+          echo "$CHANGED" > /tmp/changed_files.txt
+
+          NATIVE_PATTERNS=(
+            '^ios/'
+            '^android/'
+            '^app\.json$'
+            '^app\.config\.(js|ts)$'
+            '^eas\.json$'
+            '^package\.json$'
+            '^package-lock\.json$'
+            '^pnpm-lock\.yaml$'
+            '^Gemfile'
+            '^Podfile'
+          )
+
+          NATIVE_CHANGED=false
+          for pattern in "${NATIVE_PATTERNS[@]}"; do
+            if grep -qE "$pattern" /tmp/changed_files.txt; then
+              echo "Native-impacting change detected: $pattern"
+              NATIVE_CHANGED=true
+              break
+            fi
+          done
+
+          if [ "$NATIVE_CHANGED" = "true" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "::warning::Native files changed in this push. OTA will not run — use eas build + App Store instead."
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No native-impacting changes detected."
+          fi
+
+  eas-update:
+    name: Publish EAS OTA (production)
+    runs-on: ubuntu-latest
+    needs: check-native-changes
+    if: needs.check-native-changes.outputs.native_changed == 'false'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Publish OTA update
+        if: ${{ secrets.EXPO_TOKEN != '' }}
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: |
+          npx eas-cli update \
+            --channel production \
+            --message "Automated OTA from ${GITHUB_SHA::7}: ${GITHUB_EVENT_HEAD_COMMIT_MESSAGE:-push to main}" \
+            --non-interactive
+
+      - name: EXPO_TOKEN not configured
+        if: ${{ secrets.EXPO_TOKEN == '' }}
+        run: |
+          echo "::warning::EXPO_TOKEN secret is not set. Add it in GitHub repo Settings → Secrets to enable automated OTA."
