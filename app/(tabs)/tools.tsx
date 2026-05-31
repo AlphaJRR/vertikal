@@ -8,17 +8,10 @@ import { ProductionChecklistsSection } from "../../components/toolkit/Production
 import { PresetsManager } from "../../components/toolkit/PresetsManager";
 import { SonyShootingModes } from "../../components/toolkit/SonyShootingModes";
 import { RateCalculator } from "../../components/toolkit/RateCalculator";
+import { InvoiceBuilderSection } from "../../components/toolkit/InvoiceBuilder";
 import { ShootCalculator } from "../../components/toolkit/ShootCalculator";
 import { ShortcutsModule } from "../../components/toolkit/ToolkitModules";
 import { menuItems, ToolkitMenuId } from "../../components/toolkit/ToolkitNavigator";
-
-const INVOICE_LINES = [
-  "Production day — $X / 10hr",
-  "Half day — $X / 5hr",
-  "Edit / color — $X per minute delivered",
-  "Travel — mileage + per diem",
-  "Rush fee — +25% under 48hr turnaround",
-];
 
 type SubScreen = "main" | ToolkitMenuId;
 
@@ -91,20 +84,7 @@ export default function ToolsScreen() {
         </Pressable>
       </View>
 
-      <View style={styles.section}>
-        <Text style={styles.eyebrow}>Invoice Builder</Text>
-        <Text style={styles.sectionTitle}>Line Items</Text>
-        <Text style={styles.sectionDesc}>
-          Standard line items for AVA creators. Export full invoices from the client portal after booking.
-        </Text>
-        <View style={styles.card}>
-          {INVOICE_LINES.map((line) => (
-            <Text key={line} style={styles.listItem}>
-              {line}
-            </Text>
-          ))}
-        </View>
-      </View>
+      <InvoiceBuilderSection />
 
       <ProductionChecklistsSection />
 

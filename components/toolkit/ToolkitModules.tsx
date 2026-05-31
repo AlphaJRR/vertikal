@@ -8,6 +8,7 @@ import {
   toolkitCategories,
 } from "../../data/toolkitContent";
 import { ToolkitSlideView } from "./ToolkitSlideView";
+import { InvoiceBuilderSection } from "./InvoiceBuilder";
 import { toolkitStyles as s } from "./toolkitStyles";
 
 interface ModuleProps {
@@ -170,24 +171,9 @@ export function ShortcutsModule({ onBack }: ModuleProps) {
 }
 
 export function InvoiceModule({ onBack }: ModuleProps) {
-  const lines = [
-    "Production day — $X / 10hr",
-    "Half day — $X / 5hr",
-    "Edit / color — $X per minute delivered",
-    "Travel — mileage + per diem",
-    "Rush fee — +25% under 48hr turnaround",
-  ];
   return (
     <ToolkitModuleShell title="Invoice Builder" onBack={onBack}>
-      <Text style={s.placeholder}>Standard line items for AVA creators:</Text>
-      {lines.map((line) => (
-        <Text key={line} style={s.listItem}>
-          {line}
-        </Text>
-      ))}
-      <Text style={[s.placeholder, { marginTop: 12 }]}>
-        Export full invoices from the client portal after booking.
-      </Text>
+      <InvoiceBuilderSection showHeader={false} />
     </ToolkitModuleShell>
   );
 }
