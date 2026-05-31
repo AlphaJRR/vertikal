@@ -351,14 +351,18 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "camera",
         "category": "Shooting Modes",
         "title": "Manual Mode",
-        "description": "Full control over ISO, aperture, and shutter. The standard for consistent cinematic work.",
+        "type": "static",
+        "description": "Manual Mode gives you full control over exposure. It matters because nothing shifts automatically — your creative intent stays locked.",
+        "guide": "You set aperture, shutter speed, and ISO yourself. This removes unpredictability and ensures consistent results across shots.",
+        "keyRule": "You control all three exposure variables — nothing changes unless you change it.",
         "steps": [
-          "Dial in shutter first (180° rule), then aperture for depth, then ISO for exposure",
-          "Use manual for interviews, narrative, and any multi-cam matching scenario",
-          "Assign custom buttons for quick ISO and WB access on Sony bodies",
-          "Review every setup on a calibrated monitor — phone screens lie",
-          "Manual does not mean slow — build a muscle-memory starting recipe per location type"
+          "Set aperture for depth of field.",
+          "Set shutter for motion.",
+          "Raise ISO only as needed.",
+          "Rebalance exposure until histogram is centered."
         ],
+        "proTip": "Lock two settings for your style and adjust the third for exposure.",
+        "commonMistake": "Forgetting ISO is still part of the triangle and letting it drift too high.",
         "images": []
       },
       {
@@ -367,14 +371,18 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "camera",
         "category": "Shooting Modes",
         "title": "Aperture Priority",
-        "description": "You set f-stop, camera picks shutter. Useful for fast-changing light when depth matters most.",
+        "type": "static",
+        "description": "Aperture Priority lets you control depth of field while the camera sets shutter speed automatically.",
+        "guide": "You choose the f‑stop; the camera adjusts shutter to maintain exposure. Great for portraits, interviews, and controlled depth.",
+        "keyRule": "You control depth — the camera controls motion.",
         "steps": [
-          "Set minimum shutter limit in menu (e.g. 1/50 at 24fps) to prevent stutter",
-          "Use for events and documentary when subjects move between sun and shade",
-          "Watch for shutter dropping too low in dim corners — add light or bump ISO",
-          "Not ideal for high-frame-rate slow motion — switch to manual",
-          "Pair with auto ISO cap so the camera cannot climb into noisy territory"
+          "Set your desired f‑stop.",
+          "Watch shutter speed to avoid motion blur.",
+          "Adjust exposure compensation if needed.",
+          "Keep ISO low for clean images."
         ],
+        "proTip": "Use Aperture Priority when lighting changes quickly but depth must stay consistent.",
+        "commonMistake": "Letting shutter drop too low and introducing motion blur.",
         "images": []
       },
       {
@@ -383,14 +391,18 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "camera",
         "category": "Shooting Modes",
         "title": "Shutter Priority",
-        "description": "You set shutter, camera picks aperture. Best when motion look is non-negotiable.",
+        "type": "static",
+        "description": "Shutter Priority locks motion style while the camera adjusts aperture.",
+        "guide": "You choose shutter speed; the camera sets aperture. Ideal for sports, action, or stylized motion blur.",
+        "keyRule": "You control motion — the camera controls depth.",
         "steps": [
-          "Lock 1/48 at 24fps for filmic motion on the move",
-          "Use for sports and stage when action sharpness beats background blur",
-          "Monitor aperture — camera may pin wide open and overexpose in bright scenes",
-          "Add ND when aperture hits minimum and image still blows out",
-          "Match shutter-priority settings across B-roll operators for consistent feel"
+          "Set shutter based on motion needs.",
+          "Monitor aperture to avoid underexposure.",
+          "Raise ISO if aperture maxes out.",
+          "Use exposure compensation to fine‑tune."
         ],
+        "proTip": "Use Shutter Priority for fast-moving subjects outdoors.",
+        "commonMistake": "Forgetting aperture may hit its limit and cause underexposure.",
         "images": []
       },
       {
@@ -399,14 +411,18 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "camera",
         "category": "Shooting Modes",
         "title": "Picture Profiles",
-        "description": "In-camera color and gamma curves. Choose based on how much grade work you want.",
+        "type": "static",
+        "description": "Picture profiles define the look of your footage in‑camera. They matter because they affect contrast, color, and dynamic range.",
+        "guide": "Standard profiles look finished but limit grading. Log profiles look flat but preserve detail. Choose based on workflow and turnaround time.",
+        "keyRule": "Choose profiles based on grading needs — not habit.",
         "steps": [
-          "S-Log3 / V-Log / C-Log for maximum dynamic range — expose carefully",
-          "HLG for fast turnaround HDR delivery without heavy grading",
-          "Standard/rec709 for same-day social clips with minimal post",
-          "Set black level, knee, and saturation once — save as a custom profile",
-          "Never change picture profile mid-interview — match across all angles"
+          "Pick Standard for fast delivery.",
+          "Pick Log for cinematic grading.",
+          "Use monitoring LUTs for Log.",
+          "Expose Log brighter to avoid noise."
         ],
+        "proTip": "Use Log only when you plan to grade intentionally.",
+        "commonMistake": "Underexposing Log and creating noisy shadows.",
         "images": []
       },
       {
@@ -415,14 +431,18 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "camera",
         "category": "Shooting Modes",
         "title": "RAW vs Compressed",
-        "description": "RAW preserves sensor data. Compressed codecs save space and edit faster.",
+        "type": "static",
+        "description": "RAW captures maximum sensor data; compressed formats save space. It matters because workflow and storage change dramatically.",
+        "guide": "RAW gives flexibility but requires heavy processing. Compressed formats are efficient but limit recovery in post.",
+        "keyRule": "Use RAW for maximum control — compressed for speed.",
         "steps": [
-          "RAW / ProRes RAW when client grade budget exists and storage is planned",
-          "ProRes 422 HQ for most commercial and doc work — sweet spot of quality and size",
-          "H.264/H.265 for long runtimes, livestreams, and backup cams",
-          "Calculate card needs before roll — 4K ProRes fills drives fast",
-          "Match codec across cams when syncing multicam in Resolve or Premiere"
+          "Use RAW for high-end or cinematic work.",
+          "Use compressed for social content or fast edits.",
+          "Ensure storage can handle RAW.",
+          "Match codec to your editing machine."
         ],
+        "proTip": "ProRes RAW or BRAW offer a strong balance of flexibility and workflow.",
+        "commonMistake": "Overshooting RAW without enough storage or processing power.",
         "images": []
       }
     ]
@@ -439,14 +459,18 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "camera",
         "category": "Camera Movement",
         "title": "Handheld",
-        "description": "Organic energy. Works for doc, vérité, and grounded narrative.",
+        "type": "static",
+        "description": "Handheld shooting adds energy and realism. It matters because it creates an immersive, human feel.",
+        "guide": "Use controlled micro-movements, stable posture, and intentional motion. Handheld should feel organic, not sloppy.",
+        "keyRule": "Stability first — movement second.",
         "steps": [
-          "Breathe and tuck elbows — become a human steadicam, not a shaky phone",
-          "Use wider lenses (24–35mm) — micro-jitter reads less than on telephoto",
-          "Enable IBIS or lens OSS; add electronic stabilization only as last resort",
-          "Walk heel-to-toe for smoother push-ins — do not bounce on toes",
-          "Match handheld energy across the scene — one floaty B-cam breaks immersion"
+          "Tuck elbows in.",
+          "Use your body as a shock absorber.",
+          "Move intentionally, not randomly.",
+          "Add subtle motion to avoid static shake."
         ],
+        "proTip": "Use a wider lens to hide micro‑shake.",
+        "commonMistake": "Over‑shaking the camera and calling it \"handheld style.\"",
         "images": []
       },
       {
@@ -455,14 +479,18 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "camera",
         "category": "Camera Movement",
         "title": "Gimbal",
-        "description": "Smooth floating moves for reveals, walk-and-talk, and product orbit.",
+        "type": "static",
+        "description": "Gimbals create smooth, floating movement. They matter because they add polish and cinematic motion.",
+        "guide": "Balance the camera, walk heel‑to‑toe, and keep movements slow and intentional. Let the gimbal do the stabilization — not your arms.",
+        "keyRule": "Smooth steps = smooth footage.",
         "steps": [
-          "Balance on stand first — save 10 minutes of fighting mid-shoot",
-          "Use underslung mode for low hero angles on products and footwear",
-          "Walk backward with a spotter — forward-facing gimbal moves read cinematic",
-          "Combine slow push with slight parallax — do not just float randomly",
-          "Disable in-camera stabilization when on gimbal — let the gimbal do the work"
+          "Balance the gimbal perfectly.",
+          "Use slow, controlled movements.",
+          "Keep horizon level.",
+          "Avoid sudden pans or tilts."
         ],
+        "proTip": "Use \"follow\" mode for natural movement and \"lock\" mode for precision.",
+        "commonMistake": "Running with a gimbal and creating bounce.",
         "images": []
       },
       {
@@ -471,14 +499,18 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "camera",
         "category": "Camera Movement",
         "title": "Static",
-        "description": "Locked-off frames signal confidence. Let performance and lighting carry the shot.",
+        "type": "static",
+        "description": "Locked-off shots create stability and focus. They matter because they feel intentional and professional.",
+        "guide": "Use a tripod or solid surface. Frame precisely. Let the subject or scene provide the motion.",
+        "keyRule": "If the camera doesn't move, the composition must be perfect.",
         "steps": [
-          "Heavy tripod or c-stand sandbagged — no drift on long interview takes",
-          "Use static for dialogue masters and product beauty — cut movement with purpose",
-          "Frame for the edit — leave headroom and look space consistent across takes",
-          "Record 30 seconds of static room tone and empty frame for transitions",
-          "Static does not mean boring — light for depth and let subjects move within frame"
+          "Level the tripod.",
+          "Frame with purpose.",
+          "Lock all adjustments.",
+          "Avoid touching the camera during takes."
         ],
+        "proTip": "Use static shots to contrast dynamic sequences.",
+        "commonMistake": "Crooked horizons or sloppy framing.",
         "images": []
       },
       {
@@ -487,14 +519,18 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "camera",
         "category": "Camera Movement",
         "title": "Dolly / Slider",
-        "description": "Controlled linear motion for reveals, product pushes, and slow tension.",
+        "type": "static",
+        "description": "Dolly and slider moves add controlled, cinematic motion. They matter because they feel intentional and smooth.",
+        "guide": "Use slow, consistent movement. Dolly reveals space; sliders add subtle parallax.",
+        "keyRule": "Movement must serve the story — not distract.",
         "steps": [
-          "Level the slider — uneven rails add accidental Dutch and drift",
-          "Mark start and end points with tape for repeatable takes",
-          "Move slow — 15–30 second pushes feel premium; fast slides feel like B-roll filler",
-          "Parallax foreground objects (plants, columns) to sell depth on slider moves",
-          "Motorized slider for interviews — consistent speed beats hand-crank wobble"
+          "Set a slow, steady pace.",
+          "Keep subject distance consistent.",
+          "Use foreground elements for parallax.",
+          "Avoid speed changes mid‑move."
         ],
+        "proTip": "Use sliders for micro‑moves that elevate simple shots.",
+        "commonMistake": "Moving too fast and losing cinematic feel.",
         "images": []
       },
       {
@@ -503,14 +539,18 @@ export const toolkitCategories: ToolkitCategory[] = [
         "tab": "camera",
         "category": "Camera Movement",
         "title": "Whip Pan",
-        "description": "Fast pan blur to hide a cut or jump time. Rhythm tool for montage and music video.",
+        "type": "static",
+        "description": "Whip pans create fast, energetic transitions. They matter because they add momentum and hide cuts.",
+        "guide": "Start and end with a fast horizontal motion. Match direction and speed between shots for seamless transitions.",
+        "keyRule": "Motion blur hides the cut.",
         "steps": [
-          "Start and end on blurred motion — cut on the blur, not on a sharp frame",
-          "Use 1/30–1/60 shutter for longer motion streaks during the whip",
-          "Match direction and speed in the edit — whip out of scene A, whip into scene B",
-          "Practice the same arc three times — pick the cleanest whip for the cut point",
-          "Pair with sound whoosh or music hit — audio sells what the eye barely sees"
+          "Start with a clean frame.",
+          "Whip quickly left or right.",
+          "Match the direction on the next shot.",
+          "Cut at peak blur."
         ],
+        "proTip": "Shoot at a higher shutter speed to keep the blur clean.",
+        "commonMistake": "Whipping too slowly and revealing the cut.",
         "images": []
       }
     ]

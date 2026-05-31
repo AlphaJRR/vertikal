@@ -5,8 +5,8 @@ Content-complete for canonical slides; **next: integration testing** (Expo devic
 
 **Due: June 5, 2026 (next week)**
 
-- [ ] Paste **SHOOTING MODES (5)** + **CAMERA MOVEMENT (5)** camera lessons in v2 format
-  - **2026-05-30 investigation (Joshua: "I DID THAT THIS MORNING"):** v2 paste **NOT FOUND** in repo, Downloads, or agent transcripts. This morning's pastes were **CAMERA BASICS** (ISO→File Formats, lines 269–323) — those ARE applied with full v2. The 10 shooting/movement lessons still have script-generated `description` + `steps` only — missing `guide`, `keyRule`, `proTip`, `commonMistake`. **Joshua must re-paste** the 10 lessons in v2 template (or point to file location). Do NOT mark done until fields are filled.
+- [x] Paste **SHOOTING MODES (5)** + **CAMERA MOVEMENT (5)** camera lessons in v2 format
+  - **2026-05-30:** All 10 lessons applied with full v2 fields (`guide`, `keyRule`, `steps` ×4, `proTip`, `commonMistake`, `type: "static"`) — Joshua paste applied to `camera-manual-mode` through `camera-whip-pan`.
   - **2026-05-30 fix:** `editing-skin-tone` v2 applied from transcript paste (line 217) — was partially applied before.
 - [x] Test Expo app (all 5 tabs, HTML slide WebViews) — see `SLIDE_QA_CHECKLIST.md`
   - **2026-05-30:** Toolkit data files typecheck clean (`toolkitCurriculum.ts`, `toolkitSlideAssets.ts`, `toolkitSlideLinking.ts`, `toolkitSlideTypes.ts`). All 33 HTML lesson paths resolve in `toolkitSlideAssets.ts` (0 missing). Full-project `npm run typecheck` has pre-existing unrelated errors (missing deps, hooks). **Joshua manual QA on device still required** — all 12 steps in `SLIDE_QA_CHECKLIST.md` (open every HTML lesson, swipe slides, diagram images, callout/warning styling, deep linking, console errors, red screens, low-end perf, back nav, scroll, slideRef↔lessonId).
