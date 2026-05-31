@@ -1,7 +1,7 @@
 {
   "id": "camera_dolly_slider",
   "tab": "camera",
-  "type": "STATIC",
+  "type": "HTML_PRESENTATION",
   "title": "Dolly / Slider",
   "description": "Dolly and slider moves add controlled, cinematic motion. They matter because they feel intentional and smooth.",
   "guide": "Use slow, consistent movement. Dolly reveals space; sliders add subtle parallax.",
@@ -13,5 +13,6 @@
     "Avoid speed changes mid‑move."
   ],
   "proTip": "Use sliders for micro‑moves that elevate simple shots.",
-  "commonMistake": "Moving too fast and losing cinematic feel."
+  "commonMistake": "Moving too fast and losing cinematic feel.",
+  "slideRef": "slides_dolly_slider"
 }

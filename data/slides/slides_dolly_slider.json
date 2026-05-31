@@ -1,0 +1,47 @@
+{
+  "id": "slides_dolly_slider",
+  "lessonId": "camera_dolly_slider",
+  "title": "Dolly / Slider",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "Dolly / Slider",
+      "subheading": "Movement must serve the story — not distract."
+    },
+    {
+      "type": "concept",
+      "heading": "Why It Matters",
+      "bullets": [
+        "Dolly and slider moves add controlled, cinematic motion.",
+        "They matter because they feel intentional and smooth.",
+        "Use slow, consistent movement."
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "Visual Guide",
+      "image": "ava/camera/dolly_slider.png",
+      "caption": "Use slow, consistent movement."
+    },
+    {
+      "type": "steps",
+      "heading": "How To",
+      "steps": [
+        "Set a slow, steady pace.",
+        "Keep subject distance consistent.",
+        "Use foreground elements for parallax.",
+        "Avoid speed changes mid‑move."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "Pro Tip",
+      "text": "Use sliders for micro‑moves that elevate simple shots."
+    },
+    {
+      "type": "warning",
+      "heading": "Common Mistake",
+      "text": "Moving too fast and losing cinematic feel."
+    }
+  ]
+}

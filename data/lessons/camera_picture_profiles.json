@@ -1,7 +1,7 @@
 {
   "id": "camera_picture_profiles",
   "tab": "camera",
-  "type": "STATIC",
+  "type": "HTML_PRESENTATION",
   "title": "Picture Profiles",
   "description": "Picture profiles define the look of your footage in‑camera. They matter because they affect contrast, color, and dynamic range.",
   "guide": "Standard profiles look finished but limit grading. Log profiles look flat but preserve detail. Choose based on workflow and turnaround time.",
@@ -13,5 +13,6 @@
     "Expose Log brighter to avoid noise."
   ],
   "proTip": "Use Log only when you plan to grade intentionally.",
-  "commonMistake": "Underexposing Log and creating noisy shadows."
+  "commonMistake": "Underexposing Log and creating noisy shadows.",
+  "slideRef": "slides_picture_profiles"
 }

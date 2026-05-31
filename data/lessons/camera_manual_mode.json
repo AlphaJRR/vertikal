@@ -1,7 +1,7 @@
 {
   "id": "camera_manual_mode",
   "tab": "camera",
-  "type": "STATIC",
+  "type": "HTML_PRESENTATION",
   "title": "Manual Mode",
   "description": "Manual Mode gives you full control over exposure. It matters because nothing shifts automatically — your creative intent stays locked.",
   "guide": "You set aperture, shutter speed, and ISO yourself. This removes unpredictability and ensures consistent results across shots.",
@@ -13,5 +13,6 @@
     "Rebalance exposure until histogram is centered."
   ],
   "proTip": "Lock two settings for your style and adjust the third for exposure.",
-  "commonMistake": "Forgetting ISO is still part of the triangle and letting it drift too high."
+  "commonMistake": "Forgetting ISO is still part of the triangle and letting it drift too high.",
+  "slideRef": "slides_manual_mode"
 }

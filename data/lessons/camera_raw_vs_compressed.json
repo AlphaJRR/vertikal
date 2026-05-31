@@ -1,7 +1,7 @@
 {
   "id": "camera_raw_vs_compressed",
   "tab": "camera",
-  "type": "STATIC",
+  "type": "HTML_PRESENTATION",
   "title": "RAW vs Compressed",
   "description": "RAW captures maximum sensor data; compressed formats save space. It matters because workflow and storage change dramatically.",
   "guide": "RAW gives flexibility but requires heavy processing. Compressed formats are efficient but limit recovery in post.",
@@ -13,5 +13,6 @@
     "Match codec to your editing machine."
   ],
   "proTip": "ProRes RAW or BRAW offer a strong balance of flexibility and workflow.",
-  "commonMistake": "Overshooting RAW without enough storage or processing power."
+  "commonMistake": "Overshooting RAW without enough storage or processing power.",
+  "slideRef": "slides_raw_vs_compressed"
 }
