@@ -3,12 +3,15 @@
   "tab": "production",
   "type": "STATIC",
   "title": "Producer",
-  "description": "TODO: Joshua to paste v2 content.",
-  "guide": "TODO: Joshua to paste v2 content.",
-  "keyRule": "TODO: Joshua to paste v2 content.",
+  "description": "The Producer oversees logistics, budget, scheduling, and problem‑solving. They make the production possible.",
+  "guide": "Producers coordinate departments, secure locations, manage contracts, and ensure the project stays on time and on budget.",
+  "keyRule": "Producers remove obstacles so the creative team can work.",
   "howTo": [
-    "TODO: Joshua to paste v2 content."
+    "Build a realistic schedule.",
+    "Manage budget and resources.",
+    "Communicate with all departments.",
+    "Solve problems before they hit set."
   ],
-  "proTip": "TODO: Joshua to paste v2 content.",
-  "commonMistake": "TODO: Joshua to paste v2 content."
+  "proTip": "A great Producer prevents fires — they don't just put them out.",
+  "commonMistake": "Overscheduling days and burning out the crew."
 }

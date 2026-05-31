@@ -3,12 +3,15 @@
   "tab": "production",
   "type": "STATIC",
   "title": "Rates & Invoicing",
-  "description": "TODO: Joshua to paste v2 content.",
-  "guide": "TODO: Joshua to paste v2 content.",
-  "keyRule": "TODO: Joshua to paste v2 content.",
+  "description": "Understanding rates, invoicing, and contracts protects your time and income.",
+  "guide": "Know your day rate, negotiate clearly, invoice promptly, and understand kill fees and overtime rules.",
+  "keyRule": "Never start work without written terms.",
   "howTo": [
-    "TODO: Joshua to paste v2 content."
+    "Agree on rate and hours in writing.",
+    "Send invoice within 24 hours.",
+    "Include kill fee terms.",
+    "Track overtime and meal penalties."
   ],
-  "proTip": "TODO: Joshua to paste v2 content.",
-  "commonMistake": "TODO: Joshua to paste v2 content."
+  "proTip": "Use a simple invoice template with clear line items.",
+  "commonMistake": "Accepting vague verbal agreements."
 }

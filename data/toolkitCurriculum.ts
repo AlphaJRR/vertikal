@@ -2163,12 +2163,17 @@ export const toolkitCategories: ToolkitCategory[] = [
         "category": "ON-SET ROLES",
         "title": "Director",
         "type": "static",
-        "description": "TODO: Joshua to paste v2 content.",
-        "guide": "TODO: Joshua to paste v2 content.",
-        "keyRule": "TODO: Joshua to paste v2 content.",
-        "steps": ["TODO: Joshua to paste v2 content."],
-        "proTip": "TODO: Joshua to paste v2 content.",
-        "commonMistake": "TODO: Joshua to paste v2 content.",
+        "description": "The Director is the creative leader of the production. They shape the story, performances, pacing, and overall vision.",
+        "guide": "The Director communicates the emotional intent of each scene, collaborates with department heads, and ensures every decision supports the story. They don't do every job — they guide the people who do.",
+        "keyRule": "The Director protects the story above everything else.",
+        "steps": [
+          "Communicate the emotional goal of each scene.",
+          "Give actors clear, actionable direction.",
+          "Collaborate with DP on shot design.",
+          "Maintain consistency across takes."
+        ],
+        "proTip": "Direct actions, not emotions — \"walk in frustrated,\" not \"be frustrated.\"",
+        "commonMistake": "Micromanaging departments instead of leading them.",
         "images": []
       },
       {
@@ -2178,12 +2183,17 @@ export const toolkitCategories: ToolkitCategory[] = [
         "category": "ON-SET ROLES",
         "title": "DP",
         "type": "static",
-        "description": "TODO: Joshua to paste v2 content.",
-        "guide": "TODO: Joshua to paste v2 content.",
-        "keyRule": "TODO: Joshua to paste v2 content.",
-        "steps": ["TODO: Joshua to paste v2 content."],
-        "proTip": "TODO: Joshua to paste v2 content.",
-        "commonMistake": "TODO: Joshua to paste v2 content.",
+        "description": "The DP translates the Director's vision into images. They control lighting, camera, lenses, and visual style.",
+        "guide": "The DP leads the camera and lighting teams, designs the look of each scene, and ensures visual continuity. They balance creativity with technical execution.",
+        "keyRule": "The DP serves the story — not the gear.",
+        "steps": [
+          "Align with the Director on tone and mood.",
+          "Choose lenses and lighting that support emotion.",
+          "Lead Gaffer and AC teams clearly.",
+          "Maintain exposure and continuity."
+        ],
+        "proTip": "Pre‑light whenever possible — it saves hours on set.",
+        "commonMistake": "Overcomplicating lighting setups that don't serve the scene.",
         "images": []
       },
       {
@@ -2193,12 +2203,17 @@ export const toolkitCategories: ToolkitCategory[] = [
         "category": "ON-SET ROLES",
         "title": "AC",
         "type": "static",
-        "description": "TODO: Joshua to paste v2 content.",
-        "guide": "TODO: Joshua to paste v2 content.",
-        "keyRule": "TODO: Joshua to paste v2 content.",
-        "steps": ["TODO: Joshua to paste v2 content."],
-        "proTip": "TODO: Joshua to paste v2 content.",
-        "commonMistake": "TODO: Joshua to paste v2 content.",
+        "description": "The AC keeps the camera department running. They manage focus, media, batteries, and camera builds.",
+        "guide": "The 1st AC pulls focus and maintains the camera. The 2nd AC slates, swaps media, and supports the team. They keep the shoot moving smoothly.",
+        "keyRule": "Stay organized — chaos kills efficiency.",
+        "steps": [
+          "Build and maintain the camera.",
+          "Pull focus accurately.",
+          "Manage media and batteries.",
+          "Slate clearly and consistently."
+        ],
+        "proTip": "Label everything — lenses, batteries, cards, cables.",
+        "commonMistake": "Losing track of media or battery levels.",
         "images": []
       },
       {
@@ -2208,12 +2223,17 @@ export const toolkitCategories: ToolkitCategory[] = [
         "category": "ON-SET ROLES",
         "title": "Gaffer",
         "type": "static",
-        "description": "TODO: Joshua to paste v2 content.",
-        "guide": "TODO: Joshua to paste v2 content.",
-        "keyRule": "TODO: Joshua to paste v2 content.",
-        "steps": ["TODO: Joshua to paste v2 content."],
-        "proTip": "TODO: Joshua to paste v2 content.",
-        "commonMistake": "TODO: Joshua to paste v2 content.",
+        "description": "The Gaffer is the head of lighting. They execute the DP's lighting plan and manage the electric team.",
+        "guide": "The Gaffer shapes light, controls exposure, and ensures safety. They translate creative notes into practical lighting solutions.",
+        "keyRule": "Light with intention — not brightness.",
+        "steps": [
+          "Understand the DP's lighting goals.",
+          "Choose fixtures that match the mood.",
+          "Shape light with flags and diffusion.",
+          "Maintain safe power distribution."
+        ],
+        "proTip": "Use negative fill to add contrast without adding lights.",
+        "commonMistake": "Overlighting scenes and flattening the image.",
         "images": []
       },
       {
@@ -2223,12 +2243,17 @@ export const toolkitCategories: ToolkitCategory[] = [
         "category": "ON-SET ROLES",
         "title": "Sound Recordist",
         "type": "static",
-        "description": "TODO: Joshua to paste v2 content.",
-        "guide": "TODO: Joshua to paste v2 content.",
-        "keyRule": "TODO: Joshua to paste v2 content.",
-        "steps": ["TODO: Joshua to paste v2 content."],
-        "proTip": "TODO: Joshua to paste v2 content.",
-        "commonMistake": "TODO: Joshua to paste v2 content.",
+        "description": "The Sound Recordist captures clean dialogue and ambient audio. Good sound makes or breaks a production.",
+        "guide": "They choose mics, place booms, manage wireless systems, and monitor levels. Clean audio saves hours in post.",
+        "keyRule": "Mic placement matters more than mic quality.",
+        "steps": [
+          "Boom from above when possible.",
+          "Hide lavs without clothing noise.",
+          "Monitor levels constantly.",
+          "Capture room tone."
+        ],
+        "proTip": "Always get a safety track at lower gain.",
+        "commonMistake": "Relying on \"fix it in post.\"",
         "images": []
       },
       {
@@ -2238,12 +2263,17 @@ export const toolkitCategories: ToolkitCategory[] = [
         "category": "ON-SET ROLES",
         "title": "PA",
         "type": "static",
-        "description": "TODO: Joshua to paste v2 content.",
-        "guide": "TODO: Joshua to paste v2 content.",
-        "keyRule": "TODO: Joshua to paste v2 content.",
-        "steps": ["TODO: Joshua to paste v2 content."],
-        "proTip": "TODO: Joshua to paste v2 content.",
-        "commonMistake": "TODO: Joshua to paste v2 content.",
+        "description": "PAs support every department and keep the set running. They are the backbone of production logistics.",
+        "guide": "PAs handle lock‑ups, paperwork, runs, communication, and general support. A great PA becomes indispensable fast.",
+        "keyRule": "Stay proactive — anticipate needs before they're spoken.",
+        "steps": [
+          "Arrive early and check in with AD.",
+          "Keep walkie etiquette tight.",
+          "Handle tasks quickly and quietly.",
+          "Maintain set safety and organization."
+        ],
+        "proTip": "Always carry a Sharpie, tape, and multitool.",
+        "commonMistake": "Standing around waiting for instructions.",
         "images": []
       },
       {
@@ -2253,12 +2283,17 @@ export const toolkitCategories: ToolkitCategory[] = [
         "category": "ON-SET ROLES",
         "title": "Producer",
         "type": "static",
-        "description": "TODO: Joshua to paste v2 content.",
-        "guide": "TODO: Joshua to paste v2 content.",
-        "keyRule": "TODO: Joshua to paste v2 content.",
-        "steps": ["TODO: Joshua to paste v2 content."],
-        "proTip": "TODO: Joshua to paste v2 content.",
-        "commonMistake": "TODO: Joshua to paste v2 content.",
+        "description": "The Producer oversees logistics, budget, scheduling, and problem‑solving. They make the production possible.",
+        "guide": "Producers coordinate departments, secure locations, manage contracts, and ensure the project stays on time and on budget.",
+        "keyRule": "Producers remove obstacles so the creative team can work.",
+        "steps": [
+          "Build a realistic schedule.",
+          "Manage budget and resources.",
+          "Communicate with all departments.",
+          "Solve problems before they hit set."
+        ],
+        "proTip": "A great Producer prevents fires — they don't just put them out.",
+        "commonMistake": "Overscheduling days and burning out the crew.",
         "images": []
       }
     ]
@@ -2276,12 +2311,17 @@ export const toolkitCategories: ToolkitCategory[] = [
         "category": "WHAT TO EXPECT ON SET",
         "title": "Set Etiquette",
         "type": "static",
-        "description": "TODO: Joshua to paste v2 content.",
-        "guide": "TODO: Joshua to paste v2 content.",
-        "keyRule": "TODO: Joshua to paste v2 content.",
-        "steps": ["TODO: Joshua to paste v2 content."],
-        "proTip": "TODO: Joshua to paste v2 content.",
-        "commonMistake": "TODO: Joshua to paste v2 content.",
+        "description": "Set culture is built on professionalism, timing, and communication. Understanding etiquette keeps the production running smoothly.",
+        "guide": "Arrive early, listen more than you speak, respect the chain of command, and never interrupt a take.",
+        "keyRule": "Early is on time — on time is late.",
+        "steps": [
+          "Arrive 15 minutes early.",
+          "Follow AD instructions.",
+          "Keep walkie chatter minimal.",
+          "Stay out of sightlines and monitor areas."
+        ],
+        "proTip": "Learn everyone's role — it helps you anticipate needs.",
+        "commonMistake": "Talking or moving during takes.",
         "images": []
       }
     ]
@@ -2299,12 +2339,17 @@ export const toolkitCategories: ToolkitCategory[] = [
         "category": "FINDING GIGS",
         "title": "Breaking In",
         "type": "static",
-        "description": "TODO: Joshua to paste v2 content.",
-        "guide": "TODO: Joshua to paste v2 content.",
-        "keyRule": "TODO: Joshua to paste v2 content.",
-        "steps": ["TODO: Joshua to paste v2 content."],
-        "proTip": "TODO: Joshua to paste v2 content.",
-        "commonMistake": "TODO: Joshua to paste v2 content.",
+        "description": "Breaking into production requires networking, consistency, and visibility. Opportunities come from relationships and reliability.",
+        "guide": "Use film commissions, Facebook groups, crew apps, and cold outreach. Show up, deliver, and people will call you back.",
+        "keyRule": "Your reputation is your resume.",
+        "steps": [
+          "Join local film Facebook groups.",
+          "Register with your state film commission.",
+          "Use crew apps like StaffMeUp or Mandy.",
+          "Send concise cold outreach messages."
+        ],
+        "proTip": "Always follow up after a gig — relationships compound.",
+        "commonMistake": "Waiting for opportunities instead of creating them.",
         "images": []
       }
     ]
@@ -2322,12 +2367,17 @@ export const toolkitCategories: ToolkitCategory[] = [
         "category": "GETTING PAID",
         "title": "Rates & Invoicing",
         "type": "static",
-        "description": "TODO: Joshua to paste v2 content.",
-        "guide": "TODO: Joshua to paste v2 content.",
-        "keyRule": "TODO: Joshua to paste v2 content.",
-        "steps": ["TODO: Joshua to paste v2 content."],
-        "proTip": "TODO: Joshua to paste v2 content.",
-        "commonMistake": "TODO: Joshua to paste v2 content.",
+        "description": "Understanding rates, invoicing, and contracts protects your time and income.",
+        "guide": "Know your day rate, negotiate clearly, invoice promptly, and understand kill fees and overtime rules.",
+        "keyRule": "Never start work without written terms.",
+        "steps": [
+          "Agree on rate and hours in writing.",
+          "Send invoice within 24 hours.",
+          "Include kill fee terms.",
+          "Track overtime and meal penalties."
+        ],
+        "proTip": "Use a simple invoice template with clear line items.",
+        "commonMistake": "Accepting vague verbal agreements.",
         "images": []
       }
     ]

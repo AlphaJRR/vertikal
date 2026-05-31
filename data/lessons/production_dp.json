@@ -3,12 +3,15 @@
   "tab": "production",
   "type": "STATIC",
   "title": "DP",
-  "description": "TODO: Joshua to paste v2 content.",
-  "guide": "TODO: Joshua to paste v2 content.",
-  "keyRule": "TODO: Joshua to paste v2 content.",
+  "description": "The DP translates the Director's vision into images. They control lighting, camera, lenses, and visual style.",
+  "guide": "The DP leads the camera and lighting teams, designs the look of each scene, and ensures visual continuity. They balance creativity with technical execution.",
+  "keyRule": "The DP serves the story — not the gear.",
   "howTo": [
-    "TODO: Joshua to paste v2 content."
+    "Align with the Director on tone and mood.",
+    "Choose lenses and lighting that support emotion.",
+    "Lead Gaffer and AC teams clearly.",
+    "Maintain exposure and continuity."
   ],
-  "proTip": "TODO: Joshua to paste v2 content.",
-  "commonMistake": "TODO: Joshua to paste v2 content."
+  "proTip": "Pre‑light whenever possible — it saves hours on set.",
+  "commonMistake": "Overcomplicating lighting setups that don't serve the scene."
 }

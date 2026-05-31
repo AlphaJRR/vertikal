@@ -3,12 +3,15 @@
   "tab": "production",
   "type": "STATIC",
   "title": "AC",
-  "description": "TODO: Joshua to paste v2 content.",
-  "guide": "TODO: Joshua to paste v2 content.",
-  "keyRule": "TODO: Joshua to paste v2 content.",
+  "description": "The AC keeps the camera department running. They manage focus, media, batteries, and camera builds.",
+  "guide": "The 1st AC pulls focus and maintains the camera. The 2nd AC slates, swaps media, and supports the team. They keep the shoot moving smoothly.",
+  "keyRule": "Stay organized — chaos kills efficiency.",
   "howTo": [
-    "TODO: Joshua to paste v2 content."
+    "Build and maintain the camera.",
+    "Pull focus accurately.",
+    "Manage media and batteries.",
+    "Slate clearly and consistently."
   ],
-  "proTip": "TODO: Joshua to paste v2 content.",
-  "commonMistake": "TODO: Joshua to paste v2 content."
+  "proTip": "Label everything — lenses, batteries, cards, cables.",
+  "commonMistake": "Losing track of media or battery levels."
 }

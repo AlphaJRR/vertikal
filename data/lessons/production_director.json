@@ -3,12 +3,15 @@
   "tab": "production",
   "type": "STATIC",
   "title": "Director",
-  "description": "TODO: Joshua to paste v2 content.",
-  "guide": "TODO: Joshua to paste v2 content.",
-  "keyRule": "TODO: Joshua to paste v2 content.",
+  "description": "The Director is the creative leader of the production. They shape the story, performances, pacing, and overall vision.",
+  "guide": "The Director communicates the emotional intent of each scene, collaborates with department heads, and ensures every decision supports the story. They don't do every job — they guide the people who do.",
+  "keyRule": "The Director protects the story above everything else.",
   "howTo": [
-    "TODO: Joshua to paste v2 content."
+    "Communicate the emotional goal of each scene.",
+    "Give actors clear, actionable direction.",
+    "Collaborate with DP on shot design.",
+    "Maintain consistency across takes."
   ],
-  "proTip": "TODO: Joshua to paste v2 content.",
-  "commonMistake": "TODO: Joshua to paste v2 content."
+  "proTip": "Direct actions, not emotions — \"walk in frustrated,\" not \"be frustrated.\"",
+  "commonMistake": "Micromanaging departments instead of leading them."
 }

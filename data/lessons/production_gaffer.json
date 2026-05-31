@@ -3,12 +3,15 @@
   "tab": "production",
   "type": "STATIC",
   "title": "Gaffer",
-  "description": "TODO: Joshua to paste v2 content.",
-  "guide": "TODO: Joshua to paste v2 content.",
-  "keyRule": "TODO: Joshua to paste v2 content.",
+  "description": "The Gaffer is the head of lighting. They execute the DP's lighting plan and manage the electric team.",
+  "guide": "The Gaffer shapes light, controls exposure, and ensures safety. They translate creative notes into practical lighting solutions.",
+  "keyRule": "Light with intention — not brightness.",
   "howTo": [
-    "TODO: Joshua to paste v2 content."
+    "Understand the DP's lighting goals.",
+    "Choose fixtures that match the mood.",
+    "Shape light with flags and diffusion.",
+    "Maintain safe power distribution."
   ],
-  "proTip": "TODO: Joshua to paste v2 content.",
-  "commonMistake": "TODO: Joshua to paste v2 content."
+  "proTip": "Use negative fill to add contrast without adding lights.",
+  "commonMistake": "Overlighting scenes and flattening the image."
 }

@@ -3,12 +3,15 @@
   "tab": "production",
   "type": "STATIC",
   "title": "Sound Recordist",
-  "description": "TODO: Joshua to paste v2 content.",
-  "guide": "TODO: Joshua to paste v2 content.",
-  "keyRule": "TODO: Joshua to paste v2 content.",
+  "description": "The Sound Recordist captures clean dialogue and ambient audio. Good sound makes or breaks a production.",
+  "guide": "They choose mics, place booms, manage wireless systems, and monitor levels. Clean audio saves hours in post.",
+  "keyRule": "Mic placement matters more than mic quality.",
   "howTo": [
-    "TODO: Joshua to paste v2 content."
+    "Boom from above when possible.",
+    "Hide lavs without clothing noise.",
+    "Monitor levels constantly.",
+    "Capture room tone."
   ],
-  "proTip": "TODO: Joshua to paste v2 content.",
-  "commonMistake": "TODO: Joshua to paste v2 content."
+  "proTip": "Always get a safety track at lower gain.",
+  "commonMistake": "Relying on \"fix it in post.\""
 }
