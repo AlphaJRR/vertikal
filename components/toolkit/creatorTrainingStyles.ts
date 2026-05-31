@@ -2,6 +2,16 @@ import { StyleSheet } from "react-native";
 import { brandColors, brandFonts, filmAccents } from "../../constants/brand";
 
 export const creatorTrainingStyles = StyleSheet.create({
+  trainingRoot: {
+    flex: 1,
+    position: "relative",
+  },
+  trainingScroll: {
+    flex: 1,
+  },
+  trainingScrollContent: {
+    paddingBottom: 32,
+  },
   section: {
     marginBottom: 32,
   },
@@ -171,6 +181,16 @@ export const creatorTrainingStyles = StyleSheet.create({
   expandedOverlay: {
     flex: 1,
     width: "100%",
+    backgroundColor: brandColors.avaBlack,
+  },
+  lessonOverlay: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    zIndex: 50,
+    elevation: 50,
     backgroundColor: brandColors.avaBlack,
   },
   expandedScroll: {

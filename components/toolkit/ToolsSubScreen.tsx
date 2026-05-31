@@ -68,5 +68,9 @@ export function ToolsSubScreen({ id, onBack }: ToolsSubScreenProps) {
     );
   }
 
-  return <Screen onBack={onBack} />;
+  return (
+    <View style={{ flex: 1 }}>
+      <Screen onBack={onBack} />
+    </View>
+  );
 }

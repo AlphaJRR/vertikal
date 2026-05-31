@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Pressable, Text, View } from "react-native";
+import { Pressable, ScrollView, Text, View } from "react-native";
 import { useRouter, type Href } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
@@ -51,92 +51,96 @@ export function CreatorTraining() {
   };
 
   return (
-    <View style={s.section}>
-      <View style={s.sectionHeader}>
-        <Text style={s.sectionEyebrow}>Creator Training</Text>
-        <Text style={s.sectionTitle}>Creators Toolkit</Text>
-        <Text style={s.sectionSubtitle}>
-          {toolkitLessonCount} lessons · {TOOLKIT_TABS.length} tracks · HTML slide
-          decks
-        </Text>
-      </View>
+    <View style={s.trainingRoot}>
+      <ScrollView
+        style={s.trainingScroll}
+        contentContainerStyle={s.trainingScrollContent}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+      >
+        <View style={s.sectionHeader}>
+          <Text style={s.sectionEyebrow}>Creator Training</Text>
+          <Text style={s.sectionTitle}>Creators Toolkit</Text>
+          <Text style={s.sectionSubtitle}>
+            {toolkitLessonCount} lessons · {TOOLKIT_TABS.length} tracks · HTML slide
+            decks
+          </Text>
+        </View>
 
-      <View style={s.tabBar}>
-        {TOOLKIT_TABS.map((tab) => {
-          const active = tab.id === activeTab;
+        <View style={s.tabBar}>
+          {TOOLKIT_TABS.map((tab) => {
+            const active = tab.id === activeTab;
+            return (
+              <Pressable
+                key={tab.id}
+                onPress={() => setActiveTab(tab.id)}
+                style={[s.tab, active && s.tabActive]}
+              >
+                <Text style={[s.tabLabel, active && s.tabLabelActive]}>
+                  {tab.label}
+                </Text>
+              </Pressable>
+            );
+          })}
+        </View>
+
+        <Text style={s.tabMeta}>
+          {tabLessonCount} lessons in this track
+        </Text>
+
+        {categories.map((cat) => {
+          const open = expandedCategories.has(cat.id);
           return (
-            <Pressable
-              key={tab.id}
-              onPress={() => setActiveTab(tab.id)}
-              style={[s.tab, active && s.tabActive]}
-            >
-              <Text style={[s.tabLabel, active && s.tabLabelActive]}>
-                {tab.label}
-              </Text>
-            </Pressable>
+            <View key={cat.id} style={s.categoryPanel}>
+              <Pressable onPress={() => toggleCategory(cat.id)} style={s.categoryHeader}>
+                <View style={s.categoryHeaderLeft}>
+                  <Text style={s.categoryEyebrow}>{cat.eyebrow}</Text>
+                  <Text style={s.categoryTitle}>{cat.title}</Text>
+                  <View style={s.categoryDivider}>
+                    <View style={s.dividerLine} />
+                    <View style={s.dividerDot} />
+                    <View style={s.dividerLine} />
+                  </View>
+                </View>
+                <Ionicons
+                  name={open ? "chevron-up" : "chevron-down"}
+                  size={20}
+                  color="#555555"
+                />
+              </Pressable>
+
+              {open ? (
+                <View style={s.lessonList}>
+                  {cat.lessons.map((lesson) => (
+                    <Pressable
+                      key={lesson.id}
+                      onPress={() =>
+                        setSelectedLesson({ ...lesson, saved: isSaved(lesson.id) })
+                      }
+                      style={s.lessonCard}
+                    >
+                      <View style={s.lessonBadge}>
+                        <Text style={s.lessonBadgeText}>{lesson.number}</Text>
+                      </View>
+                      <View style={s.lessonBody}>
+                        <Text style={s.lessonTitle}>{lesson.title}</Text>
+                        <Text style={s.lessonDesc} numberOfLines={2}>
+                          {lesson.description}
+                        </Text>
+                      </View>
+                      <Ionicons name="chevron-forward" size={16} color="#555555" />
+                    </Pressable>
+                  ))}
+                </View>
+              ) : null}
+            </View>
           );
         })}
-      </View>
+      </ScrollView>
 
-      <Text style={s.tabMeta}>
-        {tabLessonCount} lessons in this track
-      </Text>
-
-      {categories.map((cat) => {
-        const open = expandedCategories.has(cat.id);
-        return (
-          <View key={cat.id} style={s.categoryPanel}>
-            <Pressable onPress={() => toggleCategory(cat.id)} style={s.categoryHeader}>
-              <View style={s.categoryHeaderLeft}>
-                <Text style={s.categoryEyebrow}>{cat.eyebrow}</Text>
-                <Text style={s.categoryTitle}>{cat.title}</Text>
-                <View style={s.categoryDivider}>
-                  <View style={s.dividerLine} />
-                  <View style={s.dividerDot} />
-                  <View style={s.dividerLine} />
-                </View>
-              </View>
-              <Ionicons
-                name={open ? "chevron-up" : "chevron-down"}
-                size={20}
-                color="#555555"
-              />
-            </Pressable>
-
-            {open ? (
-              <View style={s.lessonList}>
-                {cat.lessons.map((lesson) => (
-                  <Pressable
-                    key={lesson.id}
-                    onPress={() => setSelectedLesson({ ...lesson, saved: isSaved(lesson.id) })}
-                    style={s.lessonCard}
-                  >
-                    <View style={s.lessonBadge}>
-                      <Text style={s.lessonBadgeText}>{lesson.number}</Text>
-                    </View>
-                    <View style={s.lessonBody}>
-                      <Text style={s.lessonTitle}>{lesson.title}</Text>
-                      <Text style={s.lessonDesc} numberOfLines={2}>
-                        {lesson.description}
-                      </Text>
-                    </View>
-                    <Ionicons name="chevron-forward" size={16} color="#555555" />
-                  </Pressable>
-                ))}
-              </View>
-            ) : null}
-          </View>
-        );
-      })}
-
-      <Modal
-        visible={selectedLesson !== null}
-        animationType="slide"
-        presentationStyle="fullScreen"
-        onRequestClose={() => setSelectedLesson(null)}
-      >
-        <SafeAreaView style={s.expandedOverlay} edges={["top", "left", "right"]}>
-          {selectedLesson ? (
+      {selectedLesson ? (
+        <View style={s.lessonOverlay} accessibilityViewIsModal>
+          <SafeAreaView style={s.expandedOverlay} edges={["top", "bottom"]}>
             <LessonExpandedView
               lesson={selectedLesson}
               saved={isSaved(selectedLesson.id)}
@@ -150,9 +154,9 @@ export function CreatorTraining() {
               }}
               onOpenSlide={openSlide}
             />
-          ) : null}
-        </SafeAreaView>
-      </Modal>
+          </SafeAreaView>
+        </View>
+      ) : null}
     </View>
   );
 }

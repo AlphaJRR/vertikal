@@ -37,20 +37,17 @@ function ToolkitModuleShell({
 }
 
 export function TrainingModule({ onBack }: ModuleProps) {
+  const insets = useSafeAreaInsets();
+
   return (
-    <ScrollView
-      style={s.screen}
-      contentContainerStyle={[
-        s.content,
-        { paddingTop: 8, paddingBottom: 24 },
-      ]}
-      showsVerticalScrollIndicator={false}
-    >
-      <Pressable onPress={onBack}>
+    <View style={[s.screen, { flex: 1, paddingTop: 8, paddingBottom: insets.bottom }]}>
+      <Pressable onPress={onBack} style={{ paddingHorizontal: 20, marginBottom: 4 }}>
         <Text style={s.backTxt}>← Toolkit</Text>
       </Pressable>
-      <DeferredCreatorTraining />
-    </ScrollView>
+      <View style={{ flex: 1 }}>
+        <DeferredCreatorTraining />
+      </View>
+    </View>
   );
 }
 
