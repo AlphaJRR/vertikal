@@ -3,16 +3,15 @@
   "tab": "camera",
   "type": "STATIC",
   "title": "RAW vs Compressed",
-  "description": "RAW preserves sensor data. Compressed codecs save space and edit faster.",
-  "guide": "",
-  "keyRule": "",
+  "description": "RAW captures maximum sensor data; compressed formats save space. It matters because workflow and storage change dramatically.",
+  "guide": "RAW gives flexibility but requires heavy processing. Compressed formats are efficient but limit recovery in post.",
+  "keyRule": "Use RAW for maximum control — compressed for speed.",
   "howTo": [
-    "RAW / ProRes RAW when client grade budget exists and storage is planned",
-    "ProRes 422 HQ for most commercial and doc work — sweet spot of quality and size",
-    "H.264/H.265 for long runtimes, livestreams, and backup cams",
-    "Calculate card needs before roll — 4K ProRes fills drives fast",
-    "Match codec across cams when syncing multicam in Resolve or Premiere"
+    "Use RAW for high-end or cinematic work.",
+    "Use compressed for social content or fast edits.",
+    "Ensure storage can handle RAW.",
+    "Match codec to your editing machine."
   ],
-  "proTip": "",
-  "commonMistake": ""
+  "proTip": "ProRes RAW or BRAW offer a strong balance of flexibility and workflow.",
+  "commonMistake": "Overshooting RAW without enough storage or processing power."
 }

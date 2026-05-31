@@ -3,16 +3,15 @@
   "tab": "camera",
   "type": "STATIC",
   "title": "Manual Mode",
-  "description": "Full control over ISO, aperture, and shutter. The standard for consistent cinematic work.",
-  "guide": "",
-  "keyRule": "",
+  "description": "Manual Mode gives you full control over exposure. It matters because nothing shifts automatically — your creative intent stays locked.",
+  "guide": "You set aperture, shutter speed, and ISO yourself. This removes unpredictability and ensures consistent results across shots.",
+  "keyRule": "You control all three exposure variables — nothing changes unless you change it.",
   "howTo": [
-    "Dial in shutter first (180° rule), then aperture for depth, then ISO for exposure",
-    "Use manual for interviews, narrative, and any multi-cam matching scenario",
-    "Assign custom buttons for quick ISO and WB access on Sony bodies",
-    "Review every setup on a calibrated monitor — phone screens lie",
-    "Manual does not mean slow — build a muscle-memory starting recipe per location type"
+    "Set aperture for depth of field.",
+    "Set shutter for motion.",
+    "Raise ISO only as needed.",
+    "Rebalance exposure until histogram is centered."
   ],
-  "proTip": "",
-  "commonMistake": ""
+  "proTip": "Lock two settings for your style and adjust the third for exposure.",
+  "commonMistake": "Forgetting ISO is still part of the triangle and letting it drift too high."
 }

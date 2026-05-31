@@ -3,16 +3,15 @@
   "tab": "camera",
   "type": "STATIC",
   "title": "Handheld",
-  "description": "Organic energy. Works for doc, vérité, and grounded narrative.",
-  "guide": "",
-  "keyRule": "",
+  "description": "Handheld shooting adds energy and realism. It matters because it creates an immersive, human feel.",
+  "guide": "Use controlled micro-movements, stable posture, and intentional motion. Handheld should feel organic, not sloppy.",
+  "keyRule": "Stability first — movement second.",
   "howTo": [
-    "Breathe and tuck elbows — become a human steadicam, not a shaky phone",
-    "Use wider lenses (24–35mm) — micro-jitter reads less than on telephoto",
-    "Enable IBIS or lens OSS; add electronic stabilization only as last resort",
-    "Walk heel-to-toe for smoother push-ins — do not bounce on toes",
-    "Match handheld energy across the scene — one floaty B-cam breaks immersion"
+    "Tuck elbows in.",
+    "Use your body as a shock absorber.",
+    "Move intentionally, not randomly.",
+    "Add subtle motion to avoid static shake."
   ],
-  "proTip": "",
-  "commonMistake": ""
+  "proTip": "Use a wider lens to hide micro‑shake.",
+  "commonMistake": "Over‑shaking the camera and calling it \"handheld style.\""
 }

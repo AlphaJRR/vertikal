@@ -3,16 +3,15 @@
   "tab": "camera",
   "type": "STATIC",
   "title": "Aperture Priority",
-  "description": "You set f-stop, camera picks shutter. Useful for fast-changing light when depth matters most.",
-  "guide": "",
-  "keyRule": "",
+  "description": "Aperture Priority lets you control depth of field while the camera sets shutter speed automatically.",
+  "guide": "You choose the f‑stop; the camera adjusts shutter to maintain exposure. Great for portraits, interviews, and controlled depth.",
+  "keyRule": "You control depth — the camera controls motion.",
   "howTo": [
-    "Set minimum shutter limit in menu (e.g. 1/50 at 24fps) to prevent stutter",
-    "Use for events and documentary when subjects move between sun and shade",
-    "Watch for shutter dropping too low in dim corners — add light or bump ISO",
-    "Not ideal for high-frame-rate slow motion — switch to manual",
-    "Pair with auto ISO cap so the camera cannot climb into noisy territory"
+    "Set your desired f‑stop.",
+    "Watch shutter speed to avoid motion blur.",
+    "Adjust exposure compensation if needed.",
+    "Keep ISO low for clean images."
   ],
-  "proTip": "",
-  "commonMistake": ""
+  "proTip": "Use Aperture Priority when lighting changes quickly but depth must stay consistent.",
+  "commonMistake": "Letting shutter drop too low and introducing motion blur."
 }

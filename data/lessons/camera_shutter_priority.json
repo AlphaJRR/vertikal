@@ -3,16 +3,15 @@
   "tab": "camera",
   "type": "STATIC",
   "title": "Shutter Priority",
-  "description": "You set shutter, camera picks aperture. Best when motion look is non-negotiable.",
-  "guide": "",
-  "keyRule": "",
+  "description": "Shutter Priority locks motion style while the camera adjusts aperture.",
+  "guide": "You choose shutter speed; the camera sets aperture. Ideal for sports, action, or stylized motion blur.",
+  "keyRule": "You control motion — the camera controls depth.",
   "howTo": [
-    "Lock 1/48 at 24fps for filmic motion on the move",
-    "Use for sports and stage when action sharpness beats background blur",
-    "Monitor aperture — camera may pin wide open and overexpose in bright scenes",
-    "Add ND when aperture hits minimum and image still blows out",
-    "Match shutter-priority settings across B-roll operators for consistent feel"
+    "Set shutter based on motion needs.",
+    "Monitor aperture to avoid underexposure.",
+    "Raise ISO if aperture maxes out.",
+    "Use exposure compensation to fine‑tune."
   ],
-  "proTip": "",
-  "commonMistake": ""
+  "proTip": "Use Shutter Priority for fast-moving subjects outdoors.",
+  "commonMistake": "Forgetting aperture may hit its limit and cause underexposure."
 }

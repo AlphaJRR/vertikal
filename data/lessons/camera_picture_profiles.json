@@ -3,16 +3,15 @@
   "tab": "camera",
   "type": "STATIC",
   "title": "Picture Profiles",
-  "description": "In-camera color and gamma curves. Choose based on how much grade work you want.",
-  "guide": "",
-  "keyRule": "",
+  "description": "Picture profiles define the look of your footage in‑camera. They matter because they affect contrast, color, and dynamic range.",
+  "guide": "Standard profiles look finished but limit grading. Log profiles look flat but preserve detail. Choose based on workflow and turnaround time.",
+  "keyRule": "Choose profiles based on grading needs — not habit.",
   "howTo": [
-    "S-Log3 / V-Log / C-Log for maximum dynamic range — expose carefully",
-    "HLG for fast turnaround HDR delivery without heavy grading",
-    "Standard/rec709 for same-day social clips with minimal post",
-    "Set black level, knee, and saturation once — save as a custom profile",
-    "Never change picture profile mid-interview — match across all angles"
+    "Pick Standard for fast delivery.",
+    "Pick Log for cinematic grading.",
+    "Use monitoring LUTs for Log.",
+    "Expose Log brighter to avoid noise."
   ],
-  "proTip": "",
-  "commonMistake": ""
+  "proTip": "Use Log only when you plan to grade intentionally.",
+  "commonMistake": "Underexposing Log and creating noisy shadows."
 }

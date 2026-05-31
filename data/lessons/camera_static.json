@@ -3,16 +3,15 @@
   "tab": "camera",
   "type": "STATIC",
   "title": "Static",
-  "description": "Locked-off frames signal confidence. Let performance and lighting carry the shot.",
-  "guide": "",
-  "keyRule": "",
+  "description": "Locked-off shots create stability and focus. They matter because they feel intentional and professional.",
+  "guide": "Use a tripod or solid surface. Frame precisely. Let the subject or scene provide the motion.",
+  "keyRule": "If the camera doesn't move, the composition must be perfect.",
   "howTo": [
-    "Heavy tripod or c-stand sandbagged — no drift on long interview takes",
-    "Use static for dialogue masters and product beauty — cut movement with purpose",
-    "Frame for the edit — leave headroom and look space consistent across takes",
-    "Record 30 seconds of static room tone and empty frame for transitions",
-    "Static does not mean boring — light for depth and let subjects move within frame"
+    "Level the tripod.",
+    "Frame with purpose.",
+    "Lock all adjustments.",
+    "Avoid touching the camera during takes."
   ],
-  "proTip": "",
-  "commonMistake": ""
+  "proTip": "Use static shots to contrast dynamic sequences.",
+  "commonMistake": "Crooked horizons or sloppy framing."
 }

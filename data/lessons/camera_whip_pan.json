@@ -3,16 +3,15 @@
   "tab": "camera",
   "type": "STATIC",
   "title": "Whip Pan",
-  "description": "Fast pan blur to hide a cut or jump time. Rhythm tool for montage and music video.",
-  "guide": "",
-  "keyRule": "",
+  "description": "Whip pans create fast, energetic transitions. They matter because they add momentum and hide cuts.",
+  "guide": "Start and end with a fast horizontal motion. Match direction and speed between shots for seamless transitions.",
+  "keyRule": "Motion blur hides the cut.",
   "howTo": [
-    "Start and end on blurred motion — cut on the blur, not on a sharp frame",
-    "Use 1/30–1/60 shutter for longer motion streaks during the whip",
-    "Match direction and speed in the edit — whip out of scene A, whip into scene B",
-    "Practice the same arc three times — pick the cleanest whip for the cut point",
-    "Pair with sound whoosh or music hit — audio sells what the eye barely sees"
+    "Start with a clean frame.",
+    "Whip quickly left or right.",
+    "Match the direction on the next shot.",
+    "Cut at peak blur."
   ],
-  "proTip": "",
-  "commonMistake": ""
+  "proTip": "Shoot at a higher shutter speed to keep the blur clean.",
+  "commonMistake": "Whipping too slowly and revealing the cut."
 }

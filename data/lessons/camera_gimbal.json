@@ -3,16 +3,15 @@
   "tab": "camera",
   "type": "STATIC",
   "title": "Gimbal",
-  "description": "Smooth floating moves for reveals, walk-and-talk, and product orbit.",
-  "guide": "",
-  "keyRule": "",
+  "description": "Gimbals create smooth, floating movement. They matter because they add polish and cinematic motion.",
+  "guide": "Balance the camera, walk heel‑to‑toe, and keep movements slow and intentional. Let the gimbal do the stabilization — not your arms.",
+  "keyRule": "Smooth steps = smooth footage.",
   "howTo": [
-    "Balance on stand first — save 10 minutes of fighting mid-shoot",
-    "Use underslung mode for low hero angles on products and footwear",
-    "Walk backward with a spotter — forward-facing gimbal moves read cinematic",
-    "Combine slow push with slight parallax — do not just float randomly",
-    "Disable in-camera stabilization when on gimbal — let the gimbal do the work"
+    "Balance the gimbal perfectly.",
+    "Use slow, controlled movements.",
+    "Keep horizon level.",
+    "Avoid sudden pans or tilts."
   ],
-  "proTip": "",
-  "commonMistake": ""
+  "proTip": "Use \"follow\" mode for natural movement and \"lock\" mode for precision.",
+  "commonMistake": "Running with a gimbal and creating bounce."
 }

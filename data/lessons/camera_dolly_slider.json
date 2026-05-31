@@ -3,16 +3,15 @@
   "tab": "camera",
   "type": "STATIC",
   "title": "Dolly / Slider",
-  "description": "Controlled linear motion for reveals, product pushes, and slow tension.",
-  "guide": "",
-  "keyRule": "",
+  "description": "Dolly and slider moves add controlled, cinematic motion. They matter because they feel intentional and smooth.",
+  "guide": "Use slow, consistent movement. Dolly reveals space; sliders add subtle parallax.",
+  "keyRule": "Movement must serve the story — not distract.",
   "howTo": [
-    "Level the slider — uneven rails add accidental Dutch and drift",
-    "Mark start and end points with tape for repeatable takes",
-    "Move slow — 15–30 second pushes feel premium; fast slides feel like B-roll filler",
-    "Parallax foreground objects (plants, columns) to sell depth on slider moves",
-    "Motorized slider for interviews — consistent speed beats hand-crank wobble"
+    "Set a slow, steady pace.",
+    "Keep subject distance consistent.",
+    "Use foreground elements for parallax.",
+    "Avoid speed changes mid‑move."
   ],
-  "proTip": "",
-  "commonMistake": ""
+  "proTip": "Use sliders for micro‑moves that elevate simple shots.",
+  "commonMistake": "Moving too fast and losing cinematic feel."
 }
