@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Pressable, ScrollView, Text, View } from "react-native";
+import { Modal, Pressable, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import {
   getCategoriesByTab,
@@ -51,12 +51,7 @@ export function CreatorTraining() {
         </Text>
       </View>
 
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={s.tabBarScroll}
-        contentContainerStyle={s.tabBar}
-      >
+      <View style={s.tabBar}>
         {TOOLKIT_TABS.map((tab) => {
           const active = tab.id === activeTab;
           return (
@@ -71,7 +66,7 @@ export function CreatorTraining() {
             </Pressable>
           );
         })}
-      </ScrollView>
+      </View>
 
       <Text style={s.tabMeta}>
         {tabLessonCount} lessons in this track

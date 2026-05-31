@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { brandColors, brandFonts } from "../../constants/theme";
 import { toolkitLessonCount } from "../../data/toolkitCurriculum";
 import { CreatorTraining } from "../../components/toolkit/CreatorTraining";
@@ -63,8 +64,12 @@ export default function ToolsScreen() {
         paddingHorizontal: 20,
       }}
       showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="handled"
+      nestedScrollEnabled
     >
-      <CreatorTraining />
+      <ErrorBoundary>
+        <CreatorTraining />
+      </ErrorBoundary>
 
       <Pressable
         onPress={() => setSubScreen("training")}

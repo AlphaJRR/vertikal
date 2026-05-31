@@ -30,11 +30,9 @@ export const creatorTrainingStyles = StyleSheet.create({
     color: brandColors.subtleText,
     marginTop: 8,
   },
-  tabBarScroll: {
-    marginBottom: 0,
-  },
   tabBar: {
     flexDirection: "row",
+    flexWrap: "wrap",
     borderBottomWidth: 1,
     borderBottomColor: brandColors.borderGray,
     marginBottom: 0,
