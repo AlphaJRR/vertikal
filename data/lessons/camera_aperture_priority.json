@@ -1,7 +1,7 @@
 {
   "id": "camera_aperture_priority",
   "tab": "camera",
-  "type": "STATIC",
+  "type": "HTML_PRESENTATION",
   "title": "Aperture Priority",
   "description": "Aperture Priority lets you control depth of field while the camera sets shutter speed automatically.",
   "guide": "You choose the f‑stop; the camera adjusts shutter to maintain exposure. Great for portraits, interviews, and controlled depth.",
@@ -13,5 +13,6 @@
     "Keep ISO low for clean images."
   ],
   "proTip": "Use Aperture Priority when lighting changes quickly but depth must stay consistent.",
-  "commonMistake": "Letting shutter drop too low and introducing motion blur."
+  "commonMistake": "Letting shutter drop too low and introducing motion blur.",
+  "slideRef": "slides_aperture_priority"
 }

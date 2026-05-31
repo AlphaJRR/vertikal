@@ -1,7 +1,7 @@
 {
   "id": "camera_shutter_priority",
   "tab": "camera",
-  "type": "STATIC",
+  "type": "HTML_PRESENTATION",
   "title": "Shutter Priority",
   "description": "Shutter Priority locks motion style while the camera adjusts aperture.",
   "guide": "You choose shutter speed; the camera sets aperture. Ideal for sports, action, or stylized motion blur.",
@@ -13,5 +13,6 @@
     "Use exposure compensation to fine‑tune."
   ],
   "proTip": "Use Shutter Priority for fast-moving subjects outdoors.",
-  "commonMistake": "Forgetting aperture may hit its limit and cause underexposure."
+  "commonMistake": "Forgetting aperture may hit its limit and cause underexposure.",
+  "slideRef": "slides_shutter_priority"
 }

@@ -1,7 +1,7 @@
 {
   "id": "camera_whip_pan",
   "tab": "camera",
-  "type": "STATIC",
+  "type": "HTML_PRESENTATION",
   "title": "Whip Pan",
   "description": "Whip pans create fast, energetic transitions. They matter because they add momentum and hide cuts.",
   "guide": "Start and end with a fast horizontal motion. Match direction and speed between shots for seamless transitions.",
@@ -13,5 +13,6 @@
     "Cut at peak blur."
   ],
   "proTip": "Shoot at a higher shutter speed to keep the blur clean.",
-  "commonMistake": "Whipping too slowly and revealing the cut."
+  "commonMistake": "Whipping too slowly and revealing the cut.",
+  "slideRef": "slides_camera_whip_pan"
 }

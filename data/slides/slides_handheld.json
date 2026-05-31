@@ -1,0 +1,47 @@
+{
+  "id": "slides_handheld",
+  "lessonId": "camera_handheld",
+  "title": "Handheld",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "Handheld",
+      "subheading": "Stability first — movement second."
+    },
+    {
+      "type": "concept",
+      "heading": "Why It Matters",
+      "bullets": [
+        "Handheld shooting adds energy and realism.",
+        "It matters because it creates an immersive, human feel.",
+        "Use controlled micro-movements, stable posture, and intentional motion."
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "Visual Guide",
+      "image": "ava/camera/handheld.png",
+      "caption": "Use controlled micro-movements, stable posture, and intentional motion."
+    },
+    {
+      "type": "steps",
+      "heading": "How To",
+      "steps": [
+        "Tuck elbows in.",
+        "Use your body as a shock absorber.",
+        "Move intentionally, not randomly.",
+        "Add subtle motion to avoid static shake."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "Pro Tip",
+      "text": "Use a wider lens to hide micro‑shake."
+    },
+    {
+      "type": "warning",
+      "heading": "Common Mistake",
+      "text": "Over‑shaking the camera and calling it \"handheld style.\""
+    }
+  ]
+}

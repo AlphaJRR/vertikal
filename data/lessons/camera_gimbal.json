@@ -1,7 +1,7 @@
 {
   "id": "camera_gimbal",
   "tab": "camera",
-  "type": "STATIC",
+  "type": "HTML_PRESENTATION",
   "title": "Gimbal",
   "description": "Gimbals create smooth, floating movement. They matter because they add polish and cinematic motion.",
   "guide": "Balance the camera, walk heel‑to‑toe, and keep movements slow and intentional. Let the gimbal do the stabilization — not your arms.",
@@ -13,5 +13,6 @@
     "Avoid sudden pans or tilts."
   ],
   "proTip": "Use \"follow\" mode for natural movement and \"lock\" mode for precision.",
-  "commonMistake": "Running with a gimbal and creating bounce."
+  "commonMistake": "Running with a gimbal and creating bounce.",
+  "slideRef": "slides_gimbal"
 }

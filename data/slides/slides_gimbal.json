@@ -1,0 +1,47 @@
+{
+  "id": "slides_gimbal",
+  "lessonId": "camera_gimbal",
+  "title": "Gimbal",
+  "slides": [
+    {
+      "type": "title",
+      "heading": "Gimbal",
+      "subheading": "Smooth steps = smooth footage."
+    },
+    {
+      "type": "concept",
+      "heading": "Why It Matters",
+      "bullets": [
+        "Gimbals create smooth, floating movement.",
+        "They matter because they add polish and cinematic motion.",
+        "Balance the camera, walk heel‑to‑toe, and keep movements slow and intentional."
+      ]
+    },
+    {
+      "type": "diagram",
+      "heading": "Visual Guide",
+      "image": "ava/camera/gimbal.png",
+      "caption": "Balance the camera, walk heel‑to‑toe, and keep movements slow and intentional."
+    },
+    {
+      "type": "steps",
+      "heading": "How To",
+      "steps": [
+        "Balance the gimbal perfectly.",
+        "Use slow, controlled movements.",
+        "Keep horizon level.",
+        "Avoid sudden pans or tilts."
+      ]
+    },
+    {
+      "type": "callout",
+      "heading": "Pro Tip",
+      "text": "Use \"follow\" mode for natural movement and \"lock\" mode for precision."
+    },
+    {
+      "type": "warning",
+      "heading": "Common Mistake",
+      "text": "Running with a gimbal and creating bounce."
+    }
+  ]
+}
