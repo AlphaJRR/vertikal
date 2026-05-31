@@ -22,7 +22,7 @@ ON CONFLICT (id) DO UPDATE SET
   allowed_mime_types = EXCLUDED.allowed_mime_types;
 
 -- Users can read/write their own logo folder
-CREATE POLICY IF NOT EXISTS "Users can upload own invoice logos"
+CREATE POLICY "Users can upload own invoice logos"
   ON storage.objects FOR INSERT
   WITH CHECK (
     bucket_id = 'creator-assets'
@@ -30,7 +30,7 @@ CREATE POLICY IF NOT EXISTS "Users can upload own invoice logos"
     AND (storage.foldername(name))[1] = 'logos'
   );
 
-CREATE POLICY IF NOT EXISTS "Users can update own invoice logos"
+CREATE POLICY "Users can update own invoice logos"
   ON storage.objects FOR UPDATE
   USING (
     bucket_id = 'creator-assets'
@@ -38,7 +38,7 @@ CREATE POLICY IF NOT EXISTS "Users can update own invoice logos"
     AND (storage.foldername(name))[1] = 'logos'
   );
 
-CREATE POLICY IF NOT EXISTS "Users can delete own invoice logos"
+CREATE POLICY "Users can delete own invoice logos"
   ON storage.objects FOR DELETE
   USING (
     bucket_id = 'creator-assets'
@@ -46,6 +46,6 @@ CREATE POLICY IF NOT EXISTS "Users can delete own invoice logos"
     AND (storage.foldername(name))[1] = 'logos'
   );
 
-CREATE POLICY IF NOT EXISTS "Public read creator assets"
+CREATE POLICY "Public read creator assets"
   ON storage.objects FOR SELECT
   USING (bucket_id = 'creator-assets');
