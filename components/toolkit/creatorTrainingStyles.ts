@@ -23,16 +23,27 @@ export const creatorTrainingStyles = StyleSheet.create({
     textTransform: "uppercase",
     letterSpacing: 0.5,
   },
+  sectionSubtitle: {
+    fontFamily: brandFonts.body,
+    fontSize: 12,
+    lineHeight: 18,
+    color: brandColors.subtleText,
+    marginTop: 8,
+  },
+  tabBarScroll: {
+    marginBottom: 0,
+  },
   tabBar: {
     flexDirection: "row",
     borderBottomWidth: 1,
     borderBottomColor: brandColors.borderGray,
-    marginBottom: 16,
+    marginBottom: 0,
   },
   tab: {
-    flex: 1,
+    minWidth: 92,
     alignItems: "center",
     paddingVertical: 10,
+    paddingHorizontal: 8,
     borderBottomWidth: 2,
     borderBottomColor: "transparent",
   },
@@ -48,6 +59,15 @@ export const creatorTrainingStyles = StyleSheet.create({
   },
   tabLabelActive: {
     color: brandColors.pureWhite,
+  },
+  tabMeta: {
+    fontFamily: brandFonts.mono,
+    fontSize: 10,
+    letterSpacing: 1.2,
+    textTransform: "uppercase",
+    color: brandColors.inactiveTab,
+    marginTop: 10,
+    marginBottom: 16,
   },
   categoryPanel: {
     backgroundColor: brandColors.deepBlack,

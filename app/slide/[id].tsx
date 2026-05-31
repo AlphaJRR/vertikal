@@ -4,35 +4,50 @@ import { View, Text, Pressable, StyleSheet } from "react-native";
 import { ToolkitHtmlSlideView } from "../../components/toolkit/ToolkitHtmlSlideView";
 import { ToolkitSlideView } from "../../components/toolkit/ToolkitSlideView";
 import { getSlideById } from "../../data/toolkitContent";
+import { getLessonByHtmlSlideId } from "../../data/toolkitCurriculum";
 import { isBundledHtmlSlidePath } from "../../data/toolkitSlideAssets";
 
 export default function SlideDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const slide = id ? getSlideById(id) : undefined;
+  const curriculumLesson = id ? getLessonByHtmlSlideId(id) : undefined;
 
-  if (!slide) {
-    return (
-      <View style={styles.missing}>
-        <Text style={styles.missingTitle}>Slide not found</Text>
-        <Pressable onPress={() => router.back()}>
-          <Text style={styles.back}>← Go back</Text>
-        </Pressable>
-      </View>
-    );
+  if (slide) {
+    if (slide.htmlPath && isBundledHtmlSlidePath(slide.htmlPath)) {
+      return (
+        <ToolkitHtmlSlideView
+          htmlPath={slide.htmlPath}
+          title={slide.title}
+          onBack={() => router.back()}
+        />
+      );
+    }
+
+    return <ToolkitSlideView slide={slide} onBack={() => router.back()} />;
   }
 
-  if (slide.htmlPath && isBundledHtmlSlidePath(slide.htmlPath)) {
+  if (
+    curriculumLesson?.htmlSlidePath &&
+    isBundledHtmlSlidePath(curriculumLesson.htmlSlidePath)
+  ) {
     return (
       <ToolkitHtmlSlideView
-        htmlPath={slide.htmlPath}
-        title={slide.title}
+        htmlPath={curriculumLesson.htmlSlidePath}
+        title={curriculumLesson.title}
         onBack={() => router.back()}
       />
     );
   }
 
-  return <ToolkitSlideView slide={slide} onBack={() => router.back()} />;
+  return (
+    <View style={styles.missing}>
+      <Text style={styles.missingTitle}>Slide not found</Text>
+      <Pressable onPress={() => router.back()}>
+        <Text style={styles.back}>← Go back</Text>
+      </Pressable>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

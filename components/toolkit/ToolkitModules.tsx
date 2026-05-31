@@ -1,13 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { Ionicons } from "@expo/vector-icons";
-import {
-  ToolkitSlide,
-  getSlidesByCategory,
-  toolkitCategories,
-} from "../../data/toolkitContent";
-import { ToolkitSlideView } from "./ToolkitSlideView";
+import { CreatorTraining } from "./CreatorTraining";
 import { InvoiceBuilderSection } from "./InvoiceBuilder";
 import { toolkitStyles as s } from "./toolkitStyles";
 
@@ -42,85 +36,21 @@ function ToolkitModuleShell({
   );
 }
 
-type TrainingView =
-  | { mode: "categories" }
-  | { mode: "category"; categoryId: string }
-  | { mode: "slide"; slide: ToolkitSlide };
-
 export function TrainingModule({ onBack }: ModuleProps) {
-  const [view, setView] = useState<TrainingView>({ mode: "categories" });
-
-  if (view.mode === "slide") {
-    return (
-      <ToolkitSlideView
-        slide={view.slide}
-        onBack={() =>
-          setView({ mode: "category", categoryId: view.slide.categoryId })
-        }
-      />
-    );
-  }
-
-  if (view.mode === "category") {
-    const category = toolkitCategories.find((c) => c.id === view.categoryId);
-    const slides = getSlidesByCategory(view.categoryId);
-    return (
-      <ToolkitModuleShell
-        title={category?.name ?? "Category"}
-        subtitle={`${slides.length} lessons`}
-        onBack={() => setView({ mode: "categories" })}
-      >
-        {slides.map((slide) => (
-          <Pressable
-            key={slide.id}
-            onPress={() => setView({ mode: "slide", slide })}
-            style={s.menuCard}
-          >
-            <View style={[s.menuIcon, { backgroundColor: `${category?.color ?? "#00d4ff"}22` }]}>
-              <Text style={{ color: category?.color ?? "#00d4ff", fontWeight: "800", fontSize: 12 }}>
-                {slide.num || "•"}
-              </Text>
-            </View>
-            <View style={{ flex: 1 }}>
-              <Text style={s.menuTitle}>{slide.title}</Text>
-              <Text style={s.menuDesc} numberOfLines={2}>
-                {slide.summary}
-              </Text>
-            </View>
-            <Ionicons name="chevron-forward" size={20} color="#737373" />
-          </Pressable>
-        ))}
-      </ToolkitModuleShell>
-    );
-  }
-
   return (
-    <ToolkitModuleShell
-      title="Creator Training"
-      subtitle="37 lessons from the AVA Creators Toolkit"
-      onBack={onBack}
+    <ScrollView
+      style={s.screen}
+      contentContainerStyle={[
+        s.content,
+        { paddingTop: 8, paddingBottom: 24 },
+      ]}
+      showsVerticalScrollIndicator={false}
     >
-      {toolkitCategories.map((cat) => (
-        <Pressable
-          key={cat.id}
-          onPress={() => setView({ mode: "category", categoryId: cat.id })}
-          style={s.menuCard}
-        >
-          <View style={[s.menuIcon, { backgroundColor: `${cat.color}22` }]}>
-            <Ionicons
-              name={cat.icon as React.ComponentProps<typeof Ionicons>["name"]}
-              size={22}
-              color={cat.color}
-            />
-          </View>
-          <View style={{ flex: 1 }}>
-            <Text style={s.menuTitle}>{cat.name}</Text>
-            <Text style={s.menuDesc}>{cat.slideCount} slides · tap to browse</Text>
-          </View>
-          <Ionicons name="chevron-forward" size={20} color="#737373" />
-        </Pressable>
-      ))}
-    </ToolkitModuleShell>
+      <Pressable onPress={onBack}>
+        <Text style={s.backTxt}>← Toolkit</Text>
+      </Pressable>
+      <CreatorTraining />
+    </ScrollView>
   );
 }
 

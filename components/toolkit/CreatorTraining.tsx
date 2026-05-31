@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Pressable, ScrollView, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import {
   getCategoriesByTab,
   getLessonById,
   TOOLKIT_TABS,
+  toolkitLessonCount,
   ToolkitLesson,
   ToolkitTab,
 } from "../../data/toolkitCurriculum";
@@ -21,6 +22,14 @@ export function CreatorTraining() {
   const { toggleSaved, isSaved } = useSavedLessons();
 
   const categories = getCategoriesByTab(activeTab);
+  const tabLessonCount = categories.reduce(
+    (total, category) => total + category.lessons.length,
+    0,
+  );
+
+  useEffect(() => {
+    setExpandedCategories(new Set());
+  }, [activeTab]);
 
   const toggleCategory = (id: string) => {
     setExpandedCategories((prev) => {
@@ -36,9 +45,18 @@ export function CreatorTraining() {
       <View style={s.sectionHeader}>
         <Text style={s.sectionEyebrow}>Creator Training</Text>
         <Text style={s.sectionTitle}>Creators Toolkit</Text>
+        <Text style={s.sectionSubtitle}>
+          {toolkitLessonCount} lessons · {TOOLKIT_TABS.length} tracks · HTML slide
+          decks
+        </Text>
       </View>
 
-      <View style={s.tabBar}>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        style={s.tabBarScroll}
+        contentContainerStyle={s.tabBar}
+      >
         {TOOLKIT_TABS.map((tab) => {
           const active = tab.id === activeTab;
           return (
@@ -53,7 +71,11 @@ export function CreatorTraining() {
             </Pressable>
           );
         })}
-      </View>
+      </ScrollView>
+
+      <Text style={s.tabMeta}>
+        {tabLessonCount} lessons in this track
+      </Text>
 
       {categories.map((cat) => {
         const open = expandedCategories.has(cat.id);

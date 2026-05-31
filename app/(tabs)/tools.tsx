@@ -3,6 +3,7 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { brandColors, brandFonts } from "../../constants/theme";
+import { toolkitLessonCount } from "../../data/toolkitCurriculum";
 import { CreatorTraining } from "../../components/toolkit/CreatorTraining";
 import { ProductionChecklistsSection } from "../../components/toolkit/ProductionChecklistsSection";
 import { PresetsManager } from "../../components/toolkit/PresetsManager";
@@ -10,7 +11,7 @@ import { SonyShootingModes } from "../../components/toolkit/SonyShootingModes";
 import { RateCalculator } from "../../components/toolkit/RateCalculator";
 import { InvoiceBuilderSection } from "../../components/toolkit/InvoiceBuilder";
 import { ShootCalculator } from "../../components/toolkit/ShootCalculator";
-import { ShortcutsModule } from "../../components/toolkit/ToolkitModules";
+import { ShortcutsModule, TrainingModule } from "../../components/toolkit/ToolkitModules";
 import { menuItems, ToolkitMenuId } from "../../components/toolkit/ToolkitNavigator";
 
 type SubScreen = "main" | ToolkitMenuId;
@@ -44,6 +45,9 @@ export default function ToolsScreen() {
   if (subScreen === "shortcuts") {
     return <ShortcutsModule onBack={goMain} />;
   }
+  if (subScreen === "training") {
+    return <TrainingModule onBack={goMain} />;
+  }
 
   const moreTools = menuItems.filter(
     (item) =>
@@ -61,6 +65,22 @@ export default function ToolsScreen() {
       showsVerticalScrollIndicator={false}
     >
       <CreatorTraining />
+
+      <Pressable
+        onPress={() => setSubScreen("training")}
+        style={styles.moreCard}
+      >
+        <View style={[styles.moreIcon, { backgroundColor: "rgba(58,134,255,0.13)" }]}>
+          <Ionicons name="school-outline" size={20} color="#3a86ff" />
+        </View>
+        <View style={{ flex: 1 }}>
+          <Text style={styles.moreTitle}>Open Full Training Library</Text>
+          <Text style={styles.moreDesc}>
+            Browse all {toolkitLessonCount} lessons with slide decks and Production 101
+          </Text>
+        </View>
+        <Ionicons name="chevron-forward" size={18} color={brandColors.inactiveTab} />
+      </Pressable>
 
       <View style={styles.section}>
         <Text style={styles.eyebrow}>Rate Calculator</Text>

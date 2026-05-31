@@ -2440,6 +2440,15 @@ export function getLessonById(id: string): ToolkitLesson | undefined {
   return toolkitLessons.find((l) => l.id === id);
 }
 
+/** Resolve a slide route id (`htmlSlideId` or lesson `id`) to a curriculum lesson. */
+export function getLessonByHtmlSlideId(slideId: string): ToolkitLesson | undefined {
+  return toolkitLessons.find(
+    (l) => l.htmlSlideId === slideId || l.id === slideId,
+  );
+}
+
+export const toolkitLessonCount = toolkitLessons.length;
+
 export const lessonCountByTab: Record<ToolkitTab, number> = {
   "camera": 25,
   "framing": 16,
