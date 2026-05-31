@@ -1,6 +1,7 @@
 import React from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { View, Text, Pressable, StyleSheet } from "react-native";
+import { ErrorBoundary } from "../../components/ErrorBoundary";
 import { ToolkitHtmlSlideView } from "../../components/toolkit/ToolkitHtmlSlideView";
 import { ToolkitSlideView } from "../../components/toolkit/ToolkitSlideView";
 import { getSlideById } from "../../data/toolkitContent";
@@ -16,11 +17,13 @@ export default function SlideDetailScreen() {
   if (slide) {
     if (slide.htmlPath && isBundledHtmlSlidePath(slide.htmlPath)) {
       return (
-        <ToolkitHtmlSlideView
-          htmlPath={slide.htmlPath}
-          title={slide.title}
-          onBack={() => router.back()}
-        />
+        <ErrorBoundary>
+          <ToolkitHtmlSlideView
+            htmlPath={slide.htmlPath}
+            title={slide.title}
+            onBack={() => router.back()}
+          />
+        </ErrorBoundary>
       );
     }
 
@@ -32,11 +35,13 @@ export default function SlideDetailScreen() {
     isBundledHtmlSlidePath(curriculumLesson.htmlSlidePath)
   ) {
     return (
-      <ToolkitHtmlSlideView
-        htmlPath={curriculumLesson.htmlSlidePath}
-        title={curriculumLesson.title}
-        onBack={() => router.back()}
-      />
+      <ErrorBoundary>
+        <ToolkitHtmlSlideView
+          htmlPath={curriculumLesson.htmlSlidePath}
+          title={curriculumLesson.title}
+          onBack={() => router.back()}
+        />
+      </ErrorBoundary>
     );
   }
 

@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Pressable, Text, View, StyleSheet } from "react-native";
+import {
+  ActivityIndicator,
+  InteractionManager,
+  Pressable,
+  Text,
+  View,
+  StyleSheet,
+} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { WebView } from "react-native-webview";
-import { resolveToolkitHtmlUri } from "../../data/toolkitSlideAssets";
+import { resolveToolkitSlideHtml } from "../../data/toolkitSlideAssets";
 import { brandColors } from "../../constants/theme";
 
 interface ToolkitHtmlSlideViewProps {
@@ -11,22 +17,37 @@ interface ToolkitHtmlSlideViewProps {
   onBack: () => void;
 }
 
+type WebViewComponent = React.ComponentType<{
+  source: { html: string; baseUrl?: string };
+  style: object;
+  originWhitelist: string[];
+  allowsInlineMediaPlayback?: boolean;
+  javaScriptEnabled?: boolean;
+  domStorageEnabled?: boolean;
+  scrollEnabled?: boolean;
+  setSupportMultipleWindows?: boolean;
+  onError?: () => void;
+  onHttpError?: () => void;
+}>;
+
 export function ToolkitHtmlSlideView({
   htmlPath,
   title,
   onBack,
 }: ToolkitHtmlSlideViewProps) {
   const insets = useSafeAreaInsets();
-  const [uri, setUri] = useState<string | null>(null);
+  const [html, setHtml] = useState<string | null>(null);
   const [error, setError] = useState(false);
+  const [WebView, setWebView] = useState<WebViewComponent | null>(null);
+  const [webViewReady, setWebViewReady] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
-    resolveToolkitHtmlUri(htmlPath)
-      .then((resolved) => {
+    resolveToolkitSlideHtml(htmlPath)
+      .then((document) => {
         if (!cancelled) {
-          setUri(resolved);
-          setError(resolved == null);
+          setHtml(document);
+          setError(document == null);
         }
       })
       .catch(() => {
@@ -36,6 +57,29 @@ export function ToolkitHtmlSlideView({
       cancelled = true;
     };
   }, [htmlPath]);
+
+  useEffect(() => {
+    if (!html) return;
+
+    let cancelled = false;
+    const task = InteractionManager.runAfterInteractions(() => {
+      requestAnimationFrame(() => {
+        if (cancelled) return;
+        try {
+          const { WebView: NativeWebView } = require("react-native-webview");
+          setWebView(() => NativeWebView);
+          setWebViewReady(true);
+        } catch {
+          setError(true);
+        }
+      });
+    });
+
+    return () => {
+      cancelled = true;
+      task.cancel();
+    };
+  }, [html]);
 
   return (
     <View style={[styles.screen, { paddingTop: insets.top }]}>
@@ -50,21 +94,25 @@ export function ToolkitHtmlSlideView({
         <View style={styles.centered}>
           <Text style={styles.errorTitle}>Presentation unavailable</Text>
           <Text style={styles.errorBody}>
-            This cheat sheet is not bundled in the app yet.
+            This cheat sheet could not be loaded. Go back and try again.
           </Text>
         </View>
-      ) : uri == null ? (
+      ) : html == null || !webViewReady || WebView == null ? (
         <View style={styles.centered}>
           <ActivityIndicator color={brandColors.alphaRed} />
         </View>
       ) : (
         <WebView
-          source={{ uri }}
+          source={{ html, baseUrl: "about:blank" }}
           style={styles.webview}
           originWhitelist={["*"]}
           allowsInlineMediaPlayback
-          javaScriptEnabled
-          domStorageEnabled
+          javaScriptEnabled={false}
+          domStorageEnabled={false}
+          scrollEnabled
+          setSupportMultipleWindows={false}
+          onError={() => setError(true)}
+          onHttpError={() => setError(true)}
         />
       )}
     </View>

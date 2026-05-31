@@ -1,9 +1,10 @@
+import { Image } from "expo-image";
 import React from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-/** 2026 AVA app logo asset. */
-const BRAND_LOGO = require("../assets/images/ava-app-logo-2026.png");
+/** True RGBA logo extracted from ProRes — no white fill. */
+const BRAND_LOGO = require("../assets/images/ava-logo-transparent.png");
 
 type BrandLogoBarProps = {
   /** Compact watermark vs slightly larger on home-adjacent screens */
@@ -23,7 +24,9 @@ export function BrandLogoBar({ size = "compact" }: BrandLogoBarProps) {
       <Image
         source={BRAND_LOGO}
         style={[styles.logo, dims]}
-        resizeMode="contain"
+        contentFit="contain"
+        transition={0}
+        cachePolicy="memory-disk"
       />
     </View>
   );

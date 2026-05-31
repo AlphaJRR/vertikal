@@ -1,4 +1,7 @@
 import { Asset } from "expo-asset";
+import * as FileSystem from "expo-file-system";
+
+const TOOLKIT_CSS_MODULE = require("../assets/creators-toolkit/css/ava-toolkit.css");
 
 export {
   AVA_DIAGRAM_ASSETS,
@@ -60,6 +63,15 @@ const BUNDLED_HTML_SLIDES: Record<string, number> = {
 };
 
 const uriCache = new Map<string, string>();
+const htmlCache = new Map<string, string>();
+
+async function readBundledAssetText(moduleId: number): Promise<string | null> {
+  const asset = Asset.fromModule(moduleId);
+  await asset.downloadAsync();
+  const uri = asset.localUri ?? asset.uri;
+  if (!uri) return null;
+  return FileSystem.readAsStringAsync(uri);
+}
 
 export function isBundledHtmlSlidePath(htmlPath: string): boolean {
   return htmlPath in BUNDLED_HTML_SLIDES;
@@ -78,4 +90,26 @@ export async function resolveToolkitHtmlUri(htmlPath: string): Promise<string | 
   const uri = asset.localUri ?? asset.uri;
   if (uri) uriCache.set(htmlPath, uri);
   return uri ?? null;
+}
+
+/** Inline CSS into bundled HTML for stable WebView rendering on iOS 26. */
+export async function resolveToolkitSlideHtml(htmlPath: string): Promise<string | null> {
+  const cached = htmlCache.get(htmlPath);
+  if (cached) return cached;
+
+  const moduleId = BUNDLED_HTML_SLIDES[htmlPath];
+  if (moduleId == null) return null;
+
+  const [html, css] = await Promise.all([
+    readBundledAssetText(moduleId),
+    readBundledAssetText(TOOLKIT_CSS_MODULE),
+  ]);
+  if (!html || !css) return null;
+
+  const document = html.replace(
+    /<link[^>]*href="[^"]*ava-toolkit\.css"[^>]*>/i,
+    `<style>${css}</style>`,
+  );
+  htmlCache.set(htmlPath, document);
+  return document;
 }
