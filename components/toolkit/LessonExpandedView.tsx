@@ -1,7 +1,6 @@
 import React from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useRouter, type Href } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { ToolkitLesson } from "../../data/toolkitCurriculum";
 import { brandColors } from "../../constants/theme";
@@ -16,6 +15,7 @@ export interface LessonExpandedViewProps {
   onBack: () => void;
   onToggleSave: () => void;
   onOpenLesson?: (lessonId: string) => void;
+  onOpenSlide?: (slideId: string) => void;
 }
 
 export function LessonExpandedView({
@@ -24,9 +24,9 @@ export function LessonExpandedView({
   onBack,
   onToggleSave,
   onOpenLesson,
+  onOpenSlide,
 }: LessonExpandedViewProps) {
   const insets = useSafeAreaInsets();
-  const router = useRouter();
   const isHtmlPresentation =
     lesson.type === "html_presentation" &&
     (lesson.htmlSlideId != null || lesson.htmlSlidePath != null);
@@ -34,7 +34,7 @@ export function LessonExpandedView({
 
   const openPresentation = () => {
     if (presentationSlideId) {
-      router.push(`/slide/${presentationSlideId}` as Href);
+      onOpenSlide?.(presentationSlideId);
     }
   };
 
@@ -51,11 +51,11 @@ export function LessonExpandedView({
 
   const showLegacyPlaceholder =
     !guideImagePath &&
-    lesson.images.length === 0 &&
+    (lesson.images?.length ?? 0) === 0 &&
     hasRichContent;
 
   return (
-    <View style={[s.expandedOverlay, { paddingTop: insets.top }]}>
+    <View style={s.expandedOverlay}>
       <ScrollView
         style={s.expandedScroll}
         contentContainerStyle={[
@@ -63,6 +63,7 @@ export function LessonExpandedView({
           { paddingBottom: insets.bottom + 32 },
         ]}
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
       >
         <Pressable onPress={onBack}>
           <Text style={s.backLink}>← Back to lessons</Text>
@@ -122,7 +123,7 @@ export function LessonExpandedView({
           </View>
         ) : null}
 
-        {lesson.images.length > 0 ? (
+        {(lesson.images?.length ?? 0) > 0 ? (
           lesson.images.map((uri) => (
             <LessonGuideImage key={uri} path={uri} />
           ))
@@ -130,7 +131,7 @@ export function LessonExpandedView({
           <View style={s.imagePlaceholder} />
         ) : null}
 
-        {lesson.steps.length > 0 ? (
+        {(lesson.steps?.length ?? 0) > 0 ? (
           <>
             <Text style={s.howToHeader}>How To Do It</Text>
             {lesson.steps.map((step, idx) => (

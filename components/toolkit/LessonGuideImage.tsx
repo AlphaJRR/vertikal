@@ -5,7 +5,7 @@ import { normalizeToolkitImagePath } from "../../utils/lessonContentParser";
 import {
   isAvaDiagramAssetPath,
   resolveAvaDiagramUri,
-} from "../../data/toolkitSlideAssets";
+} from "../../data/toolkitDiagramAssets";
 import { resolveAvaDiagramPath } from "../../data/toolkitSlideLinking";
 
 interface LessonGuideImageProps {

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, Modal, Pressable, Text, View } from "react-native";
+import { Modal, Pressable, Text, View } from "react-native";
+import { useRouter, type Href } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import {
   getCategoriesByTab,
@@ -11,39 +13,10 @@ import {
 } from "../../data/toolkitCurriculum";
 import { useSavedLessons } from "../../hooks/useSavedLessons";
 import { creatorTrainingStyles as s } from "./creatorTrainingStyles";
-import type { LessonExpandedViewProps } from "./LessonExpandedView";
-
-function LazyLessonExpandedView(props: LessonExpandedViewProps) {
-  const [Component, setComponent] = useState<React.ComponentType<LessonExpandedViewProps> | null>(
-    null,
-  );
-
-  useEffect(() => {
-    let cancelled = false;
-    import("./LessonExpandedView")
-      .then((mod) => {
-        if (!cancelled) setComponent(() => mod.LessonExpandedView);
-      })
-      .catch(() => {
-        if (!cancelled) setComponent(null);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  if (!Component) {
-    return (
-      <View style={[s.expandedOverlay, { alignItems: "center", justifyContent: "center" }]}>
-        <ActivityIndicator color="#E8000A" />
-      </View>
-    );
-  }
-
-  return <Component {...props} />;
-}
+import { LessonExpandedView } from "./LessonExpandedView";
 
 export function CreatorTraining() {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<ToolkitTab>("camera");
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(
     new Set(),
@@ -67,6 +40,13 @@ export function CreatorTraining() {
       if (next.has(id)) next.delete(id);
       else next.add(id);
       return next;
+    });
+  };
+
+  const openSlide = (slideId: string) => {
+    setSelectedLesson(null);
+    requestAnimationFrame(() => {
+      router.push(`/slide/${slideId}` as Href);
     });
   };
 
@@ -155,20 +135,23 @@ export function CreatorTraining() {
         presentationStyle="fullScreen"
         onRequestClose={() => setSelectedLesson(null)}
       >
-        {selectedLesson ? (
-          <LazyLessonExpandedView
-            lesson={selectedLesson}
-            saved={isSaved(selectedLesson.id)}
-            onBack={() => setSelectedLesson(null)}
-            onToggleSave={() => toggleSaved(selectedLesson.id)}
-            onOpenLesson={(lessonId) => {
-              const next = getLessonById(lessonId);
-              if (next) {
-                setSelectedLesson({ ...next, saved: isSaved(next.id) });
-              }
-            }}
-          />
-        ) : null}
+        <SafeAreaView style={s.expandedOverlay} edges={["top", "left", "right"]}>
+          {selectedLesson ? (
+            <LessonExpandedView
+              lesson={selectedLesson}
+              saved={isSaved(selectedLesson.id)}
+              onBack={() => setSelectedLesson(null)}
+              onToggleSave={() => toggleSaved(selectedLesson.id)}
+              onOpenLesson={(lessonId) => {
+                const next = getLessonById(lessonId);
+                if (next) {
+                  setSelectedLesson({ ...next, saved: isSaved(next.id) });
+                }
+              }}
+              onOpenSlide={openSlide}
+            />
+          ) : null}
+        </SafeAreaView>
       </Modal>
     </View>
   );

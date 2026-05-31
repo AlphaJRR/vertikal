@@ -169,9 +169,9 @@ export const creatorTrainingStyles = StyleSheet.create({
     marginTop: 10,
   },
   expandedOverlay: {
-    ...StyleSheet.absoluteFillObject,
+    flex: 1,
+    width: "100%",
     backgroundColor: brandColors.avaBlack,
-    zIndex: 100,
   },
   expandedScroll: {
     flex: 1,

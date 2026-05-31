@@ -1,5 +1,5 @@
 import React from "react";
-import { Linking, Text, type TextStyle } from "react-native";
+import { Linking, StyleSheet, Text, View, type TextStyle } from "react-native";
 import { brandColors } from "../../constants/theme";
 import {
   parseLessonTextField,
@@ -27,16 +27,24 @@ function handleLinkPress(
   void Linking.openURL(resolved.url);
 }
 
+function segmentTextStyle(baseStyle: TextStyle): TextStyle {
+  const flat = StyleSheet.flatten(baseStyle) ?? {};
+  const { flex, flexGrow, flexShrink, flexBasis, alignSelf, ...textStyle } = flat;
+  return textStyle;
+}
+
 function renderSegments(
   segments: ContentSegment[],
   baseStyle: TextStyle,
   linkStyle: TextStyle,
   onOpenLesson?: (lessonId: string) => void,
 ) {
+  const innerStyle = segmentTextStyle(baseStyle);
+
   return segments.map((segment, index) => {
     if (segment.type === "text") {
       return (
-        <Text key={`text-${index}`} style={baseStyle}>
+        <Text key={`text-${index}`} style={innerStyle}>
           {segment.value}
         </Text>
       );
@@ -66,10 +74,26 @@ export function LessonRichText({
     color: brandColors.alphaRed,
     textDecorationLine: "underline" as const,
   };
+  const flat = StyleSheet.flatten(style) ?? {};
+  const layoutStyle =
+    flat.flex != null || flat.flexGrow != null || flat.flexShrink != null
+      ? {
+          flex: flat.flex,
+          flexGrow: flat.flexGrow,
+          flexShrink: flat.flexShrink,
+          alignSelf: flat.alignSelf,
+        }
+      : null;
 
-  return (
-    <Text style={style}>
+  const content = (
+    <Text style={segmentTextStyle(style)}>
       {renderSegments(segments, style, resolvedLinkStyle, onOpenLesson)}
     </Text>
   );
+
+  if (layoutStyle) {
+    return <View style={layoutStyle}>{content}</View>;
+  }
+
+  return content;
 }
