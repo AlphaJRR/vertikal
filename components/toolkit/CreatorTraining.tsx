@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Pressable, Text, View } from "react-native";
+import { ActivityIndicator, Modal, Pressable, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import {
   getCategoriesByTab,
@@ -11,7 +11,37 @@ import {
 } from "../../data/toolkitCurriculum";
 import { useSavedLessons } from "../../hooks/useSavedLessons";
 import { creatorTrainingStyles as s } from "./creatorTrainingStyles";
-import { LessonExpandedView } from "./LessonExpandedView";
+import type { LessonExpandedViewProps } from "./LessonExpandedView";
+
+function LazyLessonExpandedView(props: LessonExpandedViewProps) {
+  const [Component, setComponent] = useState<React.ComponentType<LessonExpandedViewProps> | null>(
+    null,
+  );
+
+  useEffect(() => {
+    let cancelled = false;
+    import("./LessonExpandedView")
+      .then((mod) => {
+        if (!cancelled) setComponent(() => mod.LessonExpandedView);
+      })
+      .catch(() => {
+        if (!cancelled) setComponent(null);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  if (!Component) {
+    return (
+      <View style={[s.expandedOverlay, { alignItems: "center", justifyContent: "center" }]}>
+        <ActivityIndicator color="#E8000A" />
+      </View>
+    );
+  }
+
+  return <Component {...props} />;
+}
 
 export function CreatorTraining() {
   const [activeTab, setActiveTab] = useState<ToolkitTab>("camera");
@@ -126,7 +156,7 @@ export function CreatorTraining() {
         onRequestClose={() => setSelectedLesson(null)}
       >
         {selectedLesson ? (
-          <LessonExpandedView
+          <LazyLessonExpandedView
             lesson={selectedLesson}
             saved={isSaved(selectedLesson.id)}
             onBack={() => setSelectedLesson(null)}

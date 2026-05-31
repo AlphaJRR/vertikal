@@ -64,3 +64,6 @@ export const TOOLKIT_TABS: { id: ToolkitTab; label: string }[] = [
 ];
 
 export const SAVED_LESSONS_KEY = "@ava/toolkit/saved-lessons";
+
+/** Total lessons in toolkitCurriculum — avoid importing the full curriculum for UI copy. */
+export const TOOLKIT_LESSON_COUNT = 108;

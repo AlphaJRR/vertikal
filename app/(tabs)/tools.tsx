@@ -1,18 +1,21 @@
-import React, { useState } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  ActivityIndicator,
+  InteractionManager,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { ErrorBoundary } from "../../components/ErrorBoundary";
 import { brandColors, brandFonts } from "../../constants/theme";
-import { toolkitLessonCount } from "../../data/toolkitCurriculum";
-import { CreatorTraining } from "../../components/toolkit/CreatorTraining";
+import { TOOLKIT_LESSON_COUNT } from "../../data/toolkitCurriculumTypes";
 import { ProductionChecklistsSection } from "../../components/toolkit/ProductionChecklistsSection";
-import { PresetsManager } from "../../components/toolkit/PresetsManager";
-import { SonyShootingModes } from "../../components/toolkit/SonyShootingModes";
-import { RateCalculator } from "../../components/toolkit/RateCalculator";
-import { InvoiceBuilderSection } from "../../components/toolkit/InvoiceBuilder";
-import { ShootCalculator } from "../../components/toolkit/ShootCalculator";
-import { ShortcutsModule, TrainingModule } from "../../components/toolkit/ToolkitModules";
+import { ToolsErrorFallback } from "../../components/toolkit/ToolsErrorFallback";
+import { ToolsSubScreen } from "../../components/toolkit/ToolsSubScreen";
 import { menuItems, ToolkitMenuId } from "../../components/toolkit/ToolkitNavigator";
 
 type SubScreen = "main" | ToolkitMenuId;
@@ -25,29 +28,51 @@ export type ViewState =
   | { screen: "shooting-modes" }
   | { screen: "slide"; slideId: string };
 
+function DeferredInvoiceBuilder() {
+  const [Component, setComponent] = useState<React.ComponentType<{
+    showHeader?: boolean;
+  }> | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    const task = InteractionManager.runAfterInteractions(() => {
+      import("../../components/toolkit/InvoiceBuilder")
+        .then((mod) => {
+          if (!cancelled) setComponent(() => mod.InvoiceBuilderSection);
+        })
+        .catch(() => {
+          if (!cancelled) setComponent(null);
+        });
+    });
+    return () => {
+      cancelled = true;
+      task.cancel();
+    };
+  }, []);
+
+  if (!Component) {
+    return (
+      <View style={{ paddingVertical: 24, alignItems: "center" }}>
+        <ActivityIndicator color={brandColors.alphaRed} />
+      </View>
+    );
+  }
+
+  return <Component />;
+}
+
 export default function ToolsScreen() {
   const insets = useSafeAreaInsets();
   const [subScreen, setSubScreen] = useState<SubScreen>("main");
 
   const goMain = () => setSubScreen("main");
 
-  if (subScreen === "calculator") {
-    return <ShootCalculator onBack={goMain} />;
-  }
-  if (subScreen === "rate-calculator") {
-    return <RateCalculator onBack={goMain} />;
-  }
-  if (subScreen === "presets") {
-    return <PresetsManager onBack={goMain} />;
-  }
-  if (subScreen === "shooting-modes") {
-    return <SonyShootingModes onBack={goMain} />;
-  }
-  if (subScreen === "shortcuts") {
-    return <ShortcutsModule onBack={goMain} />;
-  }
-  if (subScreen === "training") {
-    return <TrainingModule onBack={goMain} />;
+  if (subScreen !== "main") {
+    return (
+      <ErrorBoundary FallbackComponent={ToolsErrorFallback}>
+        <ToolsSubScreen id={subScreen} onBack={goMain} />
+      </ErrorBoundary>
+    );
   }
 
   const moreTools = menuItems.filter(
@@ -56,93 +81,100 @@ export default function ToolsScreen() {
   );
 
   return (
-    <ScrollView
-      style={styles.root}
-      contentContainerStyle={{
-        paddingTop: 8,
-        paddingBottom: insets.bottom + 32,
-        paddingHorizontal: 20,
-      }}
-      showsVerticalScrollIndicator={false}
-      keyboardShouldPersistTaps="handled"
-      nestedScrollEnabled
-    >
-      <ErrorBoundary>
-        <CreatorTraining />
-      </ErrorBoundary>
-
-      <Pressable
-        onPress={() => setSubScreen("training")}
-        style={styles.moreCard}
+    <ErrorBoundary FallbackComponent={ToolsErrorFallback}>
+      <ScrollView
+        style={styles.root}
+        contentContainerStyle={{
+          paddingTop: 8,
+          paddingBottom: insets.bottom + 32,
+          paddingHorizontal: 20,
+        }}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
       >
-        <View style={[styles.moreIcon, { backgroundColor: "rgba(58,134,255,0.13)" }]}>
-          <Ionicons name="school-outline" size={20} color="#3a86ff" />
-        </View>
-        <View style={{ flex: 1 }}>
-          <Text style={styles.moreTitle}>Open Full Training Library</Text>
-          <Text style={styles.moreDesc}>
-            Browse all {toolkitLessonCount} lessons with slide decks and Production 101
+        <View style={styles.hero}>
+          <Text style={styles.eyebrow}>Creator Training</Text>
+          <Text style={styles.sectionTitle}>Creators Toolkit</Text>
+          <Text style={styles.sectionDesc}>
+            {TOOLKIT_LESSON_COUNT} lessons across 6 tracks — camera, lighting, editing,
+            strategy, and Production 101 with HTML slide decks.
           </Text>
         </View>
-        <Ionicons name="chevron-forward" size={18} color={brandColors.inactiveTab} />
-      </Pressable>
 
-      <View style={styles.section}>
-        <Text style={styles.eyebrow}>Rate Calculator</Text>
-        <Text style={styles.sectionTitle}>Quote Builder</Text>
-        <Text style={styles.sectionDesc}>
-          Build a professional quote in 5 steps — skill level baselines, national
-          averages, IRS mileage at $0.67/mi, and Pro-gated Send Quote.
-        </Text>
         <Pressable
-          onPress={() => setSubScreen("rate-calculator")}
+          onPress={() => setSubScreen("training")}
           style={styles.moreCard}
         >
-          <View style={[styles.moreIcon, { backgroundColor: "rgba(232,0,10,0.13)" }]}>
-            <Ionicons name="cash-outline" size={20} color={brandColors.alphaRed} />
+          <View style={[styles.moreIcon, { backgroundColor: "rgba(58,134,255,0.13)" }]}>
+            <Ionicons name="school-outline" size={20} color="#3a86ff" />
           </View>
           <View style={{ flex: 1 }}>
-            <Text style={styles.moreTitle}>Open Rate Calculator</Text>
-            <Text style={styles.moreDesc}>5-step quote builder</Text>
+            <Text style={styles.moreTitle}>Open Creator Training</Text>
+            <Text style={styles.moreDesc}>
+              Browse all {TOOLKIT_LESSON_COUNT} lessons with slide decks
+            </Text>
           </View>
           <Ionicons name="chevron-forward" size={18} color={brandColors.inactiveTab} />
         </Pressable>
-      </View>
 
-      <InvoiceBuilderSection />
-
-      <ProductionChecklistsSection />
-
-      <View style={styles.section}>
-        <Text style={styles.eyebrow}>More Tools</Text>
-        <Text style={styles.sectionTitle}>On-Set Utilities</Text>
-        {moreTools.map((item) => (
+        <View style={styles.section}>
+          <Text style={styles.eyebrow}>Rate Calculator</Text>
+          <Text style={styles.sectionTitle}>Quote Builder</Text>
+          <Text style={styles.sectionDesc}>
+            Build a professional quote in 5 steps — skill level baselines, national
+            averages, IRS mileage at $0.67/mi, and Pro-gated Send Quote.
+          </Text>
           <Pressable
-            key={item.id}
-            onPress={() => setSubScreen(item.id)}
+            onPress={() => setSubScreen("rate-calculator")}
             style={styles.moreCard}
           >
-            <View style={[styles.moreIcon, { backgroundColor: `${item.color}22` }]}>
-              <Ionicons
-                name={item.icon as React.ComponentProps<typeof Ionicons>["name"]}
-                size={20}
-                color={item.color}
-              />
+            <View style={[styles.moreIcon, { backgroundColor: "rgba(232,0,10,0.13)" }]}>
+              <Ionicons name="cash-outline" size={20} color={brandColors.alphaRed} />
             </View>
             <View style={{ flex: 1 }}>
-              <Text style={styles.moreTitle}>{item.title}</Text>
-              <Text style={styles.moreDesc}>{item.description}</Text>
+              <Text style={styles.moreTitle}>Open Rate Calculator</Text>
+              <Text style={styles.moreDesc}>5-step quote builder</Text>
             </View>
             <Ionicons name="chevron-forward" size={18} color={brandColors.inactiveTab} />
           </Pressable>
-        ))}
-      </View>
-    </ScrollView>
+        </View>
+
+        <DeferredInvoiceBuilder />
+
+        <ProductionChecklistsSection />
+
+        <View style={styles.section}>
+          <Text style={styles.eyebrow}>More Tools</Text>
+          <Text style={styles.sectionTitle}>On-Set Utilities</Text>
+          {moreTools.map((item) => (
+            <Pressable
+              key={item.id}
+              onPress={() => setSubScreen(item.id)}
+              style={styles.moreCard}
+            >
+              <View style={[styles.moreIcon, { backgroundColor: `${item.color}22` }]}>
+                <Ionicons
+                  name={item.icon as React.ComponentProps<typeof Ionicons>["name"]}
+                  size={20}
+                  color={item.color}
+                />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={styles.moreTitle}>{item.title}</Text>
+                <Text style={styles.moreDesc}>{item.description}</Text>
+              </View>
+              <Ionicons name="chevron-forward" size={18} color={brandColors.inactiveTab} />
+            </Pressable>
+          ))}
+        </View>
+      </ScrollView>
+    </ErrorBoundary>
   );
 }
 
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: brandColors.avaBlack },
+  hero: { marginBottom: 16 },
   section: { marginBottom: 32 },
   eyebrow: {
     fontFamily: brandFonts.mono,
@@ -165,20 +197,6 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     color: brandColors.subtleText,
     marginBottom: 12,
-  },
-  card: {
-    backgroundColor: brandColors.graphite,
-    borderWidth: 1,
-    borderColor: brandColors.borderGray,
-    borderRadius: 12,
-    padding: 16,
-  },
-  listItem: {
-    fontFamily: brandFonts.body,
-    fontSize: 14,
-    lineHeight: 22,
-    color: brandColors.secondaryText,
-    marginBottom: 6,
   },
   moreCard: {
     flexDirection: "row",

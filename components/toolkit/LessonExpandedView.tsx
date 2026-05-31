@@ -10,7 +10,7 @@ import { creatorTrainingStyles as s } from "./creatorTrainingStyles";
 import { LessonGuideImage } from "./LessonGuideImage";
 import { LessonRichText } from "./LessonRichText";
 
-interface LessonExpandedViewProps {
+export interface LessonExpandedViewProps {
   lesson: ToolkitLesson;
   saved: boolean;
   onBack: () => void;

@@ -1,7 +1,7 @@
 import React from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { CreatorTraining } from "./CreatorTraining";
+import { DeferredCreatorTraining } from "./DeferredCreatorTraining";
 import { InvoiceBuilderSection } from "./InvoiceBuilder";
 import { toolkitStyles as s } from "./toolkitStyles";
 
@@ -49,7 +49,7 @@ export function TrainingModule({ onBack }: ModuleProps) {
       <Pressable onPress={onBack}>
         <Text style={s.backTxt}>← Toolkit</Text>
       </Pressable>
-      <CreatorTraining />
+      <DeferredCreatorTraining />
     </ScrollView>
   );
 }
