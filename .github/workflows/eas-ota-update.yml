@@ -100,12 +100,19 @@ jobs:
           MSG="Automated OTA from ${GITHUB_SHA::7}: ${GITHUB_EVENT_HEAD_COMMIT_MESSAGE:-push to main}"
           # App Store build 25 ships runtime 1.0.0 (Vertikal-era native). Publish AVA JS for both runtimes.
           for RV in 1.0.0 1.0.4; do
+            node -e "
+              const fs = require('fs');
+              const p = 'app.json';
+              const j = JSON.parse(fs.readFileSync(p, 'utf8'));
+              j.expo.version = process.argv[1];
+              fs.writeFileSync(p, JSON.stringify(j, null, 2) + '\n');
+            " "$RV"
             npx eas-cli update \
               --channel production \
-              --runtime-version "$RV" \
               --message "$MSG (runtime $RV)" \
               --non-interactive
           done
+          git checkout -- app.json
 
       - name: EXPO_TOKEN not configured
         if: ${{ secrets.EXPO_TOKEN == '' }}
