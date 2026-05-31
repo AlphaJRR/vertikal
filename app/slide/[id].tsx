@@ -2,11 +2,11 @@ import React from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import { ErrorBoundary } from "../../components/ErrorBoundary";
-import { ToolkitHtmlSlideView } from "../../components/toolkit/ToolkitHtmlSlideView";
+import { ToolkitNativeCheatSheetView } from "../../components/toolkit/ToolkitNativeCheatSheetView";
 import { ToolkitSlideView } from "../../components/toolkit/ToolkitSlideView";
 import { getSlideById } from "../../data/toolkitContent";
 import { getLessonByHtmlSlideId } from "../../data/toolkitCurriculum";
-import { isBundledHtmlSlidePath } from "../../data/toolkitSlideAssets";
+import { isBundledHtmlSlidePath } from "../../data/toolkitSlidePaths";
 
 export default function SlideDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -18,9 +18,11 @@ export default function SlideDetailScreen() {
     if (slide.htmlPath && isBundledHtmlSlidePath(slide.htmlPath)) {
       return (
         <ErrorBoundary>
-          <ToolkitHtmlSlideView
+          <ToolkitNativeCheatSheetView
             htmlPath={slide.htmlPath}
+            htmlSlideId={slide.id}
             title={slide.title}
+            fallbackLesson={curriculumLesson}
             onBack={() => router.back()}
           />
         </ErrorBoundary>
@@ -36,9 +38,11 @@ export default function SlideDetailScreen() {
   ) {
     return (
       <ErrorBoundary>
-        <ToolkitHtmlSlideView
+        <ToolkitNativeCheatSheetView
           htmlPath={curriculumLesson.htmlSlidePath}
+          htmlSlideId={curriculumLesson.htmlSlideId ?? id}
           title={curriculumLesson.title}
+          fallbackLesson={curriculumLesson}
           onBack={() => router.back()}
         />
       </ErrorBoundary>
