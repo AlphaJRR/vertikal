@@ -16,6 +16,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import * as ExpoLinking from "expo-linking";
 import * as SplashScreen from "expo-splash-screen";
+import * as Updates from "expo-updates";
 import * as WebBrowser from "expo-web-browser";
 import React, { useEffect, useRef } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -101,6 +102,21 @@ export default function RootLayout() {
     SpaceGrotesk_600SemiBold,
   });
   const handledInitial = useRef(false);
+
+  useEffect(() => {
+    if (__DEV__) {
+      console.log("[EAS Update] expo-updates unavailable in development mode");
+      return;
+    }
+
+    console.log("[EAS Update]", {
+      updateId: Updates.updateId,
+      runtimeVersion: Updates.runtimeVersion,
+      channel: Updates.channel,
+      isEmbeddedLaunch: Updates.isEmbeddedLaunch,
+      createdAt: Updates.createdAt?.toISOString() ?? null,
+    });
+  }, []);
 
   useEffect(() => {
     if (fontsLoaded || fontError) {
