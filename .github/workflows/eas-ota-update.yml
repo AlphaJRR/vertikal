@@ -97,10 +97,15 @@ jobs:
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: |
-          npx eas-cli update \
-            --channel production \
-            --message "Automated OTA from ${GITHUB_SHA::7}: ${GITHUB_EVENT_HEAD_COMMIT_MESSAGE:-push to main}" \
-            --non-interactive
+          MSG="Automated OTA from ${GITHUB_SHA::7}: ${GITHUB_EVENT_HEAD_COMMIT_MESSAGE:-push to main}"
+          # App Store build 25 ships runtime 1.0.0 (Vertikal-era native). Publish AVA JS for both runtimes.
+          for RV in 1.0.0 1.0.4; do
+            npx eas-cli update \
+              --channel production \
+              --runtime-version "$RV" \
+              --message "$MSG (runtime $RV)" \
+              --non-interactive
+          done
 
       - name: EXPO_TOKEN not configured
         if: ${{ secrets.EXPO_TOKEN == '' }}
