@@ -1,4 +1,10 @@
-export type ToolkitTab = "camera" | "framing" | "lighting" | "editing" | "strategy";
+export type ToolkitTab =
+  | "camera"
+  | "framing"
+  | "lighting"
+  | "editing"
+  | "strategy"
+  | "production";
 
 export type ToolkitLessonType =
   | "static"
@@ -54,6 +60,7 @@ export const TOOLKIT_TABS: { id: ToolkitTab; label: string }[] = [
   { id: "lighting", label: "LIGHTING" },
   { id: "editing", label: "EDITING" },
   { id: "strategy", label: "STRATEGY" },
+  { id: "production", label: "PRODUCTION 101" },
 ];
 
 export const SAVED_LESSONS_KEY = "@ava/toolkit/saved-lessons";

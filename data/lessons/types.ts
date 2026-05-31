@@ -3,7 +3,13 @@ export type CanonicalLessonType = "STATIC" | "HTML_PRESENTATION";
 
 export interface CanonicalLesson {
   id: string;
-  tab: "camera" | "framing" | "lighting" | "editing" | "strategy";
+  tab:
+    | "camera"
+    | "framing"
+    | "lighting"
+    | "editing"
+    | "strategy"
+    | "production";
   type: CanonicalLessonType;
   title: string;
   description: string;

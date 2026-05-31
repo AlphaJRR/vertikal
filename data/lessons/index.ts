@@ -98,6 +98,16 @@ import l93 from "./strategy_pricing.json";
 import l94 from "./strategy_repurposing_content.json";
 import l95 from "./strategy_tiktok_native.json";
 import l96 from "./strategy_youtube_titles_thumbs.json";
+import l97 from "./production_director.json";
+import l98 from "./production_dp.json";
+import l99 from "./production_ac.json";
+import l100 from "./production_gaffer.json";
+import l101 from "./production_sound_recordist.json";
+import l102 from "./production_pa.json";
+import l103 from "./production_producer.json";
+import l104 from "./production_set_etiquette.json";
+import l105 from "./production_breaking_in.json";
+import l106 from "./production_rates_invoicing.json";
 
 /** Canonical lesson ids — JSON files under data/lessons/ are source of truth. */
 export const LESSON_IDS = [
@@ -198,6 +208,16 @@ export const LESSON_IDS = [
   "strategy_repurposing_content",
   "strategy_tiktok_native",
   "strategy_youtube_titles_thumbs",
+  "production_director",
+  "production_dp",
+  "production_ac",
+  "production_gaffer",
+  "production_sound_recordist",
+  "production_pa",
+  "production_producer",
+  "production_set_etiquette",
+  "production_breaking_in",
+  "production_rates_invoicing",
 ] as const;
 
 export type LessonId = (typeof LESSON_IDS)[number];
@@ -300,6 +320,16 @@ const LESSON_MAP = {
   "strategy_repurposing_content": l94,
   "strategy_tiktok_native": l95,
   "strategy_youtube_titles_thumbs": l96,
+  "production_director": l97,
+  "production_dp": l98,
+  "production_ac": l99,
+  "production_gaffer": l100,
+  "production_sound_recordist": l101,
+  "production_pa": l102,
+  "production_producer": l103,
+  "production_set_etiquette": l104,
+  "production_breaking_in": l105,
+  "production_rates_invoicing": l106,
 } as Record<LessonId, CanonicalLesson>;
 
 export function getLessonById(id: string): CanonicalLesson | undefined {

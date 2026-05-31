@@ -2149,6 +2149,188 @@ export const toolkitCategories: ToolkitCategory[] = [
         "images": []
       }
     ]
+  },
+  {
+    "id": "production-on-set-roles",
+    "tab": "production",
+    "eyebrow": "ON-SET ROLES",
+    "title": "On-Set Roles",
+    "lessons": [
+      {
+        "id": "production-director",
+        "number": "97",
+        "tab": "production",
+        "category": "ON-SET ROLES",
+        "title": "Director",
+        "type": "static",
+        "description": "TODO: Joshua to paste v2 content.",
+        "guide": "TODO: Joshua to paste v2 content.",
+        "keyRule": "TODO: Joshua to paste v2 content.",
+        "steps": ["TODO: Joshua to paste v2 content."],
+        "proTip": "TODO: Joshua to paste v2 content.",
+        "commonMistake": "TODO: Joshua to paste v2 content.",
+        "images": []
+      },
+      {
+        "id": "production-dp",
+        "number": "98",
+        "tab": "production",
+        "category": "ON-SET ROLES",
+        "title": "DP",
+        "type": "static",
+        "description": "TODO: Joshua to paste v2 content.",
+        "guide": "TODO: Joshua to paste v2 content.",
+        "keyRule": "TODO: Joshua to paste v2 content.",
+        "steps": ["TODO: Joshua to paste v2 content."],
+        "proTip": "TODO: Joshua to paste v2 content.",
+        "commonMistake": "TODO: Joshua to paste v2 content.",
+        "images": []
+      },
+      {
+        "id": "production-ac",
+        "number": "99",
+        "tab": "production",
+        "category": "ON-SET ROLES",
+        "title": "AC",
+        "type": "static",
+        "description": "TODO: Joshua to paste v2 content.",
+        "guide": "TODO: Joshua to paste v2 content.",
+        "keyRule": "TODO: Joshua to paste v2 content.",
+        "steps": ["TODO: Joshua to paste v2 content."],
+        "proTip": "TODO: Joshua to paste v2 content.",
+        "commonMistake": "TODO: Joshua to paste v2 content.",
+        "images": []
+      },
+      {
+        "id": "production-gaffer",
+        "number": "100",
+        "tab": "production",
+        "category": "ON-SET ROLES",
+        "title": "Gaffer",
+        "type": "static",
+        "description": "TODO: Joshua to paste v2 content.",
+        "guide": "TODO: Joshua to paste v2 content.",
+        "keyRule": "TODO: Joshua to paste v2 content.",
+        "steps": ["TODO: Joshua to paste v2 content."],
+        "proTip": "TODO: Joshua to paste v2 content.",
+        "commonMistake": "TODO: Joshua to paste v2 content.",
+        "images": []
+      },
+      {
+        "id": "production-sound-recordist",
+        "number": "101",
+        "tab": "production",
+        "category": "ON-SET ROLES",
+        "title": "Sound Recordist",
+        "type": "static",
+        "description": "TODO: Joshua to paste v2 content.",
+        "guide": "TODO: Joshua to paste v2 content.",
+        "keyRule": "TODO: Joshua to paste v2 content.",
+        "steps": ["TODO: Joshua to paste v2 content."],
+        "proTip": "TODO: Joshua to paste v2 content.",
+        "commonMistake": "TODO: Joshua to paste v2 content.",
+        "images": []
+      },
+      {
+        "id": "production-pa",
+        "number": "102",
+        "tab": "production",
+        "category": "ON-SET ROLES",
+        "title": "PA",
+        "type": "static",
+        "description": "TODO: Joshua to paste v2 content.",
+        "guide": "TODO: Joshua to paste v2 content.",
+        "keyRule": "TODO: Joshua to paste v2 content.",
+        "steps": ["TODO: Joshua to paste v2 content."],
+        "proTip": "TODO: Joshua to paste v2 content.",
+        "commonMistake": "TODO: Joshua to paste v2 content.",
+        "images": []
+      },
+      {
+        "id": "production-producer",
+        "number": "103",
+        "tab": "production",
+        "category": "ON-SET ROLES",
+        "title": "Producer",
+        "type": "static",
+        "description": "TODO: Joshua to paste v2 content.",
+        "guide": "TODO: Joshua to paste v2 content.",
+        "keyRule": "TODO: Joshua to paste v2 content.",
+        "steps": ["TODO: Joshua to paste v2 content."],
+        "proTip": "TODO: Joshua to paste v2 content.",
+        "commonMistake": "TODO: Joshua to paste v2 content.",
+        "images": []
+      }
+    ]
+  },
+  {
+    "id": "production-what-to-expect",
+    "tab": "production",
+    "eyebrow": "WHAT TO EXPECT ON SET",
+    "title": "What to Expect on Set",
+    "lessons": [
+      {
+        "id": "production-set-etiquette",
+        "number": "104",
+        "tab": "production",
+        "category": "WHAT TO EXPECT ON SET",
+        "title": "Set Etiquette",
+        "type": "static",
+        "description": "TODO: Joshua to paste v2 content.",
+        "guide": "TODO: Joshua to paste v2 content.",
+        "keyRule": "TODO: Joshua to paste v2 content.",
+        "steps": ["TODO: Joshua to paste v2 content."],
+        "proTip": "TODO: Joshua to paste v2 content.",
+        "commonMistake": "TODO: Joshua to paste v2 content.",
+        "images": []
+      }
+    ]
+  },
+  {
+    "id": "production-finding-gigs",
+    "tab": "production",
+    "eyebrow": "FINDING GIGS",
+    "title": "Finding Gigs",
+    "lessons": [
+      {
+        "id": "production-breaking-in",
+        "number": "105",
+        "tab": "production",
+        "category": "FINDING GIGS",
+        "title": "Breaking In",
+        "type": "static",
+        "description": "TODO: Joshua to paste v2 content.",
+        "guide": "TODO: Joshua to paste v2 content.",
+        "keyRule": "TODO: Joshua to paste v2 content.",
+        "steps": ["TODO: Joshua to paste v2 content."],
+        "proTip": "TODO: Joshua to paste v2 content.",
+        "commonMistake": "TODO: Joshua to paste v2 content.",
+        "images": []
+      }
+    ]
+  },
+  {
+    "id": "production-getting-paid",
+    "tab": "production",
+    "eyebrow": "GETTING PAID",
+    "title": "Getting Paid",
+    "lessons": [
+      {
+        "id": "production-rates-invoicing",
+        "number": "106",
+        "tab": "production",
+        "category": "GETTING PAID",
+        "title": "Rates & Invoicing",
+        "type": "static",
+        "description": "TODO: Joshua to paste v2 content.",
+        "guide": "TODO: Joshua to paste v2 content.",
+        "keyRule": "TODO: Joshua to paste v2 content.",
+        "steps": ["TODO: Joshua to paste v2 content."],
+        "proTip": "TODO: Joshua to paste v2 content.",
+        "commonMistake": "TODO: Joshua to paste v2 content.",
+        "images": []
+      }
+    ]
   }
 ];
 
@@ -2173,5 +2355,6 @@ export const lessonCountByTab: Record<ToolkitTab, number> = {
   "framing": 16,
   "lighting": 15,
   "editing": 26,
-  "strategy": 14
+  "strategy": 14,
+  "production": 10
 };
