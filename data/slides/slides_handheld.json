@@ -1,47 +1,46 @@
 {
   "id": "slides_handheld",
-  "lessonId": "camera_handheld",
-  "title": "Handheld",
+  "lessonId": "handheld",
+  "title": "Handheld Movement",
   "slides": [
     {
       "type": "title",
       "heading": "Handheld",
-      "subheading": "Stability first — movement second."
+      "subheading": "Organic • Human • Dynamic"
     },
     {
       "type": "concept",
       "heading": "Why It Matters",
       "bullets": [
-        "Handheld shooting adds energy and realism.",
-        "It matters because it creates an immersive, human feel.",
-        "Use controlled micro-movements, stable posture, and intentional motion."
+        "Adds realism",
+        "Feels immersive",
+        "Creates emotional immediacy"
       ]
     },
     {
       "type": "diagram",
-      "heading": "Visual Guide",
-      "image": "ava/camera/handheld.png",
-      "caption": "Use controlled micro-movements, stable posture, and intentional motion."
+      "heading": "Handheld Posture",
+      "image": "ava/camera/handheld_posture.png"
     },
     {
       "type": "steps",
-      "heading": "How To",
+      "heading": "How To Shoot",
       "steps": [
-        "Tuck elbows in.",
-        "Use your body as a shock absorber.",
-        "Move intentionally, not randomly.",
-        "Add subtle motion to avoid static shake."
+        "Tuck elbows in",
+        "Use body as shock absorber",
+        "Move intentionally",
+        "Add subtle motion"
       ]
     },
     {
       "type": "callout",
       "heading": "Pro Tip",
-      "text": "Use a wider lens to hide micro‑shake."
+      "text": "Use wider lenses to hide micro-shake"
     },
     {
       "type": "warning",
       "heading": "Common Mistake",
-      "text": "Over‑shaking the camera and calling it \"handheld style.\""
+      "text": "Over-shaking and calling it 'style'"
     }
   ]
 }

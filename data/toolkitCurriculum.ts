@@ -2407,17 +2407,17 @@ export const toolkitCategories: ToolkitCategory[] = [
         "category": "GETTING PAID",
         "title": "Contracts & Kill Fees",
         "type": "static",
-        "description": "Written contracts define scope, payment, and what happens when a job is canceled. Kill fees protect your income when clients pull a shoot after you have reserved time and turned down other work.",
-        "guide": "Before any paid work, agree on rate, hours, deliverables, revision limits, payment schedule, and kill-fee percentage if the client cancels within a defined window. Put it in writing — email plus signed agreement or clear proposal acceptance counts.",
-        "keyRule": "No contract, no shoot — kill fees belong in writing before day one.",
+        "description": "Contracts protect you when projects change, cancel, or go over schedule.",
+        "guide": "Kill fees, overtime rules, and cancellation terms ensure you're compensated even when the production shifts unexpectedly.",
+        "keyRule": "If it's not in writing, it doesn't exist.",
         "steps": [
-          "Define scope, rate, and payment terms in writing.",
-          "State kill-fee percentage and cancellation notice window.",
-          "Require a deposit or booking fee when possible.",
-          "Invoice kill fees promptly if a job is canceled."
+          "Request a simple contract or deal memo",
+          "Include kill fee terms",
+          "Clarify overtime and meal penalties",
+          "Keep all communication documented"
         ],
-        "proTip": "Use the same contract template as your invoicing lesson — one doc for rate, kill fee, and overtime.",
-        "commonMistake": "Starting without kill-fee language and hoping verbal promises hold.",
+        "proTip": "A one-page deal memo is enough — it doesn't need to be complicated.",
+        "commonMistake": "Working without cancellation terms and losing income",
         "images": []
       }
     ]

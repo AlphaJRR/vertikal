@@ -1,47 +1,46 @@
 {
   "id": "slides_aperture_priority",
-  "lessonId": "camera_aperture_priority",
+  "lessonId": "aperture-priority",
   "title": "Aperture Priority",
   "slides": [
     {
       "type": "title",
       "heading": "Aperture Priority",
-      "subheading": "You control depth — the camera controls motion."
+      "subheading": "Depth of Field First"
     },
     {
       "type": "concept",
       "heading": "Why It Matters",
       "bullets": [
-        "Aperture Priority lets you control depth of field while the camera sets shutter speed automatically.",
-        "You choose the f‑stop; the camera adjusts shutter to maintain exposure.",
-        "You control depth — the camera controls motion."
+        "You control depth",
+        "Camera maintains exposure",
+        "Great for portraits and interviews"
       ]
     },
     {
       "type": "diagram",
-      "heading": "Visual Guide",
-      "image": "ava/camera/aperture_priority.png",
-      "caption": "You choose the f‑stop; the camera adjusts shutter to maintain exposure."
+      "heading": "Depth Control",
+      "image": "ava/camera/aperture_depth_of_field.png"
     },
     {
       "type": "steps",
-      "heading": "How To",
+      "heading": "How To Use It",
       "steps": [
-        "Set your desired f‑stop.",
-        "Watch shutter speed to avoid motion blur.",
-        "Adjust exposure compensation if needed.",
-        "Keep ISO low for clean images."
+        "Choose your f-stop",
+        "Watch shutter speed to avoid blur",
+        "Use exposure compensation",
+        "Keep ISO low"
       ]
     },
     {
       "type": "callout",
       "heading": "Pro Tip",
-      "text": "Use Aperture Priority when lighting changes quickly but depth must stay consistent."
+      "text": "Use when lighting changes but depth must stay consistent"
     },
     {
       "type": "warning",
       "heading": "Common Mistake",
-      "text": "Letting shutter drop too low and introducing motion blur."
+      "text": "Letting shutter drop too low"
     }
   ]
 }

@@ -1,47 +1,46 @@
 {
   "id": "slides_camera_whip_pan",
-  "lessonId": "camera_whip_pan",
+  "lessonId": "whip-pan",
   "title": "Whip Pan",
   "slides": [
     {
       "type": "title",
       "heading": "Whip Pan",
-      "subheading": "Motion blur hides the cut."
+      "subheading": "Fast • Energetic • Seamless"
     },
     {
       "type": "concept",
       "heading": "Why It Matters",
       "bullets": [
-        "Whip pans create fast, energetic transitions.",
-        "They matter because they add momentum and hide cuts.",
-        "Start and end with a fast horizontal motion."
+        "Adds momentum",
+        "Hides cuts",
+        "Creates dynamic transitions"
       ]
     },
     {
       "type": "diagram",
-      "heading": "Visual Guide",
-      "image": "ava/camera/camera_whip_pan.png",
-      "caption": "Start and end with a fast horizontal motion."
+      "heading": "Whip Motion",
+      "image": "ava/camera/whip_pan_transition_frames.png"
     },
     {
       "type": "steps",
-      "heading": "How To",
+      "heading": "How To Shoot",
       "steps": [
-        "Start with a clean frame.",
-        "Whip quickly left or right.",
-        "Match the direction on the next shot.",
-        "Cut at peak blur."
+        "Start with a clean frame",
+        "Whip quickly left or right",
+        "Match direction on next shot",
+        "Cut at peak blur"
       ]
     },
     {
       "type": "callout",
       "heading": "Pro Tip",
-      "text": "Shoot at a higher shutter speed to keep the blur clean."
+      "text": "Use higher shutter speed for cleaner blur"
     },
     {
       "type": "warning",
       "heading": "Common Mistake",
-      "text": "Whipping too slowly and revealing the cut."
+      "text": "Whipping too slowly"
     }
   ]
 }

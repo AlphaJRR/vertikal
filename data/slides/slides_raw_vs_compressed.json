@@ -1,47 +1,46 @@
 {
   "id": "slides_raw_vs_compressed",
-  "lessonId": "camera_raw_vs_compressed",
+  "lessonId": "raw-vs-compressed",
   "title": "RAW vs Compressed",
   "slides": [
     {
       "type": "title",
       "heading": "RAW vs Compressed",
-      "subheading": "Use RAW for maximum control — compressed for speed."
+      "subheading": "Flexibility vs Efficiency"
     },
     {
       "type": "concept",
       "heading": "Why It Matters",
       "bullets": [
-        "RAW captures maximum sensor data; compressed formats save space.",
-        "It matters because workflow and storage change dramatically.",
-        "RAW gives flexibility but requires heavy processing."
+        "RAW captures maximum sensor data",
+        "Compressed saves space",
+        "Workflow changes dramatically"
       ]
     },
     {
       "type": "diagram",
-      "heading": "Visual Guide",
-      "image": "ava/camera/raw_vs_compressed.png",
-      "caption": "RAW gives flexibility but requires heavy processing."
+      "heading": "Data Comparison",
+      "image": "ava/camera/raw_vs_compressed.png"
     },
     {
       "type": "steps",
-      "heading": "How To",
+      "heading": "How To Choose",
       "steps": [
-        "Use RAW for high-end or cinematic work.",
-        "Use compressed for social content or fast edits.",
-        "Ensure storage can handle RAW.",
-        "Match codec to your editing machine."
+        "Use RAW for cinematic work",
+        "Use compressed for speed",
+        "Check storage capacity",
+        "Match codec to your machine"
       ]
     },
     {
       "type": "callout",
       "heading": "Pro Tip",
-      "text": "ProRes RAW or BRAW offer a strong balance of flexibility and workflow."
+      "text": "ProRes RAW or BRAW offer strong balance"
     },
     {
       "type": "warning",
       "heading": "Common Mistake",
-      "text": "Overshooting RAW without enough storage or processing power."
+      "text": "Overshooting RAW without storage"
     }
   ]
 }
