@@ -10,20 +10,17 @@ import {
   View,
   ViewToken,
 } from "react-native";
-import { Image as ExpoImage } from "expo-image";
 import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import * as WebBrowser from "expo-web-browser";
 import { useRouter, Href } from "expo-router";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ReelVideoCover } from "../../components/ReelVideoCover";
 import { VideoModal } from "../../components/VideoModal";
 import { ProductionTipsList } from "../../components/toolkit/ProductionTipsList";
 import { featuredTips } from "../../data/toolkitContent";
 
 const SITE_URL = "https://alphavisualartists.com";
-const HOME_LOGO = require("../../assets/images/ava-app-logo-2026.png");
 
 type Reel = {
   id: string;
@@ -217,7 +214,6 @@ const PHOTOS: Photo[] = [
 
 export default function HomeScreen() {
   const router = useRouter();
-  const insets = useSafeAreaInsets();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [activeVideo, setActiveVideo] = useState<any | null>(null);
 
@@ -297,13 +293,7 @@ export default function HomeScreen() {
         showsVerticalScrollIndicator={false}
       >
         {/* HERO */}
-        <View style={[styles.hero, { paddingTop: insets.top + 8 }]}>
-          <ExpoImage
-            source={HOME_LOGO}
-            style={styles.heroLogo}
-            contentFit="contain"
-            accessibilityLabel="Alpha Visual Artists logo"
-          />
+        <View style={[styles.hero, { paddingTop: 12 }]}>
           <Text style={styles.brand}>ALPHA VISUAL ARTISTS</Text>
           <Text style={styles.tag}>Chicago · Cinematic · Stop The Scroll</Text>
 
@@ -429,12 +419,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderBottomWidth: 1,
     borderBottomColor: "rgba(255,255,255,0.05)",
-  },
-  heroLogo: {
-    width: 220,
-    height: 220,
-    marginBottom: 8,
-    backgroundColor: "transparent",
   },
   brand: {
     color: "#fff",
