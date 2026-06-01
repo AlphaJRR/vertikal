@@ -13,6 +13,7 @@ node_modules/
 *.md
 *.mov
 *.mp4
+!assets/videos/ava-logo-intro.mp4
 *.pdf
 *.pages
 playwright-report/

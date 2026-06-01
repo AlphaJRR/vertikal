@@ -18,12 +18,15 @@ import * as ExpoLinking from "expo-linking";
 import * as SplashScreen from "expo-splash-screen";
 import * as Updates from "expo-updates";
 import * as WebBrowser from "expo-web-browser";
-import React, { useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { StyleSheet, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
+import { AppIntroVideo } from "@/components/AppIntroVideo";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { shouldPlayAppIntro } from "@/utils/introVideoGate";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -104,6 +107,11 @@ export default function RootLayout() {
     SpaceGrotesk_600SemiBold,
   });
   const handledInitial = useRef(false);
+  const [introGate, setIntroGate] = useState<"loading" | "show" | "skip">("loading");
+
+  const finishIntro = useCallback(() => {
+    setIntroGate("skip");
+  }, []);
 
   useEffect(() => {
     if (__DEV__) {
@@ -145,10 +153,27 @@ export default function RootLayout() {
   }, []);
 
   useEffect(() => {
-    if (fontsLoaded || fontError) {
+    if (!fontsLoaded && !fontError) return;
+
+    let cancelled = false;
+    shouldPlayAppIntro()
+      .then((play) => {
+        if (!cancelled) setIntroGate(play ? "show" : "skip");
+      })
+      .catch(() => {
+        if (!cancelled) setIntroGate("show");
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [fontsLoaded, fontError]);
+
+  useEffect(() => {
+    if ((fontsLoaded || fontError) && introGate !== "loading") {
       SplashScreen.hideAsync();
     }
-  }, [fontsLoaded, fontError]);
+  }, [fontsLoaded, fontError, introGate]);
 
   // Handle deep links at the root so all unmatched inbound URLs (custom
   // scheme + universal links) route to the in-app browser.
@@ -182,13 +207,21 @@ export default function RootLayout() {
 
   if (!fontsLoaded && !fontError) return null;
 
+  const showMainApp = introGate === "skip";
+
   return (
     <SafeAreaProvider>
       <ErrorBoundary>
         <QueryClientProvider client={queryClient}>
           <GestureHandlerRootView style={{ flex: 1 }}>
             <KeyboardProvider>
-              <RootLayoutNav />
+              {introGate === "loading" ? (
+                <View style={styles.bootScreen} />
+              ) : null}
+              {showMainApp ? <RootLayoutNav /> : null}
+              {introGate === "show" ? (
+                <AppIntroVideo onFinish={finishIntro} />
+              ) : null}
             </KeyboardProvider>
           </GestureHandlerRootView>
         </QueryClientProvider>
@@ -196,3 +229,10 @@ export default function RootLayout() {
     </SafeAreaProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  bootScreen: {
+    flex: 1,
+    backgroundColor: "#0a0a0a",
+  },
+});
