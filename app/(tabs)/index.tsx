@@ -10,6 +10,7 @@ import {
   View,
   ViewToken,
 } from "react-native";
+import { Image as ExpoImage } from "expo-image";
 import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
@@ -21,6 +22,7 @@ import { ProductionTipsList } from "../../components/toolkit/ProductionTipsList"
 import { featuredTips } from "../../data/toolkitContent";
 
 const SITE_URL = "https://alphavisualartists.com";
+const HOME_LOGO = require("../../assets/images/ava-app-logo-2026.png");
 
 type Reel = {
   id: string;
@@ -294,6 +296,12 @@ export default function HomeScreen() {
       >
         {/* HERO */}
         <View style={[styles.hero, { paddingTop: 12 }]}>
+          <ExpoImage
+            source={HOME_LOGO}
+            style={styles.heroLogo}
+            contentFit="contain"
+            accessibilityLabel="Alpha Visual Artists logo"
+          />
           <Text style={styles.brand}>ALPHA VISUAL ARTISTS</Text>
           <Text style={styles.tag}>Chicago · Cinematic · Stop The Scroll</Text>
 
@@ -419,6 +427,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderBottomWidth: 1,
     borderBottomColor: "rgba(255,255,255,0.05)",
+  },
+  heroLogo: {
+    width: 220,
+    height: 220,
+    marginBottom: 8,
+    backgroundColor: "transparent",
   },
   brand: {
     color: "#fff",

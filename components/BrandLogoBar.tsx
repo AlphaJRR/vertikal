@@ -3,8 +3,8 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-/** True RGBA logo extracted from ProRes — no white fill. */
-const BRAND_LOGO = require("../assets/images/ava-logo-transparent.png");
+/** Circular lens logo — RGBA, white background removed. */
+const BRAND_LOGO = require("../assets/images/ava-app-logo-2026.png");
 
 type BrandLogoBarProps = {
   /** Compact watermark vs slightly larger on home-adjacent screens */
@@ -13,7 +13,10 @@ type BrandLogoBarProps = {
 
 export function BrandLogoBar({ size = "compact" }: BrandLogoBarProps) {
   const insets = useSafeAreaInsets();
-  const dims = size === "standard" ? { width: 160, height: 56 } : { width: 132, height: 46 };
+  const dims =
+    size === "standard"
+      ? { width: 200, height: 200 }
+      : { width: 132, height: 132 };
 
   return (
     <View

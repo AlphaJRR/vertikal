@@ -4,7 +4,12 @@ import {
   INTRO_COOLDOWN_MS,
 } from "../constants/introVideo";
 
+/** Set false before production — plays intro on every cold start for QA. */
+const FORCE_INTRO_EVERY_LAUNCH = true;
+
 export async function shouldPlayAppIntro(): Promise<boolean> {
+  if (FORCE_INTRO_EVERY_LAUNCH) return true;
+
   const raw = await AsyncStorage.getItem(AVA_INTRO_LAST_PLAYED_KEY);
   if (raw == null || raw === "") return true;
 
