@@ -16,6 +16,7 @@ import { Ionicons } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import * as WebBrowser from "expo-web-browser";
 import { useRouter, Href } from "expo-router";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ReelVideoCover } from "../../components/ReelVideoCover";
 import { VideoModal } from "../../components/VideoModal";
 import { ProductionTipsList } from "../../components/toolkit/ProductionTipsList";
@@ -216,6 +217,7 @@ const PHOTOS: Photo[] = [
 
 export default function HomeScreen() {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [activeVideo, setActiveVideo] = useState<any | null>(null);
 
@@ -295,7 +297,7 @@ export default function HomeScreen() {
         showsVerticalScrollIndicator={false}
       >
         {/* HERO */}
-        <View style={[styles.hero, { paddingTop: 12 }]}>
+        <View style={[styles.hero, { paddingTop: insets.top + 8 }]}>
           <ExpoImage
             source={HOME_LOGO}
             style={styles.heroLogo}
