@@ -26,6 +26,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { AppIntroVideo } from "@/components/AppIntroVideo";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { AuthProvider } from "@/contexts/AuthContext";
 import { shouldPlayAppIntro } from "@/utils/introVideoGate";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -90,6 +91,7 @@ function RootLayoutNav() {
       <Stack.Screen name="lesson/[id]" options={{ headerShown: false }} />
       <Stack.Screen name="cheatsheet/[id]" options={{ headerShown: false }} />
       <Stack.Screen name="slide/[id]" options={{ headerShown: false }} />
+      <Stack.Screen name="sign-in" options={{ headerShown: false }} />
     </Stack>
   );
 }
@@ -213,17 +215,19 @@ export default function RootLayout() {
     <SafeAreaProvider>
       <ErrorBoundary>
         <QueryClientProvider client={queryClient}>
-          <GestureHandlerRootView style={{ flex: 1 }}>
-            <KeyboardProvider>
-              {introGate === "loading" ? (
-                <View style={styles.bootScreen} />
-              ) : null}
-              {showMainApp ? <RootLayoutNav /> : null}
-              {introGate === "show" ? (
-                <AppIntroVideo onFinish={finishIntro} />
-              ) : null}
-            </KeyboardProvider>
-          </GestureHandlerRootView>
+          <AuthProvider>
+            <GestureHandlerRootView style={{ flex: 1 }}>
+              <KeyboardProvider>
+                {introGate === "loading" ? (
+                  <View style={styles.bootScreen} />
+                ) : null}
+                {showMainApp ? <RootLayoutNav /> : null}
+                {introGate === "show" ? (
+                  <AppIntroVideo onFinish={finishIntro} />
+                ) : null}
+              </KeyboardProvider>
+            </GestureHandlerRootView>
+          </AuthProvider>
         </QueryClientProvider>
       </ErrorBoundary>
     </SafeAreaProvider>

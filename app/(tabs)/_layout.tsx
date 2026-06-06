@@ -73,6 +73,15 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="wallpapers"
+        options={{
+          title: "Walls",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="images-outline" size={size} color={color} />
+          ),
+        }}
+      />
     </Tabs>
   );
 }

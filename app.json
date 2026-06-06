@@ -20,6 +20,8 @@
       "supportsTablet": false,
       "bundleIdentifier": "com.alphavisualartists.app",
       "infoPlist": {
+        "NSPhotoLibraryAddUsageDescription": "AVA saves wallpapers you download to your Photo Library.",
+        "NSPhotoLibraryUsageDescription": "AVA needs access to save wallpapers to your Photo Library.",
         "ITSAppUsesNonExemptEncryption": false,
         "NSAppTransportSecurity": {
           "NSAllowsArbitraryLoads": false,
@@ -33,7 +35,7 @@
           }
         }
       },
-      "buildNumber": "6"
+      "buildNumber": "11"
     },
     "android": {
       "package": "com.alphavisualartists.app",
@@ -72,7 +74,14 @@
       "expo-font",
       "expo-web-browser",
       "expo-video",
-      "expo-updates"
+      "expo-updates",
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "AVA needs access to save wallpapers to your Photo Library.",
+          "savePhotosPermission": "AVA saves wallpapers you download to your Photo Library."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

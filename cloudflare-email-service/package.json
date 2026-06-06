@@ -1,0 +1,16 @@
+{
+  "name": "ava-email",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Cloudflare Email Service worker for Alpha Visual Artists (alphavisualartists.com)",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "types": "wrangler types",
+    "tail": "wrangler tail"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3",
+    "wrangler": "^4.95.0"
+  }
+}

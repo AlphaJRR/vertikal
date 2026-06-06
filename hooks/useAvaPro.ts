@@ -1,79 +1,96 @@
 import { useEffect, useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
 import { supabase } from "../lib/supabase";
 
+export type AvaProStatus = "loading" | "free" | "pro";
+
+function tierIsPro(tier: string | null | undefined): boolean {
+  if (!tier) return false;
+  const normalized = tier.toLowerCase();
+  return normalized === "pro";
+}
+
 /**
- * Returns whether the signed-in user has AVA Pro (Creator Toolkit Pro tier).
- * Checks Supabase auth user_metadata / app_metadata first, then profiles.subscription_tier.
+ * AVA Pro entitlement for the signed-in user.
+ * Tri-state: loading | free | pro — never pro on error; null/missing profile = free.
  */
 export function useAvaPro() {
-  const [isPro, setIsPro] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const { user, loading: authLoading } = useAuth();
+  const [status, setStatus] = useState<AvaProStatus>("loading");
 
   useEffect(() => {
     let cancelled = false;
 
-    async function checkPro() {
+    async function resolvePro() {
+      if (authLoading) {
+        if (!cancelled) setStatus("loading");
+        return;
+      }
+
+      if (!user) {
+        if (!cancelled) setStatus("free");
+        return;
+      }
+
+      if (!cancelled) setStatus("loading");
+
       try {
         if (!supabase?.auth) {
-          if (!cancelled) {
-            setIsPro(false);
-            setLoading(false);
-          }
-          return;
-        }
-
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
-
-        if (!user) {
-          if (!cancelled) {
-            setIsPro(false);
-            setLoading(false);
-          }
+          if (!cancelled) setStatus("free");
           return;
         }
 
         const meta =
           user.user_metadata?.subscription_tier ??
           user.app_metadata?.subscription_tier;
-        if (meta === "pro" || meta === "PRO") {
-          if (!cancelled) {
-            setIsPro(true);
-            setLoading(false);
-          }
+        if (tierIsPro(typeof meta === "string" ? meta : undefined)) {
+          if (!cancelled) setStatus("pro");
           return;
         }
 
-        const { data: profile } = await supabase
+        const { data: profile, error } = await supabase
           .from("profiles")
           .select("subscription_tier")
           .eq("id", user.id)
           .maybeSingle();
 
-        if (!cancelled) {
-          setIsPro(profile?.subscription_tier === "pro");
-          setLoading(false);
+        if (error) {
+          console.error("[useAvaPro] profiles lookup failed:", error);
+          if (!cancelled) setStatus("free");
+          return;
         }
-      } catch {
+
         if (!cancelled) {
-          setIsPro(false);
-          setLoading(false);
+          setStatus(tierIsPro(profile?.subscription_tier) ? "pro" : "free");
         }
+      } catch (error) {
+        console.error("[useAvaPro] resolvePro failed:", error);
+        if (!cancelled) setStatus("free");
       }
     }
 
-    checkPro();
+    void resolvePro();
 
-    const sub = supabase?.auth?.onAuthStateChange?.(() => {
-      checkPro();
+    const { data: authListener } = supabase.auth.onAuthStateChange(() => {
+      void resolvePro();
     });
 
     return () => {
       cancelled = true;
-      sub?.data?.subscription?.unsubscribe();
+      authListener.subscription.unsubscribe();
     };
-  }, []);
+  }, [user, authLoading]);
 
-  return { isPro, loading };
+  const isPro = status === "pro";
+  const loading = status === "loading" || authLoading;
+  const isSignedIn = Boolean(user);
+  const userEmail = user?.email ?? null;
+
+  return {
+    status,
+    isPro,
+    loading,
+    isSignedIn,
+    userEmail,
+  };
 }

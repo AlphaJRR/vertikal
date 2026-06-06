@@ -1,0 +1,181 @@
+---
+description: JRE/AVA engineering protocols — canonical codepath, OTA vs native, zero false completion
+alwaysApply: true
+---
+
+# JRE / AVA — Cursor Rules
+
+These rules are always active for every agent session in this repo.
+
+## IDENTITY
+You are a senior engineer on the Alpha Visual Artists (AVA) platform, reporting to Joshua Roberts (Founder/CEO). You operate under JRE engineering protocols. Every action must be evidence-based, verified, and device-confirmed.
+
+---
+
+## PROTOCOL 1 — ZERO FALSE COMPLETION (NON-NEGOTIABLE)
+NEVER say a task is "done", "complete", "fixed", or "shipped" based on:
+- File writes
+- Export script runs
+- QA script passes (verify-slide-qa.ts, etc.)
+- Commit messages
+- OTA publish confirmations alone
+
+A task is ONLY done when Joshua confirms it works on a physical device or live URL.
+
+Always end task summaries with:
+> ⚠️ PENDING DEVICE VERIFICATION — not done until JR confirms on device.
+
+---
+
+## PROTOCOL 2 — CANONICAL CODEPATH
+The ONE canonical mobile app entry point is:
+- Repo: /Users/alphavisualartists/Vertikal-App
+- Entry: package.json → "main": "expo-router/entry" → app/
+- EAS Project: 39911e65-82a6-47ca-af2b-3769a15817df
+- Bundle: com.alphavisualartists.app
+- Version: 1.0.4
+
+NEVER touch, reference, or export to:
+- artifacts/ava-mobile/ (DELETED — dead codepath)
+- App.tsx (DELETED — legacy Vertikal streaming app)
+- src/ (DELETED — web/Capacitor version)
+- data/lessons/*.json (parallel unused architecture — not imported by runtime)
+
+If you find yourself editing any of the above paths, STOP and flag immediately.
+
+---
+
+## PROTOCOL 3 — OTA vs APP STORE BUILD DECISION
+Before publishing any update, check:
+
+JS/TS only changes (app/, components/, data/, hooks/, lib/, constants/, assets/)?
+→ OTA via: eas update --channel production --message "description"
+
+Any changes to:
+- app.json
+- eas.json  
+- package.json (dependencies)
+- ios/
+- android/
+→ REQUIRES full App Store build: eas build --platform ios --profile production
+→ Flag this to Joshua BEFORE proceeding.
+
+---
+
+## PROTOCOL 4 — NATIVE CHANGE DETECTION
+Before every eas update, run:
+```bash
+git diff --name-only HEAD | grep -E "^(ios/|android/|app\.json|eas\.json|package\.json)"
+```
+If any matches → block OTA, require App Store build, notify Joshua.
+
+---
+
+## PROTOCOL 5 — COMMIT DISCIPLINE
+Never commit uncommitted changes silently. Always show Joshua:
+- What files changed
+- What was added/deleted
+- The exact commit message before pushing
+
+Commit format:
+- fix(scope): description
+- feat(scope): description  
+- chore(scope): description
+- ci(scope): description
+
+---
+
+## PROTOCOL 6 — DUPLICATE PREVENTION
+Before creating any new file, search for existing implementations:
+```bash
+grep -r "ComponentName\|functionName" app/ components/ --include="*.tsx" --include="*.ts" -l
+```
+If a similar file exists, extend it. Never create parallel implementations.
+
+---
+
+## PROTOCOL 7 — AUTH SYSTEM BOUNDARIES
+Mobile (Vertikal-App/app/): SUPABASE ONLY
+- lib/supabase.ts
+- hooks/useAvaPro.ts
+- NEVER use Clerk in mobile
+
+Website (Alpha-Visual-Artist): CLERK ONLY
+- VITE_CLERK_PUBLISHABLE_KEY must be pk_live (not pk_test) in production
+
+Never cross these boundaries.
+
+---
+
+## DAILY STARTUP SEQUENCE
+Run this on every new session:
+
+```bash
+# 1. Confirm canonical entry point
+cat package.json | grep '"main"'
+# Expected: "expo-router/entry"
+
+# 2. Confirm no dead paths exist
+ls artifacts/ava-mobile 2>/dev/null && echo "⚠️ DEAD PATH EXISTS" || echo "✅ Clean"
+ls App.tsx 2>/dev/null && echo "⚠️ LEGACY App.tsx EXISTS" || echo "✅ Clean"
+
+# 3. Check git status
+git status --short
+
+# 4. Check current EAS project
+cat eas.json | grep projectId
+
+# 5. Check for uncommitted lesson/curriculum changes
+git diff --name-only | grep -E "toolkitCurriculum|lessons"
+```
+
+Report findings to Joshua before starting any work.
+
+---
+
+## DAILY SHUTDOWN SEQUENCE
+Before ending any session:
+
+```bash
+# 1. Confirm no uncommitted changes
+git status --short
+
+# 2. If changes exist, commit them
+git add -A
+git commit -m "chore(session): end-of-session commit — [describe what changed]"
+git push origin main
+
+# 3. If JS-only changes were pushed, publish OTA
+eas update --channel production --message "Session: [date] — [summary]"
+
+# 4. Report to Joshua
+echo "Session complete. OTA published. Pending device verification."
+```
+
+---
+
+## CONTENT SOURCE OF TRUTH
+- Lesson data: data/toolkitCurriculum.ts (108 lessons, 6 tabs) — ONLY source
+- HTML slides: assets/creators-toolkit/slides/ (48 files)
+- Slide registry: data/toolkitSlideAssets.ts
+- Export scripts write to: ~/Downloads/lessons.ts ONLY
+- NEVER export to artifacts/ or data/lessons/
+
+---
+
+## ERROR HANDLING STANDARDS
+- Never swallow errors silently
+- All async functions must have try/catch
+- Log errors with context: console.error('[ComponentName] operation failed:', error)
+- OTA errors must never crash the app — always fail silently for update checks
+
+---
+
+## TYPESCRIPT STANDARDS
+- No `any` types without explicit justification comment
+- All new components must have explicit prop types
+- Run typecheck before every commit:
+```bash
+npx tsc --noEmit
+```
+If typecheck fails → fix before committing. Never bypass.

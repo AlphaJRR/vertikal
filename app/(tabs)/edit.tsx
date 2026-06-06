@@ -1,6 +1,7 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Alert,
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -8,6 +9,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableWithoutFeedback,
   View,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -43,6 +45,12 @@ export default function EditScreen() {
   const [items, setItems] = useState<Item[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [draft, setDraft] = useState("");
+  const inputRef = useRef<TextInput>(null);
+
+  const dismissKeyboard = useCallback(() => {
+    inputRef.current?.blur();
+    Keyboard.dismiss();
+  }, []);
 
   useEffect(() => {
     (async () => {
@@ -88,6 +96,7 @@ export default function EditScreen() {
   };
 
   const toggle = (id: string) => {
+    dismissKeyboard();
     Haptics.selectionAsync().catch(() => {});
     setItems((s) =>
       s.map((i) => (i.id === id ? { ...i, done: !i.done } : i)),
@@ -95,11 +104,13 @@ export default function EditScreen() {
   };
 
   const remove = (id: string) => {
+    dismissKeyboard();
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(() => {});
     setItems((s) => s.filter((i) => i.id !== id));
   };
 
   const clearDone = () => {
+    dismissKeyboard();
     const doneCount = items.filter((s) => s.done).length;
     if (doneCount === 0) return;
     Alert.alert("Clear completed?", `Remove ${doneCount} item(s).`, [
@@ -113,6 +124,7 @@ export default function EditScreen() {
   };
 
   const resetSeed = () => {
+    dismissKeyboard();
     Alert.alert("Reset workflow?", "Replaces list with default edit pipeline.", [
       { text: "Cancel", style: "cancel" },
       {
@@ -136,6 +148,8 @@ export default function EditScreen() {
       style={styles.root}
       keyboardVerticalOffset={Platform.OS === "ios" ? 90 : 0}
     >
+      <TouchableWithoutFeedback onPress={dismissKeyboard} accessible={false}>
+        <View style={styles.flex}>
       <View style={[styles.header, { paddingTop: 12 }]}>
         <Text style={styles.eyebrow}>Post Production</Text>
         <Text style={styles.h1}>Edit</Text>
@@ -155,6 +169,8 @@ export default function EditScreen() {
         style={styles.list}
         contentContainerStyle={{ paddingBottom: 24, paddingHorizontal: 20 }}
         keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="on-drag"
+        onScrollBeginDrag={dismissKeyboard}
       >
         {items.length === 0 ? (
           <View style={styles.empty}>
@@ -206,17 +222,23 @@ export default function EditScreen() {
           </>
         )}
       </ScrollView>
+        </View>
+      </TouchableWithoutFeedback>
 
       <View style={[styles.inputBar, { paddingBottom: insets.bottom + 8 }]}>
         <TextInput
+          ref={inputRef}
           value={draft}
           onChangeText={setDraft}
           placeholder="Add an edit task…"
           placeholderTextColor="#555"
           style={styles.input}
           returnKeyType="done"
-          onSubmitEditing={add}
-          blurOnSubmit={false}
+          blurOnSubmit
+          onSubmitEditing={() => {
+            add();
+            dismissKeyboard();
+          }}
         />
         <Pressable
           onPress={add}
@@ -236,6 +258,7 @@ export default function EditScreen() {
 
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: "#0a0a0a" },
+  flex: { flex: 1 },
   header: { paddingHorizontal: 20, paddingBottom: 16 },
   eyebrow: {
     color: "#00d4ff",

@@ -5,13 +5,17 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ErrorBoundary } from "../../components/ErrorBoundary";
 import { ToolkitCheatSheetContent } from "../../components/toolkit/ToolkitCheatSheetContent";
 import { brandColors, brandFonts } from "../../constants/theme";
+import { Paywall } from "../../components/Paywall";
+import { isCheatSheetProLocked } from "../../constants/proAccess";
 import { getCheatSheetCards } from "../../data/toolkitCheatSheetCards";
 import { getLessonById } from "../../data/toolkitCurriculum";
+import { useAvaPro } from "../../hooks/useAvaPro";
 
 export default function CheatSheetScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const { status, isPro, isSignedIn } = useAvaPro();
   const lesson = id ? getLessonById(id) : undefined;
   const cards = lesson?.htmlSlideId ? getCheatSheetCards(lesson.htmlSlideId) : undefined;
 
@@ -34,6 +38,20 @@ export default function CheatSheetScreen() {
         <Pressable onPress={() => router.back()}>
           <Text style={styles.back}>← Go back</Text>
         </Pressable>
+      </View>
+    );
+  }
+
+  if (!isPro && isCheatSheetProLocked()) {
+    return (
+      <View style={[styles.missing, { paddingTop: insets.top, flex: 1 }]}>
+        <Paywall
+          contextTitle={lesson.title}
+          subtitle="Cheat sheets are included with AVA Pro — every slide deck, one tap away."
+          status={status}
+          isSignedIn={isSignedIn}
+          onBack={() => router.back()}
+        />
       </View>
     );
   }
@@ -76,5 +94,23 @@ const styles = StyleSheet.create({
     fontFamily: brandFonts.bodyMedium,
     fontSize: 14,
     color: brandColors.alphaRed,
+  },
+  locked: {
+    paddingHorizontal: 32,
+  },
+  upgradeBtn: {
+    paddingVertical: 14,
+    paddingHorizontal: 24,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#00BFFF",
+    backgroundColor: "rgba(0, 191, 255, 0.12)",
+  },
+  upgradeBtnText: {
+    fontFamily: brandFonts.mono,
+    fontSize: 10,
+    letterSpacing: 1.5,
+    textTransform: "uppercase",
+    color: "#00BFFF",
   },
 });

@@ -1,6 +1,7 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Alert,
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -8,6 +9,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableWithoutFeedback,
   View,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -78,6 +80,12 @@ export default function ShootScreen() {
     post: false,
   });
   const [draft, setDraft] = useState("");
+  const inputRef = useRef<TextInput>(null);
+
+  const dismissKeyboard = useCallback(() => {
+    inputRef.current?.blur();
+    Keyboard.dismiss();
+  }, []);
 
   // Load each phase from storage on mount
   useEffect(() => {
@@ -121,6 +129,7 @@ export default function ShootScreen() {
   const pct = total === 0 ? 0 : Math.round(((total - remaining) / total) * 100);
 
   const switchPhase = (p: Phase) => {
+    dismissKeyboard();
     Haptics.selectionAsync().catch(() => {});
     setPhase(p);
     setDraft("");
@@ -138,6 +147,7 @@ export default function ShootScreen() {
   };
 
   const toggle = (id: string) => {
+    dismissKeyboard();
     Haptics.selectionAsync().catch(() => {});
     setData((d) => ({
       ...d,
@@ -148,6 +158,7 @@ export default function ShootScreen() {
   };
 
   const remove = (id: string) => {
+    dismissKeyboard();
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(() => {});
     setData((d) => ({
       ...d,
@@ -156,6 +167,7 @@ export default function ShootScreen() {
   };
 
   const clearDone = () => {
+    dismissKeyboard();
     const doneCount = items.filter((s) => s.done).length;
     if (doneCount === 0) return;
     Alert.alert(
@@ -177,6 +189,7 @@ export default function ShootScreen() {
   };
 
   const resetSeed = () => {
+    dismissKeyboard();
     Alert.alert(
       "Reset to defaults?",
       "Replaces this list with the starter checklist.",
@@ -207,6 +220,8 @@ export default function ShootScreen() {
       style={styles.root}
       keyboardVerticalOffset={Platform.OS === "ios" ? 90 : 0}
     >
+      <TouchableWithoutFeedback onPress={dismissKeyboard} accessible={false}>
+        <View style={styles.flex}>
       <View style={[styles.header, { paddingTop: 12 }]}>
         <Text style={styles.eyebrow}>Production</Text>
         <Text style={styles.h1}>Shoot</Text>
@@ -247,6 +262,8 @@ export default function ShootScreen() {
         style={styles.list}
         contentContainerStyle={{ paddingBottom: 24, paddingHorizontal: 20 }}
         keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="on-drag"
+        onScrollBeginDrag={dismissKeyboard}
       >
         {items.length === 0 ? (
           <View style={styles.empty}>
@@ -298,17 +315,23 @@ export default function ShootScreen() {
           </>
         )}
       </ScrollView>
+        </View>
+      </TouchableWithoutFeedback>
 
       <View style={[styles.inputBar, { paddingBottom: insets.bottom + 8 }]}>
         <TextInput
+          ref={inputRef}
           value={draft}
           onChangeText={setDraft}
           placeholder={`Add to ${activePhase.label.toLowerCase()}…`}
           placeholderTextColor="#555"
           style={styles.input}
           returnKeyType="done"
-          onSubmitEditing={add}
-          blurOnSubmit={false}
+          blurOnSubmit
+          onSubmitEditing={() => {
+            add();
+            dismissKeyboard();
+          }}
         />
         <Pressable
           onPress={add}
@@ -328,6 +351,7 @@ export default function ShootScreen() {
 
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: "#0a0a0a" },
+  flex: { flex: 1 },
   header: { paddingHorizontal: 20, paddingBottom: 16 },
   eyebrow: {
     color: "#00d4ff",

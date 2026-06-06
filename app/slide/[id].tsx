@@ -3,17 +3,21 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ErrorBoundary } from "../../components/ErrorBoundary";
+import { Paywall } from "../../components/Paywall";
 import { ToolkitCheatSheetContent } from "../../components/toolkit/ToolkitCheatSheetContent";
 import { ToolkitSlideView } from "../../components/toolkit/ToolkitSlideView";
 import { brandColors, brandFonts } from "../../constants/theme";
+import { isCheatSheetProLocked } from "../../constants/proAccess";
 import { getCheatSheetCards } from "../../data/toolkitCheatSheetCards";
 import { getSlideById } from "../../data/toolkitContent";
 import { getLessonByHtmlSlideId } from "../../data/toolkitCurriculum";
+import { useAvaPro } from "../../hooks/useAvaPro";
 
 export default function SlideDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const { status, isPro, isSignedIn } = useAvaPro();
   const slideId = id ?? "";
   const cards = slideId ? getCheatSheetCards(slideId) : undefined;
   const curriculumLesson = slideId ? getLessonByHtmlSlideId(slideId) : undefined;
@@ -21,6 +25,21 @@ export default function SlideDetailScreen() {
 
   if (cards?.length) {
     const title = curriculumLesson?.title ?? legacySlide?.title ?? "Cheat Sheet";
+
+    if (!isPro && isCheatSheetProLocked()) {
+      return (
+        <View style={[styles.missing, { paddingTop: insets.top, flex: 1 }]}>
+          <Paywall
+            contextTitle={title}
+            subtitle="Cheat sheets are included with AVA Pro — every slide deck, one tap away."
+            status={status}
+            isSignedIn={isSignedIn}
+            onBack={() => router.back()}
+          />
+        </View>
+      );
+    }
+
     return (
       <ErrorBoundary>
         <ToolkitCheatSheetContent

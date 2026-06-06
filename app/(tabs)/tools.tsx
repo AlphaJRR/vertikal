@@ -12,11 +12,19 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { ErrorBoundary } from "../../components/ErrorBoundary";
 import { brandColors, brandFonts } from "../../constants/theme";
+import {
+  isChecklistsProLocked,
+  isInvoiceBuilderProLocked,
+  isToolProLocked,
+} from "../../constants/proAccess";
 import { TOOLKIT_LESSON_COUNT } from "../../data/toolkitCurriculumTypes";
 import { ProductionChecklistsSection } from "../../components/toolkit/ProductionChecklistsSection";
+import { ProLockBadge } from "../../components/toolkit/ProLockBadge";
 import { ToolsErrorFallback } from "../../components/toolkit/ToolsErrorFallback";
 import { ToolsSubScreen } from "../../components/toolkit/ToolsSubScreen";
 import { menuItems, ToolkitMenuId } from "../../components/toolkit/ToolkitNavigator";
+import { useAvaPro } from "../../hooks/useAvaPro";
+import { showProUpgradeAlert } from "../../utils/showProUpgradeAlert";
 
 type SubScreen = "main" | ToolkitMenuId;
 
@@ -61,11 +69,67 @@ function DeferredInvoiceBuilder() {
   return <Component />;
 }
 
+interface ToolCardProps {
+  locked: boolean;
+  onPress: () => void;
+  icon: React.ComponentProps<typeof Ionicons>["name"];
+  iconColor: string;
+  iconBg: string;
+  title: string;
+  description: string;
+}
+
+function ToolCard({
+  locked,
+  onPress,
+  icon,
+  iconColor,
+  iconBg,
+  title,
+  description,
+}: ToolCardProps) {
+  return (
+    <Pressable
+      onPress={onPress}
+      style={[styles.moreCard, locked && styles.moreCardLocked]}
+    >
+      <View style={[styles.moreIcon, { backgroundColor: iconBg }]}>
+        <Ionicons name={icon} size={20} color={iconColor} />
+      </View>
+      <View style={{ flex: 1 }}>
+        <View style={styles.moreTitleRow}>
+          <Text style={[styles.moreTitle, locked && styles.moreTitleLocked]}>
+            {title}
+          </Text>
+          {locked ? <ProLockBadge compact /> : null}
+        </View>
+        <Text style={styles.moreDesc}>{description}</Text>
+      </View>
+      {locked ? (
+        <Ionicons name="lock-closed" size={18} color="#00BFFF" />
+      ) : (
+        <Ionicons name="chevron-forward" size={18} color={brandColors.inactiveTab} />
+      )}
+    </Pressable>
+  );
+}
+
 export default function ToolsScreen() {
   const insets = useSafeAreaInsets();
+  const { status, isPro, isSignedIn } = useAvaPro();
   const [subScreen, setSubScreen] = useState<SubScreen>("main");
 
   const goMain = () => setSubScreen("main");
+
+  const openTool = (id: ToolkitMenuId) => {
+    if (status === "loading") return;
+    const locked = !isPro && isToolProLocked(id);
+    if (locked) {
+      showProUpgradeAlert(isSignedIn, "tool");
+      return;
+    }
+    setSubScreen(id);
+  };
 
   if (subScreen !== "main") {
     return (
@@ -101,21 +165,15 @@ export default function ToolsScreen() {
           </Text>
         </View>
 
-        <Pressable
-          onPress={() => setSubScreen("training")}
-          style={styles.moreCard}
-        >
-          <View style={[styles.moreIcon, { backgroundColor: "rgba(58,134,255,0.13)" }]}>
-            <Ionicons name="school-outline" size={20} color="#3a86ff" />
-          </View>
-          <View style={{ flex: 1 }}>
-            <Text style={styles.moreTitle}>Open Creator Training</Text>
-            <Text style={styles.moreDesc}>
-              Browse all {TOOLKIT_LESSON_COUNT} lessons with slide decks
-            </Text>
-          </View>
-          <Ionicons name="chevron-forward" size={18} color={brandColors.inactiveTab} />
-        </Pressable>
+        <ToolCard
+          locked={false}
+          onPress={() => openTool("training")}
+          icon="school-outline"
+          iconColor="#3a86ff"
+          iconBg="rgba(58,134,255,0.13)"
+          title="Open Creator Training"
+          description={`Browse all ${TOOLKIT_LESSON_COUNT} lessons with slide decks`}
+        />
 
         <View style={styles.section}>
           <Text style={styles.eyebrow}>Rate Calculator</Text>
@@ -124,48 +182,65 @@ export default function ToolsScreen() {
             Build a professional quote in 5 steps — skill level baselines, national
             averages, IRS mileage at $0.67/mi, and Pro-gated Send Quote.
           </Text>
-          <Pressable
-            onPress={() => setSubScreen("rate-calculator")}
-            style={styles.moreCard}
-          >
-            <View style={[styles.moreIcon, { backgroundColor: "rgba(232,0,10,0.13)" }]}>
-              <Ionicons name="cash-outline" size={20} color={brandColors.alphaRed} />
-            </View>
-            <View style={{ flex: 1 }}>
-              <Text style={styles.moreTitle}>Open Rate Calculator</Text>
-              <Text style={styles.moreDesc}>5-step quote builder</Text>
-            </View>
-            <Ionicons name="chevron-forward" size={18} color={brandColors.inactiveTab} />
-          </Pressable>
+          <ToolCard
+            locked={false}
+            onPress={() => openTool("rate-calculator")}
+            icon="cash-outline"
+            iconColor={brandColors.alphaRed}
+            iconBg="rgba(232,0,10,0.13)"
+            title="Open Rate Calculator"
+            description="5-step quote builder"
+          />
         </View>
 
-        <DeferredInvoiceBuilder />
+        {!isPro && isInvoiceBuilderProLocked() ? (
+          <View style={styles.section}>
+            <View style={styles.sectionTitleRow}>
+              <Text style={styles.eyebrow}>Invoice Builder</Text>
+              <ProLockBadge compact />
+            </View>
+            <Text style={styles.sectionTitle}>Client Invoices</Text>
+            <Text style={styles.sectionDesc}>
+              Line items, rates, and export-ready summaries — AVA Pro.
+            </Text>
+            <ToolCard
+              locked
+              onPress={() => showProUpgradeAlert(isSignedIn, "tool")}
+              icon="document-text-outline"
+              iconColor="#fb5607"
+              iconBg="rgba(251,86,7,0.13)"
+              title="Open Invoice Builder"
+              description="Pro-gated invoice templates"
+            />
+          </View>
+        ) : (
+          <DeferredInvoiceBuilder />
+        )}
 
-        <ProductionChecklistsSection />
+        <ProductionChecklistsSection
+          isPro={isPro}
+          isSignedIn={isSignedIn}
+          onLockedPress={() => showProUpgradeAlert(isSignedIn, "tool")}
+        />
 
         <View style={styles.section}>
           <Text style={styles.eyebrow}>More Tools</Text>
           <Text style={styles.sectionTitle}>On-Set Utilities</Text>
-          {moreTools.map((item) => (
-            <Pressable
-              key={item.id}
-              onPress={() => setSubScreen(item.id)}
-              style={styles.moreCard}
-            >
-              <View style={[styles.moreIcon, { backgroundColor: `${item.color}22` }]}>
-                <Ionicons
-                  name={item.icon as React.ComponentProps<typeof Ionicons>["name"]}
-                  size={20}
-                  color={item.color}
-                />
-              </View>
-              <View style={{ flex: 1 }}>
-                <Text style={styles.moreTitle}>{item.title}</Text>
-                <Text style={styles.moreDesc}>{item.description}</Text>
-              </View>
-              <Ionicons name="chevron-forward" size={18} color={brandColors.inactiveTab} />
-            </Pressable>
-          ))}
+          {moreTools.map((item) => {
+            const locked = !isPro && isToolProLocked(item.id);
+            return (
+              <ToolCard
+                key={item.id}
+                locked={locked}
+                onPress={() => openTool(item.id)}
+                icon={item.icon as React.ComponentProps<typeof Ionicons>["name"]}
+                iconColor={item.color}
+                iconBg={`${item.color}22`}
+                title={item.title}
+                description={item.description}
+              />
+            );
+          })}
         </View>
       </ScrollView>
     </ErrorBoundary>
@@ -209,6 +284,22 @@ const styles = StyleSheet.create({
     padding: 14,
     marginBottom: 8,
   },
+  moreCardLocked: {
+    opacity: 0.78,
+    borderColor: "rgba(0, 191, 255, 0.25)",
+  },
+  moreTitleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    flexWrap: "wrap",
+  },
+  sectionTitleRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    marginBottom: 6,
+  },
   moreIcon: {
     width: 40,
     height: 40,
@@ -220,6 +311,9 @@ const styles = StyleSheet.create({
     fontFamily: brandFonts.bodySemiBold,
     fontSize: 15,
     color: brandColors.pureWhite,
+  },
+  moreTitleLocked: {
+    color: brandColors.mutedText,
   },
   moreDesc: {
     fontFamily: brandFonts.body,

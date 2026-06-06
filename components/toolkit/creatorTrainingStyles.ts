@@ -140,6 +140,18 @@ export const creatorTrainingStyles = StyleSheet.create({
     alignItems: "flex-start",
     gap: 12,
   },
+  lessonCardLocked: {
+    opacity: 0.72,
+    borderColor: "rgba(0, 191, 255, 0.25)",
+  },
+  lessonCardRight: {
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 6,
+  },
+  lessonTitleLocked: {
+    color: brandColors.mutedText,
+  },
   lessonBadge: {
     backgroundColor: brandColors.alphaRed,
     minWidth: 32,

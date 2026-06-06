@@ -14,11 +14,12 @@ import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import * as WebBrowser from "expo-web-browser";
-import { useRouter, Href } from "expo-router";
+import { useRouter, type Href } from "expo-router";
 import { ReelVideoCover } from "../../components/ReelVideoCover";
 import { VideoModal } from "../../components/VideoModal";
 import { ProductionTipsList } from "../../components/toolkit/ProductionTipsList";
 import { featuredTips } from "../../data/toolkitContent";
+import { useAuth } from "../../contexts/AuthContext";
 
 const SITE_URL = "https://alphavisualartists.com";
 
@@ -43,39 +44,59 @@ type Photo = {
   caption: string;
 };
 
-const REELS: Reel[] = [
+/**
+ * Featured Cloudflare reels — display order per Joshua (Jun 2026).
+ * Do not swap UIDs by old placeholder slot numbers alone; match clip content to title.
+ */
+const FEATURED_REELS: Reel[] = [
   {
+    // Featured Reel #3 — Argueably The Best 'Burgers' (UID 9d3d0efe; joshuaArgueVideoSeed + alphavisualartists.com)
     id: "cf-9d3d0efed36b71e5f75c7b5e218809d7",
-    title: "Featured Video #1",
-    tag: "Featured · Reel",
-    cover: require("../../assets/images/creator-court.jpg"),
+    title: "Argueably The Best 'Burgers'",
+    tag: "Joshua Argue · Featured",
+    cover: require("../../assets/images/director-monitor.jpg"),
     url: `${SITE_URL}/work`,
     video: cloudflareHls("9d3d0efed36b71e5f75c7b5e218809d7"),
   },
   {
-    id: "cf-106e0a1004f97de68d31ba317010425d",
-    title: "BET Video",
-    tag: "Featured · BET",
-    cover: require("../../assets/images/cinema-cam.jpg"),
-    url: `${SITE_URL}/work`,
-    video: cloudflareHls("106e0a1004f97de68d31ba317010425d"),
-  },
-  {
+    // DHC Live — position #2 (UID c861d85f; ex placeholder "Featured Video #3")
     id: "cf-c861d85f92202939bb33ebb87bb3a089",
-    title: "Featured Video #3",
-    tag: "Featured · Reel",
-    cover: require("../../assets/images/director-monitor.jpg"),
+    title: "DHC Live Feat. Kirk Franklin Joe Guidry",
+    tag: "Featured · Live",
+    cover: require("../../assets/images/creator-court.jpg"),
     url: `${SITE_URL}/work`,
     video: cloudflareHls("c861d85f92202939bb33ebb87bb3a089"),
   },
   {
-    id: "cf-c28e7aee6bd7b9d9c9f44f277d2d11fa",
-    title: "Fashion Show Promo",
-    tag: "Featured · Promo",
-    cover: require("../../assets/images/event-wade.jpg"),
+    // Additional Reel #1 — CCHS Ground Breaking Ceremony
+    id: "cf-793c5fad3fa152369bdaacf731049663",
+    title: "CCHS Ground Breaking Ceremony",
+    tag: "Featured · Ceremony",
+    cover: require("../../assets/images/portrait-dada.jpg"),
     url: `${SITE_URL}/work`,
-    video: cloudflareHls("c28e7aee6bd7b9d9c9f44f277d2d11fa"),
+    video: cloudflareHls("793c5fad3fa152369bdaacf731049663"),
   },
+  {
+    // Additional Reel #2 — Cadance Apartments & Condominiums
+    id: "cf-25d31f0e020a4759d7e1c2fa0d1945d3",
+    title: "Cadance Apartments & Condominiums",
+    tag: "Featured · Real Estate",
+    cover: require("../../assets/images/peace-suit.jpg"),
+    url: `${SITE_URL}/work`,
+    video: cloudflareHls("25d31f0e020a4759d7e1c2fa0d1945d3"),
+  },
+  {
+    // Additional Reel #3 — Winter Nights Chicago Lights
+    id: "cf-29424a48ea60434f3feb6e6cfd12fff4",
+    title: "Winter Nights Chicago Lights",
+    tag: "Featured · Chicago",
+    cover: require("../../assets/images/kids-plaid.jpg"),
+    url: `${SITE_URL}/work`,
+    video: cloudflareHls("29424a48ea60434f3feb6e6cfd12fff4"),
+  },
+];
+
+const PHOTO_REELS: Reel[] = [
   {
     id: "r1",
     title: "Dwyane Wade",
@@ -103,30 +124,6 @@ const REELS: Reel[] = [
     tag: "Waymaker Kid's Summit",
     cover: require("../../assets/images/event-drose.jpg"),
     url: `${SITE_URL}/work`,
-  },
-  {
-    id: "cf-793c5fad3fa152369bdaacf731049663",
-    title: "Additional Reel #1",
-    tag: "Cloudflare · Extra",
-    cover: require("../../assets/images/portrait-dada.jpg"),
-    url: `${SITE_URL}/work`,
-    video: cloudflareHls("793c5fad3fa152369bdaacf731049663"),
-  },
-  {
-    id: "cf-25d31f0e020a4759d7e1c2fa0d1945d3",
-    title: "Additional Reel #2",
-    tag: "Cloudflare · Extra",
-    cover: require("../../assets/images/peace-suit.jpg"),
-    url: `${SITE_URL}/work`,
-    video: cloudflareHls("25d31f0e020a4759d7e1c2fa0d1945d3"),
-  },
-  {
-    id: "cf-29424a48ea60434f3feb6e6cfd12fff4",
-    title: "Additional Reel #3",
-    tag: "Cloudflare · Extra",
-    cover: require("../../assets/images/kids-plaid.jpg"),
-    url: `${SITE_URL}/work`,
-    video: cloudflareHls("29424a48ea60434f3feb6e6cfd12fff4"),
   },
   {
     id: "rkids",
@@ -214,6 +211,15 @@ const PHOTOS: Photo[] = [
 
 export default function HomeScreen() {
   const router = useRouter();
+  const { user, signOut } = useAuth();
+  const isSignedIn = Boolean(user);
+  const userEmail = user?.email ?? null;
+
+  const handleSignOut = () => {
+    signOut().catch((error) => {
+      console.error("[HomeScreen] signOut failed:", error);
+    });
+  };
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [activeVideo, setActiveVideo] = useState<any | null>(null);
 
@@ -296,15 +302,27 @@ export default function HomeScreen() {
         <View style={[styles.hero, { paddingTop: 12 }]}>
           <Text style={styles.brand}>ALPHA VISUAL ARTISTS</Text>
           <Text style={styles.tag}>Chicago · Cinematic · Stop The Scroll</Text>
+          {isSignedIn && userEmail ? (
+            <Text style={styles.signedInEmail} numberOfLines={1}>
+              Signed in · {userEmail}
+            </Text>
+          ) : null}
 
           <View style={styles.heroBtnRow}>
-            <Pressable
-              onPress={() => open(`${SITE_URL}/portal`)}
-              style={styles.primaryBtn}
-            >
-              <Ionicons name="lock-closed-outline" size={16} color="#000" />
-              <Text style={styles.primaryBtnTxt}>Client Portal</Text>
-            </Pressable>
+            {isSignedIn ? (
+              <Pressable onPress={handleSignOut} style={styles.secondaryBtn}>
+                <Ionicons name="log-out-outline" size={16} color="#00d4ff" />
+                <Text style={styles.secondaryBtnTxt}>Sign out</Text>
+              </Pressable>
+            ) : (
+              <Pressable
+                onPress={() => router.push("/sign-in" as Href)}
+                style={styles.primaryBtn}
+              >
+                <Ionicons name="log-in-outline" size={16} color="#000" />
+                <Text style={styles.primaryBtnTxt}>Sign in</Text>
+              </Pressable>
+            )}
             <Pressable
               onPress={() => open(SITE_URL)}
               style={styles.secondaryBtn}
@@ -323,7 +341,7 @@ export default function HomeScreen() {
           onAction={() => open(`${SITE_URL}/work`)}
         />
         <FlatList
-          data={REELS}
+          data={FEATURED_REELS}
           horizontal
           scrollEnabled
           showsHorizontalScrollIndicator={false}
@@ -332,7 +350,22 @@ export default function HomeScreen() {
           renderItem={renderReelCard}
           onViewableItemsChanged={handleViewableItemsChanged}
           viewabilityConfig={{
-            itemVisiblePercentThreshold: 50, // Show as visible when 50%+ on screen
+            itemVisiblePercentThreshold: 50,
+          }}
+          scrollEventThrottle={16}
+          decelerationRate="fast"
+        />
+        <FlatList
+          data={PHOTO_REELS}
+          horizontal
+          scrollEnabled
+          showsHorizontalScrollIndicator={false}
+          keyExtractor={(item) => item.id}
+          contentContainerStyle={[styles.reelRow, styles.photoReelRow]}
+          renderItem={renderReelCard}
+          onViewableItemsChanged={handleViewableItemsChanged}
+          viewabilityConfig={{
+            itemVisiblePercentThreshold: 50,
           }}
           scrollEventThrottle={16}
           decelerationRate="fast"
@@ -436,6 +469,12 @@ const styles = StyleSheet.create({
     marginTop: 6,
     marginBottom: 20,
   },
+  signedInEmail: {
+    color: "#888888",
+    fontSize: 12,
+    marginTop: -12,
+    marginBottom: 16,
+  },
   heroBtnRow: { flexDirection: "row", gap: 10 },
   primaryBtn: {
     flexDirection: "row",
@@ -503,6 +542,7 @@ const styles = StyleSheet.create({
 
   // REELS
   reelRow: { paddingHorizontal: 20, gap: 12 },
+  photoReelRow: { paddingTop: 4, paddingBottom: 4 },
   reelCard: {
     width: 220,
     marginRight: 12,

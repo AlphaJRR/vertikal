@@ -33,7 +33,7 @@ eas credentials:configure-build --platform ios
 echo ""
 echo "🚀 Step 4: Starting production build for both platforms..."
 echo "   This will take 10-30 minutes..."
-eas build --platform all --profile production
+eas build --platform all --profile production --auto-submit
 
 echo ""
 echo "✅ Build process initiated!"

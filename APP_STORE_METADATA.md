@@ -1,103 +1,76 @@
-# 📱 VERTIKAL — APP STORE METADATA
+# Alpha Visual Artists (AVA) — App Store Metadata
 
-**Version:** v1.0.0-RC1  
-**Platform:** iOS (App Store) & Android (Play Store)  
-**Date:** December 13, 2024
+**Version:** 1.0.4  
+**Platform:** iOS (App Store)  
+**Date:** June 2026
 
 ---
 
-## 🍎 iOS APP STORE
+## iOS App Store
 
 ### App Name
-**VERTIKAL**
+**Alpha Visual Artists**
 
 ### Subtitle
-**Cinematic Creator Platform**
+**Creator Toolkit for Visual Storytellers**
 
 ### Category
-- **Primary:** Entertainment
-- **Secondary:** Social Networking
+- **Primary:** Photo & Video
+- **Secondary:** Education
 
 ### Keywords
 ```
-cinematic, creators, vertical video, danmaku, streaming, 
-networks, directors, original content, founding 50, 
-messaging, profiles, shows, series, documentaries
+creators, filmmaking, video production, cinematography, editing,
+color grading, lighting, shot list, invoice, rate calculator,
+creator tools, production checklist, training
 ```
 
 ### Description
 
-**VERTIKAL — Where Creators Broadcast**
+**Alpha Visual Artists — The Creator Toolkit**
 
-VERTIKAL is the premier platform for cinematic creators and networks. Discover original series, documentaries, and exclusive content from the Founding 50 — the most influential creators in vertical storytelling.
+AVA is the mobile home for visual storytellers: production checklists, rate calculator, invoice builder, and a full Creators Toolkit with 108 lessons across camera, framing, lighting, editing, strategy, and production.
 
 **Features:**
 
-🎬 **Vertical Feed**
-- Infinite scroll through curated content
-- Hero video sections with cinematic thumbnails
-- Continue watching your favorite shows
-- Director Originals exclusive content
+**Creators Toolkit**
+- 108 structured lessons with cheat sheets and HTML slides
+- Camera, framing, lighting, editing, strategy, and production tracks
+- Foundational lessons free; AVA Pro unlocks the full curriculum
 
-💬 **Daunt Effect (Danmaku)**
-- Live comments scroll over video
-- Real-time community engagement
-- Immersive viewing experience
+**Production Tools**
+- Shoot-day and post-production checklists
+- Rate calculator with quote builder
+- Invoice builder with logo options
 
-👥 **Creator Profiles**
-- Premium profile displays
-- Stats and achievements
-- Show collections
-- Founding 50 badges
+**Creator Home**
+- Featured work reels and production tips
+- Wallpapers and brand assets
+- Sign in to sync Pro access and saved progress
 
-💌 **Direct Messaging**
-- Connect with creators
-- Role-based permissions
-- Secure messaging system
-
-🎯 **Content Discovery**
-- Category filters (For You, Networks, Drama, Docu)
-- Trending shows
-- Popular creators
-- Personalized recommendations
-
-**Join the VERTIKAL community and experience the future of vertical storytelling.**
+**Sign in with email and password in-app.** AVA Pro unlocks premium lessons and pro tools.
 
 ---
 
 ### Promotional Text
 
-**New in v1.0.0:**
-- Daunt Effect (Danmaku) — Live comments over video
-- Direct Messaging — Connect with creators
-- Enhanced Creator Profiles — Premium displays
-- Performance Optimizations — Smoother animations
+**New in v1.0.4:**
+- In-app email + password sign-in (Supabase)
+- Full Creators Toolkit with pro gating
+- Production checklists, rate calculator, and invoice builder
+- Performance and stability improvements
 
 ---
 
 ### Screenshots (Required)
 
-**iPhone 6.7" Display (iPhone 14 Pro Max, 15 Pro Max)**
+**iPhone 6.7" Display**
 
-1. **Home Feed** — Vertical scrolling feed with hero video
-2. **Creator Profile** — Premium profile with stats
-3. **Daunt Effect** — Comments scrolling over video
-4. **Founding 50 Rail** — Horizontal creator scroll
-5. **Navigation** — Bottom tab navigation
-
-**iPhone 6.5" Display (iPhone 11 Pro Max, XS Max)**
-
-1. **Home Feed** — Vertical scrolling feed
-2. **Creator Profile** — Premium profile
-3. **Daunt Effect** — Comments overlay
-4. **Founding 50 Rail** — Creator carousel
-5. **Navigation** — Tab bar
-
-**iPhone 5.5" Display (iPhone 8 Plus)**
-
-1. **Home Feed** — Vertical feed
-2. **Creator Profile** — Profile display
-3. **Daunt Effect** — Comments animation
+1. **Home** — Featured reels and Sign in
+2. **Creators Toolkit** — Lesson library
+3. **Production Checklist** — Shoot-day workflow
+4. **Rate Calculator** — Quote builder
+5. **Tools Tab** — Toolkit navigation
 
 ---
 
@@ -106,180 +79,75 @@ VERTIKAL is the premier platform for cinematic creators and networks. Discover o
 **Requirements:**
 - 1024x1024px PNG
 - No transparency
-- VERTIKAL logo centered
-- Black background (#000000)
-- Gold accent (#FFD700)
+- AVA logo centered
+- Dark background (#0a0a0a)
+- Cyan accent (#00d4ff)
 
 ---
 
 ### Privacy Policy URL
-**https://vertikal.com/privacy**
+**https://alphavisualartists.com/privacy**
 
 ### Support URL
-**https://vertikal.com/support**
+**https://alphavisualartists.com/support**
 
 ### Marketing URL
-**https://vertikal.com**
+**https://alphavisualartists.com**
 
 ---
 
-## 🤖 ANDROID PLAY STORE
-
-### App Name
-**VERTIKAL**
-
-### Short Description (80 characters)
-**Cinematic creator platform with vertical video, danmaku, and messaging**
-
-### Full Description
-
-**VERTIKAL — Where Creators Broadcast**
-
-VERTIKAL is the premier platform for cinematic creators and networks. Discover original series, documentaries, and exclusive content from the Founding 50 — the most influential creators in vertical storytelling.
-
-**Features:**
-
-🎬 **Vertical Feed**
-- Infinite scroll through curated content
-- Hero video sections with cinematic thumbnails
-- Continue watching your favorite shows
-- Director Originals exclusive content
-
-💬 **Daunt Effect (Danmaku)**
-- Live comments scroll over video
-- Real-time community engagement
-- Immersive viewing experience
-
-👥 **Creator Profiles**
-- Premium profile displays
-- Stats and achievements
-- Show collections
-- Founding 50 badges
-
-💌 **Direct Messaging**
-- Connect with creators
-- Role-based permissions
-- Secure messaging system
-
-🎯 **Content Discovery**
-- Category filters (For You, Networks, Drama, Docu)
-- Trending shows
-- Popular creators
-- Personalized recommendations
-
-**Join the VERTIKAL community and experience the future of vertical storytelling.**
-
----
-
-### Category
-- **Primary:** Entertainment
-- **Secondary:** Social
-
-### Tags
-```
-cinematic, creators, vertical video, danmaku, streaming, 
-networks, directors, original content, messaging, profiles
-```
-
-### Screenshots (Required)
-
-**Phone (16:9 or 9:16)**
-
-1. **Home Feed** — Vertical scrolling feed with hero video
-2. **Creator Profile** — Premium profile with stats
-3. **Daunt Effect** — Comments scrolling over video
-4. **Founding 50 Rail** — Horizontal creator scroll
-5. **Navigation** — Bottom tab navigation
-
-**Tablet (16:9 or 9:16)**
-
-1. **Home Feed** — Vertical feed
-2. **Creator Profile** — Profile display
-3. **Daunt Effect** — Comments overlay
-
----
-
-### Feature Graphic (1024x500px)
-
-**Design:**
-- VERTIKAL logo centered
-- Tagline: "Where Creators Broadcast"
-- Cinematic background
-- Gold accent (#FFD700)
-
----
-
-### App Icon
-
-**Requirements:**
-- 512x512px PNG
-- No transparency
-- VERTIKAL logo centered
-- Black background (#000000)
-- Gold accent (#FFD700)
-
----
-
-### Privacy Policy URL
-**https://vertikal.com/privacy**
-
-### Support URL
-**https://vertikal.com/support**
-
-### Website URL
-**https://vertikal.com**
-
----
-
-## 📊 CONTENT RATINGS
+## Content Ratings
 
 ### iOS
 - **Age Rating:** 12+
 - **Reasons:** Infrequent/Mild Profanity or Crude Humor
 
-### Android
-- **Content Rating:** Teen
-- **Reasons:** Infrequent/Mild Profanity or Crude Humor
+### Age Assurance (Guideline 2.3.6) — ASC only
+
+Complete in **App Store Connect** before each resubmission when Apple flags 2.3.6:
+
+1. **Apps** → Alpha Visual Artists → **App Information** / compliance sections.
+2. Fill **Age Assurance** questionnaire to match the 12+ rating above.
+3. Account creation: handled **in-app** via Supabase email + password at `/sign-in`.
+4. No UGC feed requiring separate child-safety flow in the mobile binary for this release.
+
+Step-by-step and Resolution Center copy: `docs/APP_STORE_REJECTION_JUNE_2026.md`.
 
 ---
 
-## 🔒 PRIVACY & PERMISSIONS
+## Privacy & Permissions
 
-### Required Permissions
-
-**iOS:**
-- Camera (optional) — For profile photos
-- Photo Library (optional) — For profile photos
-- Notifications (optional) — For push notifications
-
-**Android:**
-- INTERNET — Required for API calls
-- CAMERA (optional) — For profile photos
-- READ_EXTERNAL_STORAGE (optional) — For profile photos
+### Required Permissions (iOS)
+- Photo Library — Save wallpapers; optional invoice logo upload
+- No camera permission required for core flows
 
 ---
 
-## 📝 RELEASE NOTES
+## Release Notes
 
-### v1.0.0-RC1 (Initial Release)
+### v1.0.4 (Build 10)
 
 **Features:**
-- Vertical feed with infinite scroll
-- Daunt Effect (Danmaku) — Live comments over video
-- Creator profiles with premium displays
-- Direct messaging system (role-based)
-- Founding 50 creators rail
-- Category filters
-- Performance optimizations
-- Security hardening
+- In-app email + password sign-in for App Review and production users
+- Creators Toolkit with AVA Pro gating
+- Production checklists, rate calculator, invoice builder
+- Featured reels on home screen
 
-**Known Issues:**
-- Auth context currently mocked (real auth in v1.0.1)
-- Comment sheet modal not implemented (coming in v1.0.1)
-- DM chat screen not implemented (coming in v1.0.1)
+**App Review demo account:** Provide credentials in App Store Connect Review Notes only (not in metadata). Email: `appreview@alphavisualartists.com`; password set in Supabase dashboard.
 
 ---
 
-**Generated:** December 13, 2024  
-**Version:** v1.0.0-RC1
+## Metadata scrub checklist (Round 2 — June 2026)
 
+Before resubmission, confirm **App Store Connect** fields contain **no** references to:
+- "beta"
+- "join the beta"
+- "TestFlight" (unless in internal notes only)
+- "coming soon" for sign-in or core features
+
+Use **"Alpha Visual Artists"** or **"AVA"** — not legacy product names in user-facing copy.
+
+---
+
+**Generated:** June 2026  
+**Version:** 1.0.4 / build 10

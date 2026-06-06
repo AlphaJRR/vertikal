@@ -1,0 +1,37 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "ava-email",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-02-04",
+  "observability": {
+    "enabled": true
+  },
+  // HTTP route (optional — /health and /send work on workers.dev without this):
+  // "routes": [{ "pattern": "email.alphavisualartists.com/*", "zone_name": "alphavisualartists.com" }],
+  //
+  // Email Routing setup (one-time, Dashboard or CLI):
+  // 1. Enable routing:  npx wrangler email routing enable alphavisualartists.com
+  // 2. Verify forward destination:
+  //      npx wrangler email routing addresses create jrandall08@icloud.com
+  // 3. Create routing rule (Dashboard → Email Service → Email Routing → Routing Rules):
+  //      Match: support@alphavisualartists.com (or catch-all @alphavisualartists.com)
+  //      Action: Send to Worker → ava-email
+  // 4. Email Sending must already be enabled for outbound auto-replies (/send, AUTO_REPLY).
+  "send_email": [
+    {
+      "name": "SEND_EMAIL",
+      "allowed_sender_addresses": [
+        "noreply@alphavisualartists.com",
+        "support@alphavisualartists.com"
+      ]
+      // Local dev: add "remote": true to send real emails from wrangler dev
+    }
+  ],
+  "vars": {
+    "FROM_EMAIL": "noreply@alphavisualartists.com",
+    "FROM_NAME": "Alpha Visual Artists",
+    "REPLY_TO": "support@alphavisualartists.com",
+    "FORWARD_TO": "jrandall08@icloud.com",
+    "AUTO_REPLY_ENABLED": "true"
+  }
+}

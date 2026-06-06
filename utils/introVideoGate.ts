@@ -4,8 +4,8 @@ import {
   INTRO_COOLDOWN_MS,
 } from "../constants/introVideo";
 
-/** Set false before production — plays intro on every cold start for QA. */
-const FORCE_INTRO_EVERY_LAUNCH = true;
+/** Set true only for intro QA — production must stay false (App Store 2.2). */
+const FORCE_INTRO_EVERY_LAUNCH = false;
 
 export async function shouldPlayAppIntro(): Promise<boolean> {
   if (FORCE_INTRO_EVERY_LAUNCH) return true;

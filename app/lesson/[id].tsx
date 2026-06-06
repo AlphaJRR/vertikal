@@ -10,14 +10,19 @@ import { useLocalSearchParams, useRouter, type Href } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { brandColors, brandFonts } from "../../constants/theme";
+import { Paywall } from "../../components/Paywall";
+import { isCheatSheetProLocked, isLessonProLocked } from "../../constants/proAccess";
 import { getLessonById } from "../../data/toolkitCurriculum";
+import { useAvaPro } from "../../hooks/useAvaPro";
 import { useSavedLessons } from "../../hooks/useSavedLessons";
+import { showProUpgradeAlert } from "../../utils/showProUpgradeAlert";
 import { toPlainLessonText } from "../../utils/plainLessonText";
 
 export default function LessonScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const { status, isPro, isSignedIn } = useAvaPro();
   const { toggleSaved, isSaved } = useSavedLessons();
   const lesson = id ? getLessonById(id) : undefined;
 
@@ -33,9 +38,23 @@ export default function LessonScreen() {
   }
 
   const saved = isSaved(lesson.id);
+  const locked = !isPro && isLessonProLocked(lesson.id);
   const hasSlide =
     lesson.type === "html_presentation" &&
     (lesson.htmlSlideId != null || lesson.htmlSlidePath != null);
+
+  if (locked) {
+    return (
+      <View style={[styles.root, { paddingTop: insets.top }]}>
+        <Paywall
+          contextTitle={lesson.title}
+          status={status}
+          isSignedIn={isSignedIn}
+          onBack={() => router.back()}
+        />
+      </View>
+    );
+  }
 
   return (
     <View style={[styles.root, { paddingTop: insets.top }]}>
@@ -56,11 +75,21 @@ export default function LessonScreen() {
 
         {hasSlide ? (
           <Pressable
-            onPress={() => router.push(`/cheatsheet/${lesson.id}` as Href)}
+            onPress={() => {
+              if (!isPro && isCheatSheetProLocked()) {
+                showProUpgradeAlert(isSignedIn, "feature");
+                return;
+              }
+              router.push(`/cheatsheet/${lesson.id}` as Href);
+            }}
             style={styles.slideBtn}
           >
             <Ionicons name="easel-outline" size={18} color={brandColors.pureWhite} />
-            <Text style={styles.slideBtnText}>Open Cheat Sheet</Text>
+            <Text style={styles.slideBtnText}>
+              {!isPro && isCheatSheetProLocked()
+                ? "Open Cheat Sheet · Pro"
+                : "Open Cheat Sheet"}
+            </Text>
             <Ionicons name="chevron-forward" size={16} color="#555555" />
           </Pressable>
         ) : null}
@@ -149,6 +178,31 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: brandColors.pureWhite,
     marginBottom: 16,
+    textAlign: "center",
+  },
+  lockedBody: {
+    fontFamily: brandFonts.body,
+    fontSize: 14,
+    lineHeight: 21,
+    color: brandColors.subtleText,
+    textAlign: "center",
+    marginBottom: 20,
+    paddingHorizontal: 24,
+  },
+  upgradeBtn: {
+    paddingVertical: 14,
+    paddingHorizontal: 24,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#00BFFF",
+    backgroundColor: "rgba(0, 191, 255, 0.12)",
+  },
+  upgradeBtnText: {
+    fontFamily: brandFonts.mono,
+    fontSize: 10,
+    letterSpacing: 1.5,
+    textTransform: "uppercase",
+    color: "#00BFFF",
   },
   backLink: {
     fontFamily: brandFonts.bodyMedium,

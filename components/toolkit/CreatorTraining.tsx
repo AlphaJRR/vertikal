@@ -8,10 +8,15 @@ import {
   toolkitLessonCount,
   ToolkitTab,
 } from "../../data/toolkitCurriculum";
+import { isLessonProLocked } from "../../constants/proAccess";
+import { useAvaPro } from "../../hooks/useAvaPro";
+import { showProUpgradeAlert } from "../../utils/showProUpgradeAlert";
+import { ProLockBadge } from "./ProLockBadge";
 import { creatorTrainingStyles as s } from "./creatorTrainingStyles";
 
 export function CreatorTraining() {
   const router = useRouter();
+  const { status, isPro, isSignedIn } = useAvaPro();
   const [activeTab, setActiveTab] = useState<ToolkitTab>("camera");
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(
     new Set(),
@@ -37,6 +42,12 @@ export function CreatorTraining() {
   };
 
   const openLesson = (lessonId: string) => {
+    if (status === "loading") return;
+    const locked = !isPro && isLessonProLocked(lessonId);
+    if (locked) {
+      showProUpgradeAlert(isSignedIn, "lesson");
+      return;
+    }
     router.push(`/lesson/${lessonId}` as Href);
   };
 
@@ -98,24 +109,44 @@ export function CreatorTraining() {
 
             {open ? (
               <View style={s.lessonList}>
-                {cat.lessons.map((lesson) => (
-                  <Pressable
-                    key={lesson.id}
-                    onPress={() => openLesson(lesson.id)}
-                    style={s.lessonCard}
-                  >
-                    <View style={s.lessonBadge}>
-                      <Text style={s.lessonBadgeText}>{lesson.number}</Text>
-                    </View>
-                    <View style={s.lessonBody}>
-                      <Text style={s.lessonTitle}>{lesson.title}</Text>
-                      <Text style={s.lessonDesc} numberOfLines={2}>
-                        {lesson.description}
-                      </Text>
-                    </View>
-                    <Ionicons name="chevron-forward" size={16} color="#555555" />
-                  </Pressable>
-                ))}
+                {cat.lessons.map((lesson) => {
+                  const locked = !isPro && isLessonProLocked(lesson.id);
+                  return (
+                    <Pressable
+                      key={lesson.id}
+                      onPress={() => openLesson(lesson.id)}
+                      style={[s.lessonCard, locked && s.lessonCardLocked]}
+                    >
+                      <View style={s.lessonBadge}>
+                        <Text style={s.lessonBadgeText}>{lesson.number}</Text>
+                      </View>
+                      <View style={s.lessonBody}>
+                        <Text
+                          style={[s.lessonTitle, locked && s.lessonTitleLocked]}
+                        >
+                          {lesson.title}
+                        </Text>
+                        <Text style={s.lessonDesc} numberOfLines={2}>
+                          {lesson.description}
+                        </Text>
+                      </View>
+                      <View style={s.lessonCardRight}>
+                        {locked ? (
+                          <>
+                            <ProLockBadge compact />
+                            <Ionicons
+                              name="lock-closed"
+                              size={16}
+                              color="#00BFFF"
+                            />
+                          </>
+                        ) : (
+                          <Ionicons name="chevron-forward" size={16} color="#555555" />
+                        )}
+                      </View>
+                    </Pressable>
+                  );
+                })}
               </View>
             ) : null}
           </View>

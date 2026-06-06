@@ -23,6 +23,7 @@ import {
   SKILL_LEVELS,
   SkillLevel,
 } from "../../data/rateCalculatorData";
+import { isRateCalculatorQuoteProLocked } from "../../constants/proAccess";
 import { useAvaPro } from "../../hooks/useAvaPro";
 import { rateCalculatorStyles as s } from "./rateCalculatorStyles";
 
@@ -39,6 +40,7 @@ interface QuoteLine {
 export function RateCalculator({ onBack }: RateCalculatorProps) {
   const insets = useSafeAreaInsets();
   const { isPro } = useAvaPro();
+  const sendQuoteLocked = !isPro && isRateCalculatorQuoteProLocked();
   const [step, setStep] = useState(1);
 
   // Step 1 — Project
@@ -194,10 +196,10 @@ export function RateCalculator({ onBack }: RateCalculatorProps) {
   const goBack = () => setStep((n) => Math.max(n - 1, 1));
 
   const handleSendQuote = () => {
-    if (!isPro) {
+    if (sendQuoteLocked) {
       Alert.alert(
         "AVA Pro Required",
-        "Send Quote is available on AVA Pro ($9.99/mo). Upgrade to export and share professional quotes with clients.",
+        "Send Quote is available on AVA Pro — $40/year founding price or $9.99/mo. In-app purchase coming soon.",
         [{ text: "OK" }],
       );
       return;
@@ -453,13 +455,13 @@ export function RateCalculator({ onBack }: RateCalculatorProps) {
             </View>
             <Pressable
               onPress={handleSendQuote}
-              style={[s.btnPrimary, !isPro && s.btnProLocked]}
+              style={[s.btnPrimary, sendQuoteLocked && s.btnProLocked]}
             >
               <Text style={s.btnPrimaryTxt}>
-                {isPro ? "Send Quote" : "Send Quote · Pro"}
+                {sendQuoteLocked ? "Send Quote · Pro" : "Send Quote"}
               </Text>
             </Pressable>
-            {!isPro ? (
+            {sendQuoteLocked ? (
               <View style={s.proBadge}>
                 <Ionicons name="lock-closed" size={12} color="#888" />
                 <Text style={s.proBadgeTxt}>
