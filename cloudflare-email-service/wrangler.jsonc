@@ -32,6 +32,7 @@
     "FROM_NAME": "Alpha Visual Artists",
     "REPLY_TO": "support@alphavisualartists.com",
     "FORWARD_TO": "jrandall08@icloud.com",
-    "AUTO_REPLY_ENABLED": "true"
+    // Disabled until `wrangler email sending enable alphavisualartists.com` completes.
+    "AUTO_REPLY_ENABLED": "false"
   }
 }

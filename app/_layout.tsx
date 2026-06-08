@@ -27,6 +27,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { AppIntroVideo } from "@/components/AppIntroVideo";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { hydrateDemoMode } from "@/lib/demoMode";
 import { shouldPlayAppIntro } from "@/utils/introVideoGate";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -110,6 +111,10 @@ export default function RootLayout() {
   });
   const handledInitial = useRef(false);
   const [introGate, setIntroGate] = useState<"loading" | "show" | "skip">("loading");
+
+  useEffect(() => {
+    void hydrateDemoMode();
+  }, []);
 
   const finishIntro = useCallback(() => {
     setIntroGate("skip");

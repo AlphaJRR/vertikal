@@ -20,6 +20,7 @@ import { VideoModal } from "../../components/VideoModal";
 import { ProductionTipsList } from "../../components/toolkit/ProductionTipsList";
 import { featuredTips } from "../../data/toolkitContent";
 import { useAuth } from "../../contexts/AuthContext";
+import { exitDemoMode, useDemoMode } from "../../lib/demoMode";
 
 const SITE_URL = "https://alphavisualartists.com";
 
@@ -212,11 +213,22 @@ const PHOTOS: Photo[] = [
 export default function HomeScreen() {
   const router = useRouter();
   const { user, signOut } = useAuth();
+  const isDemoMode = useDemoMode();
   const isSignedIn = Boolean(user);
   const userEmail = user?.email ?? null;
 
+  const handleExitDemoMode = () => {
+    exitDemoMode().catch((error) => {
+      console.error("[HomeScreen] exitDemoMode failed:", error);
+    });
+  };
+
   const handleSignOut = () => {
-    signOut().catch((error) => {
+    const tasks: Promise<void>[] = [signOut()];
+    if (isDemoMode) {
+      tasks.push(exitDemoMode());
+    }
+    Promise.all(tasks).catch((error) => {
       console.error("[HomeScreen] signOut failed:", error);
     });
   };
@@ -298,6 +310,17 @@ export default function HomeScreen() {
         contentContainerStyle={{ paddingBottom: 40 }}
         showsVerticalScrollIndicator={false}
       >
+        {isDemoMode ? (
+          <View style={styles.demoBanner}>
+            <Text style={styles.demoBannerText}>
+              Reviewer mode — all features unlocked
+            </Text>
+            <Pressable onPress={handleExitDemoMode} style={styles.demoExitBtn}>
+              <Text style={styles.demoExitBtnText}>Exit Reviewer Mode</Text>
+            </Pressable>
+          </View>
+        ) : null}
+
         {/* HERO */}
         <View style={[styles.hero, { paddingTop: 12 }]}>
           <Text style={styles.brand}>ALPHA VISUAL ARTISTS</Text>
@@ -444,6 +467,43 @@ function SectionHeader({
 
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: "#0a0a0a" },
+
+  demoBanner: {
+    marginHorizontal: 20,
+    marginTop: 12,
+    marginBottom: 4,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderRadius: 12,
+    backgroundColor: "rgba(0,212,255,0.1)",
+    borderWidth: 1,
+    borderColor: "rgba(0,212,255,0.35)",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 12,
+  },
+  demoBannerText: {
+    flex: 1,
+    color: "#fff",
+    fontSize: 13,
+    fontWeight: "700",
+    lineHeight: 18,
+  },
+  demoExitBtn: {
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 999,
+    borderWidth: 1,
+    borderColor: "rgba(232,0,10,0.5)",
+  },
+  demoExitBtnText: {
+    color: "#E8000A",
+    fontSize: 11,
+    fontWeight: "800",
+    letterSpacing: 0.5,
+    textTransform: "uppercase",
+  },
 
   // HERO
   hero: {

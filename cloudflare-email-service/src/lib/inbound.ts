@@ -27,14 +27,25 @@ export async function handleInboundEmail(
         "X-AVA-Inbound": "true",
       }),
     );
+    console.log(
+      `[ava-email] forward ok to=${forwardTo} original=${message.to} from=${message.from}`,
+    );
   } catch (error) {
-    console.error("[ava-email] forward failed:", error);
+    console.error(
+      `[ava-email] forward failed to=${forwardTo} original=${message.to} from=${message.from}:`,
+      error,
+    );
     message.setReject("Unable to deliver message");
     return;
   }
 
+  // Auto-reply is best-effort only — never block or fail the inbound forward above.
   if (env.AUTO_REPLY_ENABLED === "true") {
-    ctx.waitUntil(sendAutoReply(message, env, subject));
+    ctx.waitUntil(
+      sendAutoReply(message, env, subject).catch((error) => {
+        console.error("[ava-email] auto-reply waitUntil failed:", error);
+      }),
+    );
   }
 }
 

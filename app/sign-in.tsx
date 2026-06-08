@@ -13,6 +13,7 @@ import { useRouter, type Href } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { brandColors, brandFonts } from "../constants/theme";
+import { enableDemoMode } from "../lib/demoMode";
 import { supabase } from "../lib/supabase";
 import { seedDemoReviewDataIfNeeded } from "../utils/demoReviewSeed";
 
@@ -140,6 +141,20 @@ export default function SignInScreen() {
     setErrorMessage(null);
   };
 
+  const startAppReviewDemo = async () => {
+    setBusy(true);
+    setErrorMessage(null);
+    try {
+      await enableDemoMode();
+      router.replace("/(tabs)" as Href);
+    } catch (error) {
+      console.error("[sign-in] startAppReviewDemo failed:", error);
+      setErrorMessage("Could not start demo mode. Try again.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
   const subtitle =
     mode === "password"
       ? "Sign in with your email and password."
@@ -202,6 +217,13 @@ export default function SignInScreen() {
             ) : (
               <Text style={styles.primaryBtnText}>Sign in</Text>
             )}
+          </Pressable>
+          <Pressable
+            onPress={() => void startAppReviewDemo()}
+            disabled={busy}
+            style={[styles.reviewerBtn, busy && styles.btnDisabled]}
+          >
+            <Text style={styles.reviewerBtnText}>Continue as Reviewer</Text>
           </Pressable>
           <Pressable onPress={switchToOtp} style={styles.secondaryBtn} disabled={busy}>
             <Text style={styles.secondaryBtnText}>Use email code instead</Text>
@@ -378,6 +400,21 @@ const styles = StyleSheet.create({
     fontFamily: brandFonts.bodyMedium,
     fontSize: 14,
     color: "#00d4ff",
+  },
+  reviewerBtn: {
+    marginTop: 16,
+    borderWidth: 1,
+    borderColor: "rgba(232,0,10,0.5)",
+    borderRadius: 10,
+    paddingVertical: 14,
+    alignItems: "center",
+    opacity: 1,
+  },
+  reviewerBtnText: {
+    fontFamily: brandFonts.bodyMedium,
+    fontSize: 14,
+    color: "#E8000A",
+    letterSpacing: 0.3,
   },
   error: {
     fontFamily: brandFonts.body,

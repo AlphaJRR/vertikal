@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import { useDemoMode } from "../lib/demoMode";
 import { supabase } from "../lib/supabase";
 
 export type AvaProStatus = "loading" | "free" | "pro";
@@ -16,12 +17,23 @@ function tierIsPro(tier: string | null | undefined): boolean {
  */
 export function useAvaPro() {
   const { user, loading: authLoading } = useAuth();
+  const demo = useDemoMode();
   const [status, setStatus] = useState<AvaProStatus>("loading");
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  const refresh = useCallback(() => {
+    setRefreshKey((k) => k + 1);
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
 
     async function resolvePro() {
+      if (demo) {
+        if (!cancelled) setStatus("pro");
+        return;
+      }
+
       if (authLoading) {
         if (!cancelled) setStatus("loading");
         return;
@@ -79,7 +91,19 @@ export function useAvaPro() {
       cancelled = true;
       authListener.subscription.unsubscribe();
     };
-  }, [user, authLoading]);
+  }, [user, authLoading, demo, refreshKey]);
+
+  if (demo) {
+    return {
+      status: "pro" as const,
+      isPro: true,
+      isDemo: true,
+      loading: false,
+      isSignedIn: Boolean(user),
+      userEmail: user?.email ?? null,
+      refresh,
+    };
+  }
 
   const isPro = status === "pro";
   const loading = status === "loading" || authLoading;
@@ -92,5 +116,7 @@ export function useAvaPro() {
     loading,
     isSignedIn,
     userEmail,
+    isDemo: false,
+    refresh,
   };
 }
