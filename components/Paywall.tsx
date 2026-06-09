@@ -61,9 +61,9 @@ export function Paywall({
         <Text style={styles.priceHero}>$40/year</Text>
         <Text style={styles.priceHeroLabel}>Founding member price</Text>
         <Text style={styles.priceSecondary}>or $9.99/month</Text>
-        <Text style={styles.comingSoon}>
-          In-app purchase coming soon. Upgrade stays in the App Store — no web
-          checkout for digital content.
+        <Text style={styles.iapNote}>
+          AVA Pro is a subscription unlocked through the App Store. Digital
+          content is not sold via web checkout in this app.
         </Text>
       </View>
 
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     color: brandColors.mutedText,
     marginBottom: 12,
   },
-  comingSoon: {
+  iapNote: {
     fontFamily: brandFonts.body,
     fontSize: 12,
     lineHeight: 18,

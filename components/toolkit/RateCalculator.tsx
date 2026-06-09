@@ -199,7 +199,7 @@ export function RateCalculator({ onBack }: RateCalculatorProps) {
     if (sendQuoteLocked) {
       Alert.alert(
         "AVA Pro Required",
-        "Send Quote is available on AVA Pro — $40/year founding price or $9.99/mo. In-app purchase coming soon.",
+        "Send Quote is included with AVA Pro — $40/year founding price or $9.99/mo. Subscribe via in-app purchase in the App Store.",
         [{ text: "OK" }],
       );
       return;

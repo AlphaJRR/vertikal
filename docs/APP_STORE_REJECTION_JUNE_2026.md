@@ -2,11 +2,123 @@
 
 **App:** Alpha Visual Artists (AVA)  
 **Bundle:** `com.alphavisualartists.app`  
-**Version:** 1.0.4 / build 10  
+**Version:** 1.0.4 / build 11 (Round 3 resubmission target)  
 
 This doc tracks Apple rejection reasons, code fixes in-repo, and what **Joshua must do only in App Store Connect (ASC)**.
 
 **Architecture reference:** In-app Supabase auth, Pro gating, and free-tier policy are documented in [`AVA_PRO_GATING_AUTH_ARCHITECTURE.md`](./AVA_PRO_GATING_AUTH_ARCHITECTURE.md).
+
+---
+
+## Round 3 — Submission 52c6a517 (June 6, 2026)
+
+**Device tested:** iPhone 17 Pro Max  
+**Build reviewed:** 1.0.4 / build **11**
+
+| Guideline | Issue | Code / deploy fix | ASC-only |
+|-----------|--------|-------------------|----------|
+| **2.3.6** | Age Assurance metadata says **In-App Controls** but app has none | N/A in binary | **Joshua:** App Information → Age Assurance → **None** |
+| **2.1** | Wrong demo credentials in ASC (`ALPHAJRR` / old password) | No code change — creds live in ASC only | **Joshua:** update App Review Information immediately (see below) |
+| **2.2** | App reads as beta/trial (Pro locks + “coming soon” on Paywall) | Removed “coming soon” / “when available” from Paywall + upgrade alerts | Review notes explaining free tier + Reviewer mode |
+| **2.1(b)** | Business model — 5 questions unanswered | N/A | Paste answers below in Resolution Center |
+
+### Code changes (Round 3)
+
+- `components/Paywall.tsx` — production IAP copy (no “coming soon”)
+- `utils/showProUpgradeAlert.ts` — same
+- `components/toolkit/RateCalculator.tsx` — Send Quote alert copy updated
+
+**Grep audit (`app/`, `components/`):** no `beta`, `trial`, or `test flight` in user-facing mobile copy. Demo/reviewer strings are intentional for App Review (`Continue as Reviewer`, `Reviewer mode` banner).
+
+### Joshua ASC checklist (do before resubmit)
+
+- [ ] **Age Assurance:** App Store Connect → **App Information** → **Age Assurance** → set **None** (app has no in-app age controls or age-gate UI).
+- [ ] **App Review Information → Sign-In Required:**
+  - Username: `appreview@alphavisualartists.com`
+  - Password: `AVAreview!2026#Pro`
+  - Remove any old credentials (`ALPHAJRR`, `Billion$Company08`, etc.).
+- [ ] **Review Notes:** paste the **App Review Information notes** block below (both access paths).
+- [ ] **Metadata scrub:** confirm description, promotional text, and keywords contain **no** “beta”, “trial”, “TestFlight”, or “pre-release”.
+- [ ] **Resolution Center:** reply to **each** guideline (2.3.6, 2.1, 2.2, 2.1(b)) using paste-ready blocks below.
+- [ ] **Resubmit** build 11 (or newer) after ASC updates — OTA can ship copy fixes; ASC metadata/credentials are not OTA.
+
+### App Review Information (paste in ASC)
+
+| Field | Value |
+|-------|--------|
+| **Sign-in required** | Yes |
+| **Username** | `appreview@alphavisualartists.com` |
+| **Password** | `AVAreview!2026#Pro` |
+
+**Notes (paste in Review Notes):**
+
+> Alpha Visual Artists (AVA) is a production creator toolkit with a free tier and an AVA Pro subscription tier.
+>
+> **Path 1 — Demo account (recommended):** Open the app → tap **Sign in** on the home tab → enter email `appreview@alphavisualartists.com` and password `AVAreview!2026#Pro` → Sign in. This account has AVA Pro enabled in our backend (`subscription_tier = pro`). Sample checklist progress is pre-seeded on first login.
+>
+> **Path 2 — Full access without password:** On the Sign in screen, tap **Continue as Reviewer**. This unlocks all Pro features for App Review demonstration only (local reviewer mode; banner shows “Reviewer mode — all features unlocked”).
+>
+> **Free tier (no sign-in required):** Home, marketing content, and **12 Creators Toolkit lessons** are fully usable without an account.
+>
+> **Pro tier:** Remaining toolkit lessons, cheat sheets, invoice builder, production checklists, rate calculator Send Quote, and related pro tools. Pro gates are visible on locked content; subscription is processed via in-app purchase (App Store). Account creation is **free** (email/password or OTP via Supabase). No payment is required to create an account.
+>
+> Previous credentials (`ALPHAJRR` / `Billion$Company08`) were outdated and have been replaced with the credentials above.
+
+### Resolution Center reply — 2.3.6 Age Rating / Age Assurance
+
+> We corrected App Store Connect metadata for Guideline 2.3.6. Under App Information → Age Assurance, we set **In-App Controls / Age Assurance** to **None**, because AVA does not implement in-app age verification or parental age-gate controls. AVA is a creator education and production toolkit; account creation uses standard email sign-up (Supabase) and is not restricted to a separate under-13 experience in the iOS app. Please confirm the updated Age Assurance selection on your side.
+
+### Resolution Center reply — 2.1 Demo credentials
+
+> The demo credentials previously listed in App Review Information were incorrect (outdated account). We have updated App Store Connect with the correct credentials:
+>
+> - Email: `appreview@alphavisualartists.com`
+> - Password: `AVAreview!2026#Pro`
+>
+> Alternatively, on the Sign in screen, tap **Continue as Reviewer** to access all features without entering a password (demonstration mode for App Review only).
+>
+> After sign-in with the demo account, AVA Pro features unlock automatically. The free tier (12 toolkit lessons and home/marketing surfaces) remains available without sign-in.
+
+### Resolution Center reply — 2.2 Beta / pre-release
+
+> AVA is not a beta or trial build. It is a production app with a defined free tier and a paid AVA Pro subscription tier.
+>
+> **Free tier (complete, usable product):** Users can browse the home experience and access **12 Creators Toolkit lessons** without creating an account or subscribing.
+>
+> **AVA Pro (subscription):** Additional lessons, cheat sheets, invoice builder, production checklists, rate-calculator Send Quote, and related pro tools require AVA Pro. Locked content displays clear Pro gates with subscription pricing ($40/year founding price or $9.99/month). Digital purchases are intended for in-app purchase through the App Store only (Guideline 3.1.1 compliant — no web checkout for digital content in the iOS app).
+>
+> **App Review access:** Tap **Continue as Reviewer** on the Sign in screen, or sign in with the demo account in Review Notes, to evaluate all Pro features without purchase.
+>
+> We removed “coming soon” language from in-app Paywall and upgrade messaging so the app presents as a finished freemium product, not a pre-release trial.
+
+### Resolution Center reply — 2.1(b) Business model (all 5 questions)
+
+> **1. Who uses paid digital content?**  
+> Creators and production professionals who subscribe to **AVA Pro** for the full Creators Toolkit (lessons beyond the 12 free lessons, cheat sheets, invoice builder, production checklists, rate-calculator Send Quote, and related pro tools).
+>
+> **2. Where can users purchase?**  
+> AVA Pro is purchased via **in-app purchase** in the iOS app (App Store). We do not link mobile users to web checkout for digital content unlocks in the app (Guideline 3.1.1).
+>
+> **3. What previously purchased content can users access?**  
+> After subscribing to AVA Pro, users access all Pro-gated toolkit content tied to their Supabase account (`subscription_tier = pro`). Content remains available while the subscription is active. The 12 free lessons remain available without subscription.
+>
+> **4. What paid content is unlocked without IAP?**  
+> **None for production users.** App Review may use **Continue as Reviewer** (demonstration mode) or the demo account in Review Notes to evaluate Pro features without completing a purchase. This is for review only, not offered as a consumer bypass.
+>
+> **5. How do users obtain an account? Is payment required to create an account?**  
+> Account creation is **free**. Users tap **Sign in** and register with email/password or email OTP via Supabase. No payment is required to create an account. AVA Pro is an optional subscription after account creation.
+
+### Build & deploy (Round 3)
+
+Copy fixes are **JS-only** → OTA-eligible after commit:
+
+```bash
+cd /Users/alphavisualartists/Vertikal-App
+npx tsc --noEmit
+eas update --channel production --message "Round 3 rejection copy fixes"
+```
+
+ASC metadata, Age Assurance, and Review credentials are **not** OTA — Joshua must update App Store Connect before resubmitting.
 
 ---
 

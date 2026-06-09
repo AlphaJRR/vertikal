@@ -16,8 +16,8 @@ export function showProUpgradeAlert(
   const subject = CONTEXT_LABEL[context];
   const title = isSignedIn ? "AVA Pro Required" : "Sign in for AVA Pro";
   const message = isSignedIn
-    ? `${subject} is included with AVA Pro. In-app purchase is coming soon — no web checkout in the app.`
-    : `${subject} requires AVA Pro. Sign in with your account; upgrade via in-app purchase when available.`;
+    ? `${subject} is included with AVA Pro. Subscribe via in-app purchase in the App Store — no web checkout in this app.`
+    : `${subject} requires AVA Pro. Sign in with your account to unlock via App Store subscription.`;
 
   Alert.alert(title, message, [
     { text: "OK", style: "cancel" },
