@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { FREE_LAUNCH } from "../constants/proAccess";
 import { useAuth } from "../contexts/AuthContext";
 import { useDemoMode } from "../lib/demoMode";
 import { supabase } from "../lib/supabase";
@@ -93,11 +94,11 @@ export function useAvaPro() {
     };
   }, [user, authLoading, demo, refreshKey]);
 
-  if (demo) {
+  if (FREE_LAUNCH || demo) {
     return {
       status: "pro" as const,
       isPro: true,
-      isDemo: true,
+      isDemo: demo && !FREE_LAUNCH,
       loading: false,
       isSignedIn: Boolean(user),
       userEmail: user?.email ?? null,

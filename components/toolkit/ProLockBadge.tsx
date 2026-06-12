@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { FREE_LAUNCH } from "../../constants/proAccess";
 import { brandFonts } from "../../constants/theme";
 
 const PRO_CYAN = "#00BFFF";
@@ -10,6 +11,8 @@ interface ProLockBadgeProps {
 }
 
 export function ProLockBadge({ compact = false }: ProLockBadgeProps) {
+  if (FREE_LAUNCH) return null;
+
   return (
     <View style={[styles.badge, compact && styles.badgeCompact]}>
       <Ionicons

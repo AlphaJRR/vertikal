@@ -12,11 +12,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { ErrorBoundary } from "../../components/ErrorBoundary";
 import { brandColors, brandFonts } from "../../constants/theme";
-import {
-  isChecklistsProLocked,
-  isInvoiceBuilderProLocked,
-  isToolProLocked,
-} from "../../constants/proAccess";
+import { isToolProLocked } from "../../constants/proAccess";
 import { TOOLKIT_LESSON_COUNT } from "../../data/toolkitCurriculumTypes";
 import { ProductionChecklistsSection } from "../../components/toolkit/ProductionChecklistsSection";
 import { ProLockBadge } from "../../components/toolkit/ProLockBadge";
@@ -180,7 +176,7 @@ export default function ToolsScreen() {
           <Text style={styles.sectionTitle}>Quote Builder</Text>
           <Text style={styles.sectionDesc}>
             Build a professional quote in 5 steps — skill level baselines, national
-            averages, IRS mileage at $0.67/mi, and Pro-gated Send Quote.
+            averages, IRS mileage at $0.67/mi, and Send Quote export.
           </Text>
           <ToolCard
             locked={false}
@@ -193,29 +189,7 @@ export default function ToolsScreen() {
           />
         </View>
 
-        {!isPro && isInvoiceBuilderProLocked() ? (
-          <View style={styles.section}>
-            <View style={styles.sectionTitleRow}>
-              <Text style={styles.eyebrow}>Invoice Builder</Text>
-              <ProLockBadge compact />
-            </View>
-            <Text style={styles.sectionTitle}>Client Invoices</Text>
-            <Text style={styles.sectionDesc}>
-              Line items, rates, and export-ready summaries — AVA Pro.
-            </Text>
-            <ToolCard
-              locked
-              onPress={() => showProUpgradeAlert(isSignedIn, "tool")}
-              icon="document-text-outline"
-              iconColor="#fb5607"
-              iconBg="rgba(251,86,7,0.13)"
-              title="Open Invoice Builder"
-              description="Pro-gated invoice templates"
-            />
-          </View>
-        ) : (
-          <DeferredInvoiceBuilder />
-        )}
+        <DeferredInvoiceBuilder />
 
         <ProductionChecklistsSection
           isPro={isPro}

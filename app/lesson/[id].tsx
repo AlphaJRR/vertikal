@@ -11,11 +11,10 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { brandColors, brandFonts } from "../../constants/theme";
 import { Paywall } from "../../components/Paywall";
-import { isCheatSheetProLocked, isLessonProLocked } from "../../constants/proAccess";
+import { isLessonProLocked } from "../../constants/proAccess";
 import { getLessonById } from "../../data/toolkitCurriculum";
 import { useAvaPro } from "../../hooks/useAvaPro";
 import { useSavedLessons } from "../../hooks/useSavedLessons";
-import { showProUpgradeAlert } from "../../utils/showProUpgradeAlert";
 import { toPlainLessonText } from "../../utils/plainLessonText";
 
 export default function LessonScreen() {
@@ -75,21 +74,11 @@ export default function LessonScreen() {
 
         {hasSlide ? (
           <Pressable
-            onPress={() => {
-              if (!isPro && isCheatSheetProLocked()) {
-                showProUpgradeAlert(isSignedIn, "feature");
-                return;
-              }
-              router.push(`/cheatsheet/${lesson.id}` as Href);
-            }}
+            onPress={() => router.push(`/cheatsheet/${lesson.id}` as Href)}
             style={styles.slideBtn}
           >
             <Ionicons name="easel-outline" size={18} color={brandColors.pureWhite} />
-            <Text style={styles.slideBtnText}>
-              {!isPro && isCheatSheetProLocked()
-                ? "Open Cheat Sheet · Pro"
-                : "Open Cheat Sheet"}
-            </Text>
+            <Text style={styles.slideBtnText}>Open Cheat Sheet</Text>
             <Ionicons name="chevron-forward" size={16} color="#555555" />
           </Pressable>
         ) : null}

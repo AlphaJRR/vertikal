@@ -16,6 +16,12 @@
  */
 import type { ToolkitMenuId } from "../components/toolkit/ToolkitNavigator";
 
+/**
+ * Path A (App Review): full toolkit unlocked, no purchase/upsell UI.
+ * Set false when AVA Pro IAP ships.
+ */
+export const FREE_LAUNCH = true;
+
 /** Two foundational lessons per tab — fixed allow-list; do not expand via curriculum slicing. */
 const FREE_LESSON_IDS_LIST = [
   "camera-iso",
@@ -39,6 +45,7 @@ export function isLessonFree(lessonId: string): boolean {
 }
 
 export function isLessonProLocked(lessonId: string): boolean {
+  if (FREE_LAUNCH) return false;
   return !isLessonFree(lessonId);
 }
 
@@ -50,11 +57,13 @@ export const FREE_LESSON_COUNT = FREE_LESSON_IDS.size;
 
 /** All HTML cheat sheets require AVA Pro — even for free lessons. */
 export function isCheatSheetProLocked(): boolean {
+  if (FREE_LAUNCH) return false;
   return true;
 }
 
 /** Rate Calculator is free to use; Send Quote / export is Pro-only. */
 export function isRateCalculatorQuoteProLocked(): boolean {
+  if (FREE_LAUNCH) return false;
   return true;
 }
 
@@ -66,10 +75,12 @@ export const FREE_TOOL_IDS: ReadonlySet<ToolkitMenuId> = new Set([
 ]);
 
 export function isToolProLocked(toolId: ToolkitMenuId): boolean {
+  if (FREE_LAUNCH) return false;
   return !FREE_TOOL_IDS.has(toolId);
 }
 
 export function isChecklistsProLocked(): boolean {
+  if (FREE_LAUNCH) return false;
   return true;
 }
 

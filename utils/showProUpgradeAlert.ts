@@ -1,5 +1,6 @@
 import { Alert } from "react-native";
 import { router, type Href } from "expo-router";
+import { FREE_LAUNCH } from "../constants/proAccess";
 
 type UpgradeContext = "lesson" | "tool" | "feature";
 
@@ -13,6 +14,8 @@ export function showProUpgradeAlert(
   isSignedIn: boolean,
   context: UpgradeContext = "tool",
 ): void {
+  if (FREE_LAUNCH) return;
+
   const subject = CONTEXT_LABEL[context];
   const title = isSignedIn ? "AVA Pro Required" : "Sign in for AVA Pro";
   const message = isSignedIn

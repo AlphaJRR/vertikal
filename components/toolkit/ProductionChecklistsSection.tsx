@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { FREE_LAUNCH } from "../../constants/proAccess";
 import { brandColors, brandFonts } from "../../constants/theme";
 import { ProLockBadge } from "./ProLockBadge";
 import { creatorTrainingStyles as s } from "./creatorTrainingStyles";
@@ -81,7 +82,7 @@ export function ProductionChecklistsSection({
           {locked ? <ProLockBadge compact /> : null}
         </View>
         <Text style={s.sectionTitle}>Checklists</Text>
-        {locked ? (
+        {locked && !FREE_LAUNCH ? (
           <Text style={localStyles.lockHint}>
             {isSignedIn
               ? "Upgrade to AVA Pro to unlock pre-prod, on-set, and post checklists."

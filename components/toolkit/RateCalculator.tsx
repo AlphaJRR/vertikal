@@ -23,8 +23,6 @@ import {
   SKILL_LEVELS,
   SkillLevel,
 } from "../../data/rateCalculatorData";
-import { isRateCalculatorQuoteProLocked } from "../../constants/proAccess";
-import { useAvaPro } from "../../hooks/useAvaPro";
 import { rateCalculatorStyles as s } from "./rateCalculatorStyles";
 
 interface RateCalculatorProps {
@@ -39,8 +37,6 @@ interface QuoteLine {
 
 export function RateCalculator({ onBack }: RateCalculatorProps) {
   const insets = useSafeAreaInsets();
-  const { isPro } = useAvaPro();
-  const sendQuoteLocked = !isPro && isRateCalculatorQuoteProLocked();
   const [step, setStep] = useState(1);
 
   // Step 1 — Project
@@ -196,15 +192,6 @@ export function RateCalculator({ onBack }: RateCalculatorProps) {
   const goBack = () => setStep((n) => Math.max(n - 1, 1));
 
   const handleSendQuote = () => {
-    if (sendQuoteLocked) {
-      Alert.alert(
-        "AVA Pro Required",
-        "Send Quote is included with AVA Pro — $40/year founding price or $9.99/mo. Subscribe via in-app purchase in the App Store.",
-        [{ text: "OK" }],
-      );
-      return;
-    }
-
     const client = clientName.trim() || "Client";
     const project = projectName.trim() || "Project";
     Alert.alert(
@@ -453,22 +440,9 @@ export function RateCalculator({ onBack }: RateCalculatorProps) {
               <Text style={s.quotedLabel}>Quoted price</Text>
               <Text style={s.quotedTotal}>{formatCurrency(quotedTotal)}</Text>
             </View>
-            <Pressable
-              onPress={handleSendQuote}
-              style={[s.btnPrimary, sendQuoteLocked && s.btnProLocked]}
-            >
-              <Text style={s.btnPrimaryTxt}>
-                {sendQuoteLocked ? "Send Quote · Pro" : "Send Quote"}
-              </Text>
+            <Pressable onPress={handleSendQuote} style={s.btnPrimary}>
+              <Text style={s.btnPrimaryTxt}>Send Quote</Text>
             </Pressable>
-            {sendQuoteLocked ? (
-              <View style={s.proBadge}>
-                <Ionicons name="lock-closed" size={12} color="#888" />
-                <Text style={s.proBadgeTxt}>
-                  Upgrade to AVA Pro to send quotes
-                </Text>
-              </View>
-            ) : null}
           </>
         );
 

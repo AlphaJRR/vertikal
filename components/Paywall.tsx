@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { useRouter, type Href } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
+import { FREE_LAUNCH } from "../constants/proAccess";
 import { brandColors, brandFonts } from "../constants/theme";
 import { TOOLKIT_LESSON_COUNT } from "../data/toolkitCurriculumTypes";
 import { ProLockBadge } from "./toolkit/ProLockBadge";
@@ -32,6 +33,10 @@ export function Paywall({
   onBack,
 }: PaywallProps) {
   const router = useRouter();
+
+  if (FREE_LAUNCH) {
+    return null;
+  }
 
   if (status === "loading") {
     return (
