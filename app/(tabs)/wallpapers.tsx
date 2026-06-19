@@ -13,7 +13,6 @@ import {
 import { Image } from "expo-image";
 import * as FileSystem from "expo-file-system/legacy";
 import * as Haptics from "expo-haptics";
-import * as MediaLibrary from "expo-media-library";
 import { Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { brandColors, brandFonts, typography } from "../../constants/brand";
@@ -38,6 +37,18 @@ export default function WallpapersScreen() {
   const saveToPhotos = useCallback(async (entry: WallpaperEntry) => {
     setSavingId(entry.id);
     try {
+      let MediaLibrary: typeof import("expo-media-library");
+      try {
+        MediaLibrary = await import("expo-media-library");
+      } catch (importError) {
+        console.error("[WallpapersScreen] expo-media-library unavailable:", importError);
+        Alert.alert(
+          "Save unavailable in this build",
+          "Saving to Photos requires the latest App Store build. You can still preview wallpapers here.",
+        );
+        return;
+      }
+
       const { status } = await MediaLibrary.requestPermissionsAsync(true);
       if (status !== "granted") {
         Alert.alert(

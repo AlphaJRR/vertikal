@@ -19,10 +19,14 @@ import { seedDemoReviewDataIfNeeded } from "../utils/demoReviewSeed";
 
 type AuthMode = "password" | "otp";
 type OtpStep = "email" | "code";
+type ScreenIntent = "signIn" | "signUp";
+
+const MIN_PASSWORD_LENGTH = 8;
 
 export default function SignInScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const [intent, setIntent] = useState<ScreenIntent>("signIn");
   const [mode, setMode] = useState<AuthMode>("password");
   const [otpStep, setOtpStep] = useState<OtpStep>("email");
   const [email, setEmail] = useState("");
@@ -30,8 +34,22 @@ export default function SignInScreen() {
   const [otp, setOtp] = useState("");
   const [busy, setBusy] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [infoMessage, setInfoMessage] = useState<string | null>(null);
 
   const normalizedEmail = email.trim().toLowerCase();
+
+  const clearMessages = () => {
+    setErrorMessage(null);
+    setInfoMessage(null);
+  };
+
+  const switchIntent = (next: ScreenIntent) => {
+    setIntent(next);
+    setPassword("");
+    setOtp("");
+    setOtpStep("email");
+    clearMessages();
+  };
 
   const finishSignIn = async () => {
     await seedDemoReviewDataIfNeeded(normalizedEmail);
@@ -53,7 +71,7 @@ export default function SignInScreen() {
     }
 
     setBusy(true);
-    setErrorMessage(null);
+    clearMessages();
     try {
       const { error } = await supabase.auth.signInWithPassword({
         email: normalizedEmail,
@@ -73,13 +91,59 @@ export default function SignInScreen() {
     }
   };
 
+  const signUpWithPassword = async () => {
+    if (!normalizedEmail) {
+      setErrorMessage("Enter your email address.");
+      return;
+    }
+    if (password.length < MIN_PASSWORD_LENGTH) {
+      setErrorMessage(`Choose a password with at least ${MIN_PASSWORD_LENGTH} characters.`);
+      return;
+    }
+
+    setBusy(true);
+    clearMessages();
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email: normalizedEmail,
+        password,
+      });
+      if (error) {
+        console.error("[sign-in] signUp failed:", error);
+        const msg = error.message.toLowerCase();
+        if (msg.includes("already registered") || msg.includes("already exists")) {
+          setErrorMessage("This email already has an account. Sign in instead.");
+        } else {
+          setErrorMessage(error.message);
+        }
+        return;
+      }
+
+      if (data.session) {
+        await finishSignIn();
+        return;
+      }
+
+      setInfoMessage(
+        "Account created. Check your email to confirm your address, then sign in here.",
+      );
+      setIntent("signIn");
+      setPassword("");
+    } catch (error) {
+      console.error("[sign-in] signUp failed:", error);
+      setErrorMessage("Could not create account. Try again.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
   const sendCode = async () => {
     if (!normalizedEmail) {
       setErrorMessage("Enter your email address.");
       return;
     }
     setBusy(true);
-    setErrorMessage(null);
+    clearMessages();
     try {
       const { error } = await supabase.auth.signInWithOtp({
         email: normalizedEmail,
@@ -131,14 +195,14 @@ export default function SignInScreen() {
     setMode("password");
     setOtpStep("email");
     setOtp("");
-    setErrorMessage(null);
+    clearMessages();
   };
 
   const switchToOtp = () => {
     setMode("otp");
     setOtpStep("email");
     setPassword("");
-    setErrorMessage(null);
+    clearMessages();
   };
 
   const startAppReviewDemo = async () => {
@@ -156,11 +220,23 @@ export default function SignInScreen() {
   };
 
   const subtitle =
-    mode === "password"
-      ? "Sign in with your email and password."
-      : otpStep === "email"
-        ? "We will email you a one-time code."
-        : `Code sent to ${normalizedEmail}`;
+    intent === "signUp"
+      ? mode === "password"
+        ? "Create a free account with email and password. No payment required."
+        : otpStep === "email"
+          ? "New or returning — we'll email you a code and create your account if you're new."
+          : `Code sent to ${normalizedEmail}`
+      : mode === "password"
+        ? "Sign in with your email and password."
+        : otpStep === "email"
+          ? "We will email you a one-time code."
+          : `Code sent to ${normalizedEmail}`;
+
+  const screenTitle = intent === "signUp" ? "Create account" : "Sign in";
+  const primaryPasswordAction =
+    intent === "signUp" ? signUpWithPassword : signInWithPassword;
+  const primaryPasswordLabel =
+    intent === "signUp" ? "Create account" : "Sign in";
 
   return (
     <KeyboardAvoidingView
@@ -174,9 +250,11 @@ export default function SignInScreen() {
 
       <View style={styles.header}>
         <Text style={styles.brand}>ALPHA VISUAL ARTISTS</Text>
-        <Text style={styles.title}>Sign in</Text>
+        <Text style={styles.title}>{screenTitle}</Text>
         <Text style={styles.subtitle}>{subtitle}</Text>
       </View>
+
+      {infoMessage ? <Text style={styles.info}>{infoMessage}</Text> : null}
 
       {mode === "password" ? (
         <>
@@ -197,36 +275,55 @@ export default function SignInScreen() {
           <TextInput
             value={password}
             onChangeText={setPassword}
-            placeholder="Your password"
+            placeholder={
+              intent === "signUp"
+                ? `At least ${MIN_PASSWORD_LENGTH} characters`
+                : "Your password"
+            }
             placeholderTextColor={brandColors.mutedText}
             secureTextEntry
             autoCapitalize="none"
             autoCorrect={false}
-            textContentType="password"
+            textContentType={intent === "signUp" ? "newPassword" : "password"}
             style={styles.input}
             editable={!busy}
-            onSubmitEditing={() => void signInWithPassword()}
+            onSubmitEditing={() => void primaryPasswordAction()}
           />
           <Pressable
-            onPress={() => void signInWithPassword()}
+            onPress={() => void primaryPasswordAction()}
             disabled={busy}
             style={[styles.primaryBtn, busy && styles.btnDisabled]}
           >
             {busy ? (
               <ActivityIndicator color="#000" />
             ) : (
-              <Text style={styles.primaryBtnText}>Sign in</Text>
+              <Text style={styles.primaryBtnText}>{primaryPasswordLabel}</Text>
             )}
           </Pressable>
           <Pressable
-            onPress={() => void startAppReviewDemo()}
+            onPress={() => switchIntent(intent === "signUp" ? "signIn" : "signUp")}
             disabled={busy}
-            style={[styles.reviewerBtn, busy && styles.btnDisabled]}
+            style={styles.intentToggle}
           >
-            <Text style={styles.reviewerBtnText}>Continue as Reviewer</Text>
+            <Text style={styles.intentToggleText}>
+              {intent === "signUp"
+                ? "Already have an account? Sign in"
+                : "New here? Create a free account"}
+            </Text>
           </Pressable>
+          {intent === "signIn" ? (
+            <Pressable
+              onPress={() => void startAppReviewDemo()}
+              disabled={busy}
+              style={[styles.reviewerBtn, busy && styles.btnDisabled]}
+            >
+              <Text style={styles.reviewerBtnText}>Continue as Reviewer</Text>
+            </Pressable>
+          ) : null}
           <Pressable onPress={switchToOtp} style={styles.secondaryBtn} disabled={busy}>
-            <Text style={styles.secondaryBtnText}>Use email code instead</Text>
+            <Text style={styles.secondaryBtnText}>
+              {intent === "signUp" ? "Use email code to sign up" : "Use email code instead"}
+            </Text>
           </Pressable>
         </>
       ) : otpStep === "email" ? (
@@ -258,6 +355,17 @@ export default function SignInScreen() {
           <Pressable onPress={switchToPassword} style={styles.secondaryBtn} disabled={busy}>
             <Text style={styles.secondaryBtnText}>Use password instead</Text>
           </Pressable>
+          <Pressable
+            onPress={() => switchIntent(intent === "signUp" ? "signIn" : "signUp")}
+            disabled={busy}
+            style={styles.intentToggle}
+          >
+            <Text style={styles.intentToggleText}>
+              {intent === "signUp"
+                ? "Already have an account? Sign in"
+                : "New here? Create a free account"}
+            </Text>
+          </Pressable>
         </>
       ) : (
         <>
@@ -287,7 +395,7 @@ export default function SignInScreen() {
             onPress={() => {
               setOtpStep("email");
               setOtp("");
-              setErrorMessage(null);
+              clearMessages();
             }}
             style={styles.secondaryBtn}
             disabled={busy}
@@ -415,6 +523,25 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#E8000A",
     letterSpacing: 0.3,
+  },
+  intentToggle: {
+    marginTop: 20,
+    paddingVertical: 12,
+    alignItems: "center",
+  },
+  intentToggleText: {
+    fontFamily: brandFonts.bodyMedium,
+    fontSize: 14,
+    color: "#fff",
+    textAlign: "center",
+    lineHeight: 20,
+  },
+  info: {
+    fontFamily: brandFonts.body,
+    fontSize: 13,
+    color: "#00d4ff",
+    marginBottom: 16,
+    lineHeight: 18,
   },
   error: {
     fontFamily: brandFonts.body,

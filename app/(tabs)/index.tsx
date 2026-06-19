@@ -342,7 +342,7 @@ export default function HomeScreen() {
                 style={styles.primaryBtn}
               >
                 <Ionicons name="log-in-outline" size={16} color="#000" />
-                <Text style={styles.primaryBtnTxt}>Sign in</Text>
+                <Text style={styles.primaryBtnTxt}>Sign in / Join</Text>
               </Pressable>
             )}
             <Pressable
