@@ -46,8 +46,7 @@ type Photo = {
 };
 
 /**
- * Featured Cloudflare reels — display order per Joshua (Jun 2026).
- * Do not swap UIDs by old placeholder slot numbers alone; match clip content to title.
+ * Featured Cloudflare reels — UID must match clip content (verified device Jun 2026).
  */
 const FEATURED_REELS: Reel[] = [
   {
@@ -60,40 +59,40 @@ const FEATURED_REELS: Reel[] = [
     video: cloudflareHls("9d3d0efed36b71e5f75c7b5e218809d7"),
   },
   {
-    // DHC Live — position #2 (UID c861d85f; ex placeholder "Featured Video #3")
-    id: "cf-c861d85f92202939bb33ebb87bb3a089",
-    title: "DHC Live Feat. Kirk Franklin Joe Guidry",
+    // DHC Live Featuring Kirk Franklin — UID 29424a48 (was wrongly on Winter Nights slot)
+    id: "cf-29424a48ea60434f3feb6e6cfd12fff4",
+    title: "DHC Live Featuring Kirk Franklin",
     tag: "Featured · Live",
     cover: require("../../assets/images/creator-court.jpg"),
     url: `${SITE_URL}/work`,
-    video: cloudflareHls("c861d85f92202939bb33ebb87bb3a089"),
+    video: cloudflareHls("29424a48ea60434f3feb6e6cfd12fff4"),
   },
   {
-    // Additional Reel #1 — CCHS Ground Breaking Ceremony
-    id: "cf-793c5fad3fa152369bdaacf731049663",
+    // CCHS Ground Breaking Ceremony — UID c861d85f (was wrongly on DHC slot)
+    id: "cf-c861d85f92202939bb33ebb87bb3a089",
     title: "CCHS Ground Breaking Ceremony",
     tag: "Featured · Ceremony",
     cover: require("../../assets/images/portrait-dada.jpg"),
     url: `${SITE_URL}/work`,
-    video: cloudflareHls("793c5fad3fa152369bdaacf731049663"),
+    video: cloudflareHls("c861d85f92202939bb33ebb87bb3a089"),
   },
   {
-    // Additional Reel #2 — Cadance Apartments & Condominiums
-    id: "cf-25d31f0e020a4759d7e1c2fa0d1945d3",
+    // Cadance Apartments & Condominiums — UID 793c5fad (was wrongly on CCHS slot)
+    id: "cf-793c5fad3fa152369bdaacf731049663",
     title: "Cadance Apartments & Condominiums",
     tag: "Featured · Real Estate",
     cover: require("../../assets/images/peace-suit.jpg"),
     url: `${SITE_URL}/work`,
-    video: cloudflareHls("25d31f0e020a4759d7e1c2fa0d1945d3"),
+    video: cloudflareHls("793c5fad3fa152369bdaacf731049663"),
   },
   {
-    // Additional Reel #3 — Winter Nights Chicago Lights
-    id: "cf-29424a48ea60434f3feb6e6cfd12fff4",
+    // Winter Nights Chicago Lights — UID 25d31f0e (was wrongly on Cadance slot)
+    id: "cf-25d31f0e020a4759d7e1c2fa0d1945d3",
     title: "Winter Nights Chicago Lights",
     tag: "Featured · Chicago",
     cover: require("../../assets/images/kids-plaid.jpg"),
     url: `${SITE_URL}/work`,
-    video: cloudflareHls("29424a48ea60434f3feb6e6cfd12fff4"),
+    video: cloudflareHls("25d31f0e020a4759d7e1c2fa0d1945d3"),
   },
 ];
 
