@@ -32,6 +32,14 @@ export default function CreateEventScreen() {
   const { create } = useMyEvents();
   const { isOperator, loading: guardLoading } = useOperatorGuard();
 
+  const [name,      setName]      = useState('');
+  const [date,      setDate]      = useState('');
+  const [eventType, setEventType] = useState('reunion');
+  const [busy,      setBusy]      = useState(false);
+  const [error,     setError]     = useState<string | null>(null);
+
+  const EVENT_TYPES = ['reunion','wedding','corporate','sports','graduation','other'];
+
   // Guard renders a spinner while loading; redirects non-operators via useEffect
   if (guardLoading || !isOperator) {
     return (
@@ -41,19 +49,8 @@ export default function CreateEventScreen() {
     );
   }
 
-  const [name,       setName]       = useState('');
-  const [date,       setDate]       = useState('');
-  const [accessCode, setAccessCode] = useState('');
-  const [eventType,  setEventType]  = useState('reunion');
-  const [busy,       setBusy]       = useState(false);
-  const [error,      setError]      = useState<string | null>(null);
-
-  const EVENT_TYPES = ['reunion','wedding','corporate','sports','graduation','other'];
-
   const handleCreate = async () => {
     if (!name.trim()) { setError('Event name is required.'); return; }
-    if (!accessCode.trim()) { setError('Access code is required — used as your internal reference for this event.'); return; }
-    if (accessCode.trim().length < 4) { setError('Access code must be at least 4 characters.'); return; }
 
     let eventDate: string | undefined;
     if (date.trim()) {
@@ -68,7 +65,7 @@ export default function CreateEventScreen() {
       const ev = await create({
         name:        name.trim(),
         event_date:  eventDate,
-        access_code: accessCode.trim().toUpperCase(),
+        access_code: Math.random().toString(36).slice(2, 8).toUpperCase(),
         event_type:  eventType,
       });
 
@@ -114,22 +111,6 @@ export default function CreateEventScreen() {
             placeholderTextColor={brandColors.mutedText}
             style={styles.input} editable={!busy} autoFocus
           />
-        </Field>
-
-        <Field label="Access code * (your reference — e.g. event name abbreviation)">
-          <TextInput
-            value={accessCode}
-            onChangeText={t => setAccessCode(t.toUpperCase())}
-            placeholder="JOHNSON26"
-            placeholderTextColor={brandColors.mutedText}
-            autoCapitalize="characters"
-            autoCorrect={false}
-            style={[styles.input, styles.codeInput]}
-            editable={!busy}
-          />
-          <Text style={styles.fieldHint}>
-            For your records only. Attendees unlock their gallery with the individual code shown after creating each attendee.
-          </Text>
         </Field>
 
         <Field label="Date (optional)">

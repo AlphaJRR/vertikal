@@ -34,10 +34,11 @@ export default function SettingsScreen() {
   const insets  = useSafeAreaInsets();
   const { session } = useAuth();
 
-  const [deleting,     setDeleting]     = useState(false);
-  const [signingOut,   setSigningOut]   = useState(false);
-  const [marketingOn,  setMarketingOn]  = useState(false);  // loaded below
+  const [deleting,      setDeleting]      = useState(false);
+  const [signingOut,    setSigningOut]    = useState(false);
+  const [marketingOn,   setMarketingOn]   = useState(false);  // loaded below
   const [marketingBusy, setMarketingBusy] = useState(false);
+  const [marketingErr,  setMarketingErr]  = useState<string | null>(null);
 
   // Load current marketing preference on mount
   React.useEffect(() => {
@@ -55,14 +56,21 @@ export default function SettingsScreen() {
   const toggleMarketing = async (value: boolean) => {
     setMarketingBusy(true);
     setMarketingOn(value);
+    setMarketingErr(null);
     try {
-      await supabase
+      const { error: updateErr } = await supabase
         .from('profiles')
         .update({ marketing_opt_in: value })
         .eq('id', session?.user.id ?? '');
+      if (updateErr) {
+        console.error('[settings] marketing update failed:', updateErr);
+        setMarketingOn(!value);
+        setMarketingErr('Could not update email preference. Please try again.');
+      }
     } catch (err) {
       console.error('[settings] marketing update failed:', err);
-      setMarketingOn(!value); // revert
+      setMarketingOn(!value);
+      setMarketingErr('Could not update email preference. Please try again.');
     } finally {
       setMarketingBusy(false);
     }
@@ -156,6 +164,9 @@ export default function SettingsScreen() {
                 thumbColor={marketingOn ? '#fff' : '#888'}
               />
             </View>
+            {marketingErr ? (
+              <Text style={styles.inlineError}>{marketingErr}</Text>
+            ) : null}
           </Section>
 
           {/* Legal */}
@@ -284,7 +295,8 @@ const styles = StyleSheet.create({
     fontFamily: brandFonts.body, fontSize: 11, lineHeight: 16,
     color: brandColors.mutedText,
   },
-  btnDisabled: { opacity: 0.6 },
+  btnDisabled:  { opacity: 0.6 },
+  inlineError:  { fontFamily: brandFonts.body, fontSize: 12, color: brandColors.alphaRed, lineHeight: 16 },
   centeredState: { gap: 20 },
   notSignedIn: { fontFamily: brandFonts.body, fontSize: 14, color: brandColors.subtleText },
   signInBtn: {

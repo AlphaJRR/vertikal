@@ -38,6 +38,10 @@ export default function AssignScreen() {
   const { photos, loading: photosLoading }    = useEventPhotos(id ?? '');
   const { attendees, loading: attLoading }    = useAttendees(id ?? '');
 
+  const [step,          setStep]          = useState<Step>('selectPhoto');
+  const [selectedPhoto, setSelectedPhoto] = useState<EventPhoto | null>(null);
+  const [assignedIds,   setAssignedIds]   = useState<Set<string>>(new Set());
+
   if (guardLoading || !isOperator) {
     return (
       <View style={[styles.root, { paddingTop: insets.top, alignItems: 'center', justifyContent: 'center' }]}>
@@ -45,10 +49,6 @@ export default function AssignScreen() {
       </View>
     );
   }
-
-  const [step,          setStep]          = useState<Step>('selectPhoto');
-  const [selectedPhoto, setSelectedPhoto] = useState<EventPhoto | null>(null);
-  const [assignedIds,   setAssignedIds]   = useState<Set<string>>(new Set());
 
   const loadAssignments = useCallback(async (photoId: string) => {
     const { data } = await supabase

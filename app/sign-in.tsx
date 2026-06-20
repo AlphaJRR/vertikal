@@ -101,7 +101,7 @@ export default function SignInScreen() {
           .from("profiles")
           .select("tos_accepted_at")
           .eq("id", user.id)
-          .single();
+          .maybeSingle();
         if (!profile?.tos_accepted_at) {
           router.replace("/consent" as Href);
           return;
@@ -202,7 +202,7 @@ export default function SignInScreen() {
           .from("profiles")
           .select("tos_accepted_at")
           .eq("id", userId)
-          .single();
+          .maybeSingle();
         isNew = !profile?.tos_accepted_at;
       }
 

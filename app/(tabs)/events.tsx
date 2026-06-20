@@ -28,7 +28,7 @@ import { useMyEvents } from '@/hooks/useEvents';
 import { useIsOperator } from '@/hooks/useIsOperator';
 import { EventCard } from '@/components/events/EventCard';
 import { useAuth } from '@/contexts/AuthContext';
-import type { Attendee, AVAEvent } from '@/types/events';
+import type { AVAEvent } from '@/types/events';
 
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -135,34 +135,42 @@ function OperatorHome({ router, insets }: { router: ReturnType<typeof useRouter>
 
 // ─── Attendee / standard-user view ───────────────────────────────────────────
 
+type UnlockedGallery = {
+  attendeeId: string;
+  eventName:  string;
+  firstName:  string | null;
+  lastName:   string | null;
+};
+
 function AttendeeHome({ router, insets }: { router: ReturnType<typeof useRouter>; insets: ReturnType<typeof import('react-native-safe-area-context').useSafeAreaInsets> }) {
-  const [unlockedEvents, setUnlockedEvents] = useState<Array<{ attendee: Attendee; eventName: string }>>([]);
+  const [unlockedEvents, setUnlockedEvents] = useState<UnlockedGallery[]>([]);
   const [loadingGalleries, setLoadingGalleries] = useState(true);
 
   useEffect(() => {
-    const load = async () => {
+    const loadGalleries = async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      const userId = user?.id ?? '';
-      if (!userId) { setLoadingGalleries(false); return; }
+      if (!user) { setLoadingGalleries(false); return; }
 
       const { data } = await supabase
         .from('attendees')
-        .select('*, events!inner(name)')
-        .eq('user_id', userId)
+        .select('id, event_id, first_name, last_name, events!inner(name)')
+        .eq('user_id', user.id)
         .is('deleted_at', null);
 
       if (data) {
         setUnlockedEvents(
-          (data as unknown as Array<Attendee & { events: { name: string } }>).map(row => ({
-            attendee:  row as unknown as Attendee,
-            eventName: row.events.name,
+          (data as unknown as Array<{ id: string; event_id: string; first_name: string | null; last_name: string | null; events: { name: string } }>).map(row => ({
+            attendeeId: row.id,
+            eventName:  row.events.name,
+            firstName:  row.first_name,
+            lastName:   row.last_name,
           })),
         );
       }
       setLoadingGalleries(false);
     };
 
-    void load();
+    void loadGalleries();
   }, []);
 
   return (
@@ -206,9 +214,9 @@ function AttendeeHome({ router, insets }: { router: ReturnType<typeof useRouter>
         <>
           <Text style={styles.sectionLabel}>Unlocked galleries</Text>
           <View style={styles.eventList}>
-            {unlockedEvents.map(({ attendee, eventName }) => (
+            {unlockedEvents.map(({ attendeeId, eventName }) => (
               <Pressable
-                key={attendee.id}
+                key={attendeeId}
                 style={styles.galleryCard}
                 onPress={() => router.push('/gallery' as never)}
               >

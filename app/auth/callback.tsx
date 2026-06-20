@@ -36,7 +36,7 @@ export default function AuthCallbackScreen() {
           .from("profiles")
           .select("tos_accepted_at")
           .eq("id", session.user.id)
-          .single();
+          .maybeSingle();
 
         if (!profile?.tos_accepted_at) {
           router.replace("/consent" as Href);

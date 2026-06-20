@@ -36,10 +36,9 @@ export default function RedeemScreen() {
   const insets  = useSafeAreaInsets();
   const { session } = useAuth();
 
-  const [code,    setCode]    = useState('');
-  const [busy,    setBusy]    = useState(false);
-  const [error,   setError]   = useState<string | null>(null);
-  const [success, setSuccess] = useState<RedeemResult | null>(null);
+  const [code,  setCode]  = useState('');
+  const [busy,  setBusy]  = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   if (!session) {
     return (
@@ -86,19 +85,19 @@ export default function RedeemScreen() {
       // data is an array of rows — take the first
       const row = Array.isArray(data) ? (data[0] as RedeemResult) : (data as RedeemResult);
 
-      // Check if this attendee has given photo consent for this specific event.
-      // A returning user with profile-level tos_accepted_at can skip /consent on
-      // subsequent redeems, bypassing per-event photo release. Always check.
-      const { data: attendeeData } = await supabase
+      // Check per-event photo consent. Always verify — a returning user with
+      // profile-level tos_accepted_at can skip /consent on subsequent redeems,
+      // bypassing the per-event photo release. Route to /photo-release if missing.
+      const { data: att } = await supabase
         .from('attendees')
         .select('photo_consent_at')
         .eq('id', row.attendee_id)
-        .single();
+        .maybeSingle();
 
-      if (!attendeeData?.photo_consent_at) {
-        router.replace({ pathname: '/consent', params: { redirectTo: '/gallery' } } as never);
+      if (!att?.photo_consent_at) {
+        router.replace({ pathname: '/photo-release', params: { attendeeId: row.attendee_id } } as never);
       } else {
-        setSuccess(row);
+        router.replace('/gallery' as never);
       }
     } catch (err) {
       console.error('[redeem] unexpected error:', err);
@@ -107,22 +106,6 @@ export default function RedeemScreen() {
       setBusy(false);
     }
   };
-
-  if (success) {
-    return (
-      <View style={[styles.centered, { paddingTop: insets.top + 40 }]}>
-        <Ionicons name="checkmark-circle" size={56} color="#00BFFF" />
-        <Text style={styles.successTitle}>Gallery unlocked!</Text>
-        <Text style={styles.successBody}>
-          Your photos from <Text style={styles.bold}>{success.event_name}</Text> are
-          ready. Tap below to view them.
-        </Text>
-        <Pressable style={styles.primaryBtn} onPress={() => router.replace('/gallery' as Href)}>
-          <Text style={styles.primaryBtnText}>View my gallery</Text>
-        </Pressable>
-      </View>
-    );
-  }
 
   return (
     <KeyboardAvoidingView
@@ -240,7 +223,4 @@ const styles = StyleSheet.create({
   helpText:  { fontFamily: brandFonts.body, fontSize: 12, color: brandColors.mutedText, flex: 1, lineHeight: 18 },
   gateTitle: { fontFamily: brandFonts.display, fontSize: 26, color: '#fff', textTransform: 'uppercase', textAlign: 'center' },
   gateBody:  { fontFamily: brandFonts.body, fontSize: 14, lineHeight: 20, color: brandColors.subtleText, textAlign: 'center' },
-  successTitle: { fontFamily: brandFonts.display, fontSize: 28, color: '#fff', textTransform: 'uppercase', textAlign: 'center' },
-  successBody:  { fontFamily: brandFonts.body, fontSize: 15, lineHeight: 22, color: brandColors.subtleText, textAlign: 'center' },
-  bold:      { fontWeight: '700', color: '#fff' },
 });

@@ -40,14 +40,6 @@ export default function CreateAttendeeScreen() {
   const { isOperator, loading: guardLoading } = useOperatorGuard();
   const { event } = useEvent(id ?? '');
 
-  if (guardLoading || !isOperator) {
-    return (
-      <View style={{ flex: 1, backgroundColor: '#0a0a0a', alignItems: 'center', justifyContent: 'center' }}>
-        <ActivityIndicator color="#00BFFF" />
-      </View>
-    );
-  }
-
   const [firstName, setFirstName] = useState('');
   const [lastName,  setLastName]  = useState('');
   const [phone,     setPhone]     = useState('');
@@ -56,6 +48,14 @@ export default function CreateAttendeeScreen() {
   const [busy,    setBusy]    = useState(false);
   const [error,   setError]   = useState<string | null>(null);
   const [created, setCreated] = useState<Attendee | null>(null);
+
+  if (guardLoading || !isOperator) {
+    return (
+      <View style={{ flex: 1, backgroundColor: '#0a0a0a', alignItems: 'center', justifyContent: 'center' }}>
+        <ActivityIndicator color="#00BFFF" />
+      </View>
+    );
+  }
 
   const handleCreate = async () => {
     if (!firstName.trim()) { setError('First name is required.'); return; }

@@ -58,48 +58,29 @@ export default function ConsentScreen() {
 
       const now = new Date().toISOString();
 
-      // ── 1. Update profiles with consent timestamps ──────────────────────
-      const { error: profileErr } = await supabase.from('profiles').update({
-        age_gate_confirmed_at: now,
-        tos_accepted_at:       now,
+      // ── 1. Upsert profiles with account-level consent timestamps ─────────
+      const { error: upsertError } = await supabase.from('profiles').upsert({
+        id:                    user.id,
+        age_gate_confirmed_at: isAdult ? now : null,
+        tos_accepted_at:       tosAccepted ? now : null,
         marketing_opt_in:      marketingOn,
-      }).eq('id', user.id);
-      if (profileErr) throw new Error('Failed to save consent: ' + profileErr.message);
+      }, { onConflict: 'id' });
 
-      // ── 2. Update attendee rows for this user (photo_consent_at + terms) ─
-      await supabase.from('attendees').update({
-        photo_consent_at:  now,
-        terms_accepted_at: now,
-        is_adult:          true,
-        marketing_opt_in:  marketingOn,
-      }).eq('user_id', user.id).is('deleted_at', null);
+      if (upsertError) {
+        console.error('[consent] profiles upsert failed:', upsertError);
+        setError('Could not save your preferences. Please try again.');
+        return;
+      }
 
-      // ── 3. Write consent_log rows (audit trail — defensible for minors) ──
-      const consents = [
-        { consent_type: 'age_confirm',   granted: true,         granted_at: now },
-        { consent_type: 'photo_release', granted: photoRelease, granted_at: now },
-        { consent_type: 'terms',         granted: tosAccepted,  granted_at: now },
-        { consent_type: 'marketing',     granted: marketingOn,  granted_at: now },
-      ];
+      // ── 2. Write account-level consent_log rows (no attendee_id here) ────
+      // photo_release is per-event and written by the /photo-release screen.
+      await supabase.from('consent_log').insert([
+        { attendee_id: null, consent_type: 'age_confirm', granted: isAdult     },
+        { attendee_id: null, consent_type: 'terms',       granted: tosAccepted  },
+        { attendee_id: null, consent_type: 'marketing',   granted: marketingOn  },
+      ]);
 
-      // attendee_id may be null if user signed up before being pre-added —
-      // that's fine; consent_log.attendee_id is nullable.
-      const { data: attendee } = await supabase
-        .from('attendees')
-        .select('id')
-        .eq('user_id', user.id)
-        .is('deleted_at', null)
-        .limit(1)
-        .maybeSingle();
-
-      await supabase.from('consent_log').insert(
-        consents.map(c => ({
-          ...c,
-          attendee_id: attendee?.id ?? null,
-        })),
-      );
-
-      // ── 4. Navigate ───────────────────────────────────────────────────────
+      // ── 3. Navigate ───────────────────────────────────────────────────────
       if (redirectTo) {
         router.replace(redirectTo as Href);
       } else if (router.canGoBack()) {

@@ -51,6 +51,7 @@ const IN_APP_PATHS = new Set([
   "consent",
   "settings",
   "redeem",
+  "photo-release",
   "auth",      // auth/callback — Supabase magic link redirect target
 ]);
 
@@ -129,6 +130,7 @@ function RootLayoutNav() {
       <Stack.Screen name="events/[id]/assign" options={{ headerShown: false }} />
       <Stack.Screen name="events/[id]/create-attendee" options={{ headerShown: false }} />
       <Stack.Screen name="events/[id]/dashboard" options={{ headerShown: false }} />
+      <Stack.Screen name="photo-release" options={{ headerShown: false }} />
     </Stack>
   );
 }
