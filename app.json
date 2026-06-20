@@ -34,8 +34,7 @@
             }
           }
         }
-      },
-      "buildNumber": "1"
+      }
     },
     "android": {
       "package": "com.alphavisualartists.app",
