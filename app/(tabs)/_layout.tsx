@@ -1,31 +1,24 @@
-import { Tabs } from "expo-router";
+import { Tabs, useRouter, type Href } from "expo-router";
 import React from "react";
-import { Platform } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { TabScreenLayout } from "../../components/TabScreenLayout";
+import { ScrollableTabBar } from "../../components/ScrollableTabBar";
 
 export default function TabLayout() {
+  const router = useRouter();
+
   return (
     <Tabs
       screenLayout={TabScreenLayout}
+      tabBar={(props) => (
+        <ScrollableTabBar
+          {...props}
+          onNewProject={() => router.push("/projects/new" as Href)}
+        />
+      )}
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: "#00d4ff",
-        tabBarInactiveTintColor: "#666",
-        tabBarStyle: {
-          backgroundColor: "#0a0a0a",
-          borderTopColor: "rgba(255,255,255,0.06)",
-          borderTopWidth: 1,
-          height: Platform.OS === "ios" ? 88 : 64,
-          paddingTop: 8,
-        },
-        tabBarLabelStyle: {
-          fontSize: 10,
-          fontWeight: "600",
-          letterSpacing: 0.4,
-          textTransform: "uppercase",
-        },
-        sceneStyle: { backgroundColor: "#0a0a0a" },
+        sceneStyle: { backgroundColor: "#060606" },
       }}
     >
       <Tabs.Screen
@@ -56,6 +49,15 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="events"
+        options={{
+          title: "Events",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="camera-outline" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="shop"
         options={{
           title: "Shop",
@@ -74,11 +76,11 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="events"
+        name="more"
         options={{
-          title: "Events",
+          title: "More",
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="camera-outline" size={size} color={color} />
+            <Ionicons name="ellipsis-horizontal-circle-outline" size={size} color={color} />
           ),
         }}
       />

@@ -131,6 +131,13 @@ function RootLayoutNav() {
       <Stack.Screen name="events/[id]/create-attendee" options={{ headerShown: false }} />
       <Stack.Screen name="events/[id]/dashboard" options={{ headerShown: false }} />
       <Stack.Screen name="photo-release" options={{ headerShown: false }} />
+      {/* ── More / Account section screens ────────────────────────── */}
+      <Stack.Screen name="projects/index" options={{ headerShown: false }} />
+      <Stack.Screen name="projects/new" options={{ headerShown: false }} />
+      <Stack.Screen name="how-to" options={{ headerShown: false }} />
+      <Stack.Screen name="tutorial" options={{ headerShown: false }} />
+      <Stack.Screen name="tutorial/[id]" options={{ headerShown: false }} />
+      <Stack.Screen name="faq" options={{ headerShown: false }} />
     </Stack>
   );
 }
