@@ -51,8 +51,33 @@ export default function SignInScreen() {
     clearMessages();
   };
 
-  const finishSignIn = async () => {
+  const finishSignIn = async (isNewAccount = false) => {
     await seedDemoReviewDataIfNeeded(normalizedEmail);
+
+    // Route brand-new accounts (or any account that hasn't accepted ToS) through consent
+    if (isNewAccount) {
+      router.replace("/consent" as Href);
+      return;
+    }
+
+    // For returning sign-ins, also check whether consent was ever recorded
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("tos_accepted_at")
+          .eq("id", user.id)
+          .single();
+        if (!profile?.tos_accepted_at) {
+          router.replace("/consent" as Href);
+          return;
+        }
+      }
+    } catch {
+      // If check fails, proceed normally — don't block sign-in
+    }
+
     if (router.canGoBack()) {
       router.back();
     } else {
@@ -120,7 +145,8 @@ export default function SignInScreen() {
       }
 
       if (data.session) {
-        await finishSignIn();
+        // New sign-up with auto-confirmed session: show consent screen first
+        router.replace("/consent" as Href);
         return;
       }
 

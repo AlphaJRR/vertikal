@@ -41,6 +41,25 @@ const SITE_HOSTS = new Set([
   "shop.alphavisualartists.com",
 ]);
 
+// ava:// deep link paths that should be handled by Expo Router in-app,
+// NOT redirected to the marketing site browser.
+const IN_APP_PATHS = new Set([
+  "attendee",
+  "gallery",
+  "events",
+  "consent",
+  "settings",
+  "redeem",
+]);
+
+// Returns true for ava:// deep links that should be handled in-app by Expo Router
+function isInAppDeepLink(linkUrl: string): boolean {
+  if (!linkUrl.startsWith("ava://")) return false;
+  const parsed = ExpoLinking.parse(linkUrl);
+  const topSegment = (parsed.hostname ?? parsed.path?.split("/")[1] ?? "").toLowerCase();
+  return IN_APP_PATHS.has(topSegment);
+}
+
 // Convert any inbound link (custom scheme or universal link) to a full https
 // URL on the marketing site. Preserves path, query, and fragment.
 function toSiteUrl(linkUrl: string): string | null {
@@ -88,11 +107,25 @@ function openInBrowser(url: string) {
 function RootLayoutNav() {
   return (
     <Stack screenOptions={{ headerBackTitle: "Back" }}>
+      {/* ── Existing screens ───────────────────────────────────────── */}
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen name="lesson/[id]" options={{ headerShown: false }} />
       <Stack.Screen name="cheatsheet/[id]" options={{ headerShown: false }} />
       <Stack.Screen name="slide/[id]" options={{ headerShown: false }} />
       <Stack.Screen name="sign-in" options={{ headerShown: false }} />
+      {/* ── Event Photo Delivery MVP screens ──────────────────────── */}
+      <Stack.Screen name="consent" options={{ headerShown: false }} />
+      <Stack.Screen name="settings" options={{ headerShown: false }} />
+      <Stack.Screen name="redeem" options={{ headerShown: false }} />
+      <Stack.Screen name="attendee/join" options={{ headerShown: false }} />
+      <Stack.Screen name="gallery/index" options={{ headerShown: false }} />
+      <Stack.Screen name="gallery/[photoId]" options={{ headerShown: false }} />
+      <Stack.Screen name="events/create" options={{ headerShown: false }} />
+      <Stack.Screen name="events/[id]/index" options={{ headerShown: false }} />
+      <Stack.Screen name="events/[id]/upload" options={{ headerShown: false }} />
+      <Stack.Screen name="events/[id]/assign" options={{ headerShown: false }} />
+      <Stack.Screen name="events/[id]/create-attendee" options={{ headerShown: false }} />
+      <Stack.Screen name="events/[id]/dashboard" options={{ headerShown: false }} />
     </Stack>
   );
 }
@@ -187,6 +220,8 @@ export default function RootLayout() {
   useEffect(() => {
     const handle = (linkUrl: string | null | undefined) => {
       if (!linkUrl) return;
+      // Let Expo Router handle in-app deep links natively
+      if (isInAppDeepLink(linkUrl)) return;
       const target = toSiteUrl(linkUrl);
       if (!target) return;
       // Skip the bare site root from cold start — that's the default launch.
