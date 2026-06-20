@@ -152,8 +152,12 @@ export default function SignInScreen() {
     setBusy(true);
     setError(null);
     try {
-      // createURL('auth/callback') → ava://auth/callback in production builds
-      const redirectTo = ExpoLinking.createURL("auth/callback");
+      // Always use the custom scheme on native to ensure the link opens the app
+      // directly. ExpoLinking.createURL produces https:// universal links in
+      // production builds which 404 if the website doesn't have that route.
+      const redirectTo = Platform.OS === 'web'
+        ? ExpoLinking.createURL('auth/callback')
+        : 'ava://auth/callback';
 
       const { error: e } = await supabase.auth.signInWithOtp({
         email: normalizedEmail,
