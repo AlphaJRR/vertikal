@@ -24,6 +24,7 @@ import {
   View,
 } from "react-native";
 import { useRouter, type Href } from "expo-router";
+import * as ExpoLinking from "expo-linking";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { brandColors, brandFonts } from "../constants/theme";
@@ -141,18 +142,25 @@ export default function SignInScreen() {
     }
   };
 
-  // ── OTP: send a 6-digit code to email ────────────────────────────────────────
-  // Used for BOTH create-account and OTP sign-in.
-  // No confirmation link — just a code. Works regardless of Supabase Site URL.
+  // ── OTP: send email with BOTH a 6-digit code AND a magic link ────────────────
+  // emailRedirectTo tells Supabase where to redirect after the user taps the
+  // magic link. The app catches that deep link in _layout.tsx and sets the
+  // session automatically — so BOTH flows (tap link OR type code) work.
   const handleSendCode = async () => {
     if (!normalizedEmail) { setError("Enter your email address."); return; }
 
     setBusy(true);
     setError(null);
     try {
+      // createURL('auth/callback') → ava://auth/callback in production builds
+      const redirectTo = ExpoLinking.createURL("auth/callback");
+
       const { error: e } = await supabase.auth.signInWithOtp({
         email: normalizedEmail,
-        options: { shouldCreateUser: true },
+        options: {
+          shouldCreateUser: true,
+          emailRedirectTo: redirectTo,
+        },
       });
       if (e) { setError(e.message); return; }
       setOtpStep("code");
@@ -232,7 +240,7 @@ export default function SignInScreen() {
     screen === "create"
       ? otpStep === "email"
         ? "We'll email you a 6-digit code. No password needed — works instantly."
-        : `Code sent to ${normalizedEmail}. Check your inbox (and spam folder).`
+        : `Email sent to ${normalizedEmail}. Enter the 6-digit code below — or just tap the link in the email. Both work.`
       : screen === "otpIn"
         ? otpStep === "email"
           ? "We'll email you a one-time code."
