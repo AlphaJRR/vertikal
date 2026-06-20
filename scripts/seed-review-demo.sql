@@ -72,18 +72,24 @@ begin
     'Demo', 'Reviewer',
     'reviewer.attendee@alphavisualartists.com',
     'DEMO01',
-    now(), now(),
+    -- photo_consent_at intentionally NULL so the App Store reviewer
+    -- sees the full per-event Photo Release screen when redeeming DEMO01.
+    -- (terms_accepted_at covers the account-level ToS; photo consent is
+    -- a separate per-event step stored here.)
+    null, now(),
     true, false
   )
   on conflict (id) do nothing;
 
   -- ── 5. Log consent for the attendee (audit trail) ─────────────────────────
+  -- NOTE: photo_release is NOT pre-logged here because photo_consent_at is
+  -- intentionally null. The real photo_release log row is written by the app
+  -- when the reviewer accepts the Photo Release screen at redeem time.
   insert into public.consent_log (attendee_id, consent_type, granted)
   values
-    (demo_attendee_row_id, 'age_confirm',   true),
-    (demo_attendee_row_id, 'photo_release', true),
-    (demo_attendee_row_id, 'terms',         true),
-    (demo_attendee_row_id, 'marketing',     false);
+    (demo_attendee_row_id, 'age_confirm', true),
+    (demo_attendee_row_id, 'terms',       true),
+    (demo_attendee_row_id, 'marketing',   false);
 
   raise notice 'Demo seed complete.';
   raise notice 'Operator UUID: %', operator_id;
@@ -101,4 +107,21 @@ end $$;
 -- =============================================================================
 -- select * from event_operators;
 -- select id, name, access_code, qr_token from events where name = 'AVA Demo Shoot';
--- select id, first_name, redeem_code, user_id from attendees where event_id = 'a0000000-demo-demo-demo-000000000001';
+-- select id, first_name, redeem_code, photo_consent_at, user_id from attendees where event_id = 'a0000000-demo-demo-demo-000000000001';
+
+-- =============================================================================
+-- RESET — run this after each test session to restore full demo state
+-- =============================================================================
+-- This ensures the App Store reviewer always sees the Photo Release screen
+-- when they redeem DEMO01, regardless of how many times the flow was tested.
+--
+-- UPDATE public.attendees
+-- SET
+--   user_id          = null,          -- unlinks the attendee account so redeem works fresh
+--   photo_consent_at = null           -- ensures photo-release screen appears on next redeem
+-- WHERE redeem_code = 'DEMO01';
+--
+-- Also delete the photo_release consent_log entry written by the app during testing:
+-- DELETE FROM public.consent_log
+-- WHERE attendee_id = 'b0000000-demo-demo-demo-000000000001'
+--   AND consent_type = 'photo_release';
