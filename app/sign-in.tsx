@@ -1,15 +1,30 @@
+/**
+ * Sign-in screen — email authentication for Alpha Creators.
+ *
+ * Account creation:  OTP only (6-digit code sent to email).
+ *   — No confirmation-link email. No dependency on Supabase "Site URL".
+ *   — Works correctly on first install with no Supabase URL config changes.
+ *
+ * Sign-in:  password OR OTP (user's choice).
+ *
+ * "Continue as Reviewer" button stays for the App Review demo mode (Creator Toolkit).
+ * For full event-photo-delivery review, use the demo credentials panel at the bottom.
+ */
+
 import React, { useState } from "react";
 import {
   ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
   View,
 } from "react-native";
 import { useRouter, type Href } from "expo-router";
+import * as ExpoLinking from "expo-linking";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { brandColors, brandFonts } from "../constants/theme";
@@ -17,407 +32,475 @@ import { enableDemoMode } from "../lib/demoMode";
 import { supabase } from "../lib/supabase";
 import { seedDemoReviewDataIfNeeded } from "../utils/demoReviewSeed";
 
-type AuthMode = "password" | "otp";
+// ── Screen states ──────────────────────────────────────────────────────────────
+// "create"  → OTP create-account flow (step 1: email, step 2: 6-digit code)
+// "signIn"  → password sign-in (default)
+// "otpIn"   → OTP sign-in (step 1: email, step 2: 6-digit code)
+type Screen = "create" | "signIn" | "otpIn";
 type OtpStep = "email" | "code";
-type ScreenIntent = "signIn" | "signUp";
 
-const MIN_PASSWORD_LENGTH = 8;
+const MIN_PW = 8;
+
+// ── App Review demo accounts ───────────────────────────────────────────────────
+const DEMO_ACCOUNTS = [
+  {
+    role:  "Operator (photographer)",
+    email: "reviewer@alphavisualartists.com",
+    note:  "Creates events, uploads photos, assigns galleries.",
+  },
+  {
+    role:  "Standard user (attendee)",
+    email: "reviewer.attendee@alphavisualartists.com",
+    note:  "Redeem code: DEMO01 → opens pre-assigned gallery.",
+  },
+] as const;
+
+// ─────────────────────────────────────────────────────────────────────────────
 
 export default function SignInScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
-  const [intent, setIntent] = useState<ScreenIntent>("signIn");
-  const [mode, setMode] = useState<AuthMode>("password");
+
+  const [screen,  setScreen]  = useState<Screen>("signIn");
   const [otpStep, setOtpStep] = useState<OtpStep>("email");
-  const [email, setEmail] = useState("");
+
+  const [email,    setEmail]    = useState("");
   const [password, setPassword] = useState("");
-  const [otp, setOtp] = useState("");
-  const [busy, setBusy] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [infoMessage, setInfoMessage] = useState<string | null>(null);
+  const [otp,      setOtp]      = useState("");
+
+  const [busy,  setBusy]  = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [info,  setInfo]  = useState<string | null>(null);
+
+  const [showDemo, setShowDemo] = useState(false);
 
   const normalizedEmail = email.trim().toLowerCase();
 
-  const clearMessages = () => {
-    setErrorMessage(null);
-    setInfoMessage(null);
-  };
-
-  const switchIntent = (next: ScreenIntent) => {
-    setIntent(next);
+  const reset = (toScreen: Screen) => {
+    setScreen(toScreen);
+    setOtpStep("email");
     setPassword("");
     setOtp("");
-    setOtpStep("email");
-    clearMessages();
+    setError(null);
+    setInfo(null);
   };
 
-  const finishSignIn = async () => {
+  // ── Routing after a successful auth ─────────────────────────────────────────
+  const finishAuth = async (isNew = false) => {
     await seedDemoReviewDataIfNeeded(normalizedEmail);
-    if (router.canGoBack()) {
-      router.back();
-    } else {
-      router.replace("/(tabs)" as Href);
-    }
-  };
 
-  const signInWithPassword = async () => {
-    if (!normalizedEmail) {
-      setErrorMessage("Enter your email address.");
-      return;
-    }
-    if (!password) {
-      setErrorMessage("Enter your password.");
+    if (isNew) {
+      router.replace("/consent" as Href);
       return;
     }
 
-    setBusy(true);
-    clearMessages();
     try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email: normalizedEmail,
-        password,
-      });
-      if (error) {
-        console.error("[sign-in] signInWithPassword failed:", error);
-        setErrorMessage(error.message);
-        return;
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("tos_accepted_at")
+          .eq("id", user.id)
+          .single();
+        if (!profile?.tos_accepted_at) {
+          router.replace("/consent" as Href);
+          return;
+        }
       }
-      await finishSignIn();
-    } catch (error) {
-      console.error("[sign-in] signInWithPassword failed:", error);
-      setErrorMessage("Sign in failed. Check your email and password.");
-    } finally {
-      setBusy(false);
-    }
+    } catch { /* non-blocking — proceed on error */ }
+
+    if (router.canGoBack()) router.back();
+    else router.replace("/(tabs)" as Href);
   };
 
-  const signUpWithPassword = async () => {
-    if (!normalizedEmail) {
-      setErrorMessage("Enter your email address.");
-      return;
-    }
-    if (password.length < MIN_PASSWORD_LENGTH) {
-      setErrorMessage(`Choose a password with at least ${MIN_PASSWORD_LENGTH} characters.`);
-      return;
-    }
+  // ── Password sign-in (returning users only) ──────────────────────────────────
+  const handlePasswordSignIn = async () => {
+    if (!normalizedEmail) { setError("Enter your email address."); return; }
+    if (!password)        { setError("Enter your password."); return; }
 
     setBusy(true);
-    clearMessages();
+    setError(null);
     try {
-      const { data, error } = await supabase.auth.signUp({
+      const { error: e } = await supabase.auth.signInWithPassword({
         email: normalizedEmail,
         password,
       });
-      if (error) {
-        console.error("[sign-in] signUp failed:", error);
-        const msg = error.message.toLowerCase();
-        if (msg.includes("already registered") || msg.includes("already exists")) {
-          setErrorMessage("This email already has an account. Sign in instead.");
+      if (e) {
+        const msg = e.message.toLowerCase();
+        if (msg.includes("invalid login") || msg.includes("credentials")) {
+          setError("Email or password is incorrect.");
         } else {
-          setErrorMessage(error.message);
+          setError(e.message);
         }
         return;
       }
-
-      if (data.session) {
-        await finishSignIn();
-        return;
-      }
-
-      setInfoMessage(
-        "Account created. Check your email to confirm your address, then sign in here.",
-      );
-      setIntent("signIn");
-      setPassword("");
-    } catch (error) {
-      console.error("[sign-in] signUp failed:", error);
-      setErrorMessage("Could not create account. Try again.");
+      await finishAuth();
+    } catch {
+      setError("Sign in failed. Please try again.");
     } finally {
       setBusy(false);
     }
   };
 
-  const sendCode = async () => {
-    if (!normalizedEmail) {
-      setErrorMessage("Enter your email address.");
-      return;
-    }
+  // ── OTP: send email with BOTH a 6-digit code AND a magic link ────────────────
+  // emailRedirectTo tells Supabase where to redirect after the user taps the
+  // magic link. The app catches that deep link in _layout.tsx and sets the
+  // session automatically — so BOTH flows (tap link OR type code) work.
+  const handleSendCode = async () => {
+    if (!normalizedEmail) { setError("Enter your email address."); return; }
+
     setBusy(true);
-    clearMessages();
+    setError(null);
     try {
-      const { error } = await supabase.auth.signInWithOtp({
+      // createURL('auth/callback') → ava://auth/callback in production builds
+      const redirectTo = ExpoLinking.createURL("auth/callback");
+
+      const { error: e } = await supabase.auth.signInWithOtp({
         email: normalizedEmail,
-        options: { shouldCreateUser: true },
+        options: {
+          shouldCreateUser: true,
+          emailRedirectTo: redirectTo,
+        },
       });
-      if (error) {
-        console.error("[sign-in] signInWithOtp failed:", error);
-        setErrorMessage(error.message);
-        return;
-      }
+      if (e) { setError(e.message); return; }
       setOtpStep("code");
-    } catch (error) {
-      console.error("[sign-in] sendCode failed:", error);
-      setErrorMessage("Could not send code. Try again.");
+    } catch {
+      setError("Could not send code. Please try again.");
     } finally {
       setBusy(false);
     }
   };
 
-  const verifyCode = async () => {
+  // ── OTP: verify the 6-digit code ─────────────────────────────────────────────
+  const handleVerifyCode = async () => {
     const token = otp.trim();
-    if (token.length < 6) {
-      setErrorMessage("Enter the 6-digit code from your email.");
-      return;
-    }
+    if (token.length < 6) { setError("Enter the 6-digit code from your email."); return; }
+
     setBusy(true);
-    setErrorMessage(null);
+    setError(null);
     try {
-      const { error } = await supabase.auth.verifyOtp({
+      const { data, error: e } = await supabase.auth.verifyOtp({
         email: normalizedEmail,
         token,
         type: "email",
       });
-      if (error) {
-        console.error("[sign-in] verifyOtp failed:", error);
-        setErrorMessage(error.message);
+      if (e) {
+        if (e.message.toLowerCase().includes("expired") || e.message.toLowerCase().includes("invalid")) {
+          setError("Code is incorrect or expired. Tap back and request a new one.");
+        } else {
+          setError(e.message);
+        }
         return;
       }
-      await finishSignIn();
-    } catch (error) {
-      console.error("[sign-in] verifyCode failed:", error);
-      setErrorMessage("Verification failed. Try again.");
+
+      // Detect whether this is a brand-new account by checking if the profile
+      // has ever had tos_accepted_at set (new accounts will not have it).
+      const userId = data.user?.id;
+      let isNew = false;
+      if (userId) {
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("tos_accepted_at")
+          .eq("id", userId)
+          .single();
+        isNew = !profile?.tos_accepted_at;
+      }
+
+      await finishAuth(isNew);
+    } catch {
+      setError("Verification failed. Please try again.");
     } finally {
       setBusy(false);
     }
   };
 
-  const switchToPassword = () => {
-    setMode("password");
-    setOtpStep("email");
-    setOtp("");
-    clearMessages();
-  };
-
-  const switchToOtp = () => {
-    setMode("otp");
-    setOtpStep("email");
-    setPassword("");
-    clearMessages();
-  };
-
-  const startAppReviewDemo = async () => {
+  // ── Reviewer demo mode ────────────────────────────────────────────────────────
+  const handleReviewerDemo = async () => {
     setBusy(true);
-    setErrorMessage(null);
+    setError(null);
     try {
       await enableDemoMode();
       router.replace("/(tabs)" as Href);
-    } catch (error) {
-      console.error("[sign-in] startAppReviewDemo failed:", error);
-      setErrorMessage("Could not start demo mode. Try again.");
+    } catch {
+      setError("Could not start demo mode. Try again.");
     } finally {
       setBusy(false);
     }
   };
 
-  const subtitle =
-    intent === "signUp"
-      ? mode === "password"
-        ? "Create a free account with email and password. No payment required."
-        : otpStep === "email"
-          ? "New or returning — we'll email you a code and create your account if you're new."
-          : `Code sent to ${normalizedEmail}`
-      : mode === "password"
-        ? "Sign in with your email and password."
-        : otpStep === "email"
-          ? "We will email you a one-time code."
-          : `Code sent to ${normalizedEmail}`;
+  // ─────────────────────────────────────────────────────────────────────────────
+  // Render
+  // ─────────────────────────────────────────────────────────────────────────────
 
-  const screenTitle = intent === "signUp" ? "Create account" : "Sign in";
-  const primaryPasswordAction =
-    intent === "signUp" ? signUpWithPassword : signInWithPassword;
-  const primaryPasswordLabel =
-    intent === "signUp" ? "Create account" : "Sign in";
+  const isOtpFlow = screen === "create" || screen === "otpIn";
+
+  const title = screen === "create" ? "Create account" : "Sign in";
+
+  const subtitle =
+    screen === "create"
+      ? otpStep === "email"
+        ? "We'll email you a 6-digit code. No password needed — works instantly."
+        : `Email sent to ${normalizedEmail}. Enter the 6-digit code below — or just tap the link in the email. Both work.`
+      : screen === "otpIn"
+        ? otpStep === "email"
+          ? "We'll email you a one-time code."
+          : `Code sent to ${normalizedEmail}`
+        : "Sign in with your email and password.";
 
   return (
     <KeyboardAvoidingView
-      style={[styles.root, { paddingTop: insets.top + 12, paddingBottom: insets.bottom + 24 }]}
+      style={styles.root}
       behavior={Platform.OS === "ios" ? "padding" : undefined}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 0 : 0}
     >
-      <Pressable onPress={() => router.back()} hitSlop={12} style={styles.backRow}>
-        <Ionicons name="chevron-back" size={22} color={brandColors.alphaRed} />
-        <Text style={styles.backText}>Back</Text>
-      </Pressable>
+      <ScrollView
+        contentContainerStyle={[
+          styles.inner,
+          { paddingTop: insets.top + 12, paddingBottom: insets.bottom + 32 },
+        ]}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+      >
+        {/* Back */}
+        <Pressable onPress={() => router.back()} hitSlop={12} style={styles.backRow}>
+          <Ionicons name="chevron-back" size={22} color={brandColors.alphaRed} />
+          <Text style={styles.backText}>Back</Text>
+        </Pressable>
 
-      <View style={styles.header}>
-        <Text style={styles.brand}>ALPHA VISUAL ARTISTS</Text>
-        <Text style={styles.title}>{screenTitle}</Text>
-        <Text style={styles.subtitle}>{subtitle}</Text>
-      </View>
+        {/* Header */}
+        <View style={styles.header}>
+          <Text style={styles.brand}>ALPHA VISUAL ARTISTS</Text>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.subtitle}>{subtitle}</Text>
+        </View>
 
-      {infoMessage ? <Text style={styles.info}>{infoMessage}</Text> : null}
+        {info  ? <Text style={styles.info}>{info}</Text>  : null}
+        {error ? <Text style={styles.error}>{error}</Text> : null}
 
-      {mode === "password" ? (
-        <>
-          <Text style={styles.label}>Email</Text>
-          <TextInput
-            value={email}
-            onChangeText={setEmail}
-            placeholder="you@studio.com"
-            placeholderTextColor={brandColors.mutedText}
-            keyboardType="email-address"
-            autoCapitalize="none"
-            autoCorrect={false}
-            textContentType="emailAddress"
-            style={styles.input}
-            editable={!busy}
-          />
-          <Text style={styles.label}>Password</Text>
-          <TextInput
-            value={password}
-            onChangeText={setPassword}
-            placeholder={
-              intent === "signUp"
-                ? `At least ${MIN_PASSWORD_LENGTH} characters`
-                : "Your password"
-            }
-            placeholderTextColor={brandColors.mutedText}
-            secureTextEntry
-            autoCapitalize="none"
-            autoCorrect={false}
-            textContentType={intent === "signUp" ? "newPassword" : "password"}
-            style={styles.input}
-            editable={!busy}
-            onSubmitEditing={() => void primaryPasswordAction()}
-          />
-          <Pressable
-            onPress={() => void primaryPasswordAction()}
-            disabled={busy}
-            style={[styles.primaryBtn, busy && styles.btnDisabled]}
-          >
-            {busy ? (
-              <ActivityIndicator color="#000" />
-            ) : (
-              <Text style={styles.primaryBtnText}>{primaryPasswordLabel}</Text>
-            )}
-          </Pressable>
-          <Pressable
-            onPress={() => switchIntent(intent === "signUp" ? "signIn" : "signUp")}
-            disabled={busy}
-            style={styles.intentToggle}
-          >
-            <Text style={styles.intentToggleText}>
-              {intent === "signUp"
-                ? "Already have an account? Sign in"
-                : "New here? Create a free account"}
-            </Text>
-          </Pressable>
-          {intent === "signIn" ? (
+        {/* ── Password sign-in ─────────────────────────────────────────── */}
+        {screen === "signIn" && (
+          <>
+            <Text style={styles.label}>Email</Text>
+            <TextInput
+              value={email}
+              onChangeText={setEmail}
+              placeholder="you@studio.com"
+              placeholderTextColor={brandColors.mutedText}
+              keyboardType="email-address"
+              autoCapitalize="none"
+              autoCorrect={false}
+              textContentType="emailAddress"
+              style={styles.input}
+              editable={!busy}
+            />
+
+            <Text style={styles.label}>Password</Text>
+            <TextInput
+              value={password}
+              onChangeText={setPassword}
+              placeholder="Your password"
+              placeholderTextColor={brandColors.mutedText}
+              secureTextEntry
+              autoCapitalize="none"
+              autoCorrect={false}
+              textContentType="password"
+              style={styles.input}
+              editable={!busy}
+              onSubmitEditing={() => void handlePasswordSignIn()}
+            />
+
             <Pressable
-              onPress={() => void startAppReviewDemo()}
+              onPress={() => void handlePasswordSignIn()}
+              disabled={busy}
+              style={[styles.primaryBtn, busy && styles.btnDisabled]}
+            >
+              {busy ? (
+                <ActivityIndicator color="#000" />
+              ) : (
+                <Text style={styles.primaryBtnText}>Sign in</Text>
+              )}
+            </Pressable>
+
+            {/* Switch to create account → OTP only */}
+            <Pressable
+              onPress={() => reset("create")}
+              disabled={busy}
+              style={styles.intentToggle}
+            >
+              <Text style={styles.intentToggleText}>
+                New here? Create a free account
+              </Text>
+            </Pressable>
+
+            {/* Switch to OTP sign-in */}
+            <Pressable onPress={() => reset("otpIn")} style={styles.secondaryBtn} disabled={busy}>
+              <Text style={styles.secondaryBtnText}>Sign in with a code instead</Text>
+            </Pressable>
+
+            {/* Reviewer demo mode */}
+            <Pressable
+              onPress={() => void handleReviewerDemo()}
               disabled={busy}
               style={[styles.reviewerBtn, busy && styles.btnDisabled]}
             >
               <Text style={styles.reviewerBtnText}>Continue as Reviewer</Text>
             </Pressable>
-          ) : null}
-          <Pressable onPress={switchToOtp} style={styles.secondaryBtn} disabled={busy}>
-            <Text style={styles.secondaryBtnText}>
-              {intent === "signUp" ? "Use email code to sign up" : "Use email code instead"}
-            </Text>
-          </Pressable>
-        </>
-      ) : otpStep === "email" ? (
-        <>
-          <Text style={styles.label}>Email</Text>
-          <TextInput
-            value={email}
-            onChangeText={setEmail}
-            placeholder="you@studio.com"
-            placeholderTextColor={brandColors.mutedText}
-            keyboardType="email-address"
-            autoCapitalize="none"
-            autoCorrect={false}
-            textContentType="emailAddress"
-            style={styles.input}
-            editable={!busy}
-          />
-          <Pressable
-            onPress={() => void sendCode()}
-            disabled={busy}
-            style={[styles.primaryBtn, busy && styles.btnDisabled]}
-          >
-            {busy ? (
-              <ActivityIndicator color="#000" />
-            ) : (
-              <Text style={styles.primaryBtnText}>Send code</Text>
-            )}
-          </Pressable>
-          <Pressable onPress={switchToPassword} style={styles.secondaryBtn} disabled={busy}>
-            <Text style={styles.secondaryBtnText}>Use password instead</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => switchIntent(intent === "signUp" ? "signIn" : "signUp")}
-            disabled={busy}
-            style={styles.intentToggle}
-          >
-            <Text style={styles.intentToggleText}>
-              {intent === "signUp"
-                ? "Already have an account? Sign in"
-                : "New here? Create a free account"}
-            </Text>
-          </Pressable>
-        </>
-      ) : (
-        <>
-          <Text style={styles.label}>6-digit code</Text>
-          <TextInput
-            value={otp}
-            onChangeText={(t) => setOtp(t.replace(/\D/g, "").slice(0, 6))}
-            placeholder="000000"
-            placeholderTextColor={brandColors.mutedText}
-            keyboardType="number-pad"
-            maxLength={6}
-            style={[styles.input, styles.otpInput]}
-            editable={!busy}
-          />
-          <Pressable
-            onPress={() => void verifyCode()}
-            disabled={busy}
-            style={[styles.primaryBtn, busy && styles.btnDisabled]}
-          >
-            {busy ? (
-              <ActivityIndicator color="#000" />
-            ) : (
-              <Text style={styles.primaryBtnText}>Verify & sign in</Text>
-            )}
-          </Pressable>
-          <Pressable
-            onPress={() => {
-              setOtpStep("email");
-              setOtp("");
-              clearMessages();
-            }}
-            style={styles.secondaryBtn}
-            disabled={busy}
-          >
-            <Text style={styles.secondaryBtnText}>Use a different email</Text>
-          </Pressable>
-          <Pressable onPress={switchToPassword} style={styles.secondaryBtn} disabled={busy}>
-            <Text style={styles.secondaryBtnText}>Use password instead</Text>
-          </Pressable>
-        </>
-      )}
+          </>
+        )}
 
-      {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
+        {/* ── OTP flow (create account OR OTP sign-in) ─────────────────── */}
+        {isOtpFlow && otpStep === "email" && (
+          <>
+            <Text style={styles.label}>Email</Text>
+            <TextInput
+              value={email}
+              onChangeText={setEmail}
+              placeholder="you@studio.com"
+              placeholderTextColor={brandColors.mutedText}
+              keyboardType="email-address"
+              autoCapitalize="none"
+              autoCorrect={false}
+              textContentType="emailAddress"
+              style={styles.input}
+              editable={!busy}
+              autoFocus
+            />
+
+            <Pressable
+              onPress={() => void handleSendCode()}
+              disabled={busy}
+              style={[styles.primaryBtn, busy && styles.btnDisabled]}
+            >
+              {busy ? (
+                <ActivityIndicator color="#000" />
+              ) : (
+                <Text style={styles.primaryBtnText}>
+                  {screen === "create" ? "Send code to create account" : "Send code"}
+                </Text>
+              )}
+            </Pressable>
+
+            <Pressable onPress={() => reset("signIn")} style={styles.intentToggle} disabled={busy}>
+              <Text style={styles.intentToggleText}>
+                {screen === "create"
+                  ? "Already have an account? Sign in"
+                  : "Use password instead"}
+              </Text>
+            </Pressable>
+          </>
+        )}
+
+        {/* ── OTP: enter code ──────────────────────────────────────────── */}
+        {isOtpFlow && otpStep === "code" && (
+          <>
+            <Text style={styles.label}>6-digit code</Text>
+            <TextInput
+              value={otp}
+              onChangeText={t => setOtp(t.replace(/\D/g, "").slice(0, 6))}
+              placeholder="000000"
+              placeholderTextColor={brandColors.mutedText}
+              keyboardType="number-pad"
+              maxLength={6}
+              style={[styles.input, styles.otpInput]}
+              editable={!busy}
+              autoFocus
+            />
+
+            <Pressable
+              onPress={() => void handleVerifyCode()}
+              disabled={busy}
+              style={[styles.primaryBtn, busy && styles.btnDisabled]}
+            >
+              {busy ? (
+                <ActivityIndicator color="#000" />
+              ) : (
+                <Text style={styles.primaryBtnText}>
+                  {screen === "create" ? "Verify & create account" : "Verify & sign in"}
+                </Text>
+              )}
+            </Pressable>
+
+            <Pressable
+              onPress={() => { setOtpStep("email"); setOtp(""); setError(null); }}
+              style={styles.secondaryBtn}
+              disabled={busy}
+            >
+              <Text style={styles.secondaryBtnText}>Resend to a different email</Text>
+            </Pressable>
+          </>
+        )}
+
+        {/* ── App Review demo panel ─────────────────────────────────────── */}
+        <Pressable
+          onPress={() => setShowDemo(v => !v)}
+          style={demoStyles.toggle}
+          hitSlop={10}
+        >
+          <Ionicons name="information-circle-outline" size={15} color={brandColors.mutedText} />
+          <Text style={demoStyles.toggleText}>App Review demo accounts</Text>
+          <Ionicons
+            name={showDemo ? "chevron-up" : "chevron-down"}
+            size={13}
+            color={brandColors.mutedText}
+          />
+        </Pressable>
+
+        {showDemo && (
+          <View style={demoStyles.panel}>
+            <Text style={demoStyles.panelTitle}>App Review — Demo Credentials</Text>
+            <Text style={demoStyles.panelSub}>
+              Password for both accounts: see App Review Information in App Store Connect.
+            </Text>
+
+            {DEMO_ACCOUNTS.map(account => (
+              <Pressable
+                key={account.email}
+                style={demoStyles.accountRow}
+                onPress={() => {
+                  setEmail(account.email);
+                  setScreen("signIn");
+                  setOtpStep("email");
+                  setShowDemo(false);
+                  setError(null);
+                }}
+                disabled={busy}
+              >
+                <View style={demoStyles.accountInfo}>
+                  <Text style={demoStyles.accountRole}>{account.role}</Text>
+                  <Text style={demoStyles.accountEmail}>{account.email}</Text>
+                  <Text style={demoStyles.accountNote}>{account.note}</Text>
+                </View>
+                <View style={demoStyles.prefillBtn}>
+                  <Text style={demoStyles.prefillBtnText}>Pre-fill</Text>
+                </View>
+              </Pressable>
+            ))}
+
+            <View style={demoStyles.codeRow}>
+              <Ionicons name="key-outline" size={14} color="#00BFFF" />
+              <Text style={demoStyles.codeText}>
+                Attendee gallery code:{" "}
+                <Text style={demoStyles.codeBold}>DEMO01</Text>
+                {"\n"}Enter this on the "Enter my code" screen after signing in as the attendee.
+              </Text>
+            </View>
+          </View>
+        )}
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: "#0a0a0a",
+  },
+  inner: {
     paddingHorizontal: 24,
+    gap: 0,
   },
   backRow: {
     flexDirection: "row",
@@ -461,6 +544,7 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     color: brandColors.mutedText,
     marginBottom: 8,
+    marginTop: 4,
   },
   input: {
     fontFamily: brandFonts.body,
@@ -481,12 +565,12 @@ const styles = StyleSheet.create({
   },
   primaryBtn: {
     backgroundColor: "#00d4ff",
-    opacity: 1,
     borderRadius: 10,
     paddingVertical: 16,
     alignItems: "center",
     justifyContent: "center",
     minHeight: 52,
+    marginTop: 4,
   },
   btnDisabled: {
     opacity: 0.85,
@@ -502,27 +586,11 @@ const styles = StyleSheet.create({
     marginTop: 16,
     paddingVertical: 12,
     alignItems: "center",
-    opacity: 1,
   },
   secondaryBtnText: {
     fontFamily: brandFonts.bodyMedium,
     fontSize: 14,
     color: "#00d4ff",
-  },
-  reviewerBtn: {
-    marginTop: 16,
-    borderWidth: 1,
-    borderColor: "rgba(232,0,10,0.5)",
-    borderRadius: 10,
-    paddingVertical: 14,
-    alignItems: "center",
-    opacity: 1,
-  },
-  reviewerBtnText: {
-    fontFamily: brandFonts.bodyMedium,
-    fontSize: 14,
-    color: "#E8000A",
-    letterSpacing: 0.3,
   },
   intentToggle: {
     marginTop: 20,
@@ -536,6 +604,20 @@ const styles = StyleSheet.create({
     textAlign: "center",
     lineHeight: 20,
   },
+  reviewerBtn: {
+    marginTop: 16,
+    borderWidth: 1,
+    borderColor: "rgba(232,0,10,0.5)",
+    borderRadius: 10,
+    paddingVertical: 14,
+    alignItems: "center",
+  },
+  reviewerBtnText: {
+    fontFamily: brandFonts.bodyMedium,
+    fontSize: 14,
+    color: "#E8000A",
+    letterSpacing: 0.3,
+  },
   info: {
     fontFamily: brandFonts.body,
     fontSize: 13,
@@ -547,7 +629,107 @@ const styles = StyleSheet.create({
     fontFamily: brandFonts.body,
     fontSize: 13,
     color: brandColors.alphaRed,
-    marginTop: 16,
+    marginBottom: 16,
     lineHeight: 18,
+  },
+});
+
+const demoStyles = StyleSheet.create({
+  toggle: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 6,
+    marginTop: 32,
+    paddingVertical: 8,
+    opacity: 0.55,
+  },
+  toggleText: {
+    fontFamily: brandFonts.mono,
+    fontSize: 10,
+    letterSpacing: 1,
+    textTransform: "uppercase",
+    color: brandColors.mutedText,
+    flex: 1,
+  },
+  panel: {
+    backgroundColor: "rgba(255,255,255,0.04)",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.1)",
+    borderRadius: 12,
+    padding: 16,
+    gap: 12,
+    marginTop: 4,
+  },
+  panelTitle: {
+    fontFamily: brandFonts.bodyMedium,
+    fontSize: 13,
+    color: "#fff",
+  },
+  panelSub: {
+    fontFamily: brandFonts.body,
+    fontSize: 11,
+    lineHeight: 16,
+    color: brandColors.mutedText,
+  },
+  accountRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
+    backgroundColor: "rgba(255,255,255,0.04)",
+    borderRadius: 8,
+    padding: 12,
+  },
+  accountInfo: { flex: 1, gap: 2 },
+  accountRole: {
+    fontFamily: brandFonts.mono,
+    fontSize: 9,
+    letterSpacing: 1,
+    textTransform: "uppercase",
+    color: "#00BFFF",
+  },
+  accountEmail: {
+    fontFamily: brandFonts.bodyMedium,
+    fontSize: 13,
+    color: "#fff",
+  },
+  accountNote: {
+    fontFamily: brandFonts.body,
+    fontSize: 11,
+    color: brandColors.mutedText,
+    lineHeight: 15,
+  },
+  prefillBtn: {
+    backgroundColor: "rgba(0,191,255,0.15)",
+    borderRadius: 6,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+  },
+  prefillBtnText: {
+    fontFamily: brandFonts.mono,
+    fontSize: 10,
+    letterSpacing: 0.5,
+    color: "#00BFFF",
+    textTransform: "uppercase",
+  },
+  codeRow: {
+    flexDirection: "row",
+    gap: 8,
+    alignItems: "flex-start",
+    backgroundColor: "rgba(0,191,255,0.06)",
+    borderRadius: 8,
+    padding: 10,
+  },
+  codeText: {
+    fontFamily: brandFonts.body,
+    fontSize: 12,
+    lineHeight: 18,
+    color: brandColors.subtleText,
+    flex: 1,
+  },
+  codeBold: {
+    fontFamily: brandFonts.mono,
+    fontSize: 13,
+    color: "#00BFFF",
+    letterSpacing: 2,
   },
 });

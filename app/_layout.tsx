@@ -28,6 +28,7 @@ import { AppIntroVideo } from "@/components/AppIntroVideo";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { hydrateDemoMode } from "@/lib/demoMode";
+import { supabase } from "@/lib/supabase";
 import { shouldPlayAppIntro } from "@/utils/introVideoGate";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -40,6 +41,26 @@ const SITE_HOSTS = new Set([
   "www.alphavisualartists.com",
   "shop.alphavisualartists.com",
 ]);
+
+// ava:// deep link paths that should be handled by Expo Router in-app,
+// NOT redirected to the marketing site browser.
+const IN_APP_PATHS = new Set([
+  "attendee",
+  "gallery",
+  "events",
+  "consent",
+  "settings",
+  "redeem",
+  "auth",      // auth/callback — Supabase magic link redirect target
+]);
+
+// Returns true for ava:// deep links that should be handled in-app by Expo Router
+function isInAppDeepLink(linkUrl: string): boolean {
+  if (!linkUrl.startsWith("ava://")) return false;
+  const parsed = ExpoLinking.parse(linkUrl);
+  const topSegment = (parsed.hostname ?? parsed.path?.split("/")[1] ?? "").toLowerCase();
+  return IN_APP_PATHS.has(topSegment);
+}
 
 // Convert any inbound link (custom scheme or universal link) to a full https
 // URL on the marketing site. Preserves path, query, and fragment.
@@ -88,11 +109,26 @@ function openInBrowser(url: string) {
 function RootLayoutNav() {
   return (
     <Stack screenOptions={{ headerBackTitle: "Back" }}>
+      {/* ── Existing screens ───────────────────────────────────────── */}
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen name="lesson/[id]" options={{ headerShown: false }} />
       <Stack.Screen name="cheatsheet/[id]" options={{ headerShown: false }} />
       <Stack.Screen name="slide/[id]" options={{ headerShown: false }} />
       <Stack.Screen name="sign-in" options={{ headerShown: false }} />
+      {/* ── Event Photo Delivery MVP screens ──────────────────────── */}
+      <Stack.Screen name="consent" options={{ headerShown: false }} />
+      <Stack.Screen name="settings" options={{ headerShown: false }} />
+      <Stack.Screen name="auth/callback" options={{ headerShown: false }} />
+      <Stack.Screen name="redeem" options={{ headerShown: false }} />
+      <Stack.Screen name="attendee/join" options={{ headerShown: false }} />
+      <Stack.Screen name="gallery/index" options={{ headerShown: false }} />
+      <Stack.Screen name="gallery/[photoId]" options={{ headerShown: false }} />
+      <Stack.Screen name="events/create" options={{ headerShown: false }} />
+      <Stack.Screen name="events/[id]/index" options={{ headerShown: false }} />
+      <Stack.Screen name="events/[id]/upload" options={{ headerShown: false }} />
+      <Stack.Screen name="events/[id]/assign" options={{ headerShown: false }} />
+      <Stack.Screen name="events/[id]/create-attendee" options={{ headerShown: false }} />
+      <Stack.Screen name="events/[id]/dashboard" options={{ headerShown: false }} />
     </Stack>
   );
 }
@@ -185,8 +221,45 @@ export default function RootLayout() {
   // Handle deep links at the root so all unmatched inbound URLs (custom
   // scheme + universal links) route to the in-app browser.
   useEffect(() => {
+    // Supabase magic-link auth callback.
+    // When the user taps the link in their email, Supabase redirects to:
+    //   ava://auth/callback#access_token=...&refresh_token=...&type=email
+    // We extract the tokens and set the session directly — no redirect needed.
+    const handleAuthCallback = async (url: string): Promise<boolean> => {
+      if (!url.includes("access_token")) return false;
+      try {
+        // Tokens arrive in the URL fragment (#) or query string
+        const fragment = url.includes("#") ? url.split("#")[1] : url.split("?")[1] ?? "";
+        const params = new URLSearchParams(fragment);
+        const accessToken  = params.get("access_token");
+        const refreshToken = params.get("refresh_token");
+        if (!accessToken || !refreshToken) return false;
+
+        const { error } = await supabase.auth.setSession({
+          access_token:  accessToken,
+          refresh_token: refreshToken,
+        });
+        if (error) {
+          console.error("[auth-callback] setSession failed:", error.message);
+          return false;
+        }
+        console.log("[auth-callback] session set from magic link ✓");
+        return true;
+      } catch (err) {
+        console.error("[auth-callback] unexpected error:", err);
+        return false;
+      }
+    };
+
     const handle = (linkUrl: string | null | undefined) => {
       if (!linkUrl) return;
+      // Handle Supabase magic link auth callbacks first (async, non-blocking)
+      if (linkUrl.includes("access_token")) {
+        void handleAuthCallback(linkUrl);
+        return;
+      }
+      // Let Expo Router handle in-app deep links natively
+      if (isInAppDeepLink(linkUrl)) return;
       const target = toSiteUrl(linkUrl);
       if (!target) return;
       // Skip the bare site root from cold start — that's the default launch.

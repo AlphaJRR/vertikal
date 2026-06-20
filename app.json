@@ -20,8 +20,8 @@
       "supportsTablet": false,
       "bundleIdentifier": "com.alphavisualartists.app",
       "infoPlist": {
-        "NSPhotoLibraryAddUsageDescription": "AVA saves wallpapers you download to your Photo Library.",
-        "NSPhotoLibraryUsageDescription": "AVA needs access to save wallpapers to your Photo Library.",
+        "NSPhotoLibraryUsageDescription": "Access photos to upload event images.",
+        "NSPhotoLibraryAddUsageDescription": "Save your event photos to your library.",
         "ITSAppUsesNonExemptEncryption": false,
         "NSAppTransportSecurity": {
           "NSAllowsArbitraryLoads": false,
@@ -78,8 +78,14 @@
       [
         "expo-media-library",
         {
-          "photosPermission": "AVA needs access to save wallpapers to your Photo Library.",
-          "savePhotosPermission": "AVA saves wallpapers you download to your Photo Library."
+          "photosPermission": "Access photos to upload event images.",
+          "savePhotosPermission": "Save your event photos to your library."
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Access photos to upload event images."
         }
       ]
     ],
