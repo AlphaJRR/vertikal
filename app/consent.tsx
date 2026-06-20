@@ -59,11 +59,12 @@ export default function ConsentScreen() {
       const now = new Date().toISOString();
 
       // ── 1. Update profiles with consent timestamps ──────────────────────
-      await supabase.from('profiles').update({
+      const { error: profileErr } = await supabase.from('profiles').update({
         age_gate_confirmed_at: now,
         tos_accepted_at:       now,
         marketing_opt_in:      marketingOn,
       }).eq('id', user.id);
+      if (profileErr) throw new Error('Failed to save consent: ' + profileErr.message);
 
       // ── 2. Update attendee rows for this user (photo_consent_at + terms) ─
       await supabase.from('attendees').update({
@@ -89,7 +90,7 @@ export default function ConsentScreen() {
         .eq('user_id', user.id)
         .is('deleted_at', null)
         .limit(1)
-        .single();
+        .maybeSingle();
 
       await supabase.from('consent_log').insert(
         consents.map(c => ({

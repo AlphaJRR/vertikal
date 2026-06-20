@@ -43,10 +43,19 @@ export default function AttendeeJoinScreen() {
   useEffect(() => {
     if (!token) { setError('Invalid QR code.'); setResolving(false); return; }
 
-    supabase.from('events').select('*').eq('qr_token', token).single()
+    supabase
+      .from('events')
+      .select('id, name, event_date, event_type, qr_token')
+      .eq('qr_token', token)
+      .maybeSingle()
       .then(({ data, error: err }) => {
-        if (err || !data) { setError('Event not found. The QR may be expired.'); }
-        else setEvent(data as AVAEvent);
+        if (err) {
+          setError('Unable to load event. Please check your connection and try again.');
+        } else if (!data) {
+          setError('Event not found. Check that you scanned the right QR code.');
+        } else {
+          setEvent(data as AVAEvent);
+        }
         setResolving(false);
       });
   }, [token]);

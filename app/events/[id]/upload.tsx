@@ -33,13 +33,6 @@ export default function UploadScreen() {
   const { event }  = useEvent(id ?? '');
   const { photos, refresh } = useEventPhotos(id ?? '');
 
-  if (guardLoading || !isOperator) {
-    return (
-      <View style={[styles.root, { paddingTop: insets.top, alignItems: 'center', justifyContent: 'center' }]}>
-        <ActivityIndicator color="#00BFFF" />
-      </View>
-    );
-  }
   const { pending, uploading, process } = useUploadQueue();
   const { pickAndEnqueue, picking }     = useBatchPicker(id ?? '', () => {
     void process();
@@ -52,6 +45,14 @@ export default function UploadScreen() {
     const timer = setInterval(() => void refresh(), 4000);
     return () => clearInterval(timer);
   }, [uploading, pending, refresh]);
+
+  if (guardLoading || !isOperator) {
+    return (
+      <View style={[styles.root, { paddingTop: insets.top, alignItems: 'center', justifyContent: 'center' }]}>
+        <ActivityIndicator color="#00BFFF" />
+      </View>
+    );
+  }
 
   const handlePick = async () => {
     const count = await pickAndEnqueue();

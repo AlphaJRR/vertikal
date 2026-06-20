@@ -85,7 +85,21 @@ export default function RedeemScreen() {
 
       // data is an array of rows — take the first
       const row = Array.isArray(data) ? (data[0] as RedeemResult) : (data as RedeemResult);
-      setSuccess(row);
+
+      // Check if this attendee has given photo consent for this specific event.
+      // A returning user with profile-level tos_accepted_at can skip /consent on
+      // subsequent redeems, bypassing per-event photo release. Always check.
+      const { data: attendeeData } = await supabase
+        .from('attendees')
+        .select('photo_consent_at')
+        .eq('id', row.attendee_id)
+        .single();
+
+      if (!attendeeData?.photo_consent_at) {
+        router.replace({ pathname: '/consent', params: { redirectTo: '/gallery' } } as never);
+      } else {
+        setSuccess(row);
+      }
     } catch (err) {
       console.error('[redeem] unexpected error:', err);
       setError('Something went wrong. Please try again.');

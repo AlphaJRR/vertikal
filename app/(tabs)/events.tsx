@@ -140,22 +140,29 @@ function AttendeeHome({ router, insets }: { router: ReturnType<typeof useRouter>
   const [loadingGalleries, setLoadingGalleries] = useState(true);
 
   useEffect(() => {
-    supabase
-      .from('attendees')
-      .select('*, events!inner(name)')
-      .not('user_id', 'is', null)
-      .is('deleted_at', null)
-      .then(({ data }) => {
-        if (data) {
-          setUnlockedEvents(
-            (data as unknown as Array<Attendee & { events: { name: string } }>).map(row => ({
-              attendee:  row as unknown as Attendee,
-              eventName: row.events.name,
-            })),
-          );
-        }
-        setLoadingGalleries(false);
-      });
+    const load = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      const userId = user?.id ?? '';
+      if (!userId) { setLoadingGalleries(false); return; }
+
+      const { data } = await supabase
+        .from('attendees')
+        .select('*, events!inner(name)')
+        .eq('user_id', userId)
+        .is('deleted_at', null);
+
+      if (data) {
+        setUnlockedEvents(
+          (data as unknown as Array<Attendee & { events: { name: string } }>).map(row => ({
+            attendee:  row as unknown as Attendee,
+            eventName: row.events.name,
+          })),
+        );
+      }
+      setLoadingGalleries(false);
+    };
+
+    void load();
   }, []);
 
   return (
