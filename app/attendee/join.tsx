@@ -27,7 +27,14 @@ import { Ionicons } from '@expo/vector-icons';
 import { brandColors, brandFonts } from '@/constants/theme';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/contexts/AuthContext';
-import type { AVAEvent } from '@/types/events';
+
+type PublicEventInfo = {
+  id: string;
+  name: string;
+  cover_image_url: string | null;
+  event_date: string | null;
+  status: string;
+};
 
 export default function AttendeeJoinScreen() {
   const { token }   = useLocalSearchParams<{ token: string }>();
@@ -35,7 +42,7 @@ export default function AttendeeJoinScreen() {
   const insets      = useSafeAreaInsets();
   const { session } = useAuth();
 
-  const [event,     setEvent]     = useState<AVAEvent | null>(null);
+  const [event,     setEvent]     = useState<PublicEventInfo | null>(null);
   const [resolving, setResolving] = useState(true);
   const [error,     setError]     = useState('');
 
@@ -44,17 +51,17 @@ export default function AttendeeJoinScreen() {
     if (!token) { setError('Invalid QR code.'); setResolving(false); return; }
 
     supabase
-      .from('events')
-      .select('id, name, event_date, event_type, qr_token')
-      .eq('qr_token', token)
-      .maybeSingle()
+      .rpc('get_event_public', { p_qr_token: token })
       .then(({ data, error: err }) => {
         if (err) {
           setError('Unable to load event. Please check your connection and try again.');
-        } else if (!data) {
-          setError('Event not found. Check that you scanned the right QR code.');
         } else {
-          setEvent(data as AVAEvent);
+          const row = Array.isArray(data) ? (data as PublicEventInfo[])[0] : null;
+          if (!row) {
+            setError('Event not found. Check that you scanned the right QR code.');
+          } else {
+            setEvent(row);
+          }
         }
         setResolving(false);
       });
@@ -124,7 +131,7 @@ export default function AttendeeJoinScreen() {
         <Ionicons name="camera-outline" size={36} color="#00BFFF" />
         <Text style={styles.eventName}>{event?.name}</Text>
         {dateLabel        && <Text style={styles.eventMeta}>{dateLabel}</Text>}
-        {event?.event_type && <Text style={styles.eventMeta}>{event.event_type}</Text>}
+        {event?.status && <Text style={styles.eventMeta}>{event.status}</Text>}
       </View>
 
       <Text style={styles.headline}>You're almost in</Text>
