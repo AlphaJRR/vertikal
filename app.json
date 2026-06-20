@@ -19,6 +19,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.alphavisualartists.app",
+      "buildNumber": "13",
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "Access photos to upload event images.",
         "NSPhotoLibraryAddUsageDescription": "Save your event photos to your library.",
