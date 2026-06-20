@@ -2,7 +2,7 @@
   "expo": {
     "name": "Alpha Visual Artists",
     "slug": "alpha-visual-artists",
-    "version": "1.0.4",
+    "version": "1.30.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "scheme": "ava",
@@ -35,7 +35,7 @@
           }
         }
       },
-      "buildNumber": "11"
+      "buildNumber": "1"
     },
     "android": {
       "package": "com.alphavisualartists.app",
