@@ -21,6 +21,22 @@ type AuthMode = "password" | "otp";
 type OtpStep = "email" | "code";
 type ScreenIntent = "signIn" | "signUp";
 
+// ── App Review demo accounts ──────────────────────────────────────────────────
+// These credentials are for Apple App Review only. The same password appears in
+// App Store Connect → App Review Information. Not real user data.
+const DEMO_ACCOUNTS = [
+  {
+    role:  "Operator (photographer)",
+    email: "reviewer@alphavisualartists.com",
+    note:  "Can create events, upload photos, assign galleries.",
+  },
+  {
+    role:  "Standard user (attendee)",
+    email: "reviewer.attendee@alphavisualartists.com",
+    note:  "Redeem code: DEMO01  →  opens pre-assigned gallery.",
+  },
+] as const;
+
 const MIN_PASSWORD_LENGTH = 8;
 
 export default function SignInScreen() {
@@ -35,6 +51,7 @@ export default function SignInScreen() {
   const [busy, setBusy] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [infoMessage, setInfoMessage] = useState<string | null>(null);
+  const [showDemoPanel, setShowDemoPanel] = useState(false);
 
   const normalizedEmail = email.trim().toLowerCase();
 
@@ -435,6 +452,61 @@ export default function SignInScreen() {
       )}
 
       {errorMessage ? <Text style={styles.error}>{errorMessage}</Text> : null}
+
+      {/* ── App Review demo accounts panel ──────────────────────────────── */}
+      <Pressable
+        onPress={() => setShowDemoPanel(v => !v)}
+        style={demoStyles.toggle}
+        hitSlop={10}
+      >
+        <Ionicons name="information-circle-outline" size={15} color={brandColors.mutedText} />
+        <Text style={demoStyles.toggleText}>App Review demo accounts</Text>
+        <Ionicons
+          name={showDemoPanel ? "chevron-up" : "chevron-down"}
+          size={13}
+          color={brandColors.mutedText}
+        />
+      </Pressable>
+
+      {showDemoPanel && (
+        <View style={demoStyles.panel}>
+          <Text style={demoStyles.panelTitle}>App Review — Demo Credentials</Text>
+          <Text style={demoStyles.panelSub}>
+            Password for both accounts: see App Review Information in App Store Connect.
+          </Text>
+
+          {DEMO_ACCOUNTS.map(account => (
+            <Pressable
+              key={account.email}
+              style={demoStyles.accountRow}
+              onPress={() => {
+                setEmail(account.email);
+                setMode("password");
+                setIntent("signIn");
+                setShowDemoPanel(false);
+              }}
+              disabled={busy}
+            >
+              <View style={demoStyles.accountInfo}>
+                <Text style={demoStyles.accountRole}>{account.role}</Text>
+                <Text style={demoStyles.accountEmail}>{account.email}</Text>
+                <Text style={demoStyles.accountNote}>{account.note}</Text>
+              </View>
+              <View style={demoStyles.prefillBtn}>
+                <Text style={demoStyles.prefillBtnText}>Pre-fill</Text>
+              </View>
+            </Pressable>
+          ))}
+
+          <View style={demoStyles.codeRow}>
+            <Ionicons name="key-outline" size={14} color="#00BFFF" />
+            <Text style={demoStyles.codeText}>
+              Attendee gallery code: <Text style={demoStyles.codeBold}>DEMO01</Text>
+              {"\n"}Enter this on the "Enter my code" screen after signing in as the attendee.
+            </Text>
+          </View>
+        </View>
+      )}
     </KeyboardAvoidingView>
   );
 }
@@ -575,5 +647,106 @@ const styles = StyleSheet.create({
     color: brandColors.alphaRed,
     marginTop: 16,
     lineHeight: 18,
+  },
+});
+
+const demoStyles = StyleSheet.create({
+  toggle: {
+    flexDirection:  "row",
+    alignItems:     "center",
+    gap:            6,
+    marginTop:      24,
+    paddingVertical: 8,
+    opacity:        0.55,
+  },
+  toggleText: {
+    fontFamily: brandFonts.mono,
+    fontSize:   10,
+    letterSpacing: 1,
+    textTransform: "uppercase",
+    color:      brandColors.mutedText,
+    flex:       1,
+  },
+  panel: {
+    backgroundColor: "rgba(255,255,255,0.04)",
+    borderWidth:     1,
+    borderColor:     "rgba(255,255,255,0.1)",
+    borderRadius:    12,
+    padding:         16,
+    gap:             12,
+    marginTop:       4,
+  },
+  panelTitle: {
+    fontFamily: brandFonts.bodyMedium,
+    fontSize:   13,
+    color:      "#fff",
+    letterSpacing: 0.2,
+  },
+  panelSub: {
+    fontFamily: brandFonts.body,
+    fontSize:   11,
+    lineHeight: 16,
+    color:      brandColors.mutedText,
+  },
+  accountRow: {
+    flexDirection:   "row",
+    alignItems:      "center",
+    gap:             12,
+    backgroundColor: "rgba(255,255,255,0.04)",
+    borderRadius:    8,
+    padding:         12,
+  },
+  accountInfo: { flex: 1, gap: 2 },
+  accountRole: {
+    fontFamily: brandFonts.mono,
+    fontSize:   9,
+    letterSpacing: 1,
+    textTransform: "uppercase",
+    color:      "#00BFFF",
+  },
+  accountEmail: {
+    fontFamily: brandFonts.bodyMedium,
+    fontSize:   13,
+    color:      "#fff",
+  },
+  accountNote: {
+    fontFamily: brandFonts.body,
+    fontSize:   11,
+    color:      brandColors.mutedText,
+    lineHeight: 15,
+  },
+  prefillBtn: {
+    backgroundColor: "rgba(0,191,255,0.15)",
+    borderRadius:    6,
+    paddingVertical: 6,
+    paddingHorizontal: 10,
+  },
+  prefillBtnText: {
+    fontFamily: brandFonts.mono,
+    fontSize:   10,
+    letterSpacing: 0.5,
+    color:      "#00BFFF",
+    textTransform: "uppercase",
+  },
+  codeRow: {
+    flexDirection:   "row",
+    gap:             8,
+    alignItems:      "flex-start",
+    backgroundColor: "rgba(0,191,255,0.06)",
+    borderRadius:    8,
+    padding:         10,
+  },
+  codeText: {
+    fontFamily: brandFonts.body,
+    fontSize:   12,
+    lineHeight: 18,
+    color:      brandColors.subtleText,
+    flex:       1,
+  },
+  codeBold: {
+    fontFamily: brandFonts.mono,
+    fontSize:   13,
+    color:      "#00BFFF",
+    letterSpacing: 2,
   },
 });
