@@ -19,7 +19,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.alphavisualartists.app",
-      "buildNumber": "25",
+      "buildNumber": "27",
       "associatedDomains": [
         "applinks:alphavisualartists.com"
       ],
@@ -101,7 +101,8 @@
         {
           "color": "#0a0a0a"
         }
-      ]
+      ],
+      "react-native-purchases"
     ],
     "experiments": {
       "typedRoutes": true

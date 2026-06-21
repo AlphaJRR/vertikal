@@ -26,6 +26,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import { AppIntroVideo } from "@/components/AppIntroVideo";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { PurchasesBootstrap } from "@/components/PurchasesBootstrap";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { hydrateDemoMode } from "@/lib/demoMode";
 import { supabase } from "@/lib/supabase";
@@ -317,6 +318,7 @@ export default function RootLayout() {
       <ErrorBoundary>
         <QueryClientProvider client={queryClient}>
           <AuthProvider>
+            <PurchasesBootstrap />
             <GestureHandlerRootView style={{ flex: 1 }}>
               <KeyboardProvider>
                 {introGate === "loading" ? (

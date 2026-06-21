@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import {
+  Alert,
   Linking,
   Platform,
   Pressable,
@@ -12,14 +13,15 @@ import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter, type Href } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { FREE_LAUNCH } from "../../constants/proAccess";
 import { useAuth } from "../../contexts/AuthContext";
+import { useAvaPro } from "../../hooks/useAvaPro";
 import { useProjects } from "../../hooks/useProjects";
+import { hasProEntitlement, restorePurchases } from "../../lib/purchases";
 
 // TODO: Google + SIWA require native build — implement in next version
 // Needs: expo-apple-authentication, @react-native-google-signin/google-signin
 // JR to enable Apple Sign-In capability in Xcode + create Google OAuth client
-
-const FREE_LAUNCH = true;
 
 // ─── Brand tokens ─────────────────────────────────────────────────────────────
 const C = {
@@ -108,7 +110,9 @@ export default function MoreScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const { user } = useAuth();
+  const { isPro, refresh } = useAvaPro();
   const { projects, syncStatus, lastSyncedAt } = useProjects();
+  const [restoring, setRestoring] = useState(false);
 
   const displayName = user?.user_metadata?.full_name as string | undefined;
   const email = user?.email ?? null;
@@ -121,10 +125,35 @@ export default function MoreScreen() {
     );
   };
 
-  const restorePurchases = () => {
-    if (Platform.OS === "ios") {
-      // Stub — requires native IAP module (expo-in-app-purchases or RevenueCat)
-      console.log("[MoreScreen] restorePurchases: native IAP not yet installed");
+  const handleRestorePurchases = async () => {
+    if (Platform.OS !== "ios") {
+      Alert.alert(
+        "Restore unavailable",
+        "Restore Purchases is only available on iOS.",
+      );
+      return;
+    }
+
+    setRestoring(true);
+    try {
+      const info = await restorePurchases();
+      refresh();
+      if (hasProEntitlement(info)) {
+        Alert.alert("Restored", "Your AVA Pro subscription has been restored.");
+      } else {
+        Alert.alert(
+          "No subscription found",
+          "We could not find an active AVA Pro subscription for this Apple ID.",
+        );
+      }
+    } catch (error) {
+      console.error("[MoreScreen] restorePurchases failed:", error);
+      Alert.alert(
+        "Restore failed",
+        "We could not restore purchases. Please try again.",
+      );
+    } finally {
+      setRestoring(false);
     }
   };
 
@@ -170,18 +199,18 @@ export default function MoreScreen() {
             <View style={s.card}>
               <Row
                 label="Current Plan"
-                right={<Pill label="FREE" />}
+                right={<Pill label={isPro ? "PRO" : "FREE"} />}
                 showChevron={false}
                 showHairline={false}
               />
               <Row
                 label="AVA Pro"
-                right={<Pill label="Subscribe in app" />}
+                right={<Pill label={isPro ? "Active" : "Subscribe in app"} dim={isPro} />}
                 showChevron={false}
               />
               <Row
-                label="Restore Purchases"
-                onPress={restorePurchases}
+                label={restoring ? "Restoring…" : "Restore Purchases"}
+                onPress={restoring ? undefined : () => void handleRestorePurchases()}
               />
             </View>
           </>

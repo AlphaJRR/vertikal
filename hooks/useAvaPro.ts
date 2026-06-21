@@ -2,6 +2,11 @@ import { useCallback, useEffect, useState } from "react";
 import { FREE_LAUNCH } from "../constants/proAccess";
 import { useAuth } from "../contexts/AuthContext";
 import { useDemoMode } from "../lib/demoMode";
+import {
+  addCustomerInfoListener,
+  getCustomerInfo,
+  hasProEntitlement,
+} from "../lib/purchases";
 import { supabase } from "../lib/supabase";
 
 export type AvaProStatus = "loading" | "free" | "pro";
@@ -73,9 +78,18 @@ export function useAvaPro() {
           return;
         }
 
-        if (!cancelled) {
-          setStatus(tierIsPro(profile?.subscription_tier) ? "pro" : "free");
+        if (tierIsPro(profile?.subscription_tier)) {
+          if (!cancelled) setStatus("pro");
+          return;
         }
+
+        const customerInfo = await getCustomerInfo();
+        if (customerInfo && hasProEntitlement(customerInfo)) {
+          if (!cancelled) setStatus("pro");
+          return;
+        }
+
+        if (!cancelled) setStatus("free");
       } catch (error) {
         console.error("[useAvaPro] resolvePro failed:", error);
         if (!cancelled) setStatus("free");
@@ -93,6 +107,16 @@ export function useAvaPro() {
       authListener.subscription.unsubscribe();
     };
   }, [user, authLoading, demo, refreshKey]);
+
+  useEffect(() => {
+    if (FREE_LAUNCH || demo) return;
+
+    const remove = addCustomerInfoListener(() => {
+      refresh();
+    });
+
+    return remove;
+  }, [demo, refresh]);
 
   if (FREE_LAUNCH || demo) {
     return {
