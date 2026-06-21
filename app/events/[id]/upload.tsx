@@ -44,7 +44,7 @@ export default function UploadScreen() {
     await refresh();
   }, [refresh]);
 
-  const { pickAndEnqueue, picking } = useBatchPicker(id ?? '', () => {
+  const { pickPhotos, pickVideos, picking } = useBatchPicker(id ?? '', () => {
     void process(id).then(() => refreshPhotos());
   });
 
@@ -69,11 +69,20 @@ export default function UploadScreen() {
     );
   }
 
-  const handlePick = async () => {
+  const handlePickPhotos = async () => {
     if (id && failed > 0) {
       await clearForEvent(id);
     }
-    const count = await pickAndEnqueue();
+    const count = await pickPhotos();
+    if (count === 0) return;
+    void process(id).then(() => refreshPhotos());
+  };
+
+  const handlePickVideos = async () => {
+    if (id && failed > 0) {
+      await clearForEvent(id);
+    }
+    const count = await pickVideos();
     if (count === 0) return;
     void process(id).then(() => refreshPhotos());
   };
@@ -150,30 +159,40 @@ export default function UploadScreen() {
               <Text style={styles.emptyBody}>
                 {pending > 0 || uploading
                   ? 'Thumbnails appear here as each photo or video finishes processing.'
-                  : 'Tap the button below to pick photos or videos from your camera roll.'}
+                  : 'Tap a button below to add photos or videos from your camera roll.'}
               </Text>
             </View>
           ) : null
         }
       />
 
-      {/* Floating pick button */}
+      {/* Floating pick buttons — separate photo/video pickers avoid iOS multi-select crash */}
       <View style={[styles.fabContainer, { bottom: insets.bottom + 24 }]}>
         <Pressable
-          style={[styles.fab, (picking || uploading) && styles.fabDisabled]}
-          onPress={() => void handlePick()}
+          style={[styles.fab, styles.fabHalf, (picking || uploading) && styles.fabDisabled]}
+          onPress={() => void handlePickPhotos()}
           disabled={picking || uploading}
           accessibilityRole="button"
-          accessibilityLabel="Select photos and videos from camera roll"
+          accessibilityLabel="Select photos from camera roll"
         >
           {picking ? (
             <ActivityIndicator color="#000" />
           ) : (
             <>
               <Ionicons name="images-outline" size={20} color="#000" />
-              <Text style={styles.fabText}>Select photos & videos</Text>
+              <Text style={styles.fabText}>Add photos</Text>
             </>
           )}
+        </Pressable>
+        <Pressable
+          style={[styles.fab, styles.fabHalf, styles.fabVideo, (picking || uploading) && styles.fabDisabled]}
+          onPress={() => void handlePickVideos()}
+          disabled={picking || uploading}
+          accessibilityRole="button"
+          accessibilityLabel="Select videos from camera roll"
+        >
+          <Ionicons name="videocam-outline" size={20} color="#000" />
+          <Text style={styles.fabText}>Add videos</Text>
         </Pressable>
       </View>
     </View>
@@ -225,13 +244,15 @@ const styles = StyleSheet.create({
     lineHeight: 20, color: brandColors.subtleText, textAlign: 'center',
   },
   fabContainer: {
-    position: 'absolute', left: 24, right: 24, alignItems: 'center',
+    position: 'absolute', left: 16, right: 16,
+    flexDirection: 'row', gap: 10,
   },
   fab: {
-    flexDirection: 'row', alignItems: 'center', gap: 10,
+    flex: 1,
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8,
     backgroundColor: '#00d4ff',
     borderRadius: 14,
-    paddingVertical: 16, paddingHorizontal: 32,
+    paddingVertical: 16, paddingHorizontal: 12,
     minHeight: 52,
     shadowColor: '#00d4ff',
     shadowOpacity: 0.4,
@@ -239,6 +260,8 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     elevation: 8,
   },
+  fabHalf: { flex: 1 },
+  fabVideo: { backgroundColor: '#7dd3fc' },
   fabDisabled: { opacity: 0.6 },
   fabText: {
     color: '#000', fontSize: 14,

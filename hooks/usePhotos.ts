@@ -14,14 +14,13 @@
  */
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { AppState } from 'react-native';
+import { Alert, AppState, Platform } from 'react-native';
 import * as FileSystem from 'expo-file-system/legacy';
 import * as ImagePicker from 'expo-image-picker';
 import { supabase } from '@/lib/supabase';
 import { UploadQueue } from '@/lib/uploadQueue';
 import {
   cacheExtension,
-  contentTypeForUpload,
   defaultFilename,
   mediaKindFromFilename,
   type EventMediaKind,
@@ -136,9 +135,12 @@ export function useEventPhotos(
 
 // ─── useBatchPicker ──────────────────────────────────────────────────────────
 
+type PickerMode = 'photo' | 'video';
+
 interface UseBatchPickerReturn {
-  pickAndEnqueue: () => Promise<number>;
-  picking:        boolean;
+  pickPhotos: () => Promise<number>;
+  pickVideos: () => Promise<number>;
+  picking:    boolean;
 }
 
 export function useBatchPicker(
@@ -147,47 +149,58 @@ export function useBatchPicker(
 ): UseBatchPickerReturn {
   const [picking, setPicking] = useState(false);
 
-  const pickAndEnqueue = useCallback(async (): Promise<number> => {
+  const pickAndEnqueue = useCallback(async (mode: PickerMode): Promise<number> => {
     setPicking(true);
     try {
       const perm = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (!perm.granted) return 0;
+      if (!perm.granted) {
+        Alert.alert(
+          'Permission needed',
+          'Allow photo library access to upload event media.',
+        );
+        return 0;
+      }
 
-      const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ['images', 'videos'],
-        allowsMultipleSelection: true,
-        quality: 0.92,
-        exif: false,
-        videoExportPreset: ImagePicker.VideoExportPreset.MediumQuality,
-        preferredAssetRepresentationMode:
-          ImagePicker.UIImagePickerPreferredAssetRepresentationMode.Compatible,
-      });
+      const result = await ImagePicker.launchImageLibraryAsync(
+        pickerOptionsForMode(mode),
+      );
 
       if (result.canceled || result.assets.length === 0) return 0;
 
       const items: UploadQueueItem[] = [];
       for (const asset of result.assets) {
-        const itemId      = randomUUID();
-        const storagePath = `${eventId}/${itemId}/original`;
-        const mediaKind: EventMediaKind =
-          asset.type === 'video' || asset.type === 'pairedVideo'
+        try {
+          const itemId      = randomUUID();
+          const storagePath = `${eventId}/${itemId}/original`;
+          const mediaKind: EventMediaKind = mode === 'video'
             ? 'video'
             : mediaKindFromFilename(asset.fileName ?? asset.uri);
-        const filename =
-          asset.fileName?.replace(/\.heic$/i, '.jpg')
-          ?? defaultFilename(mediaKind, itemId);
-        const localUri    = await persistPickerUri(asset.uri, itemId, mediaKind);
-        items.push({
-          id:          itemId,
-          eventId,
-          localUri,
-          storagePath,
-          filename,
-          mediaKind,
-          retries:     0,
-          status:      'pending' as const,
-          addedAt:     Date.now(),
-        });
+          const filename =
+            asset.fileName?.replace(/\.heic$/i, '.jpg')
+            ?? defaultFilename(mediaKind, itemId);
+          const localUri = await persistPickerUri(asset.uri, itemId, mediaKind);
+          items.push({
+            id:          itemId,
+            eventId,
+            localUri,
+            storagePath,
+            filename,
+            mediaKind,
+            retries:     0,
+            status:      'pending' as const,
+            addedAt:     Date.now(),
+          });
+        } catch (assetErr) {
+          console.error('[useBatchPicker] asset persist failed:', assetErr);
+        }
+      }
+
+      if (items.length === 0) {
+        Alert.alert(
+          'Could not add media',
+          'Selected files could not be prepared for upload. Try again or pick fewer items.',
+        );
+        return 0;
       }
 
       await UploadQueue.enqueue(items);
@@ -195,13 +208,46 @@ export function useBatchPicker(
       return items.length;
     } catch (err) {
       console.error('[useBatchPicker] error:', err);
+      const message = err instanceof Error ? err.message : 'Could not open photo library.';
+      Alert.alert('Upload failed', message);
       return 0;
     } finally {
       setPicking(false);
     }
   }, [eventId, onEnqueued]);
 
-  return { pickAndEnqueue, picking };
+  const pickPhotos = useCallback(() => pickAndEnqueue('photo'), [pickAndEnqueue]);
+  const pickVideos = useCallback(() => pickAndEnqueue('video'), [pickAndEnqueue]);
+
+  return { pickPhotos, pickVideos, picking };
+}
+
+/** iOS crashes when multi-select mixes images + videos — use separate pickers. */
+function pickerOptionsForMode(mode: PickerMode): ImagePicker.ImagePickerOptions {
+  const iosAssetMode = Platform.OS === 'ios'
+    ? {
+        preferredAssetRepresentationMode:
+          ImagePicker.UIImagePickerPreferredAssetRepresentationMode.Current,
+      }
+    : {};
+
+  if (mode === 'video') {
+    return {
+      mediaTypes: ['videos'],
+      allowsMultipleSelection: true,
+      exif: false,
+      videoExportPreset: ImagePicker.VideoExportPreset.Passthrough,
+      ...iosAssetMode,
+    };
+  }
+
+  return {
+    mediaTypes: ['images'],
+    allowsMultipleSelection: true,
+    quality: 0.92,
+    exif: false,
+    ...iosAssetMode,
+  };
 }
 
 // ─── helpers ─────────────────────────────────────────────────────────────────

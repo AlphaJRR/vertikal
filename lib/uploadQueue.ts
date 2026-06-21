@@ -21,6 +21,7 @@ import type { UploadQueueItem } from '../types/events';
 
 const QUEUE_KEY     = 'ava:photo_upload_queue_v2';
 const ORIGINALS     = 'event-originals';
+const SUPABASE_URL  = process.env.EXPO_PUBLIC_SUPABASE_URL ?? '';
 const MAX_RETRIES   = 3;
 const RETRY_BASE_MS = 2000;
 const READ_TIMEOUT_MS    = 45_000;
@@ -241,34 +242,47 @@ async function uploadOne(item: UploadQueueItem): Promise<UploadAttempt> {
 
     const fresh = normalizeQueueItem(item);
     const mediaKind = fresh.mediaKind;
+    const contentType = contentTypeForUpload(fresh.filename ?? fresh.localUri, mediaKind);
     const uploadTimeout = mediaKind === 'video' ? VIDEO_UPLOAD_TIMEOUT_MS : UPLOAD_TIMEOUT_MS;
 
-    const { bytes, contentType } = await withTimeout(
-      readUploadBytes(fresh.localUri, fresh.filename, mediaKind),
-      READ_TIMEOUT_MS,
-      mediaKind === 'video' ? 'Reading video' : 'Reading photo',
-    );
-
-    const { error: uploadError } = await withTimeout(
-      supabase.storage
-        .from(ORIGINALS)
-        .upload(fresh.storagePath, bytes, {
-          contentType,
-          upsert: true,
-        }),
-      uploadTimeout,
-      'Storage upload',
-    );
-
-    if (uploadError) {
-      console.error('[UploadQueue] storage upload failed:', uploadError.message, uploadError);
-      if (uploadError.message?.includes('row-level security')) {
-        return {
-          ok: false,
-          error: 'Storage blocked by server policy. Apply migration 011 in Supabase SQL editor, then retry.',
-        };
+    if (mediaKind === 'video') {
+      const videoAttempt = await withTimeout(
+        uploadVideoToStorage(fresh.localUri, fresh.storagePath, contentType, session.access_token),
+        uploadTimeout,
+        'Storage upload',
+      );
+      if (!videoAttempt.ok) {
+        console.error('[UploadQueue] video storage upload failed:', videoAttempt.error);
+        return videoAttempt;
       }
-      return { ok: false, error: uploadError.message || 'Storage upload failed' };
+    } else {
+      const { bytes, contentType: resolvedType } = await withTimeout(
+        readPhotoBytes(fresh.localUri, fresh.filename, mediaKind),
+        READ_TIMEOUT_MS,
+        'Reading photo',
+      );
+
+      const { error: uploadError } = await withTimeout(
+        supabase.storage
+          .from(ORIGINALS)
+          .upload(fresh.storagePath, bytes, {
+            contentType: resolvedType,
+            upsert: true,
+          }),
+        uploadTimeout,
+        'Storage upload',
+      );
+
+      if (uploadError) {
+        console.error('[UploadQueue] storage upload failed:', uploadError.message, uploadError);
+        if (uploadError.message?.includes('row-level security')) {
+          return {
+            ok: false,
+            error: 'Storage blocked by server policy. Apply migration 011 in Supabase SQL editor, then retry.',
+          };
+        }
+        return { ok: false, error: uploadError.message || 'Storage upload failed' };
+      }
     }
 
     const { data: fnData, error: fnError } = await withTimeout(
@@ -321,7 +335,7 @@ async function uploadOne(item: UploadQueueItem): Promise<UploadAttempt> {
   }
 }
 
-async function readUploadBytes(
+async function readPhotoBytes(
   localUri: string,
   filename: string | null,
   mediaKind: EventMediaKind,
@@ -331,11 +345,7 @@ async function readUploadBytes(
   try {
     const info = await FileSystem.getInfoAsync(localUri);
     if (!info.exists) {
-      throw new Error(
-        mediaKind === 'video'
-          ? 'Local video missing — re-select from camera roll.'
-          : 'Local photo missing — re-select from camera roll.',
-      );
+      throw new Error('Local photo missing — re-select from camera roll.');
     }
   } catch (err) {
     if (err instanceof Error && err.message.includes('re-select')) throw err;
@@ -369,6 +379,56 @@ async function readUploadBytes(
   } catch (fsErr) {
     const msg = fsErr instanceof Error ? fsErr.message : 'Could not read local photo.';
     throw new Error(msg);
+  }
+}
+
+/** Stream video from disk — avoids loading multi-GB files into JS memory. */
+async function uploadVideoToStorage(
+  localUri: string,
+  storagePath: string,
+  contentType: string,
+  accessToken: string,
+): Promise<UploadAttempt> {
+  if (!SUPABASE_URL) {
+    return { ok: false, error: 'Supabase URL not configured.' };
+  }
+
+  try {
+    const info = await FileSystem.getInfoAsync(localUri);
+    if (!info.exists) {
+      return { ok: false, error: 'Local video missing — re-select from camera roll.' };
+    }
+  } catch (err) {
+    console.warn('[UploadQueue] video file info check failed:', err);
+  }
+
+  const url = `${SUPABASE_URL}/storage/v1/object/${ORIGINALS}/${storagePath}`;
+  try {
+    const result = await FileSystem.uploadAsync(url, localUri, {
+      httpMethod: 'POST',
+      uploadType: FileSystem.FileSystemUploadType.BINARY_CONTENT,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': contentType,
+        'x-upsert': 'true',
+      },
+    });
+
+    if (result.status >= 200 && result.status < 300) {
+      return { ok: true };
+    }
+
+    let detail = result.body;
+    try {
+      const parsed = JSON.parse(result.body) as { message?: string; error?: string };
+      detail = parsed.message ?? parsed.error ?? result.body;
+    } catch {
+      // keep raw body
+    }
+    return { ok: false, error: detail || `Storage upload failed (${result.status})` };
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Video upload failed';
+    return { ok: false, error: message };
   }
 }
 
