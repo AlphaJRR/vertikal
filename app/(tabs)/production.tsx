@@ -28,9 +28,13 @@ import {
   View,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useLocalSearchParams } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as Haptics from "expo-haptics";
 import { Ionicons } from "@expo/vector-icons";
+
+import { ReminderButton } from "@/components/ReminderButton";
+import { cancelNoteReminder } from "@/lib/notify";
 
 type Segment = "pre" | "day" | "post";
 type Item    = { id: string; text: string; done: boolean };
@@ -96,15 +100,24 @@ const ADD_PLACEHOLDER: Record<Segment, string> = {
   post: "Add an edit task…",
 };
 
+const HIGHLIGHT_DURATION_MS = 3000;
+
 // ─────────────────────────────────────────────────────────────────────────────
 
 export default function ProductionScreen() {
   const insets = useSafeAreaInsets();
 
-  const [segment, setSegment] = useState<Segment>("pre");
-  const [data, setData] = useState<Record<Segment, Item[]>>({ pre: [], day: [], post: [] });
-  const [loaded, setLoaded] = useState<Record<Segment, boolean>>({ pre: false, day: false, post: false });
-  const [draft, setDraft] = useState("");
+  // Deep-link params injected by notification tap
+  const { phase: deepLinkPhase, highlightId } = useLocalSearchParams<{
+    phase?:       string;
+    highlightId?: string;
+  }>();
+
+  const [segment, setSegment]       = useState<Segment>("pre");
+  const [data, setData]             = useState<Record<Segment, Item[]>>({ pre: [], day: [], post: [] });
+  const [loaded, setLoaded]         = useState<Record<Segment, boolean>>({ pre: false, day: false, post: false });
+  const [draft, setDraft]           = useState("");
+  const [activeHighlight, setActiveHighlight] = useState<string | null>(null);
   const inputRef = useRef<TextInput>(null);
 
   const dismissKeyboard = useCallback(() => {
@@ -140,6 +153,20 @@ export default function ProductionScreen() {
     });
   }, [data, loaded]);
 
+  // Handle deep-link phase / highlight from notification tap
+  useEffect(() => {
+    if (deepLinkPhase && (["pre", "day", "post"] as string[]).includes(deepLinkPhase)) {
+      setSegment(deepLinkPhase as Segment);
+    }
+  }, [deepLinkPhase]);
+
+  useEffect(() => {
+    if (!highlightId) return;
+    setActiveHighlight(highlightId);
+    const timer = setTimeout(() => setActiveHighlight(null), HIGHLIGHT_DURATION_MS);
+    return () => clearTimeout(timer);
+  }, [highlightId]);
+
   const items    = data[segment];
   const remaining = useMemo(() => items.filter(i => !i.done).length, [items]);
   const total    = items.length;
@@ -169,6 +196,7 @@ export default function ProductionScreen() {
   const remove = (id: string) => {
     dismissKeyboard();
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(() => {});
+    void cancelNoteReminder(id);  // cancel any scheduled reminder for this item
     setData(d => ({ ...d, [segment]: d[segment].filter(i => i.id !== id) }));
   };
 
@@ -261,26 +289,40 @@ export default function ProductionScreen() {
               </View>
             ) : (
               <>
-                {items.map(item => (
-                  <View key={item.id} style={styles.row}>
-                    <Pressable
-                      onPress={() => toggle(item.id)}
-                      style={[styles.check, item.done && styles.checkDone]}
-                      hitSlop={8}
+                {items.map(item => {
+                  const highlighted = item.id === activeHighlight;
+                  return (
+                    <View
+                      key={item.id}
+                      style={[styles.row, highlighted && styles.rowHighlighted]}
                     >
-                      {item.done && <Ionicons name="checkmark" size={16} color="#000" />}
-                    </Pressable>
-                    <Text
-                      style={[styles.itemTxt, item.done && styles.itemTxtDone]}
-                      onPress={() => toggle(item.id)}
-                    >
-                      {item.text}
-                    </Text>
-                    <Pressable onPress={() => remove(item.id)} hitSlop={10}>
-                      <Ionicons name="close" size={20} color="#555" />
-                    </Pressable>
-                  </View>
-                ))}
+                      <Pressable
+                        onPress={() => toggle(item.id)}
+                        style={[styles.check, item.done && styles.checkDone]}
+                        hitSlop={8}
+                      >
+                        {item.done && <Ionicons name="checkmark" size={16} color="#000" />}
+                      </Pressable>
+                      <Text
+                        style={[styles.itemTxt, item.done && styles.itemTxtDone]}
+                        onPress={() => toggle(item.id)}
+                      >
+                        {item.text}
+                      </Text>
+
+                      {/* Reminder bell */}
+                      <ReminderButton
+                        itemId={item.id}
+                        phase={segment}
+                        itemText={item.text}
+                      />
+
+                      <Pressable onPress={() => remove(item.id)} hitSlop={10}>
+                        <Ionicons name="close" size={20} color="#555" />
+                      </Pressable>
+                    </View>
+                  );
+                })}
 
                 <View style={styles.actionsRow}>
                   {items.some(i => i.done) && (
@@ -373,6 +415,10 @@ const styles = StyleSheet.create({
     flexDirection: "row", alignItems: "center", gap: 12,
     paddingVertical: 14,
     borderBottomWidth: 1, borderBottomColor: "rgba(255,255,255,0.05)",
+  },
+  rowHighlighted: {
+    backgroundColor: "rgba(232,0,10,0.15)",
+    borderRadius: 8,
   },
   check:       { width: 24, height: 24, borderRadius: 6, borderWidth: 1.5, borderColor: "#444", alignItems: "center", justifyContent: "center" },
   checkDone:   { backgroundColor: "#00d4ff", borderColor: "#00d4ff" },

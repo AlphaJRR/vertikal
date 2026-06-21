@@ -19,7 +19,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.alphavisualartists.app",
-      "buildNumber": "13",
+      "buildNumber": "14",
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "Access photos to upload event images.",
         "NSPhotoLibraryAddUsageDescription": "Save your event photos to your library.",
@@ -75,6 +75,14 @@
       "expo-web-browser",
       "expo-video",
       "expo-updates",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icon.png",
+          "color": "#E8000A",
+          "sounds": []
+        }
+      ],
       [
         "expo-media-library",
         {

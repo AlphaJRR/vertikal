@@ -13,8 +13,9 @@ import {
 } from "@expo-google-fonts/space-grotesk";
 import { useFonts } from "expo-font";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import * as ExpoLinking from "expo-linking";
+import * as Notifications from "expo-notifications";
 import * as SplashScreen from "expo-splash-screen";
 import * as Updates from "expo-updates";
 import * as WebBrowser from "expo-web-browser";
@@ -108,6 +109,45 @@ function openInBrowser(url: string) {
 }
 
 function RootLayoutNav() {
+  const router = useRouter();
+
+  // Handle notification taps — warm start (app already open)
+  // and cold start (app launched via notification tap).
+  useEffect(() => {
+    const sub = Notifications.addNotificationResponseReceivedListener(response => {
+      const data = response.notification.request.content.data;
+      if (data?.kind === 'note-reminder') {
+        setTimeout(() => {
+          router.push({
+            pathname: '/(tabs)/production',
+            params: {
+              phase:       data.phase as string,
+              highlightId: data.itemId as string,
+            },
+          } as never);
+        }, 100);
+      }
+    });
+
+    // Cold start: app was launched by tapping a notification
+    Notifications.getLastNotificationResponseAsync().then(response => {
+      const data = response?.notification.request.content.data;
+      if (data?.kind === 'note-reminder') {
+        setTimeout(() => {
+          router.push({
+            pathname: '/(tabs)/production',
+            params: {
+              phase:       data.phase as string,
+              highlightId: data.itemId as string,
+            },
+          } as never);
+        }, 500);
+      }
+    }).catch(() => {});
+
+    return () => sub.remove();
+  }, [router]);
+
   return (
     <Stack screenOptions={{ headerBackTitle: "Back" }}>
       {/* ── Existing screens ───────────────────────────────────────── */}
