@@ -80,13 +80,27 @@ export function useUploadQueue(eventId?: string): UseUploadQueueReturn {
   useEffect(() => {
     void (async () => {
       await UploadQueue.recoverStuck();
+      // Stale failed items from prior sessions surface as lastError on screen open.
+      if (eventId) {
+        await UploadQueue.clearFailed(eventId);
+        await UploadQueue.clearDone();
+      }
       await refresh();
-      await process(eventId);
+
+      const actionable = await UploadQueue.getPending(eventId);
+      if (actionable.length > 0) {
+        await process(eventId);
+      }
     })();
 
     const handleAppState = (next: AppStateStatus) => {
       if (next === 'active') {
-        void process(eventId);
+        void (async () => {
+          const actionable = await UploadQueue.getPending(eventId);
+          if (actionable.length > 0) {
+            await process(eventId);
+          }
+        })();
       }
     };
 

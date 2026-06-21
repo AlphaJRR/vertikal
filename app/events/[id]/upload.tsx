@@ -1,6 +1,6 @@
 /**
  * Upload photos & videos for an event.
- * Batch-picks from camera roll → pre-inserts DB rows → queues uploads.
+ * Batch-picks from camera roll → queues uploads → process-photo edge fn inserts rows.
  * Background queue + retry handled by UploadQueue / useUploadQueue.
  */
 
@@ -13,39 +13,53 @@ import {
   Text,
   View,
 } from 'react-native';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { brandColors, brandFonts } from '@/constants/theme';
+import { useRouteParam } from '@/lib/routeParams';
 import { useEvent } from '@/hooks/useEvents';
 import { useEventPhotos, useBatchPicker } from '@/hooks/usePhotos';
 import { useUploadQueue } from '@/hooks/useUploadQueue';
-import { useOperatorPhotoPreviews } from '@/hooks/useOperatorPhotoPreviews';
 import { useOperatorGuard } from '@/hooks/useOperatorGuard';
 import { UploadProgressBar } from '@/components/events/UploadProgressBar';
+import { UploadErrorBoundary } from '@/components/events/UploadErrorBoundary';
 import { EventPhotoThumb } from '@/components/events/EventPhotoThumb';
 import type { EventPhoto } from '@/types/events';
 
 export default function UploadScreen() {
-  const { id }  = useLocalSearchParams<{ id: string }>();
+  return (
+    <UploadErrorBoundary>
+      <UploadScreenInner />
+    </UploadErrorBoundary>
+  );
+}
+
+function UploadScreenInner() {
+  const eventId = useRouteParam('id');
   const router  = useRouter();
   const insets  = useSafeAreaInsets();
   const { isOperator, loading: guardLoading } = useOperatorGuard();
-  const { event }  = useEvent(id ?? '');
+  const { event }  = useEvent(eventId);
   const { pending, failed, uploading, lastError, process, resetFailed, clearForEvent } =
-    useUploadQueue(id ?? '');
-  const { photos, refresh } = useEventPhotos(id ?? '', {
-    realtime: true,
+    useUploadQueue(eventId);
+  const { photos, error: photosError, refresh } = useEventPhotos(eventId, {
+    realtime: false,
     hasPendingUploads: pending > 0 || uploading,
   });
-  const { previewUrls } = useOperatorPhotoPreviews(photos);
+
+  useFocusEffect(
+    useCallback(() => {
+      void refresh();
+    }, [refresh]),
+  );
 
   const refreshPhotos = useCallback(async () => {
     await refresh();
   }, [refresh]);
 
-  const { pickPhotos, pickVideos, picking } = useBatchPicker(id ?? '', () => {
-    void process(id).then(() => refreshPhotos());
+  const { pickPhotos, pickVideos, picking } = useBatchPicker(eventId, () => {
+    void process(eventId).then(() => refreshPhotos());
   });
 
   // Refresh grid when uploads finish
@@ -57,9 +71,9 @@ export default function UploadScreen() {
   // Keep trying while items are still queued
   useEffect(() => {
     if (uploading || pending === 0) return;
-    const timer = setInterval(() => void process(id), 8000);
+    const timer = setInterval(() => void process(eventId), 8000);
     return () => clearInterval(timer);
-  }, [uploading, pending, process, id]);
+  }, [uploading, pending, process, eventId]);
 
   if (guardLoading || !isOperator) {
     return (
@@ -70,33 +84,32 @@ export default function UploadScreen() {
   }
 
   const handlePickPhotos = async () => {
-    if (id && failed > 0) {
-      await clearForEvent(id);
+    if (failed > 0) {
+      await clearForEvent(eventId);
     }
     const count = await pickPhotos();
     if (count === 0) return;
-    void process(id).then(() => refreshPhotos());
+    void process(eventId).then(() => refreshPhotos());
   };
 
   const handlePickVideos = async () => {
-    if (id && failed > 0) {
-      await clearForEvent(id);
+    if (failed > 0) {
+      await clearForEvent(eventId);
     }
     const count = await pickVideos();
     if (count === 0) return;
-    void process(id).then(() => refreshPhotos());
+    void process(eventId).then(() => refreshPhotos());
   };
 
   const handleRetry = async () => {
     if (failed > 0) {
-      await resetFailed(id);
+      await resetFailed(eventId);
     }
-    void process(id).then(() => refreshPhotos());
+    void process(eventId).then(() => refreshPhotos());
   };
 
   const handleClearQueue = async () => {
-    if (!id) return;
-    await clearForEvent(id);
+    await clearForEvent(eventId);
   };
 
   return (
@@ -119,6 +132,10 @@ export default function UploadScreen() {
         onRetry={handleRetry}
       />
 
+      {photosError ? (
+        <Text style={styles.photosError}>{photosError}</Text>
+      ) : null}
+
       {pending > 0 && !uploading ? (
         <Pressable style={styles.clearQueueBtn} onPress={() => void handleClearQueue()}>
           <Text style={styles.clearQueueText}>Clear stuck queue</Text>
@@ -140,7 +157,7 @@ export default function UploadScreen() {
         contentContainerStyle={[styles.grid, { paddingBottom: insets.bottom + 100 }]}
         renderItem={({ item }: { item: EventPhoto }) => (
           <View style={styles.cell}>
-            <EventPhotoThumb photo={item} previewUrl={previewUrls.get(item.id)} showReadyDot />
+            <EventPhotoThumb photo={item} showReadyDot />
           </View>
         )}
         ListEmptyComponent={
@@ -212,6 +229,14 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: brandFonts.display, fontSize: 28,
     color: '#fff', textTransform: 'uppercase',
+  },
+  photosError: {
+    fontFamily: brandFonts.body,
+    fontSize: 12,
+    color: '#fbbf24',
+    textAlign: 'center',
+    marginHorizontal: 24,
+    marginBottom: 8,
   },
   clearQueueBtn: {
     alignSelf: 'center',
