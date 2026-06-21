@@ -44,8 +44,8 @@ export default function EventDetailScreen() {
     setSharing(true);
     try {
       await Share.share({
-        message: `Tap to access your photos from ${event.name}: ${joinUrl(event.qr_token)}`,
-        title:   `${event.name} — Photo Gallery`,
+        message: `Tap to access your photos & videos from ${event.name}: ${joinUrl(event.qr_token)}`,
+        title:   `${event.name} — Event Gallery`,
       });
     } catch {
       // user dismissed share sheet
@@ -107,7 +107,7 @@ export default function EventDetailScreen() {
 
       {/* Stats row */}
       <View style={styles.statsRow}>
-        <Stat label="Photos" value={photos.length} />
+        <Stat label="Media" value={photos.length} />
         <Stat label="Ready"  value={readyPhotos}   accent />
       </View>
 
@@ -120,12 +120,12 @@ export default function EventDetailScreen() {
         />
         <ActionBtn
           icon="cloud-upload-outline"
-          label="Upload photos"
+          label="Upload photos & videos"
           onPress={() => router.push(`/events/${id}/upload` as never)}
         />
         <ActionBtn
           icon="people-outline"
-          label="Assign photos"
+          label="Assign photos & videos"
           onPress={() => router.push(`/events/${id}/assign` as never)}
         />
         <ActionBtn

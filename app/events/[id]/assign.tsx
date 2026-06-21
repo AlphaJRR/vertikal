@@ -1,5 +1,5 @@
 /**
- * Assign photos to attendees — photographer screen.
+ * Assign photos & videos to attendees — photographer screen.
  * Uses event_photos table (PRD migration 004).
  * Step 1: select a photo from the grid.
  * Step 2: search attendees by name → toggle assignment.
@@ -160,18 +160,18 @@ function AssignScreenInner() {
         <Pressable onPress={handleBack} hitSlop={12} style={styles.backRow}>
           <Ionicons name="chevron-back" size={22} color={brandColors.alphaRed} />
           <Text style={styles.backText}>
-            {step === 'assignAttendees' ? 'Photos' : (event?.name ?? 'Event')}
+            {step === 'assignAttendees' ? 'Media' : (event?.name ?? 'Event')}
           </Text>
         </Pressable>
         <Text style={styles.title}>
-          {step === 'assignAttendees' ? 'Assign to attendees' : 'Select a photo'}
+          {step === 'assignAttendees' ? 'Assign to attendees' : 'Select media'}
         </Text>
         <Text style={styles.subtitle}>
           {step === 'assignAttendees'
             ? 'Tap an attendee to grant or revoke access.'
             : photos.length > 0
-              ? `${photos.length} photo${photos.length !== 1 ? 's' : ''} — tap one to assign.`
-              : 'Tap a photo to choose who can see it.'}
+              ? `${photos.length} item${photos.length !== 1 ? 's' : ''} — tap one to assign.`
+              : 'Tap a photo or video to choose who can see it.'}
         </Text>
       </View>
 
@@ -187,7 +187,7 @@ function AssignScreenInner() {
         ) : photos.length === 0 ? (
           <View style={styles.centered}>
             <Ionicons name="images-outline" size={40} color={brandColors.mutedText} />
-            <Text style={styles.emptyText}>No photos yet. Upload photos first.</Text>
+            <Text style={styles.emptyText}>No media yet. Upload photos & videos first.</Text>
             <Pressable style={styles.linkBtn} onPress={() => router.push(`/events/${eventId}/upload` as never)}>
               <Text style={styles.linkBtnText}>Go to upload</Text>
             </Pressable>
@@ -240,7 +240,7 @@ function AssignScreenInner() {
             <View style={styles.countBadge}>
               <Ionicons name="people-outline" size={14} color="#00BFFF" />
               <Text style={styles.countText}>
-                {assignedIds.size} attendee{assignedIds.size !== 1 ? 's' : ''} can see this photo
+                {assignedIds.size} attendee{assignedIds.size !== 1 ? 's' : ''} can see this item
               </Text>
             </View>
           </ScrollView>

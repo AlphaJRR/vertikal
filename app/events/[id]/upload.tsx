@@ -1,5 +1,5 @@
 /**
- * Upload photos for an event.
+ * Upload photos & videos for an event.
  * Batch-picks from camera roll → pre-inserts DB rows → queues uploads.
  * Background queue + retry handled by UploadQueue / useUploadQueue.
  */
@@ -144,13 +144,13 @@ export default function UploadScreen() {
               />
               <Text style={styles.emptyTitle}>
                 {pending > 0 || uploading
-                  ? `Processing ${pending} photo${pending !== 1 ? 's' : ''}…`
-                  : 'No photos yet'}
+                  ? `Processing ${pending} item${pending !== 1 ? 's' : ''}…`
+                  : 'No media yet'}
               </Text>
               <Text style={styles.emptyBody}>
                 {pending > 0 || uploading
-                  ? 'Thumbnails appear here as each photo finishes processing.'
-                  : 'Tap the button below to pick photos from your camera roll.'}
+                  ? 'Thumbnails appear here as each photo or video finishes processing.'
+                  : 'Tap the button below to pick photos or videos from your camera roll.'}
               </Text>
             </View>
           ) : null
@@ -164,14 +164,14 @@ export default function UploadScreen() {
           onPress={() => void handlePick()}
           disabled={picking || uploading}
           accessibilityRole="button"
-          accessibilityLabel="Select photos from camera roll"
+          accessibilityLabel="Select photos and videos from camera roll"
         >
           {picking ? (
             <ActivityIndicator color="#000" />
           ) : (
             <>
               <Ionicons name="images-outline" size={20} color="#000" />
-              <Text style={styles.fabText}>Select photos</Text>
+              <Text style={styles.fabText}>Select photos & videos</Text>
             </>
           )}
         </Pressable>
