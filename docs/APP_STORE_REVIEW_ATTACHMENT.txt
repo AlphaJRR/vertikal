@@ -1,0 +1,233 @@
+APP STORE REVIEW — FULL WALKTHROUGH
+Alpha Visual Artists (Alpha Creators)
+
+App:     Alpha Visual Artists (Alpha Creators)
+Bundle:  com.alphavisualartists.app
+Version: 1.30.1 (Build 26)
+
+
+================================================================================
+CRITICAL: FREE BUILD — NO IN-APP PURCHASES
+================================================================================
+
+This submission runs in FREE_LAUNCH mode (constants/proAccess.ts: FREE_LAUNCH = true).
+
+- All Creator Toolkit content is fully unlocked at no charge.
+- There is NO in-app purchase, NO Stripe integration, NO price UI anywhere in the app.
+- Digital photo downloads for attendees are FREE ("Download full-res — FREE").
+- Physical prints are sold OFFLINE only (cash or card reader at events). The app
+  generates redeem codes as receipts for offline payment; it does not process payment.
+
+Pro subscription UI exists in code but is hidden while FREE_LAUNCH is true. Reviewers
+will not see paywalls or purchase buttons.
+
+
+================================================================================
+DEMO ACCOUNT CREDENTIALS
+================================================================================
+
+Operator (photographer):
+  Email:    reviewer@alphavisualartists.com
+  Password: AVAReview2026!
+
+Standard user (attendee):
+  Email:    reviewer.attendee@alphavisualartists.com
+  Password: AVAReview2026!
+
+Attendee gallery redeem code: DEMO01
+
+These are live accounts on the production Supabase backend with pre-seeded demo data.
+
+Account-level consent (bypassed for both demo accounts):
+  Both accounts have tos_accepted_at and age_gate_confirmed_at already set, so the
+  account-level consent screen (18+/guardian confirmation + ToS acceptance) is skipped
+  on sign-in.
+
+Per-event photo-release consent (will appear for the attendee):
+  The attendee account (reviewer.attendee) does NOT have photo_consent_at set for the
+  DEMO01 code. When the reviewer taps "Enter my code" and submits DEMO01, the app will
+  show the Photo Release screen before revealing any photos. This is intentional — it
+  demonstrates the full per-event consent flow.
+
+
+================================================================================
+HOW TO ACCESS DEMO ACCOUNTS IN THE APP
+================================================================================
+
+On the Sign In screen:
+  1. Scroll to the bottom.
+  2. Tap "App Review demo accounts" — this expands a panel with both email addresses.
+  3. Tap "Pre-fill" next to either account to populate the email field.
+  4. Enter the password above (AVAReview2026!).
+  5. Tap Sign in.
+
+The existing "Continue as Reviewer" button (also on the Sign In screen) unlocks the
+Creator Toolkit features (lessons, calculators, etc.) without an account and remains
+available.
+
+
+================================================================================
+WALK-THROUGH 1 — OPERATOR (PHOTOGRAPHER) FLOW
+================================================================================
+
+Sign in as: reviewer@alphavisualartists.com
+
+1. Events tab
+   Tap the "Events" icon (camera) in the scrollable tab bar.
+   You will see the Operator view: event list, "New" button, "Redeem a code" and
+   "My gallery" shortcuts.
+
+2. Production tab
+   Tap the "Production" tab (film icon).
+   This is the merged Shoot + Edit workflow. The Pre-Shoot checklist, Shoot Day log,
+   and Edit checklist are three sections in one scrollable screen. Data is saved
+   locally (AsyncStorage) and backed up to your account when signed in.
+
+3. More tab
+   Tap the "More" tab (circle with dots).
+   Shows: Account (avatar + name/email), Plan (Free / AVA Pro coming soon),
+   Projects & Sync (project count + cloud sync status), Creators (How To, Tutorial,
+   Instagram), Support (FAQ, Settings, Privacy Policy, Delete Account).
+
+4. AVA Demo Shoot
+   Back on Events tab, tap the pre-seeded event card.
+   You will see the event detail with a QR code and 4 action buttons.
+
+5. Create attendee + code
+   Tap this button.
+   Enter a first name, last name (phone/email optional). Tap "Create & get code."
+   A unique 6-character redeem code is generated and displayed — this is the buyer's
+   "receipt" for their offline payment.
+   Tap "Share code with buyer" to see the native share sheet.
+   Tap "Assign photos to this buyer" to go to the assign screen.
+
+6. Upload photos
+   From the event detail, tap "Upload photos."
+   Tap "Select photos" — camera roll picker opens (multi-select).
+   Select 2–3 photos. They are queued and uploaded in the background.
+
+7. Assign photos
+   From the event detail, tap "Assign photos."
+   Select any photo → search for "Demo Reviewer" → toggle the checkmark.
+   The assignment is instant (RLS resolves the attendee gallery).
+
+8. Dashboard
+   Tap "Dashboard" from the event detail.
+   Live metrics: photos, attendees, installs, delivered, codes redeemed, releases signed.
+   Pull-to-refresh or leave the screen open — updates in realtime via Supabase Realtime.
+
+9. Settings
+   Tap the gear icon (top-right of Events tab) OR More tab → Support → Settings.
+   Shows: account email, marketing toggle, Privacy Policy link, Terms link, Sign out,
+   Delete my account button.
+   Tapping "Delete my account" shows a confirmation alert → proceeds to soft-delete
+   + PII purge.
+   (Do not delete the operator demo account before also testing the attendee flow.)
+
+
+================================================================================
+WALK-THROUGH 2 — STANDARD USER (ATTENDEE) FLOW
+================================================================================
+
+Sign out from the operator account first (More tab → Support → Settings → Sign out), then:
+Sign in as: reviewer.attendee@alphavisualartists.com
+
+1. Events tab
+   You will see the Attendee view: only "Enter my code" and "View all my photos" —
+   no create/upload/assign/dashboard buttons appear anywhere.
+
+2. Enter my code
+   Tap the cyan "Enter my code" button.
+   Type DEMO01 and tap "Unlock gallery."
+
+3. Per-event photo release consent
+   The app shows the Photo Release screen before revealing any photos. A single
+   checkbox reads: "I consent to my event photos being displayed in my private
+   gallery and shared only with me." A separate, un-pre-checked optional marketing
+   box is also shown.
+   Check the required box → tap "View my photos."
+   This writes attendees.photo_consent_at and a consent_log row. On future redeems at
+   the same event this screen is skipped.
+
+4. Gallery
+   Assigned photos appear as thumbnails (signed URLs loaded from the private storage
+   bucket).
+   Tap any photo → full-screen view.
+
+5. Free download
+   Tap "Download full-res — FREE."
+   The app requests Photo Library permission (if not already granted) → downloads
+   the original → saves to Photos app.
+   There is no price, no purchase button, no Stripe UI anywhere.
+
+6. Share
+   Tap "Share" to invoke the native iOS share sheet.
+
+7. More tab
+   Shows the same groups as the operator view. "Projects & Sync" shows the attendee's
+   project count and sync status.
+
+8. Account deletion
+   More tab → Support → Settings → "Delete my account."
+   Soft-deletes the attendee row, purges PII (name, email, phone), then deletes the
+   auth user.
+   The app returns to the signed-out state.
+
+
+================================================================================
+COMPLIANCE NOTES
+================================================================================
+
+Guideline 3.1.1 Payments
+  Physical prints are an offline sale (cash/card reader). Digital downloads are free.
+  No in-app purchase, no Stripe, no price UI anywhere.
+
+Guideline 5.1.1(i) Data minimization
+  Account creation requires only name + email. Phone and interests are optional and
+  clearly labeled. Neither gates the gallery.
+
+Guideline 5.1.1(v) Account deletion
+  "Delete my account" is in Settings. Calls the delete-account edge function:
+  soft-delete → PII purge → auth.admin.deleteUser.
+
+Guideline 5.1.1 Consent / marketing
+  Two separate, sequential consent steps:
+  (1) Account-level (once at signup) — 18+/guardian confirmation + ToS acceptance;
+      marketing opt-in is a separate, un-pre-checked checkbox. Written to
+      profiles.tos_accepted_at, age_gate_confirmed_at. Screen: app/consent.tsx.
+  (2) Per-event photo-release (once per event, at redeem time) — user consents to
+      "my event photos being shown in my private gallery." Written to
+      attendees.photo_consent_at + consent_log row (consent_type=photo_release).
+      Screen: app/photo-release.tsx; skipped on subsequent redeems of the same event.
+
+Kids / COPPA
+  Account-level consent requires 18+/guardian confirmation before account creation
+  completes. Not categorized as a Kids app. No marketing to minors.
+
+Guideline 4.8 Sign in with Apple
+  Auth is email/phone OTP only — no social login → Sign in with Apple not triggered.
+
+Guidelines 2.1 / 2.2 Completeness
+  All screens are fully functional. No "coming soon" or placeholder UI exists.
+
+Permission strings
+  NSPhotoLibraryUsageDescription = "Access photos to upload event images."
+  NSPhotoLibraryAddUsageDescription = "Save your event photos to your library."
+
+
+================================================================================
+ADDITIONAL REFERENCE
+================================================================================
+
+Privacy policy: https://alphavisualartists.com/privacy
+Terms of service: https://alphavisualartists.com/terms
+
+Age rating: 17+ (infrequent/mild content — event photography)
+
+IMPORTANT — Age Rating setting:
+  Age Rating → "In-App Controls / Age Assurance" = NONE
+  (This specific toggle — not the overall rating — caused prior rejections.
+   Confirm it is set to None before submitting.)
+
+App Privacy nutrition label:
+  Name + Email collected; Phone optional; no payment data; no location; no tracking.
