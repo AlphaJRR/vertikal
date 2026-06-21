@@ -47,6 +47,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     void init();
 
+    if (!supabase?.auth) {
+      return () => {
+        cancelled = true;
+      };
+    }
+
     const { data: authListener } = supabase.auth.onAuthStateChange(
       (_event, nextSession) => {
         if (!cancelled) {
@@ -63,6 +69,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const signOut = useCallback(async () => {
+    if (!supabase?.auth) return;
     try {
       const { error } = await supabase.auth.signOut();
       if (error) {

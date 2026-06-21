@@ -12,16 +12,21 @@ import { Platform } from 'react-native';
 
 const MAP_KEY = 'ava_note_reminders_v1';
 
-// Configure foreground presentation
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: false,
-    shouldShowBanner: true,
-    shouldShowList: true,
-  }),
-});
+let handlerConfigured = false;
+
+function ensureNotificationHandler(): void {
+  if (handlerConfigured || Platform.OS === 'web') return;
+  handlerConfigured = true;
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: true,
+      shouldSetBadge: false,
+      shouldShowBanner: true,
+      shouldShowList: true,
+    }),
+  });
+}
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -43,6 +48,7 @@ type PermResult = { granted: boolean; canAskAgain: boolean };
 
 export async function ensureNotifPermission(): Promise<boolean> {
   if (Platform.OS === 'web') return false;
+  ensureNotificationHandler();
 
   const existing = await Notifications.getPermissionsAsync() as unknown as PermResult;
   if (existing.granted) return true;
