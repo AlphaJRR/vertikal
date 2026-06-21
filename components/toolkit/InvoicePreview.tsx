@@ -3,7 +3,7 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import { brandColors, brandFonts } from "../../constants/theme";
 import type { InvoiceLogoOption } from "../../types/invoiceLogo";
 
-const AVA_LOGO = require("../../assets/images/ava-app-logo-2026.png");
+const AVA_LOGO = require("../../assets/images/ava-logo-transparent.png");
 
 const DEFAULT_LINES = [
   { label: "Production day", amount: "$X / 10hr" },
@@ -119,6 +119,7 @@ const styles = StyleSheet.create({
   avaLogo: {
     width: 140,
     height: 48,
+    backgroundColor: "transparent",
   },
   creatorLogo: {
     maxWidth: 120,

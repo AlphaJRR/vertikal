@@ -3,8 +3,8 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-/** Circular lens logo — RGBA, white background removed. */
-const BRAND_LOGO = require("../assets/images/ava-app-logo-2026.png");
+/** Circular lens logo — true alpha PNG (no baked-in background). */
+const BRAND_LOGO = require("../assets/images/ava-logo-transparent.png");
 
 type BrandLogoBarProps = {
   /** Compact watermark vs slightly larger on home-adjacent screens */
