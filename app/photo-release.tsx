@@ -27,7 +27,7 @@ import { useLocalSearchParams, useRouter, type Href } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { brandColors, brandFonts } from '@/constants/theme';
-import { supabase } from '@/lib/supabase';
+import { savePhotoReleaseConsent } from '@/lib/photoReleaseConsent';
 
 export default function PhotoReleaseScreen() {
   const router  = useRouter();
@@ -55,23 +55,11 @@ export default function PhotoReleaseScreen() {
     setBusy(true);
     setError(null);
     try {
-      const now = new Date().toISOString();
-
-      const { error: updateErr } = await supabase
-        .from('attendees')
-        .update({ photo_consent_at: now })
-        .eq('id', attendeeId);
-
-      if (updateErr) {
-        console.error('[photo-release] attendees update failed:', updateErr);
+      const saved = await savePhotoReleaseConsent(attendeeId, marketingOn);
+      if (!saved.ok) {
         setError('Could not save your consent. Please try again.');
         return;
       }
-
-      await supabase.from('consent_log').insert([
-        { attendee_id: attendeeId, consent_type: 'photo_release', granted: true },
-        { attendee_id: attendeeId, consent_type: 'marketing',     granted: marketingOn },
-      ]);
 
       router.replace(destination);
     } catch (err) {

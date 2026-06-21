@@ -16,6 +16,7 @@ import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import { useRouter, type Href } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { brandColors, brandFonts } from "@/constants/theme";
+import { needsAccountConsentScreen } from "@/lib/accountConsent";
 import { supabase } from "@/lib/supabase";
 
 export default function AuthCallbackScreen() {
@@ -32,13 +33,8 @@ export default function AuthCallbackScreen() {
       if (session) {
         clearInterval(interval);
         // Check consent
-        const { data: profile } = await supabase
-          .from("profiles")
-          .select("tos_accepted_at")
-          .eq("id", session.user.id)
-          .maybeSingle();
-
-        if (!profile?.tos_accepted_at) {
+        const needsConsent = await needsAccountConsentScreen(session.user);
+        if (needsConsent) {
           router.replace("/consent" as Href);
         } else {
           router.replace("/(tabs)" as Href);

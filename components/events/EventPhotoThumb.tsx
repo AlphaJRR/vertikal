@@ -18,6 +18,7 @@ import type { EventPhoto } from '@/types/events';
 
 interface EventPhotoThumbProps {
   photo: EventPhoto;
+  previewUrl?: string | null;
   style?: StyleProp<ViewStyle>;
   borderRadius?: number;
   showReadyDot?: boolean;
@@ -25,14 +26,21 @@ interface EventPhotoThumbProps {
 
 export function EventPhotoThumb({
   photo,
+  previewUrl,
   style,
   borderRadius = 4,
   showReadyDot = false,
 }: EventPhotoThumbProps) {
-  const [uri, setUri] = useState<string | null>(null);
+  const [uri, setUri] = useState<string | null>(previewUrl ?? null);
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
+    if (previewUrl) {
+      setUri(previewUrl);
+      setFailed(false);
+      return;
+    }
+
     let active = true;
     setUri(null);
     setFailed(false);
@@ -44,7 +52,7 @@ export function EventPhotoThumb({
     });
 
     return () => { active = false; };
-  }, [photo.thumb_path, photo.storage_path, photo.id]);
+  }, [previewUrl, photo.thumb_path, photo.storage_path, photo.id]);
 
   return (
     <View style={[styles.root, style, { borderRadius }]}>

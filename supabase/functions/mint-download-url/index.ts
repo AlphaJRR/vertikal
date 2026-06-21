@@ -87,7 +87,15 @@ Deno.serve(async (req: Request) => {
       return json({ signedUrl: plain.data.signedUrl, expiresIn: TTL });
     }
 
-    // Preview: transformed original (never serve full-res for grid thumbnails)
+    // Preview: event-previews thumb first (v1 uploads — no transform dependency)
+    if (thumbPath) {
+      const previewPlain = await admin.storage.from(PREVIEWS).createSignedUrl(thumbPath, TTL);
+      if (!previewPlain.error && previewPlain.data?.signedUrl) {
+        return json({ signedUrl: previewPlain.data.signedUrl, expiresIn: TTL });
+      }
+    }
+
+    // Transformed original (lighter than full-res when transforms are enabled)
     const transformed = await admin.storage.from(ORIGINALS).createSignedUrl(
       storagePath,
       TTL,
@@ -97,7 +105,7 @@ Deno.serve(async (req: Request) => {
       return json({ signedUrl: transformed.data.signedUrl, expiresIn: TTL });
     }
 
-    // Legacy rows: thumb may live in event-previews from v1 process-photo
+    // Legacy fallback: previews bucket with transform
     if (thumbPath && thumbPath !== storagePath) {
       const legacy = await admin.storage.from(PREVIEWS).createSignedUrl(
         thumbPath,
@@ -109,7 +117,7 @@ Deno.serve(async (req: Request) => {
       }
     }
 
-    console.error('[mint-download-url] preview transform failed:', transformed.error?.message);
+    console.error('[mint-download-url] preview sign failed:', transformed.error?.message);
     return err('Could not generate preview URL', 500);
   } catch (e) {
     console.error('[mint-download-url]', e);

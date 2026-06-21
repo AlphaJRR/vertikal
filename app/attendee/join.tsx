@@ -25,6 +25,7 @@ import { useLocalSearchParams, useRouter, type Href } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { brandColors, brandFonts } from '@/constants/theme';
+import { needsAccountConsentScreen } from '@/lib/accountConsent';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/contexts/AuthContext';
 
@@ -82,14 +83,9 @@ export default function AttendeeJoinScreen() {
       return;
     }
 
-    // Check consent
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('tos_accepted_at')
-      .eq('id', session.user.id)
-      .single();
-
-    if (!profile?.tos_accepted_at) {
+    // Account consent — email users only; guests use per-event photo-release
+    const needsConsent = await needsAccountConsentScreen(session.user);
+    if (needsConsent) {
       router.push({ pathname: '/consent', params: { redirectTo: '/redeem' } } as never);
       return;
     }

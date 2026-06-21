@@ -10,7 +10,7 @@
  * Gate: 18+ OR parent/guardian.  Not a Kids app — categorised for 17+.
  */
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Linking,
@@ -24,6 +24,7 @@ import { useLocalSearchParams, useRouter, type Href } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { brandColors, brandFonts } from '@/constants/theme';
+import { saveAccountConsent, skipAccountConsent } from '@/lib/accountConsent';
 import { supabase } from '@/lib/supabase';
 
 // ⚠️ JR: replace with live URLs before App Store submission
@@ -45,6 +46,16 @@ export default function ConsentScreen() {
 
   const canContinue = isAdult && photoRelease && tosAccepted;
 
+  useEffect(() => {
+    void (async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (skipAccountConsent(user)) {
+        if (redirectTo) router.replace(redirectTo as Href);
+        else router.replace('/(tabs)' as Href);
+      }
+    })();
+  }, [redirectTo, router]);
+
   const handleContinue = async () => {
     if (!canContinue) {
       setError('Please confirm all required items to continue.');
@@ -57,31 +68,22 @@ export default function ConsentScreen() {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('No session');
 
-      const now = new Date().toISOString();
-
-      // ── 1. Upsert profiles with account-level consent timestamps ─────────
-      const { error: upsertError } = await supabase.from('profiles').upsert({
-        id:                    user.id,
-        age_gate_confirmed_at: isAdult ? now : null,
-        tos_accepted_at:       tosAccepted ? now : null,
-        marketing_opt_in:      marketingOn,
-      }, { onConflict: 'id' });
-
-      if (upsertError) {
-        console.error('[consent] profiles upsert failed:', upsertError);
-        setError('Could not save your preferences. Please try again.');
+      if (skipAccountConsent(user)) {
+        if (redirectTo) router.replace(redirectTo as Href);
+        else router.replace('/(tabs)' as Href);
         return;
       }
 
-      // ── 2. Write account-level consent_log rows (no attendee_id here) ────
-      // photo_release is per-event and written by the /photo-release screen.
-      await supabase.from('consent_log').insert([
-        { attendee_id: null, consent_type: 'age_confirm', granted: isAdult     },
-        { attendee_id: null, consent_type: 'terms',       granted: tosAccepted  },
-        { attendee_id: null, consent_type: 'marketing',   granted: marketingOn  },
-      ]);
+      const saved = await saveAccountConsent({
+        ageConfirm: isAdult,
+        terms:      tosAccepted,
+        marketing:  marketingOn,
+      });
 
-      // ── 3. Navigate ───────────────────────────────────────────────────────
+      if (!saved.ok) {
+        setError('Could not save your preferences. Please try again.');
+        return;
+      }
       if (redirectTo) {
         router.replace(redirectTo as Href);
       } else if (router.canGoBack()) {

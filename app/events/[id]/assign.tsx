@@ -23,6 +23,7 @@ import { brandColors, brandFonts } from '@/constants/theme';
 import { supabase } from '@/lib/supabase';
 import { useEvent, useAttendees } from '@/hooks/useEvents';
 import { useEventPhotos } from '@/hooks/usePhotos';
+import { useOperatorPhotoPreviews } from '@/hooks/useOperatorPhotoPreviews';
 import { useOperatorGuard } from '@/hooks/useOperatorGuard';
 import { AssigneeSearch } from '@/components/events/AssigneeSearch';
 import { EventPhotoThumb } from '@/components/events/EventPhotoThumb';
@@ -38,6 +39,7 @@ export default function AssignScreen() {
   const { isOperator, loading: guardLoading } = useOperatorGuard();
   const { event }                             = useEvent(id ?? '');
   const { photos, loading: photosLoading }    = useEventPhotos(id ?? '', { realtime: true });
+  const { previewUrls }                       = useOperatorPhotoPreviews(photos);
   const { attendees, loading: attLoading }    = useAttendees(id ?? '');
 
   const [step,          setStep]          = useState<Step>('selectPhoto');
@@ -129,7 +131,7 @@ export default function AssignScreen() {
             contentContainerStyle={styles.grid}
             renderItem={({ item }: { item: EventPhoto }) => (
               <Pressable style={styles.gridCell} onPress={() => void selectPhoto(item)}>
-                <EventPhotoThumb photo={item} />
+                <EventPhotoThumb photo={item} previewUrl={previewUrls.get(item.id)} />
               </Pressable>
             )}
           />
@@ -146,7 +148,12 @@ export default function AssignScreen() {
           >
             {selectedPhoto ? (
               <View style={styles.selectedPhotoWrap}>
-                <EventPhotoThumb photo={selectedPhoto} style={styles.selectedPhoto} borderRadius={8} />
+                <EventPhotoThumb
+                  photo={selectedPhoto}
+                  previewUrl={previewUrls.get(selectedPhoto.id)}
+                  style={styles.selectedPhoto}
+                  borderRadius={8}
+                />
               </View>
             ) : null}
             <AssigneeSearch

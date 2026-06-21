@@ -20,6 +20,7 @@ import { brandColors, brandFonts } from '@/constants/theme';
 import { useEvent } from '@/hooks/useEvents';
 import { useEventPhotos, useBatchPicker } from '@/hooks/usePhotos';
 import { useUploadQueue } from '@/hooks/useUploadQueue';
+import { useOperatorPhotoPreviews } from '@/hooks/useOperatorPhotoPreviews';
 import { useOperatorGuard } from '@/hooks/useOperatorGuard';
 import { UploadProgressBar } from '@/components/events/UploadProgressBar';
 import { EventPhotoThumb } from '@/components/events/EventPhotoThumb';
@@ -37,6 +38,7 @@ export default function UploadScreen() {
     realtime: true,
     hasPendingUploads: pending > 0 || uploading,
   });
+  const { previewUrls } = useOperatorPhotoPreviews(photos);
 
   const refreshPhotos = useCallback(async () => {
     await refresh();
@@ -129,7 +131,7 @@ export default function UploadScreen() {
         contentContainerStyle={[styles.grid, { paddingBottom: insets.bottom + 100 }]}
         renderItem={({ item }: { item: EventPhoto }) => (
           <View style={styles.cell}>
-            <EventPhotoThumb photo={item} showReadyDot />
+            <EventPhotoThumb photo={item} previewUrl={previewUrls.get(item.id)} showReadyDot />
           </View>
         )}
         ListEmptyComponent={

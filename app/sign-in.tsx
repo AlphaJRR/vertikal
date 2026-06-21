@@ -29,6 +29,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { brandColors, brandFonts } from "../constants/theme";
 import { enableDemoMode } from "../lib/demoMode";
+import { needsAccountConsentScreen } from "../lib/accountConsent";
 import { supabase } from "../lib/supabase";
 import { normalizeRedeemCode, stashRedeemCode } from "../lib/redeemDeepLink";
 import { seedDemoReviewDataIfNeeded } from "../utils/demoReviewSeed";
@@ -114,19 +115,12 @@ export default function SignInScreen() {
 
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
-        const { data: profile } = await supabase
-          .from("profiles")
-          .select("tos_accepted_at")
-          .eq("id", user.id)
-          .maybeSingle();
-        if (!profile?.tos_accepted_at) {
-          router.replace({
-            pathname: "/consent",
-            params: consentParams,
-          } as Href);
-          return;
-        }
+      if (user && (isNew || (await needsAccountConsentScreen(user)))) {
+        router.replace({
+          pathname: "/consent",
+          params: consentParams,
+        } as Href);
+        return;
       }
     } catch { /* non-blocking — proceed on error */ }
 
