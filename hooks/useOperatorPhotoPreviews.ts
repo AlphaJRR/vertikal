@@ -18,11 +18,14 @@ export function useOperatorPhotoPreviews(photos: EventPhoto[]): UseOperatorPhoto
   const [previewUrls, setPreviewUrls] = useState<Map<string, string>>(new Map());
   const [loading, setLoading]         = useState(false);
   const signingRef                    = useRef(false);
+  const photosRef                     = useRef(photos);
+  photosRef.current                   = photos;
 
-  const photoKey = photos.map(p => `${p.id}:${p.thumb_path}`).join('|');
+  const photoKey = photos.map(p => `${p.id}:${p.thumb_path ?? ''}`).join('|');
 
   const refresh = useCallback(async () => {
-    if (photos.length === 0) {
+    const list = photosRef.current;
+    if (list.length === 0) {
       setPreviewUrls(new Map());
       return;
     }
@@ -30,7 +33,7 @@ export function useOperatorPhotoPreviews(photos: EventPhoto[]): UseOperatorPhoto
     signingRef.current = true;
     setLoading(true);
     try {
-      const urls = await batchSignOperatorPreviews(photos);
+      const urls = await batchSignOperatorPreviews(list);
       setPreviewUrls(urls);
     } catch (err) {
       console.error('[useOperatorPhotoPreviews] batch sign failed:', err);
@@ -38,7 +41,7 @@ export function useOperatorPhotoPreviews(photos: EventPhoto[]): UseOperatorPhoto
       signingRef.current = false;
       setLoading(false);
     }
-  }, [photos]);
+  }, [photoKey]);
 
   useEffect(() => {
     void refresh();

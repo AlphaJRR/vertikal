@@ -21,6 +21,47 @@ const PREVIEW_TRANSFORM = {
 
 type SignRow = { path: string; signedUrl: string; error: string | null };
 
+type StorageBucketClient = {
+  createSignedUrl: (
+    path: string,
+    expiresIn: number,
+    options?: { transform?: typeof PREVIEW_TRANSFORM },
+  ) => Promise<{ data: { signedUrl: string } | null; error: { message: string } | null }>;
+  createSignedUrls?: (
+    paths: string[],
+    expiresIn: number,
+  ) => Promise<{ data: SignRow[] | null; error: { message: string } | null }>;
+};
+
+async function signPathsBatch(
+  bucket: string,
+  paths: string[],
+): Promise<SignRow[] | null> {
+  if (paths.length === 0) return [];
+
+  const client = supabase.storage.from(bucket) as StorageBucketClient;
+
+  if (typeof client.createSignedUrls === 'function') {
+    const { data, error } = await client.createSignedUrls(paths, TTL_SEC);
+    if (error) {
+      console.warn('[eventPhotoPreview] batch sign failed:', error.message);
+      return null;
+    }
+    return data;
+  }
+
+  const rows: SignRow[] = [];
+  for (const path of paths) {
+    const { data, error } = await client.createSignedUrl(path, TTL_SEC);
+    rows.push({
+      path,
+      signedUrl: data?.signedUrl ?? '',
+      error: error?.message ?? null,
+    });
+  }
+  return rows;
+}
+
 /** Batch-sign thumb paths — one round trip for the whole grid. */
 export async function batchSignOperatorPreviews(
   photos: EventPhoto[],
@@ -39,15 +80,8 @@ export async function batchSignOperatorPreviews(
 
   const thumbPaths = [...byThumb.keys()];
   if (thumbPaths.length > 0) {
-    const { data, error } = await supabase.storage
-      .from(PREVIEWS)
-      .createSignedUrls(thumbPaths, TTL_SEC);
-
-    if (error) {
-      console.warn('[eventPhotoPreview] batch previews sign failed:', error.message);
-    } else {
-      applySignRows(data as SignRow[] | null, byThumb, urls);
-    }
+    const data = await signPathsBatch(PREVIEWS, thumbPaths);
+    applySignRows(data, byThumb, urls);
   }
 
   const missing = photos.filter(p => !urls.has(p.id));
@@ -64,13 +98,8 @@ export async function batchSignOperatorPreviews(
 
   const storagePaths = [...byStorage.keys()];
   if (storagePaths.length > 0) {
-    const { data, error } = await supabase.storage
-      .from(PREVIEWS)
-      .createSignedUrls(storagePaths, TTL_SEC);
-
-    if (!error) {
-      applySignRows(data as SignRow[] | null, byStorage, urls);
-    }
+    const data = await signPathsBatch(PREVIEWS, storagePaths);
+    applySignRows(data, byStorage, urls);
   }
 
   for (const photo of photos) {
