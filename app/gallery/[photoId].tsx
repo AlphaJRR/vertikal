@@ -21,12 +21,12 @@ import {
   View,
 } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import * as FileSystem   from 'expo-file-system/legacy';
-import * as MediaLibrary from 'expo-media-library';
+import * as FileSystem from 'expo-file-system/legacy';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { brandColors, brandFonts } from '@/constants/theme';
 import { useAttendeeGallery } from '@/hooks/useAttendeeGallery';
+import { saveImageToPhotoLibrary } from '@/lib/mediaLibrary';
 
 export default function PhotoDetailScreen() {
   const { photoId }  = useLocalSearchParams<{ photoId: string }>();
@@ -48,14 +48,6 @@ export default function PhotoDetailScreen() {
     if (!photoId) return;
     setDownloading(true);
     try {
-      const { status } = await MediaLibrary.requestPermissionsAsync();
-      if (status !== 'granted') {
-        Alert.alert(
-          'Permission needed',
-          'Allow AVA to save photos to your Photo Library.',
-        );
-        return;
-      }
       const url = await getSignedUrl(photoId, 'original');
       if (!url) {
         Alert.alert('Error', 'Could not generate download link. Please try again.');
@@ -65,9 +57,27 @@ export default function PhotoDetailScreen() {
       const fileName = `ava-photo-${photoId.slice(0, 8)}.jpg`;
       const localUri = `${FileSystem.cacheDirectory}${fileName}`;
       await FileSystem.downloadAsync(url, localUri);
-      await MediaLibrary.saveToLibraryAsync(localUri);
 
-      Alert.alert('Saved!', 'Photo saved to your Photos library.');
+      const saved = await saveImageToPhotoLibrary(localUri);
+      if (saved.ok) {
+        Alert.alert('Saved!', 'Photo saved to your Photos library.');
+        return;
+      }
+      if (saved.reason === 'unavailable') {
+        Alert.alert(
+          'Update required',
+          'Saving to Photos needs the next App Store build. You can still view your photo here.',
+        );
+        return;
+      }
+      if (saved.reason === 'denied') {
+        Alert.alert(
+          'Permission needed',
+          'Allow AVA to save photos to your Photo Library in Settings.',
+        );
+        return;
+      }
+      Alert.alert('Download failed', saved.message ?? 'Something went wrong. Please try again.');
     } catch (err) {
       console.error('[photo-detail] download failed:', err);
       Alert.alert('Download failed', 'Something went wrong. Please try again.');
