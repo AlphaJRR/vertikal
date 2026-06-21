@@ -48,7 +48,7 @@ Deno.serve(async (req: Request) => {
     const { data: photo } = await admin
       .from('event_photos')
       .select(`
-        id, storage_path, thumb_path,
+        id, storage_path, thumb_path, media_kind,
         events!inner (photographer_id),
         photo_assignments (
           attendee_id,
@@ -78,8 +78,9 @@ Deno.serve(async (req: Request) => {
 
     const storagePath = photo.storage_path as string;
     const thumbPath   = photo.thumb_path as string;
+    const isVideo     = (photo.media_kind as string | null) === 'video';
 
-    if (resolution === 'original') {
+    if (resolution === 'original' || isVideo) {
       const plain = await admin.storage.from(ORIGINALS).createSignedUrl(storagePath, TTL);
       if (plain.error || !plain.data?.signedUrl) {
         return err('Could not generate signed URL', 500);
@@ -87,7 +88,7 @@ Deno.serve(async (req: Request) => {
       return json({ signedUrl: plain.data.signedUrl, expiresIn: TTL });
     }
 
-    // Preview: event-previews thumb first (v1 uploads — no transform dependency)
+    // Photo preview below
     if (thumbPath) {
       const previewPlain = await admin.storage.from(PREVIEWS).createSignedUrl(thumbPath, TTL);
       if (!previewPlain.error && previewPlain.data?.signedUrl) {

@@ -34,6 +34,7 @@ export interface AVAEvent {
 // ─── event_photos ─────────────────────────────────────────────────────────────
 
 export type PhotoSource = 'sony' | 'manual' | 'batch';
+export type EventMediaKind = 'photo' | 'video';
 
 export interface EventPhoto {
   id:           string;
@@ -42,6 +43,7 @@ export interface EventPhoto {
   thumb_path:   string;   // key in event-previews bucket (set by process-photo fn)
   filename:     string | null;
   source:       PhotoSource;
+  media_kind:   EventMediaKind;
   exif:         Record<string, unknown> | null;
   uploaded_at:  string;
 }
@@ -127,6 +129,7 @@ export interface UploadQueueItem {
   localUri:    string;
   storagePath: string;    // {eventId}/{id}/original in event-originals bucket
   filename:    string | null;
+  mediaKind:   EventMediaKind;
   retries:     number;
   status:      QueueItemStatus;
   addedAt:     number;

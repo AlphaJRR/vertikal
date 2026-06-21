@@ -14,6 +14,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { brandColors } from '@/constants/theme';
 import { getOperatorPreviewUrl } from '@/lib/eventPhotoPreview';
+import { isVideoMediaKind } from '@/lib/eventMedia';
 import type { EventPhoto } from '@/types/events';
 
 interface EventPhotoThumbProps {
@@ -76,6 +77,11 @@ export function EventPhotoThumb({
         </View>
       )}
       {showReadyDot ? <View style={styles.readyDot} /> : null}
+      {isVideoMediaKind(photo.media_kind) ? (
+        <View style={styles.videoBadge}>
+          <Ionicons name="play" size={14} color="#fff" />
+        </View>
+      ) : null}
     </View>
   );
 }
@@ -107,5 +113,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#22c55e',
     borderWidth: 1,
     borderColor: '#000',
+  },
+  videoBadge: {
+    position: 'absolute',
+    bottom: 6,
+    left: 6,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: 'rgba(0,0,0,0.55)',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

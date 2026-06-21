@@ -1,12 +1,7 @@
 /**
- * Photo detail — attendee-facing.
+ * Media detail — attendee-facing photo or video.
  *
  * Free full-res download: saved to camera roll via expo-media-library.
- * Native share sheet: share a note pointing them back to the gallery.
- *
- * There is NO price, NO purchase button, NO Stripe, NO "order prints" anywhere.
- * Payment for physical prints happens OFFLINE at the event. This screen only
- * delivers the digital photo, which is always FREE.
  */
 
 import React, { useEffect, useState } from 'react';
@@ -24,9 +19,26 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import * as FileSystem from 'expo-file-system/legacy';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import { useVideoPlayer, VideoView } from 'expo-video';
 import { brandColors, brandFonts } from '@/constants/theme';
+import { isVideoMediaKind } from '@/lib/eventMedia';
 import { useAttendeeGallery } from '@/hooks/useAttendeeGallery';
 import { saveImageToPhotoLibrary } from '@/lib/mediaLibrary';
+
+function GalleryVideoPlayer({ uri }: { uri: string }) {
+  const player = useVideoPlayer(uri, (p) => {
+    p.loop = false;
+  });
+
+  return (
+    <VideoView
+      player={player}
+      style={styles.media}
+      contentFit="contain"
+      nativeControls
+    />
+  );
+}
 
 export default function PhotoDetailScreen() {
   const { photoId }  = useLocalSearchParams<{ photoId: string }>();
@@ -35,14 +47,15 @@ export default function PhotoDetailScreen() {
   const { items, getSignedUrl } = useAttendeeGallery();
 
   const item = items.find(i => i.photo.id === photoId);
+  const isVideo = item ? isVideoMediaKind(item.photo.media_kind) : false;
 
   const [previewUrl,  setPreviewUrl]  = useState<string | null>(null);
   const [downloading, setDownloading] = useState(false);
 
   useEffect(() => {
     if (!photoId) return;
-    void getSignedUrl(photoId, 'preview').then(setPreviewUrl);
-  }, [photoId, getSignedUrl]);
+    void getSignedUrl(photoId, isVideo ? 'original' : 'preview').then(setPreviewUrl);
+  }, [photoId, getSignedUrl, isVideo]);
 
   const handleFreeDownload = async () => {
     if (!photoId) return;
@@ -54,26 +67,27 @@ export default function PhotoDetailScreen() {
         return;
       }
 
-      const fileName = `ava-photo-${photoId.slice(0, 8)}.jpg`;
+      const ext = isVideo ? 'mp4' : 'jpg';
+      const fileName = `ava-${isVideo ? 'video' : 'photo'}-${photoId.slice(0, 8)}.${ext}`;
       const localUri = `${FileSystem.cacheDirectory}${fileName}`;
       await FileSystem.downloadAsync(url, localUri);
 
       const saved = await saveImageToPhotoLibrary(localUri);
       if (saved.ok) {
-        Alert.alert('Saved!', 'Photo saved to your Photos library.');
+        Alert.alert('Saved!', `${isVideo ? 'Video' : 'Photo'} saved to your Photos library.`);
         return;
       }
       if (saved.reason === 'unavailable') {
         Alert.alert(
           'Update required',
-          'Saving to Photos needs the next App Store build. You can still view your photo here.',
+          'Saving to Photos needs the next App Store build. You can still view your media here.',
         );
         return;
       }
       if (saved.reason === 'denied') {
         Alert.alert(
           'Permission needed',
-          'Allow AVA to save photos to your Photo Library in Settings.',
+          'Allow AVA to save to your Photo Library in Settings.',
         );
         return;
       }
@@ -89,7 +103,7 @@ export default function PhotoDetailScreen() {
   const handleShare = async () => {
     try {
       await Share.share({
-        message: 'Check out my event photos on Alpha Creators!',
+        message: 'Check out my event photos and videos on AVA!',
       });
     } catch { /* dismissed */ }
   };
@@ -104,7 +118,6 @@ export default function PhotoDetailScreen() {
 
   return (
     <View style={[styles.root, { paddingTop: insets.top + 8 }]}>
-      {/* Header */}
       <View style={styles.header}>
         <Pressable onPress={() => router.back()} hitSlop={12} style={styles.backRow}>
           <Ionicons name="chevron-back" size={22} color={brandColors.alphaRed} />
@@ -112,20 +125,21 @@ export default function PhotoDetailScreen() {
         </Pressable>
       </View>
 
-      {/* Photo */}
-      <View style={styles.photoWrap}>
+      <View style={styles.mediaWrap}>
         {previewUrl ? (
-          <Image source={{ uri: previewUrl }} style={styles.photo} resizeMode="contain" />
+          isVideo ? (
+            <GalleryVideoPlayer uri={previewUrl} />
+          ) : (
+            <Image source={{ uri: previewUrl }} style={styles.media} resizeMode="contain" />
+          )
         ) : (
-          <View style={[styles.photo, styles.photoPlaceholder]}>
+          <View style={[styles.media, styles.mediaPlaceholder]}>
             <ActivityIndicator color="#00BFFF" />
           </View>
         )}
       </View>
 
-      {/* Actions */}
       <View style={[styles.actions, { paddingBottom: insets.bottom + 20 }]}>
-        {/* FREE download — no price, no paywall */}
         <Pressable
           style={[styles.downloadBtn, downloading && styles.btnDisabled]}
           onPress={() => void handleFreeDownload()}
@@ -136,16 +150,15 @@ export default function PhotoDetailScreen() {
           ) : (
             <>
               <Ionicons name="cloud-download-outline" size={20} color="#000" />
-              <Text style={styles.downloadBtnText}>Download full-res — FREE</Text>
+              <Text style={styles.downloadBtnText}>
+                Download {isVideo ? 'video' : 'full-res'} — FREE
+              </Text>
             </>
           )}
         </Pressable>
 
-        <Text style={styles.freeNote}>
-          Digital downloads are always free.
-        </Text>
+        <Text style={styles.freeNote}>Digital downloads are always free.</Text>
 
-        {/* Share */}
         <Pressable style={styles.shareBtn} onPress={() => void handleShare()}>
           <Ionicons name="share-outline" size={18} color="#00BFFF" />
           <Text style={styles.shareBtnText}>Share</Text>
@@ -161,9 +174,9 @@ const styles = StyleSheet.create({
   header:  { paddingHorizontal: 20, paddingBottom: 8 },
   backRow: { flexDirection: 'row', alignItems: 'center', gap: 4 },
   backText:{ fontFamily: brandFonts.bodyMedium, fontSize: 15, color: brandColors.alphaRed },
-  photoWrap: { flex: 1, backgroundColor: '#111' },
-  photo:   { width: '100%', height: '100%' },
-  photoPlaceholder: { alignItems: 'center', justifyContent: 'center' },
+  mediaWrap: { flex: 1, backgroundColor: '#111' },
+  media:   { width: '100%', height: '100%' },
+  mediaPlaceholder: { alignItems: 'center', justifyContent: 'center' },
   actions: { paddingHorizontal: 20, paddingTop: 16, gap: 10 },
   downloadBtn: {
     flexDirection: 'row', alignItems: 'center', gap: 10,

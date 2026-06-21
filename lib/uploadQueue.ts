@@ -12,6 +12,11 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as FileSystem from 'expo-file-system/legacy';
 import { supabase } from './supabase';
+import {
+  contentTypeForUpload,
+  mediaKindFromFilename,
+  type EventMediaKind,
+} from './eventMedia';
 import type { UploadQueueItem } from '../types/events';
 
 const QUEUE_KEY     = 'ava:photo_upload_queue_v2';
@@ -20,6 +25,7 @@ const MAX_RETRIES   = 3;
 const RETRY_BASE_MS = 2000;
 const READ_TIMEOUT_MS    = 45_000;
 const UPLOAD_TIMEOUT_MS  = 120_000;
+const VIDEO_UPLOAD_TIMEOUT_MS = 600_000;
 const PROCESS_TIMEOUT_MS = 90_000;
 
 export interface ProcessQueueResult {
@@ -57,8 +63,16 @@ function isActionable(item: UploadQueueItem): boolean {
 async function readQueue(): Promise<UploadQueueItem[]> {
   try {
     const raw = await AsyncStorage.getItem(QUEUE_KEY);
-    return raw ? (JSON.parse(raw) as UploadQueueItem[]) : [];
+    const parsed = raw ? (JSON.parse(raw) as UploadQueueItem[]) : [];
+    return parsed.map(normalizeQueueItem);
   } catch { return []; }
+}
+
+function normalizeQueueItem(item: UploadQueueItem): UploadQueueItem {
+  const mediaKind: EventMediaKind =
+    item.mediaKind
+    ?? mediaKindFromFilename(item.filename ?? item.localUri);
+  return { ...item, mediaKind };
 }
 
 async function writeQueue(items: UploadQueueItem[]): Promise<void> {
@@ -225,20 +239,24 @@ async function uploadOne(item: UploadQueueItem): Promise<UploadAttempt> {
       return { ok: false, error: 'Not signed in — sign in again and retry.' };
     }
 
+    const fresh = normalizeQueueItem(item);
+    const mediaKind = fresh.mediaKind;
+    const uploadTimeout = mediaKind === 'video' ? VIDEO_UPLOAD_TIMEOUT_MS : UPLOAD_TIMEOUT_MS;
+
     const { bytes, contentType } = await withTimeout(
-      readUploadBytes(item.localUri),
+      readUploadBytes(fresh.localUri, fresh.filename, mediaKind),
       READ_TIMEOUT_MS,
-      'Reading photo',
+      mediaKind === 'video' ? 'Reading video' : 'Reading photo',
     );
 
     const { error: uploadError } = await withTimeout(
       supabase.storage
         .from(ORIGINALS)
-        .upload(item.storagePath, bytes, {
+        .upload(fresh.storagePath, bytes, {
           contentType,
           upsert: true,
         }),
-      UPLOAD_TIMEOUT_MS,
+      uploadTimeout,
       'Storage upload',
     );
 
@@ -256,10 +274,11 @@ async function uploadOne(item: UploadQueueItem): Promise<UploadAttempt> {
     const { data: fnData, error: fnError } = await withTimeout(
       supabase.functions.invoke('process-photo', {
         body: {
-          eventId:     item.eventId,
-          storagePath: item.storagePath,
-          filename:    item.filename ?? null,
+          eventId:     fresh.eventId,
+          storagePath: fresh.storagePath,
+          filename:    fresh.filename ?? null,
           source:      'manual',
+          mediaKind,
         },
       }),
       PROCESS_TIMEOUT_MS,
@@ -302,14 +321,21 @@ async function uploadOne(item: UploadQueueItem): Promise<UploadAttempt> {
   }
 }
 
-async function readUploadBytes(localUri: string): Promise<{ bytes: ArrayBuffer; contentType: string }> {
-  const ext = localUri.toLowerCase().includes('.png') ? 'png' : 'jpg';
-  const contentType = ext === 'png' ? 'image/png' : 'image/jpeg';
+async function readUploadBytes(
+  localUri: string,
+  filename: string | null,
+  mediaKind: EventMediaKind,
+): Promise<{ bytes: ArrayBuffer; contentType: string }> {
+  const contentType = contentTypeForUpload(filename ?? localUri, mediaKind);
 
   try {
     const info = await FileSystem.getInfoAsync(localUri);
     if (!info.exists) {
-      throw new Error('Local photo missing — re-select from camera roll.');
+      throw new Error(
+        mediaKind === 'video'
+          ? 'Local video missing — re-select from camera roll.'
+          : 'Local photo missing — re-select from camera roll.',
+      );
     }
   } catch (err) {
     if (err instanceof Error && err.message.includes('re-select')) throw err;

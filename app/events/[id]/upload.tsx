@@ -98,7 +98,7 @@ export default function UploadScreen() {
           <Ionicons name="chevron-back" size={22} color={brandColors.alphaRed} />
           <Text style={styles.backText}>{event?.name ?? 'Event'}</Text>
         </Pressable>
-        <Text style={styles.title}>Upload Photos</Text>
+        <Text style={styles.title}>Upload Photos & Videos</Text>
       </View>
 
       {/* Progress bar */}

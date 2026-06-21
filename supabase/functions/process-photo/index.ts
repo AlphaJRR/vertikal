@@ -2,11 +2,10 @@
  * process-photo edge function
  *
  * Called after an original lands in event-originals.
- * v2: inserts the event_photos row only — preview grids use Supabase Storage
- * image transforms on the original (width 400) via mint-download-url.
- * No full-res copy into event-previews (privacy + performance).
+ * Inserts the event_photos row — photos use storage transforms for previews;
+ * videos use the original file for both preview and download.
  *
- * Request body: { eventId, storagePath, filename?, source? }
+ * Request body: { eventId, storagePath, filename?, source?, mediaKind? }
  */
 
 import { createClient } from 'npm:@supabase/supabase-js@2';
@@ -21,10 +20,18 @@ Deno.serve(async (req: Request) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: cors() });
 
   try {
-    const { eventId, storagePath, filename, source = 'manual' } =
-      await req.json() as { eventId: string; storagePath: string; filename?: string; source?: string };
+    const { eventId, storagePath, filename, source = 'manual', mediaKind = 'photo' } =
+      await req.json() as {
+        eventId: string;
+        storagePath: string;
+        filename?: string;
+        source?: string;
+        mediaKind?: string;
+      };
 
     if (!eventId || !storagePath) return err('Missing eventId or storagePath', 400);
+
+    const kind = mediaKind === 'video' ? 'video' : 'photo';
 
     const { data: event } = await admin.from('events').select('name').eq('id', eventId).single();
     if (!event) return err('Event not found', 404);
@@ -52,10 +59,11 @@ Deno.serve(async (req: Request) => {
       thumb_path:   storagePath,
       filename:     filename ?? null,
       source:       source,
+      media_kind:   kind,
     });
     if (insErr) return err(`DB insert failed: ${insErr.message}`, 500);
 
-    return json({ ok: true, thumbPath: storagePath });
+    return json({ ok: true, thumbPath: storagePath, mediaKind: kind });
   } catch (e) {
     console.error('[process-photo] unhandled:', e);
     return err('Internal server error', 500);

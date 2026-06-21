@@ -19,6 +19,13 @@ import * as FileSystem from 'expo-file-system/legacy';
 import * as ImagePicker from 'expo-image-picker';
 import { supabase } from '@/lib/supabase';
 import { UploadQueue } from '@/lib/uploadQueue';
+import {
+  cacheExtension,
+  contentTypeForUpload,
+  defaultFilename,
+  mediaKindFromFilename,
+  type EventMediaKind,
+} from '@/lib/eventMedia';
 import type { EventPhoto, UploadQueueItem } from '@/types/events';
 
 // ─── useEventPhotos ──────────────────────────────────────────────────────────
@@ -147,11 +154,11 @@ export function useBatchPicker(
       if (!perm.granted) return 0;
 
       const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ['images'],
+        mediaTypes: ['images', 'videos'],
         allowsMultipleSelection: true,
         quality: 0.92,
         exif: false,
-        // iPhone HEIC → JPEG so process-photo can handle the file.
+        videoExportPreset: ImagePicker.VideoExportPreset.MediumQuality,
         preferredAssetRepresentationMode:
           ImagePicker.UIImagePickerPreferredAssetRepresentationMode.Compatible,
       });
@@ -162,13 +169,21 @@ export function useBatchPicker(
       for (const asset of result.assets) {
         const itemId      = randomUUID();
         const storagePath = `${eventId}/${itemId}/original`;
-        const localUri    = await persistPickerUri(asset.uri, itemId);
+        const mediaKind: EventMediaKind =
+          asset.type === 'video' || asset.type === 'pairedVideo'
+            ? 'video'
+            : mediaKindFromFilename(asset.fileName ?? asset.uri);
+        const filename =
+          asset.fileName?.replace(/\.heic$/i, '.jpg')
+          ?? defaultFilename(mediaKind, itemId);
+        const localUri    = await persistPickerUri(asset.uri, itemId, mediaKind);
         items.push({
           id:          itemId,
           eventId,
           localUri,
           storagePath,
-          filename:    (asset.fileName ?? 'photo.jpg').replace(/\.heic$/i, '.jpg'),
+          filename,
+          mediaKind,
           retries:     0,
           status:      'pending' as const,
           addedAt:     Date.now(),
@@ -192,11 +207,15 @@ export function useBatchPicker(
 // ─── helpers ─────────────────────────────────────────────────────────────────
 
 /** Camera-roll URIs expire after app kill — copy into cache first. */
-async function persistPickerUri(uri: string, itemId: string): Promise<string> {
+async function persistPickerUri(
+  uri: string,
+  itemId: string,
+  mediaKind: EventMediaKind,
+): Promise<string> {
   const cacheDir = FileSystem.cacheDirectory;
   if (!cacheDir) return uri;
 
-  const ext = uri.toLowerCase().includes('.png') ? 'png' : 'jpg';
+  const ext = cacheExtension(uri, mediaKind);
   const dest  = `${cacheDir}ava-upload-${itemId}.${ext}`;
 
   try {

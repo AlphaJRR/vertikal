@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { brandColors, brandFonts } from '@/constants/theme';
+import { isVideoMediaKind } from '@/lib/eventMedia';
 import type { EventPhoto } from '@/types/events';
 
 const { width: SCREEN_W } = Dimensions.get('window');
@@ -92,12 +93,21 @@ function PhotoGridCell({
       ) : (
         <View style={[styles.image, styles.placeholder]}>
           {item.thumbnailUrl && broken ? (
-            <Ionicons name="image-outline" size={22} color={brandColors.mutedText} />
+            <Ionicons
+              name={isVideoMediaKind(item.photo.media_kind) ? 'videocam-outline' : 'image-outline'}
+              size={22}
+              color={brandColors.mutedText}
+            />
           ) : (
             <ActivityIndicator size="small" color="#00BFFF" />
           )}
         </View>
       )}
+      {isVideoMediaKind(item.photo.media_kind) ? (
+        <View style={styles.videoBadge}>
+          <Ionicons name="play" size={12} color="#fff" />
+        </View>
+      ) : null}
     </Pressable>
   );
 }
@@ -105,9 +115,20 @@ function PhotoGridCell({
 const styles = StyleSheet.create({
   list:       { gap: GAP },
   row:        { gap: GAP },
-  cell:       { width: CELL_SIZE, height: CELL_SIZE, backgroundColor: '#111' },
+  cell:       { width: CELL_SIZE, height: CELL_SIZE, backgroundColor: '#111', position: 'relative' },
   image:      { width: '100%', height: '100%' },
   placeholder:{ alignItems: 'center', justifyContent: 'center', backgroundColor: '#111' },
   emptyState: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 12, paddingVertical: 60 },
   emptyText:  { fontFamily: brandFonts.body, fontSize: 14, color: brandColors.mutedText },
+  videoBadge: {
+    position: 'absolute',
+    bottom: 6,
+    left: 6,
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
