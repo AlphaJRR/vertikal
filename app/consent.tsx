@@ -2,7 +2,8 @@
  * Age-gate + consent screen — PRD Section 05 / compliance matrix Section 10.
  *
  * REQUIRED before any gallery content is shown (App Store 5.1.1 / COPPA).
- * Writes four rows to consent_log: age_confirm, photo_release, terms, marketing.
+ * Writes three rows to consent_log: age_confirm, terms, marketing.
+ * photo_release is per-event — written by app/photo-release.tsx after redeeming a code.
  * Sets attendees.photo_consent_at + terms_accepted_at + is_adult.
  * Marketing opt-in is SEPARATE and un-pre-checked (5.1.1 compliance).
  *

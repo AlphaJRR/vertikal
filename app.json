@@ -19,7 +19,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.alphavisualartists.app",
-      "buildNumber": "14",
+      "buildNumber": "18",
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "Access photos to upload event images.",
         "NSPhotoLibraryAddUsageDescription": "Save your event photos to your library.",
@@ -80,7 +80,9 @@
         {
           "icon": "./assets/icon.png",
           "color": "#E8000A",
-          "sounds": []
+          "sounds": [],
+          "mode": "production",
+          "enableBackgroundRemoteNotifications": false
         }
       ],
       [

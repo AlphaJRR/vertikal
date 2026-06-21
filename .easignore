@@ -1,4 +1,9 @@
 # Shrink EAS upload; not needed for iOS native build
+.expo-ota-dist/
+dist-web-backup*/
+app-store-screenshots/
+shopify-theme-ava/
+.cursor/
 # Capacitor shells — force Expo prebuild for AVA native app
 ios/
 android/
