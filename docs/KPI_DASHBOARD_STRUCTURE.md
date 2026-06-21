@@ -72,6 +72,22 @@
 
 ---
 
+## V. AVA PRO SUBSCRIPTION (approved June 2026)
+
+**Canonical targets:** `docs/AI_EXEC_SALES_GOALS.md`
+
+| KPI / Metric | Calculation | Owner | Target (M1) |
+|:---|:---|:---|:---|
+| **Gross MRR** | Sum active Pro subs × plan price (normalized monthly) | LEDGER / ATLAS | $1,000 |
+| **Paid subs (cumulative)** | Active `subscription_tier = 'pro'` | ATLAS | 120–150 |
+| **Founding 50 conversion** | F50 paid / 50 | CROWN | ≥ 90% by day 30 |
+| **Free → Pro (30-day)** | New Pro / users hitting lesson 13 gate | BEACON | 6% |
+| **Monthly churn** | Churned subs / start-of-month subs | ATLAS | < 6% |
+| **Annual plan mix** | Annual subs / new subs | LEDGER | 60–65% |
+| **Founding cap remaining** | 500 − founding subs | LEDGER | Track daily |
+
+---
+
 **Generated:** December 14, 2024  
 **Version:** v1.0  
 **Status:** Production Ready

@@ -63,7 +63,7 @@ export function Paywall({
       <Text style={styles.body}>{subtitle}</Text>
 
       <View style={styles.proCard}>
-        <Text style={styles.priceHero}>$40/year</Text>
+        <Text style={styles.priceHero}>$39.99/year</Text>
         <Text style={styles.priceHeroLabel}>Founding member price</Text>
         <Text style={styles.priceSecondary}>or $9.99/month</Text>
         <Text style={styles.iapNote}>

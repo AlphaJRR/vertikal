@@ -12,7 +12,7 @@
 |------|--------|
 | Events guest redeem + gallery | ✅ Fixed — redeem context scopes gallery to correct attendee |
 | FREE_LAUNCH | `true` — all Pro content unlocked for App Review (no IAP required in binary yet) |
-| Paywall copy | Production-ready ($40/yr founding, $9.99/mo) — hidden while FREE_LAUNCH |
+| Paywall copy | Production-ready ($39.99/yr founding, $9.99/mo) — hidden while FREE_LAUNCH |
 | Native IAP SDK | ❌ **Not installed** — `restorePurchases` is a stub in `app/(tabs)/more.tsx` |
 | expo-notifications | In `app.json` — requires **build 24+** on device for reminders |
 
@@ -30,12 +30,18 @@
 
 ### AVA Pro subscription products (when flipping FREE_LAUNCH)
 
-Create in **App Store Connect → Subscriptions** (same subscription group):
+Create in **App Store Connect → Subscriptions** — group **`ALPHA CREATORS CREW`**:
 
-| Product ID (suggested) | Type | Price |
-|------------------------|------|-------|
-| `ava_pro_monthly` | Auto-renewable | $9.99/mo |
-| `ava_pro_annual` | Auto-renewable | $39.99/yr (founding $40/yr in UI) |
+| Product ID | Type | Price | Phase |
+|------------|------|-------|-------|
+| `ava_pro_monthly` | Auto-renewable | $9.99/mo | Founding (Phase 2) |
+| `ava_pro_annual` | Auto-renewable | $39.99/yr | Founding (Phase 2) |
+| `ava_pro_monthly_standard` | Auto-renewable | $14.99/mo | Standard (Phase 3) |
+| `ava_pro_annual_standard` | Auto-renewable | $49.99/yr | Standard (Phase 3) |
+
+**Founding window:** First 500 subs OR 90 days. Founding 50 get 7-day early access; grandfathered at founding price forever.
+
+Canonical sales targets: `docs/AI_EXEC_SALES_GOALS.md`.
 
 Then in code (P1 — not done yet):
 

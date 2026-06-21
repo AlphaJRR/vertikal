@@ -9,16 +9,20 @@
 ## iOS App Store
 
 ### App Name
+
 **Alpha Visual Artists**
 
 ### Subtitle
+
 **Creator Toolkit for Visual Storytellers**
 
 ### Category
+
 - **Primary:** Photo & Video
 - **Secondary:** Education
 
 ### Keywords
+
 ```
 creators, filmmaking, video production, cinematography, editing,
 color grading, lighting, shot list, invoice, rate calculator,
@@ -34,16 +38,19 @@ AVA is the mobile home for visual storytellers: production checklists, rate calc
 **Features:**
 
 **Creators Toolkit**
+
 - 108 structured lessons with cheat sheets and HTML slides
 - Camera, framing, lighting, editing, strategy, and production tracks
 - Foundational lessons free; AVA Pro unlocks the full curriculum
 
 **Production Tools**
+
 - Shoot-day and post-production checklists
 - Rate calculator with quote builder
 - Invoice builder with logo options
 
 **Creator Home**
+
 - Featured work reels and production tips
 - Wallpapers and brand assets
 - Sign in to sync Pro access and saved progress
@@ -52,9 +59,27 @@ AVA is the mobile home for visual storytellers: production checklists, rate calc
 
 ---
 
+### Subscriptions (AVA Pro)
+
+**Subscription group:** ALPHA CREATORS CREW
+
+| Phase | Monthly | Annual | Product IDs |
+|-------|---------|--------|-------------|
+| **Founding (Phase 2)** | $9.99 | $39.99 | `ava_pro_monthly`, `ava_pro_annual` |
+| **Standard (Phase 3)** | $14.99 | $49.99 | `ava_pro_monthly_standard`, `ava_pro_annual_standard` |
+
+**Founding window:** First 500 subscribers or 90 days — Founding 50 receive 7-day early access and are grandfathered at founding pricing.
+
+**Free tier:** 12 toolkit lessons, rate calculator, and invoice builder — no subscription required.
+
+**In-app purchase only** for digital content (Guideline 3.1.1). No web checkout for Pro in the iOS app.
+
+---
+
 ### Promotional Text
 
 **New in v1.0.4:**
+
 - In-app email + password sign-in (Supabase)
 - Full Creators Toolkit with pro gating
 - Production checklists, rate calculator, and invoice builder
@@ -77,6 +102,7 @@ AVA is the mobile home for visual storytellers: production checklists, rate calc
 ### App Icon
 
 **Requirements:**
+
 - 1024x1024px PNG
 - No transparency
 - AVA logo centered
@@ -86,19 +112,23 @@ AVA is the mobile home for visual storytellers: production checklists, rate calc
 ---
 
 ### Privacy Policy URL
-**https://alphavisualartists.com/privacy**
+
+**[https://alphavisualartists.com/privacy](https://alphavisualartists.com/privacy)**
 
 ### Support URL
-**https://alphavisualartists.com/support**
+
+**[https://give .com/support](https://alphavisualartists.com/support)**
 
 ### Marketing URL
-**https://alphavisualartists.com**
+
+**[https://alphavisualartists.com](https://alphavisualartists.com)**
 
 ---
 
 ## Content Ratings
 
 ### iOS
+
 - **Age Rating:** 12+
 - **Reasons:** Infrequent/Mild Profanity or Crude Humor
 
@@ -118,6 +148,7 @@ Step-by-step and Resolution Center copy: `docs/APP_STORE_REJECTION_JUNE_2026.md`
 ## Privacy & Permissions
 
 ### Required Permissions (iOS)
+
 - Photo Library — Save wallpapers; optional invoice logo upload
 - No camera permission required for core flows
 
@@ -128,6 +159,7 @@ Step-by-step and Resolution Center copy: `docs/APP_STORE_REJECTION_JUNE_2026.md`
 ### v1.0.4 (Build 10)
 
 **Features:**
+
 - In-app email + password sign-in for App Review and production users
 - Creators Toolkit with AVA Pro gating
 - Production checklists, rate calculator, invoice builder
@@ -140,6 +172,7 @@ Step-by-step and Resolution Center copy: `docs/APP_STORE_REJECTION_JUNE_2026.md`
 ## Metadata scrub checklist (Round 2 — June 2026)
 
 Before resubmission, confirm **App Store Connect** fields contain **no** references to:
+
 - "beta"
 - "join the beta"
 - "TestFlight" (unless in internal notes only)
