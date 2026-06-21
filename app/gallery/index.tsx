@@ -10,7 +10,7 @@ import {
   Text,
   View,
 } from 'react-native';
-import { useRouter } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { brandColors, brandFonts } from '@/constants/theme';
@@ -49,6 +49,12 @@ export default function GalleryScreen() {
     } as never);
   }, [items.length, loading, welcome, welcomeLoading, router]);
 
+  useFocusEffect(
+    useCallback(() => {
+      void handleRefresh();
+    }, [handleRefresh]),
+  );
+
   if (!session) {
     return (
       <View style={[styles.centered, { paddingTop: insets.top }]}>
@@ -66,7 +72,11 @@ export default function GalleryScreen() {
     router.push(`/gallery/${item.photo.id}` as never);
   };
 
-  const showWelcome = !loading && !welcomeLoading && items.length === 0 && welcome != null;
+  const showWelcome =
+    !loading && !welcomeLoading && items.length === 0 && welcome != null && welcome.assignedCount === 0;
+
+  const showSyncIssue =
+    !loading && !welcomeLoading && items.length === 0 && welcome != null && welcome.assignedCount > 0;
 
   return (
     <View style={[styles.root, { paddingTop: insets.top }]}>
@@ -93,6 +103,21 @@ export default function GalleryScreen() {
       ) : loading || welcomeLoading ? (
         <View style={styles.centered}>
           <ActivityIndicator color="#00BFFF" />
+        </View>
+      ) : showSyncIssue ? (
+        <View style={styles.centered}>
+          <Ionicons name="cloud-offline-outline" size={40} color={brandColors.mutedText} />
+          <Text style={styles.gateTitle}>Photos are assigned</Text>
+          <Text style={styles.gateBody}>
+            {welcome?.assignedCount ?? 0} photo{(welcome?.assignedCount ?? 0) !== 1 ? 's are' : ' is'} ready for you
+            at {welcome?.eventName ?? 'your event'}, but we could not load them yet. Pull refresh or re-enter your code.
+          </Text>
+          <Pressable style={styles.primaryBtn} onPress={() => void handleRefresh()}>
+            <Text style={styles.primaryBtnText}>Refresh gallery</Text>
+          </Pressable>
+          <Pressable style={styles.retryBtn} onPress={() => router.replace('/(tabs)/events' as never)}>
+            <Text style={styles.retryText}>Re-enter event code</Text>
+          </Pressable>
         </View>
       ) : showWelcome ? (
         <GalleryWelcome

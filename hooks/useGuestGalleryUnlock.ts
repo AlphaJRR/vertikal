@@ -13,6 +13,7 @@ import {
   normalizeRedeemCode,
   stashRedeemCode,
 } from '@/lib/redeemDeepLink';
+import { saveRedeemContext } from '@/lib/redeemContext';
 import type { RedeemResult } from '@/types/events';
 
 const GALLERY: Href = '/gallery';
@@ -61,10 +62,16 @@ export function useGuestGalleryUnlock(initialCode = '') {
       await AsyncStorage.setItem(LAST_CODE_KEY, eventCode);
 
       const row = Array.isArray(data) ? (data[0] as RedeemResult) : (data as RedeemResult);
-      if (!row?.attendee_id) {
+      if (!row?.attendee_id || !row?.event_id) {
         setError('Could not open your gallery. Please try again.');
         return;
       }
+
+      await saveRedeemContext({
+        attendeeId: row.attendee_id,
+        eventId:    row.event_id,
+        code:       eventCode,
+      });
 
       router.replace(GALLERY);
     } catch (err) {

@@ -12,6 +12,8 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { supabase } from '@/lib/supabase';
+import { useAuth } from '@/contexts/AuthContext';
+import { loadRedeemContext } from '@/lib/redeemContext';
 import type { EventPhoto } from '@/types/events';
 
 export interface GalleryItem {
@@ -31,10 +33,12 @@ interface UseAttendeeGalleryReturn {
 const urlCache = new Map<string, { url: string; expiresAt: number }>();
 
 export function useAttendeeGallery(): UseAttendeeGalleryReturn {
+  const { session } = useAuth();
   const [items,   setItems]   = useState<GalleryItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error,   setError]   = useState<string | null>(null);
   const fetchingRef           = useRef(false);
+  const thumbGenRef           = useRef(0);
 
   const getSignedUrl = useCallback(async (
     photoId:    string,
@@ -45,10 +49,10 @@ export function useAttendeeGallery(): UseAttendeeGalleryReturn {
     if (cached && cached.expiresAt > Date.now() + 60_000) return cached.url;
 
     try {
-      const { data, error } = await supabase.functions.invoke('mint-download-url', {
+      const { data, error: fnErr } = await supabase.functions.invoke('mint-download-url', {
         body: { photoId, resolution },
       });
-      if (error || !data?.signedUrl) return null;
+      if (fnErr || !data?.signedUrl) return null;
       urlCache.set(key, {
         url:       data.signedUrl as string,
         expiresAt: Date.now() + (data.expiresIn as number) * 1000,
@@ -61,29 +65,43 @@ export function useAttendeeGallery(): UseAttendeeGalleryReturn {
   }, []);
 
   const refresh = useCallback(async () => {
+    if (!session?.user) {
+      setItems([]);
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
     setError(null);
+    const thumbGen = ++thumbGenRef.current;
+
     try {
-      // RLS (photos_attendee_read) filters to assigned-only, deleted_at-aware
-      const { data, error: err } = await supabase
+      const ctx = await loadRedeemContext();
+
+      let query = supabase
         .from('event_photos')
         .select('*')
         .order('uploaded_at', { ascending: false });
 
+      if (ctx?.eventId) {
+        query = query.eq('event_id', ctx.eventId);
+      }
+
+      const { data, error: err } = await query;
       if (err) throw err;
 
       const photos = (data ?? []) as EventPhoto[];
       setItems(photos.map(p => ({ photo: p, thumbnailUrl: null })));
       setLoading(false);
 
-      // Fetch thumbnails in batches of 6
-      if (fetchingRef.current) return;
-      fetchingRef.current = true;
+      if (photos.length === 0) return;
 
       const BATCH = 6;
       for (let i = 0; i < photos.length; i += BATCH) {
+        if (thumbGen !== thumbGenRef.current) return;
         const batch = photos.slice(i, i + BATCH);
         const urls  = await Promise.all(batch.map(p => getSignedUrl(p.id, 'preview')));
+        if (thumbGen !== thumbGenRef.current) return;
         setItems(prev => {
           const next = [...prev];
           batch.forEach((p, idx) => {
@@ -93,14 +111,12 @@ export function useAttendeeGallery(): UseAttendeeGalleryReturn {
           return next;
         });
       }
-
-      fetchingRef.current = false;
     } catch (err) {
       console.error('[useAttendeeGallery] refresh failed:', err);
       setError('Could not load your gallery.');
       setLoading(false);
     }
-  }, [getSignedUrl]);
+  }, [getSignedUrl, session?.user]);
 
   useEffect(() => { void refresh(); }, [refresh]);
 
