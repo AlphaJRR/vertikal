@@ -13,7 +13,7 @@ import {
 } from "@expo-google-fonts/space-grotesk";
 import { useFonts } from "expo-font";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Stack, useRouter } from "expo-router";
+import { Stack } from "expo-router";
 import * as ExpoLinking from "expo-linking";
 import * as SplashScreen from "expo-splash-screen";
 import * as Updates from "expo-updates";
@@ -108,57 +108,6 @@ function openInBrowser(url: string) {
 }
 
 function RootLayoutNav() {
-  const router = useRouter();
-
-  // Handle notification taps — warm start and cold start.
-  // Lazy-load expo-notifications so a native init failure cannot block boot.
-  useEffect(() => {
-    let sub: { remove: () => void } | null = null;
-    let cancelled = false;
-
-    void (async () => {
-      try {
-        const Notifications = await import("expo-notifications");
-
-        sub = Notifications.addNotificationResponseReceivedListener((response) => {
-          const data = response.notification.request.content.data;
-          if (data?.kind === "note-reminder") {
-            setTimeout(() => {
-              router.push({
-                pathname: "/(tabs)/production",
-                params: {
-                  phase: data.phase as string,
-                  highlightId: data.itemId as string,
-                },
-              } as never);
-            }, 100);
-          }
-        });
-
-        const response = await Notifications.getLastNotificationResponseAsync();
-        const data = response?.notification.request.content.data;
-        if (!cancelled && data?.kind === "note-reminder") {
-          setTimeout(() => {
-            router.push({
-              pathname: "/(tabs)/production",
-              params: {
-                phase: data.phase as string,
-                highlightId: data.itemId as string,
-              },
-            } as never);
-          }, 500);
-        }
-      } catch (error) {
-        console.warn("[notifications] listener setup failed:", error);
-      }
-    })();
-
-    return () => {
-      cancelled = true;
-      sub?.remove();
-    };
-  }, [router]);
-
   return (
     <Stack screenOptions={{ headerBackTitle: "Back" }}>
       {/* ── Existing screens ───────────────────────────────────────── */}
