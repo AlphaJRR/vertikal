@@ -11,29 +11,17 @@ import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter, type Href } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useProjects } from "../../hooks/useProjects";
-import type { Project } from "../../hooks/useProjects";
+import { ProjectCard } from "@/components/projects/ProjectCard";
+import { useProjects } from "@/hooks/useProjects";
+import type { Project } from "@/hooks/useProjects";
 
-// ─── Brand tokens ─────────────────────────────────────────────────────────────
 const C = {
   bg: "#060606",
-  card: "#141414",
-  cell: "#171717",
-  hairline: "rgba(255,255,255,0.07)",
   text: "#fff",
   muted: "rgba(255,255,255,0.5)",
   dim: "rgba(255,255,255,0.32)",
   accent: "#E8000A",
 } as const;
-
-function formatDate(iso: string): string {
-  try {
-    const d = new Date(iso);
-    return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-  } catch {
-    return "";
-  }
-}
 
 export default function ProjectsScreen() {
   const router = useRouter();
@@ -53,6 +41,14 @@ export default function ProjectsScreen() {
   const handleLongPress = (project: Project) => {
     Alert.alert(project.name, "What do you want to do?", [
       {
+        text: "Open details",
+        onPress: () => router.push(`/projects/${project.id}` as Href),
+      },
+      {
+        text: "Set active",
+        onPress: () => { void switchProject(project.id); },
+      },
+      {
         text: "Rename",
         onPress: () => {
           Alert.prompt(
@@ -63,11 +59,7 @@ export default function ProjectsScreen() {
               {
                 text: "Save",
                 onPress: (name: string | undefined) => {
-                  if (name?.trim()) {
-                    renameProject(project.id, name.trim()).catch((err) =>
-                      console.error("[ProjectsScreen] rename failed:", err),
-                    );
-                  }
+                  if (name?.trim()) void renameProject(project.id, name.trim());
                 },
               },
             ],
@@ -88,11 +80,7 @@ export default function ProjectsScreen() {
               {
                 text: "Delete",
                 style: "destructive",
-                onPress: () => {
-                  deleteProject(project.id).catch((err) =>
-                    console.error("[ProjectsScreen] delete failed:", err),
-                  );
-                },
+                onPress: () => { void deleteProject(project.id); },
               },
             ],
           );
@@ -100,63 +88,26 @@ export default function ProjectsScreen() {
       },
       { text: "Cancel", style: "cancel" },
     ]);
-    // Suppress unused warning
     forceUpdate((n) => n + 1);
-  };
-
-  const renderItem = ({ item, index }: { item: Project; index: number }) => {
-    const isActive = item.id === activeProject?.id;
-    return (
-      <Pressable
-        onPress={() => {
-          switchProject(item.id).catch((err) =>
-            console.error("[ProjectsScreen] switchProject failed:", err),
-          );
-        }}
-        onLongPress={() => handleLongPress(item)}
-        style={({ pressed }) => [
-          s.projectRow,
-          index > 0 && s.projectRowBorder,
-          pressed && s.pressed,
-        ]}
-      >
-        <View style={{ flex: 1 }}>
-          <Text style={s.projectName}>{item.name}</Text>
-          <Text style={s.projectMeta}>
-            Last edited {formatDate(item.updated_at)}
-          </Text>
-        </View>
-        <View style={s.projectRight}>
-          {isActive && (
-            <View style={s.activePill}>
-              <Text style={s.activePillText}>ACTIVE</Text>
-            </View>
-          )}
-          <Ionicons
-            name="chevron-forward"
-            size={16}
-            color={isActive ? C.accent : C.dim}
-          />
-        </View>
-      </Pressable>
-    );
   };
 
   return (
     <>
       <StatusBar style="light" />
       <View style={[s.root, { paddingTop: insets.top }]}>
-        {/* Header */}
         <View style={s.header}>
           <Pressable onPress={() => router.back()} style={s.backBtn} hitSlop={12}>
             <Ionicons name="chevron-back" size={22} color={C.text} />
           </Pressable>
-          <Text style={s.title}>PROJECTS</Text>
+          <Text style={s.title}>MY PROJECTS</Text>
           <View style={{ width: 44 }} />
         </View>
 
-        {/* Migration banner */}
-        {migrationBanner && (
+        <Text style={s.subtitle}>
+          Track each shoot from prospect to delivery — quotes, deposits, and checklists in one place.
+        </Text>
+
+        {migrationBanner ? (
           <View style={s.banner}>
             <Text style={s.bannerText}>
               Your checklists were saved as "My First Project"
@@ -165,27 +116,32 @@ export default function ProjectsScreen() {
               <Ionicons name="close" size={18} color={C.muted} />
             </Pressable>
           </View>
-        )}
+        ) : null}
 
-        {/* List */}
         <FlatList
           data={projects}
           keyExtractor={(p) => p.id}
-          renderItem={renderItem}
-          contentContainerStyle={{ paddingBottom: insets.bottom + 120 }}
+          renderItem={({ item }) => (
+            <ProjectCard
+              project={item}
+              isActive={item.id === activeProject?.id}
+              onPress={() => router.push(`/projects/${item.id}` as Href)}
+              onLongPress={() => handleLongPress(item)}
+            />
+          )}
+          contentContainerStyle={{ paddingTop: 8, paddingBottom: insets.bottom + 120 }}
           style={{ flex: 1 }}
           ListEmptyComponent={
             loading ? null : (
               <View style={s.emptyState}>
                 <Ionicons name="folder-open-outline" size={48} color={C.dim} />
                 <Text style={s.emptyText}>No projects yet.</Text>
-                <Text style={s.emptySubtext}>Tap + to create one.</Text>
+                <Text style={s.emptySubtext}>Create one for each shoot you have on the books.</Text>
               </View>
             )
           }
         />
 
-        {/* FAB */}
         <Pressable
           style={[s.fab, { bottom: insets.bottom + 32 }]}
           onPress={() => router.push("/projects/new" as Href)}
@@ -199,10 +155,7 @@ export default function ProjectsScreen() {
 }
 
 const s = StyleSheet.create({
-  root: {
-    flex: 1,
-    backgroundColor: C.bg,
-  },
+  root: { flex: 1, backgroundColor: C.bg },
   header: {
     flexDirection: "row",
     alignItems: "center",
@@ -210,17 +163,20 @@ const s = StyleSheet.create({
     paddingVertical: 12,
     justifyContent: "space-between",
   },
-  backBtn: {
-    width: 44,
-    height: 44,
-    alignItems: "center",
-    justifyContent: "center",
-  },
+  backBtn: { width: 44, height: 44, alignItems: "center", justifyContent: "center" },
   title: {
     fontFamily: "BebasNeue_400Regular",
     fontSize: 30,
     color: C.text,
     letterSpacing: 3,
+  },
+  subtitle: {
+    fontFamily: "SpaceGrotesk_400Regular",
+    fontSize: 13,
+    lineHeight: 19,
+    color: C.muted,
+    paddingHorizontal: 20,
+    marginBottom: 8,
   },
   banner: {
     flexDirection: "row",
@@ -241,55 +197,11 @@ const s = StyleSheet.create({
     color: C.text,
     lineHeight: 18,
   },
-  projectRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: C.cell,
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    minHeight: 64,
-  },
-  projectRowBorder: {
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: C.hairline,
-  },
-  pressed: {
-    opacity: 0.65,
-  },
-  projectName: {
-    fontFamily: "SpaceGrotesk_600SemiBold",
-    fontSize: 16,
-    color: C.text,
-    marginBottom: 3,
-  },
-  projectMeta: {
-    fontFamily: "SpaceGrotesk_400Regular",
-    fontSize: 12,
-    color: C.muted,
-  },
-  projectRight: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
-  },
-  activePill: {
-    backgroundColor: C.accent,
-    borderRadius: 999,
-    paddingHorizontal: 10,
-    paddingVertical: 4,
-  },
-  activePillText: {
-    fontFamily: "DMMono_400Regular",
-    fontSize: 9,
-    color: "#fff",
-    letterSpacing: 1.5,
-  },
   emptyState: {
-    flex: 1,
     alignItems: "center",
-    justifyContent: "center",
     paddingTop: 80,
     gap: 8,
+    paddingHorizontal: 32,
   },
   emptyText: {
     fontFamily: "SpaceGrotesk_600SemiBold",
@@ -301,6 +213,8 @@ const s = StyleSheet.create({
     fontFamily: "SpaceGrotesk_400Regular",
     fontSize: 14,
     color: C.dim,
+    textAlign: "center",
+    lineHeight: 20,
   },
   fab: {
     position: "absolute",

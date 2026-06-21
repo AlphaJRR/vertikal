@@ -24,6 +24,8 @@ import {
   SkillLevel,
 } from "../../data/rateCalculatorData";
 import { rateCalculatorStyles as s } from "./rateCalculatorStyles";
+import { useProjects } from "../../hooks/useProjects";
+import { ProjectPickerModal } from "../projects/ProjectPickerModal";
 
 interface RateCalculatorProps {
   onBack?: () => void;
@@ -37,7 +39,9 @@ interface QuoteLine {
 
 export function RateCalculator({ onBack }: RateCalculatorProps) {
   const insets = useSafeAreaInsets();
+  const { projects, attachQuote } = useProjects();
   const [step, setStep] = useState(1);
+  const [pickerOpen, setPickerOpen] = useState(false);
 
   // Step 1 — Project
   const [clientName, setClientName] = useState("");
@@ -191,14 +195,32 @@ export function RateCalculator({ onBack }: RateCalculatorProps) {
   const goNext = () => setStep((n) => Math.min(n + 1, 5));
   const goBack = () => setStep((n) => Math.max(n - 1, 1));
 
-  const handleSendQuote = () => {
+  const saveQuoteToProject = async (projectId?: string) => {
     const client = clientName.trim() || "Client";
-    const project = projectName.trim() || "Project";
-    Alert.alert(
-      "Quote Ready",
-      `${formatCurrency(quotedTotal)} quote for ${client} — ${project} is ready to send.`,
-      [{ text: "OK" }],
-    );
+    const project = projectName.trim() || "Untitled project";
+    const saved = await attachQuote({
+      projectId,
+      projectName:  project,
+      clientName:   client,
+      projectType,
+      totalCents:   Math.round(quotedTotal * 100),
+    });
+    if (saved) {
+      Alert.alert(
+        "Saved to project",
+        `${formatCurrency(quotedTotal)} quote linked to "${saved.name}". Stage set to Quote sent.`,
+      );
+    } else {
+      Alert.alert("Could not save", "Sign in and run migration 013 if projects fail to save.");
+    }
+  };
+
+  const handleSendQuote = () => {
+    if (projects.length === 0) {
+      void saveQuoteToProject();
+      return;
+    }
+    setPickerOpen(true);
   };
 
   const renderStep = () => {
@@ -441,7 +463,7 @@ export function RateCalculator({ onBack }: RateCalculatorProps) {
               <Text style={s.quotedTotal}>{formatCurrency(quotedTotal)}</Text>
             </View>
             <Pressable onPress={handleSendQuote} style={s.btnPrimary}>
-              <Text style={s.btnPrimaryTxt}>Send Quote</Text>
+              <Text style={s.btnPrimaryTxt}>Save quote to project</Text>
             </Pressable>
           </>
         );
@@ -518,6 +540,20 @@ export function RateCalculator({ onBack }: RateCalculatorProps) {
           <Text style={s.btnSecondaryTxt}>Edit Quote</Text>
         </Pressable>
       )}
+
+      <ProjectPickerModal
+        visible={pickerOpen}
+        projects={projects}
+        onClose={() => setPickerOpen(false)}
+        onSelect={(id) => {
+          setPickerOpen(false);
+          void saveQuoteToProject(id);
+        }}
+        onCreateNew={() => {
+          setPickerOpen(false);
+          void saveQuoteToProject();
+        }}
+      />
     </ScrollView>
   );
 }

@@ -21,7 +21,11 @@ import { brandColors, brandFonts } from '@/constants/theme';
 import { supabase } from '@/lib/supabase';
 import { useEvent } from '@/hooks/useEvents';
 import { useOperatorGuard } from '@/hooks/useOperatorGuard';
+import { useAttendeeReport } from '@/hooks/useAttendeeReport';
+import { AttendeeReportList } from '@/components/events/AttendeeReportList';
 import type { EventDashboard } from '@/types/events';
+
+type DashboardTab = 'overview' | 'report';
 
 export default function DashboardScreen() {
   const { id }  = useLocalSearchParams<{ id: string }>();
@@ -29,7 +33,10 @@ export default function DashboardScreen() {
   const insets  = useSafeAreaInsets();
   const { isOperator, loading: guardLoading } = useOperatorGuard();
   const { event } = useEvent(id ?? '');
+  const { rows: reportRows, loading: reportLoading, error: reportError, refresh: refreshReport } =
+    useAttendeeReport(id ?? '');
 
+  const [tab,        setTab]        = useState<DashboardTab>('overview');
   const [stats,      setStats]      = useState<EventDashboard | null>(null);
   const [loading,    setLoading]    = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -60,7 +67,7 @@ export default function DashboardScreen() {
       }>;
 
       setStats({
-        event:          event ?? { id, name: '', photographer_id: '', access_code: '', qr_token: '', event_type: '', status: 'active', event_date: null, cover_image_url: null, expires_at: null, created_at: '' },
+        event:          event ?? { id, name: '', photographer_id: '', access_code: '', qr_token: '', event_type: '', status: 'active', event_date: null, cover_image_url: null, expires_at: null, created_at: '', require_attendee_contact: false, welcome_message: null },
         totalPhotos:    photosRes.count ?? 0,
         totalAttendees: attendeesRes.count ?? 0,
         installs:       installsRes.count ?? 0,
@@ -91,7 +98,11 @@ export default function DashboardScreen() {
     return () => { void supabase.removeChannel(ch); };
   }, [id, fetchStats]);
 
-  const onRefresh = () => { setRefreshing(true); void fetchStats(); };
+  const onRefresh = () => {
+    setRefreshing(true);
+    void fetchStats();
+    void refreshReport();
+  };
 
   if (guardLoading || !isOperator) {
     return (
@@ -120,7 +131,35 @@ export default function DashboardScreen() {
         </View>
       </View>
 
-      {loading ? (
+      <View style={styles.tabRow}>
+        <Pressable
+          style={[styles.tabBtn, tab === 'overview' && styles.tabBtnActive]}
+          onPress={() => setTab('overview')}
+        >
+          <Text style={[styles.tabText, tab === 'overview' && styles.tabTextActive]}>Overview</Text>
+        </Pressable>
+        <Pressable
+          style={[styles.tabBtn, tab === 'report' && styles.tabBtnActive]}
+          onPress={() => setTab('report')}
+        >
+          <Text style={[styles.tabText, tab === 'report' && styles.tabTextActive]}>Attendee report</Text>
+        </Pressable>
+      </View>
+
+      {tab === 'report' ? (
+        <>
+          <Text style={styles.sectionLabel}>Guests by code created</Text>
+          <Text style={styles.reportHint}>
+            Included = digital photos in their offline checkout package. Assigned = photos linked to their code.
+          </Text>
+          <AttendeeReportList
+            rows={reportRows}
+            loading={reportLoading}
+            error={reportError}
+            onRetry={() => void refreshReport()}
+          />
+        </>
+      ) : loading ? (
         <View style={styles.centered}><ActivityIndicator color="#00BFFF" /></View>
       ) : stats ? (
         <>
@@ -184,6 +223,37 @@ const styles = StyleSheet.create({
   liveBadge:{ flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: 'rgba(0,191,255,0.1)', borderRadius: 6, paddingHorizontal: 8, paddingVertical: 4 },
   liveDot: { width: 6, height: 6, borderRadius: 3, backgroundColor: '#00BFFF' },
   liveText:{ fontFamily: brandFonts.mono, fontSize: 10, letterSpacing: 1, color: '#00BFFF' },
+  tabRow: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  tabBtn: {
+    flex: 1,
+    paddingVertical: 10,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.1)',
+    alignItems: 'center',
+  },
+  tabBtnActive: {
+    backgroundColor: 'rgba(0,191,255,0.12)',
+    borderColor: 'rgba(0,191,255,0.35)',
+  },
+  tabText: {
+    fontFamily: brandFonts.bodyMedium,
+    fontSize: 13,
+    color: brandColors.mutedText,
+  },
+  tabTextActive: {
+    color: '#00BFFF',
+  },
+  reportHint: {
+    fontFamily: brandFonts.body,
+    fontSize: 12,
+    lineHeight: 18,
+    color: brandColors.mutedText,
+    marginTop: -8,
+  },
   sectionLabel:{ fontFamily: brandFonts.mono, fontSize: 10, letterSpacing: 1.5, textTransform: 'uppercase', color: brandColors.mutedText },
   grid:    { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
   leadBox: { backgroundColor: 'rgba(255,255,255,0.04)', borderWidth: 1, borderColor: 'rgba(255,255,255,0.08)', borderRadius: 12, overflow: 'hidden' },

@@ -29,7 +29,8 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { hydrateDemoMode } from "@/lib/demoMode";
 import { supabase } from "@/lib/supabase";
-import { shouldPlayAppIntro } from "@/utils/introVideoGate";
+import { parseRedeemCodeFromUrl } from "@/lib/redeemDeepLink";
+import { markAppIntroPlayed, shouldPlayAppIntro } from "@/utils/introVideoGate";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -53,7 +54,13 @@ const IN_APP_PATHS = new Set([
   "redeem",
   "photo-release",
   "auth",      // auth/callback — Supabase magic link redirect target
+  "r",         // ava://r/CODE — redeem deep link (custom scheme fallback)
 ]);
+
+// Universal link redeem paths must stay in-app (expo-router), not open the browser.
+function isRedeemUniversalLink(linkUrl: string): boolean {
+  return parseRedeemCodeFromUrl(linkUrl) != null;
+}
 
 // Returns true for ava:// deep links that should be handled in-app by Expo Router
 function isInAppDeepLink(linkUrl: string): boolean {
@@ -121,9 +128,9 @@ function RootLayoutNav() {
       <Stack.Screen name="settings" options={{ headerShown: false }} />
       <Stack.Screen name="auth/callback" options={{ headerShown: false }} />
       <Stack.Screen name="redeem" options={{ headerShown: false }} />
+      <Stack.Screen name="r/[code]" options={{ headerShown: false }} />
       <Stack.Screen name="attendee/join" options={{ headerShown: false }} />
-      <Stack.Screen name="gallery/index" options={{ headerShown: false }} />
-      <Stack.Screen name="gallery/[photoId]" options={{ headerShown: false }} />
+      <Stack.Screen name="gallery" options={{ headerShown: false }} />
       <Stack.Screen name="events/create" options={{ headerShown: false }} />
       <Stack.Screen name="events/[id]/index" options={{ headerShown: false }} />
       <Stack.Screen name="events/[id]/upload" options={{ headerShown: false }} />
@@ -134,6 +141,7 @@ function RootLayoutNav() {
       {/* ── More / Account section screens ────────────────────────── */}
       <Stack.Screen name="projects/index" options={{ headerShown: false }} />
       <Stack.Screen name="projects/new" options={{ headerShown: false }} />
+      <Stack.Screen name="projects/[id]" options={{ headerShown: false }} />
       <Stack.Screen name="how-to" options={{ headerShown: false }} />
       <Stack.Screen name="tutorial" options={{ headerShown: false }} />
       <Stack.Screen name="tutorial/[id]" options={{ headerShown: false }} />
@@ -162,14 +170,14 @@ export default function RootLayout() {
   }, []);
 
   const finishIntro = useCallback(() => {
-    setIntroGate("skip");
+    void markAppIntroPlayed().finally(() => {
+      setIntroGate("skip");
+    });
   }, []);
 
   useEffect(() => {
-    if (__DEV__) {
-      console.log("[EAS Update] expo-updates unavailable in development mode");
-      return;
-    }
+    // Never check/reload OTA during the intro — reloadAsync was resetting users back to the logo.
+    if (__DEV__ || introGate !== "skip") return;
 
     async function fetchProductionUpdate() {
       if (!Updates.isEnabled) {
@@ -194,20 +202,19 @@ export default function RootLayout() {
 
         console.log("[EAS Update] downloading update…");
         await Updates.fetchUpdateAsync();
-        // Never reload during the embedded (TestFlight first-open) launch — causes crash loops.
-        if (!Updates.isEmbeddedLaunch) {
-          console.log("[EAS Update] update downloaded, reloading");
-          await Updates.reloadAsync();
-        } else {
-          console.log("[EAS Update] update staged for next launch");
-        }
+        // Stage only — reloadAsync mid-session caused intro loops and blank screens.
+        console.log("[EAS Update] update staged for next cold start");
       } catch (error) {
         console.warn("[EAS Update] check/fetch failed", error);
       }
     }
 
-    void fetchProductionUpdate();
-  }, []);
+    const timer = setTimeout(() => {
+      void fetchProductionUpdate();
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [introGate]);
 
   useEffect(() => {
     if (!fontsLoaded && !fontError) return;
@@ -272,6 +279,8 @@ export default function RootLayout() {
         void handleAuthCallback(linkUrl);
         return;
       }
+      // Universal link /r/:code — handled by expo-router (app/r/[code].tsx)
+      if (isRedeemUniversalLink(linkUrl)) return;
       // Let Expo Router handle in-app deep links natively
       if (isInAppDeepLink(linkUrl)) return;
       const target = toSiteUrl(linkUrl);
@@ -313,7 +322,11 @@ export default function RootLayout() {
                 {introGate === "loading" ? (
                   <View style={styles.bootScreen} />
                 ) : null}
-                {showMainApp ? <RootLayoutNav /> : null}
+                {showMainApp ? (
+                  <View style={styles.mainShell}>
+                    <RootLayoutNav />
+                  </View>
+                ) : null}
                 {introGate === "show" ? (
                   <AppIntroVideo onFinish={finishIntro} />
                 ) : null}
@@ -330,5 +343,8 @@ const styles = StyleSheet.create({
   bootScreen: {
     flex: 1,
     backgroundColor: "#0a0a0a",
+  },
+  mainShell: {
+    flex: 1,
   },
 });

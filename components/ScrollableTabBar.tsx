@@ -48,6 +48,9 @@ const TAB_LABELS: Record<string, string> = {
   more: "More",
 };
 
+/** Only these routes appear in the tab bar — edit/notes live inside Production. */
+const VISIBLE_TAB_ROUTES = new Set(Object.keys(TAB_LABELS));
+
 // ─── Props ────────────────────────────────────────────────────────────────────
 
 export interface ScrollableTabBarProps extends BottomTabBarProps {
@@ -114,7 +117,10 @@ export function ScrollableTabBar({
             contentContainerStyle={s.scrollContent}
             style={s.scroll}
           >
-            {state.routes.map((route, index) => {
+            {state.routes
+              .filter((route) => VISIBLE_TAB_ROUTES.has(route.name))
+              .map((route) => {
+              const index = state.routes.findIndex((r) => r.key === route.key);
               const { options } = descriptors[route.key];
               const isActive = state.index === index;
               const iconName = TAB_ICONS[route.name] ?? "ellipse-outline";

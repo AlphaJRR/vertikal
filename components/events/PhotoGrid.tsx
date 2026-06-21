@@ -3,7 +3,7 @@
  * Uses EventPhoto from migration 004 (no upload_status field).
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
   ActivityIndicator,
   Dimensions,
@@ -59,23 +59,46 @@ export function PhotoGrid({ items, loading, onPhotoPress, ListHeader, ListFooter
       ListFooterComponent={ListFooter}
       columnWrapperStyle={styles.row}
       renderItem={({ item }) => (
-        <Pressable
-          style={styles.cell}
-          onPress={() => onPhotoPress(item)}
-          accessibilityRole="button"
-          accessibilityLabel={`Photo ${item.photo.filename ?? ''}`}
-        >
-          {item.thumbnailUrl ? (
-            <Image source={{ uri: item.thumbnailUrl }} style={styles.image} resizeMode="cover" />
-          ) : (
-            <View style={[styles.image, styles.placeholder]}>
-              <ActivityIndicator size="small" color="#00BFFF" />
-            </View>
-          )}
-        </Pressable>
+        <PhotoGridCell item={item} onPress={() => onPhotoPress(item)} />
       )}
       contentContainerStyle={styles.list}
     />
+  );
+}
+
+function PhotoGridCell({
+  item,
+  onPress,
+}: {
+  item: PhotoGridItem;
+  onPress: () => void;
+}) {
+  const [broken, setBroken] = useState(false);
+
+  return (
+    <Pressable
+      style={styles.cell}
+      onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={`Photo ${item.photo.filename ?? ''}`}
+    >
+      {item.thumbnailUrl && !broken ? (
+        <Image
+          source={{ uri: item.thumbnailUrl }}
+          style={styles.image}
+          resizeMode="cover"
+          onError={() => setBroken(true)}
+        />
+      ) : (
+        <View style={[styles.image, styles.placeholder]}>
+          {item.thumbnailUrl && broken ? (
+            <Ionicons name="image-outline" size={22} color={brandColors.mutedText} />
+          ) : (
+            <ActivityIndicator size="small" color="#00BFFF" />
+          )}
+        </View>
+      )}
+    </Pressable>
   );
 }
 

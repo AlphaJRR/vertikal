@@ -9,56 +9,105 @@ import { UploadQueue } from '@/lib/uploadQueue';
 import type { UploadQueueItem } from '@/types/events';
 
 interface UseUploadQueueReturn {
-  items:      UploadQueueItem[];
-  pending:    number;
-  uploading:  boolean;
-  process:    () => Promise<void>;
-  refresh:    () => Promise<void>;
+  items:       UploadQueueItem[];
+  pending:     number;
+  failed:      number;
+  uploading:   boolean;
+  lastError:   string | null;
+  process:     (eventId?: string) => Promise<void>;
+  refresh:     () => Promise<void>;
+  clearFailed: (eventId?: string) => Promise<void>;
+  resetFailed: (eventId?: string) => Promise<void>;
+  clearForEvent: (eventId: string) => Promise<void>;
 }
 
-export function useUploadQueue(): UseUploadQueueReturn {
+export function useUploadQueue(eventId?: string): UseUploadQueueReturn {
   const [items,     setItems]     = useState<UploadQueueItem[]>([]);
   const [uploading, setUploading] = useState(false);
-  const processingRef             = useRef(false);
+  const [lastError, setLastError] = useState<string | null>(null);
+  const mountedRef                = useRef(true);
+
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => { mountedRef.current = false; };
+  }, []);
 
   const refresh = useCallback(async () => {
     const all = await UploadQueue.getAll();
+    if (!mountedRef.current) return;
     setItems(all);
-  }, []);
+    if (eventId) {
+      setLastError(UploadQueue.getLastErrorForEvent(all, eventId));
+    }
+  }, [eventId]);
 
-  const process = useCallback(async () => {
-    if (processingRef.current) return;
-    processingRef.current = true;
+  const process = useCallback(async (scopeEventId?: string) => {
     setUploading(true);
     try {
-      await UploadQueue.processAll(async () => {
+      const result = await UploadQueue.processAll(async () => {
         await refresh();
-      });
+      }, scopeEventId ?? eventId);
+
+      if (mountedRef.current && result.lastError) {
+        setLastError(result.lastError);
+      }
+
       await UploadQueue.clearDone();
     } finally {
-      processingRef.current = false;
-      setUploading(false);
+      if (mountedRef.current) setUploading(false);
       await refresh();
     }
+  }, [eventId, refresh]);
+
+  const clearFailed = useCallback(async (scopeEventId?: string) => {
+    await UploadQueue.clearFailed(scopeEventId ?? eventId);
+    if (mountedRef.current) setLastError(null);
+    await refresh();
+  }, [eventId, refresh]);
+
+  const resetFailed = useCallback(async (scopeEventId?: string) => {
+    await UploadQueue.resetFailed(scopeEventId ?? eventId);
+    if (mountedRef.current) setLastError(null);
+    await refresh();
+  }, [eventId, refresh]);
+
+  const clearForEvent = useCallback(async (scopeEventId: string) => {
+    await UploadQueue.clearForEvent(scopeEventId);
+    if (mountedRef.current) setLastError(null);
+    await refresh();
   }, [refresh]);
 
-  // Process pending uploads when the app returns to foreground
   useEffect(() => {
-    void refresh();
+    void (async () => {
+      await UploadQueue.recoverStuck();
+      await refresh();
+      await process(eventId);
+    })();
 
     const handleAppState = (next: AppStateStatus) => {
       if (next === 'active') {
-        void process();
+        void process(eventId);
       }
     };
 
     const sub = AppState.addEventListener('change', handleAppState);
-    void process(); // also kick off on mount
-
     return () => sub.remove();
-  }, [process, refresh]);
+  }, [process, refresh, eventId]);
 
-  const pending = items.filter(i => i.status === 'pending' || i.status === 'uploading').length;
+  const scoped = eventId ? items.filter(i => i.eventId === eventId) : items;
+  const pending = scoped.filter(i => i.status === 'pending' || i.status === 'uploading').length;
+  const failed  = scoped.filter(i => i.status === 'failed').length;
 
-  return { items, pending, uploading, process, refresh };
+  return {
+    items: scoped,
+    pending,
+    failed,
+    uploading,
+    lastError,
+    process,
+    refresh,
+    clearFailed,
+    resetFailed,
+    clearForEvent,
+  };
 }

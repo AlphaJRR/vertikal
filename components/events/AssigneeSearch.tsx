@@ -6,7 +6,6 @@
 
 import React, { useState } from 'react';
 import {
-  FlatList,
   Pressable,
   StyleSheet,
   Text,
@@ -58,14 +57,12 @@ export function AssigneeSearch({ attendees, assigned, onToggle, disabled }: Assi
           {query ? 'No attendees match your search.' : 'No attendees added yet.'}
         </Text>
       ) : (
-        <FlatList
-          data={filtered}
-          keyExtractor={a => a.id}
-          scrollEnabled={false}
-          renderItem={({ item }) => {
+        <View style={styles.list}>
+          {filtered.map(item => {
             const isAssigned = assigned.has(item.id);
             return (
               <Pressable
+                key={item.id}
                 style={[styles.row, isAssigned && styles.rowAssigned]}
                 onPress={() => !disabled && onToggle(item)}
                 accessibilityRole="checkbox"
@@ -86,8 +83,8 @@ export function AssigneeSearch({ attendees, assigned, onToggle, disabled }: Assi
                 ) : null}
               </Pressable>
             );
-          }}
-        />
+          })}
+        </View>
       )}
     </View>
   );
@@ -96,6 +93,9 @@ export function AssigneeSearch({ attendees, assigned, onToggle, disabled }: Assi
 const styles = StyleSheet.create({
   container: {
     gap: 8,
+  },
+  list: {
+    gap: 0,
   },
   searchRow: {
     flexDirection:    'row',

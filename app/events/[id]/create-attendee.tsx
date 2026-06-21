@@ -1,12 +1,12 @@
 /**
  * Create attendee — photographer POS screen.
  *
- * Run at the sale station after a buyer pays in person (cash / card reader / Zelle).
+ * Run at the sale station after checkout (cash, card reader, or Zelle — offline).
  * The DB trigger (005) auto-generates a unique redeem_code on INSERT.
- * Photographer shows the code to the buyer — it's their "receipt" / gallery key.
+ * Photographer shows the code to the guest — it's their gallery key.
  *
- * Required: first_name + last_name (to find them in the assign screen).
- * Optional: phone, email (data minimization; never gates the gallery).
+ * Required: first_name + last_name + photos_purchased (package photo count).
+ * Contact: phone OR email when event.require_attendee_contact is true (AVA Demo Shoot).
  *
  * NO payment UI. NO price. NO Stripe. This screen only creates the attendee record.
  */
@@ -33,6 +33,9 @@ import { useEvent } from '@/hooks/useEvents';
 import { useOperatorGuard } from '@/hooks/useOperatorGuard';
 import type { Attendee } from '@/types/events';
 
+/** Fixed demo/review event — contact required after migration 012. */
+const DEMO_EVENT_ID = 'a0000000-de00-de00-de00-000000000001';
+
 export default function CreateAttendeeScreen() {
   const { id }  = useLocalSearchParams<{ id: string }>();
   const router  = useRouter();
@@ -44,6 +47,10 @@ export default function CreateAttendeeScreen() {
   const [lastName,  setLastName]  = useState('');
   const [phone,     setPhone]     = useState('');
   const [email,     setEmail]     = useState('');
+  const [photosIncluded, setPhotosIncluded] = useState('');
+
+  const requireContact =
+    event?.require_attendee_contact === true || id === DEMO_EVENT_ID;
 
   const [busy,    setBusy]    = useState(false);
   const [error,   setError]   = useState<string | null>(null);
@@ -61,18 +68,32 @@ export default function CreateAttendeeScreen() {
     if (!firstName.trim()) { setError('First name is required.'); return; }
     if (!lastName.trim())  { setError('Last name is required.'); return; }
 
+    const includedCount = parseInt(photosIncluded.trim(), 10);
+    if (!photosIncluded.trim() || Number.isNaN(includedCount) || includedCount < 1) {
+      setError('Enter how many digital photos are included in their package (at least 1).');
+      return;
+    }
+
+    const phoneVal = phone.trim();
+    const emailVal = email.trim().toLowerCase();
+    if (requireContact && !phoneVal && !emailVal) {
+      setError('Phone or email is required for this event so we can reach the guest if needed.');
+      return;
+    }
+
     setBusy(true);
     setError(null);
     try {
       const { data, error: insertErr } = await supabase
         .from('attendees')
         .insert({
-          event_id:   id,
-          first_name: firstName.trim(),
-          last_name:  lastName.trim(),
-          phone:      phone.trim()  || null,
-          email:      email.trim().toLowerCase() || null,
-          is_adult:   true,
+          event_id:         id,
+          first_name:       firstName.trim(),
+          last_name:        lastName.trim(),
+          phone:            phoneVal || null,
+          email:            emailVal || null,
+          photos_purchased: includedCount,
+          is_adult:         true,
         })
         .select()
         .single();
@@ -80,9 +101,14 @@ export default function CreateAttendeeScreen() {
       if (insertErr) {
         if (insertErr.code === '23505') {
           setError('An attendee with this email is already registered for this event.');
+        } else if (
+          insertErr.code === '23514'
+          || insertErr.message?.includes('Phone or email is required')
+        ) {
+          setError('Phone or email is required for this event so we can reach the guest if needed.');
         } else {
           setError('Could not create attendee. Please try again.');
-          console.error('[create-attendee]', insertErr);
+          console.error('[create-attendee]', insertErr.code, insertErr.message, insertErr);
         }
         return;
       }
@@ -116,6 +142,7 @@ export default function CreateAttendeeScreen() {
     setLastName('');
     setPhone('');
     setEmail('');
+    setPhotosIncluded('');
     setError(null);
   };
 
@@ -137,17 +164,17 @@ export default function CreateAttendeeScreen() {
 
           {/* Big prominent code display */}
           <View style={styles.codeCard}>
-            <Text style={styles.codeLabel}>REDEEM CODE — GIVE TO BUYER</Text>
+            <Text style={styles.codeLabel}>REDEEM CODE — GIVE TO GUEST</Text>
             <Text style={styles.codeValue}>{created.redeem_code}</Text>
             <Text style={styles.codeHint}>
-              Buyer enters this in the app to unlock their photos
+              Guest enters this in the app to unlock their photos
             </Text>
           </View>
 
           {/* Share the code */}
           <Pressable style={styles.shareBtn} onPress={() => void handleShare()}>
             <Ionicons name="share-outline" size={18} color="#000" />
-            <Text style={styles.shareBtnText}>Share code with buyer</Text>
+            <Text style={styles.shareBtnText}>Share code with guest</Text>
           </Pressable>
 
           {/* Assign photos to this attendee */}
@@ -156,7 +183,7 @@ export default function CreateAttendeeScreen() {
             onPress={() => router.push(`/events/${id}/assign` as never)}
           >
             <Ionicons name="images-outline" size={18} color="#00BFFF" />
-            <Text style={styles.assignBtnText}>Assign photos to this buyer</Text>
+            <Text style={styles.assignBtnText}>Assign photos to this guest</Text>
           </Pressable>
 
           {/* Create another */}
@@ -189,8 +216,17 @@ export default function CreateAttendeeScreen() {
 
         <Text style={styles.title}>New Attendee</Text>
         <Text style={styles.subtitle}>
-          Enter the buyer's details. A unique gallery code will be generated automatically.
+          Enter the guest&apos;s details. A unique gallery code will be generated automatically.
         </Text>
+
+        {requireContact ? (
+          <View style={styles.requiredBanner}>
+            <Ionicons name="call-outline" size={16} color="#fbbf24" />
+            <Text style={styles.requiredBannerText}>
+              Phone or email required for this event — enter at least one so we can reach the guest if delivery issues come up.
+            </Text>
+          </View>
+        ) : null}
 
         <Field label="First name *">
           <TextInput
@@ -208,7 +244,22 @@ export default function CreateAttendeeScreen() {
           />
         </Field>
 
-        <Field label="Phone (optional)">
+        <Field label="Digital photos included *">
+          <TextInput
+            value={photosIncluded}
+            onChangeText={setPhotosIncluded}
+            placeholder="3"
+            placeholderTextColor={brandColors.mutedText}
+            keyboardType="number-pad"
+            style={styles.input}
+            editable={!busy}
+          />
+        </Field>
+        <Text style={styles.fieldHint}>
+          How many digital photos are in their package (set at checkout).
+        </Text>
+
+        <Field label={requireContact ? 'Phone *' : 'Phone (optional)'}>
           <TextInput
             value={phone} onChangeText={setPhone}
             placeholder="(312) 555-0100"
@@ -218,10 +269,10 @@ export default function CreateAttendeeScreen() {
           />
         </Field>
 
-        <Field label="Email (optional)">
+        <Field label={requireContact ? 'Email *' : 'Email (optional)'}>
           <TextInput
             value={email} onChangeText={setEmail}
-            placeholder="buyer@email.com"
+            placeholder="guest@email.com"
             placeholderTextColor={brandColors.mutedText}
             keyboardType="email-address"
             autoCapitalize="none"
@@ -233,8 +284,9 @@ export default function CreateAttendeeScreen() {
         <View style={styles.infoNote}>
           <Ionicons name="information-circle-outline" size={14} color={brandColors.mutedText} />
           <Text style={styles.infoText}>
-            Phone and email are optional — they will not gate gallery access.
-            A unique code is generated automatically on save.
+            {requireContact
+              ? 'Enter at least one way to reach this guest (phone or email). We only contact them manually if something goes wrong with delivery.'
+              : 'Phone and email are optional — they will not gate gallery access. A unique code is generated automatically on save.'}
           </Text>
         </View>
 
@@ -279,7 +331,32 @@ const styles = StyleSheet.create({
   backText:   { fontFamily: brandFonts.bodyMedium, fontSize: 15, color: brandColors.alphaRed },
   title:      { fontFamily: brandFonts.display, fontSize: 30, color: '#fff', textTransform: 'uppercase' },
   subtitle:   { fontFamily: brandFonts.body, fontSize: 13, lineHeight: 19, color: brandColors.subtleText, marginTop: 6 },
+  requiredBanner: {
+    flexDirection: 'row',
+    gap: 10,
+    alignItems: 'flex-start',
+    marginTop: 14,
+    padding: 12,
+    borderRadius: 10,
+    backgroundColor: 'rgba(251,191,36,0.1)',
+    borderWidth: 1,
+    borderColor: 'rgba(251,191,36,0.35)',
+  },
+  requiredBannerText: {
+    fontFamily: brandFonts.body,
+    fontSize: 13,
+    lineHeight: 19,
+    color: '#fbbf24',
+    flex: 1,
+  },
   fieldLabel: { fontFamily: brandFonts.mono, fontSize: 10, letterSpacing: 1.5, textTransform: 'uppercase', color: brandColors.mutedText },
+  fieldHint: {
+    fontFamily: brandFonts.body,
+    fontSize: 12,
+    color: brandColors.mutedText,
+    marginTop: -6,
+    lineHeight: 17,
+  },
   input: {
     fontFamily: brandFonts.body, fontSize: 16, color: '#fff',
     backgroundColor: 'rgba(255,255,255,0.06)',

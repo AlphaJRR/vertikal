@@ -78,7 +78,7 @@ export default function AttendeeJoinScreen() {
 
   const handleContinue = async () => {
     if (!session?.user) {
-      router.push('/sign-in' as Href);
+      router.push('/redeem' as Href);
       return;
     }
 
@@ -136,13 +136,12 @@ export default function AttendeeJoinScreen() {
 
       <Text style={styles.headline}>You're almost in</Text>
       <Text style={styles.body}>
-        Create a free account (or sign in), then enter the 6-character code your
-        photographer gave you at the event to view your photos.
+        Enter the code your photographer gave you at checkout. No account signup — just the code.
       </Text>
 
       <Pressable style={styles.primaryBtn} onPress={() => void handleContinue()}>
         <Text style={styles.primaryBtnText}>
-          {session ? 'Enter my code' : 'Sign in / Create account'}
+          {session ? 'Enter my code' : 'Enter event code'}
         </Text>
       </Pressable>
 

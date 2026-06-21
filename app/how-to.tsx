@@ -25,11 +25,11 @@ const SECTIONS: { title: string; body: string }[] = [
       "and Sony Shooting Modes guides. Everything is designed for creators on the move.",
   },
   {
-    title: "Using the Shoot Checklist",
+    title: "Using Production checklists",
     body:
-      "The Production tab houses your pre-shoot and shoot-day checklists. " +
-      "Check off items as you gear up for a shoot. Your progress syncs to the cloud " +
-      "when you're signed in — never lose your workflow again.",
+      "The Production tab has three segments in one place: Pre-Prod, Day Of, and Edit. " +
+      "Pick a project at the top so each shoot (podcast, commercial, etc.) keeps its own lists. " +
+      "Check off items as you go — progress syncs when you're signed in.",
   },
   {
     title: "Managing Projects",

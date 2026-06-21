@@ -18,6 +18,39 @@ const QUEUE_KEY     = 'ava:photo_upload_queue_v2';
 const ORIGINALS     = 'event-originals';
 const MAX_RETRIES   = 3;
 const RETRY_BASE_MS = 2000;
+const READ_TIMEOUT_MS    = 45_000;
+const UPLOAD_TIMEOUT_MS  = 120_000;
+const PROCESS_TIMEOUT_MS = 90_000;
+
+export interface ProcessQueueResult {
+  succeeded: number;
+  failed:    number;
+  lastError: string | null;
+}
+
+type UploadAttempt = { ok: true } | { ok: false; error: string };
+
+let processingLock = false;
+let processChain: Promise<ProcessQueueResult> = Promise.resolve({
+  succeeded: 0,
+  failed: 0,
+  lastError: null,
+});
+
+function runExclusive<T>(fn: () => Promise<T>): Promise<T> {
+  const run = processChain.then(fn);
+  processChain = run.then(
+    () => ({ succeeded: 0, failed: 0, lastError: null }),
+    () => ({ succeeded: 0, failed: 0, lastError: null }),
+  );
+  return run;
+}
+
+function isActionable(item: UploadQueueItem): boolean {
+  return item.status === 'pending'
+    || item.status === 'uploading'
+    || (item.status === 'failed' && item.retries < MAX_RETRIES);
+}
 
 // ─── Persistence ─────────────────────────────────────────────────────────────
 
@@ -37,6 +70,11 @@ async function patchItem(id: string, patch: Partial<UploadQueueItem>): Promise<v
   await writeQueue(q.map(i => (i.id === id ? { ...i, ...patch } : i)));
 }
 
+async function getFreshItem(id: string): Promise<UploadQueueItem | undefined> {
+  const q = await readQueue();
+  return q.find(i => i.id === id);
+}
+
 // ─── Public API ──────────────────────────────────────────────────────────────
 
 export const UploadQueue = {
@@ -50,37 +88,70 @@ export const UploadQueue = {
     return readQueue();
   },
 
-  async getPending(): Promise<UploadQueueItem[]> {
+  async getPending(eventId?: string): Promise<UploadQueueItem[]> {
     const all = await readQueue();
-    return all.filter(i => i.status === 'pending' || (i.status === 'failed' && i.retries < MAX_RETRIES));
+    return all.filter(i => {
+      if (eventId && i.eventId !== eventId) return false;
+      return isActionable(i);
+    });
   },
 
-  async processAll(onProgress?: (done: number, total: number) => void): Promise<{ succeeded: number; failed: number }> {
-    const queue   = await readQueue();
-    const pending = queue.filter(i => i.status === 'pending' || (i.status === 'failed' && i.retries < MAX_RETRIES));
-    let succeeded = 0;
-    let failed    = 0;
+  getLastErrorForEvent(items: UploadQueueItem[], eventId: string): string | null {
+    const failed = items
+      .filter(i => i.eventId === eventId && i.lastError)
+      .sort((a, b) => b.addedAt - a.addedAt);
+    return failed[0]?.lastError ?? null;
+  },
 
-    for (let idx = 0; idx < pending.length; idx++) {
-      const item = pending[idx];
-      await patchItem(item.id, { status: 'uploading' });
-
-      const ok = await uploadOne(item);
-      if (ok) {
-        await patchItem(item.id, { status: 'done' });
-        succeeded++;
-      } else {
-        const retries = item.retries + 1;
-        await patchItem(item.id, {
-          status:  retries >= MAX_RETRIES ? 'failed' : 'pending',
-          retries,
-        });
-        if (retries < MAX_RETRIES) await sleep(RETRY_BASE_MS * 2 ** retries);
-        failed++;
-      }
-      onProgress?.(idx + 1, pending.length);
+  /** After force-quit mid-upload, items can stay stuck in `uploading`. */
+  async recoverStuck(): Promise<void> {
+    const q = await readQueue();
+    const next = q.map(i =>
+      i.status === 'uploading' ? { ...i, status: 'pending' as const } : i,
+    );
+    if (next.some((item, idx) => item.status !== q[idx]?.status)) {
+      await writeQueue(next);
     }
-    return { succeeded, failed };
+  },
+
+  async clearFailed(eventId?: string): Promise<void> {
+    const q = await readQueue();
+    await writeQueue(
+      q.filter(i => {
+        if (i.status !== 'failed') return true;
+        if (eventId && i.eventId !== eventId) return true;
+        return false;
+      }),
+    );
+  },
+
+  /** Reset failed items so the operator can retry without re-picking photos. */
+  async resetFailed(eventId?: string): Promise<void> {
+    const q = await readQueue();
+    await writeQueue(
+      q.map(i => {
+        if (i.status !== 'failed') return i;
+        if (eventId && i.eventId !== eventId) return i;
+        return { ...i, status: 'pending' as const, retries: 0, lastError: undefined };
+      }),
+    );
+  },
+
+  async clearForEvent(eventId: string): Promise<void> {
+    const q = await readQueue();
+    await writeQueue(q.filter(i => i.eventId !== eventId));
+  },
+
+  /**
+   * Process the queue until no actionable items remain (retries each item up to
+   * MAX_RETRIES in this run). Uses a module-level lock so multiple hook instances
+   * don't double-upload.
+   */
+  async processAll(
+    onProgress?: (done: number, total: number) => void,
+    eventId?: string,
+  ): Promise<ProcessQueueResult> {
+    return runExclusive(() => processAllInner(onProgress, eventId));
   },
 
   async clearDone(): Promise<void> {
@@ -89,49 +160,208 @@ export const UploadQueue = {
   },
 };
 
+async function processAllInner(
+  onProgress?: (done: number, total: number) => void,
+  eventId?: string,
+): Promise<ProcessQueueResult> {
+  processingLock = true;
+  let succeeded  = 0;
+  let failed     = 0;
+  let lastError: string | null = null;
+  let processed  = 0;
+
+  try {
+    await UploadQueue.recoverStuck();
+
+    while (true) {
+      const pending = await UploadQueue.getPending(eventId);
+      if (pending.length === 0) break;
+
+      const item = pending[0];
+      const fresh = await getFreshItem(item.id);
+      if (!fresh || !isActionable(fresh)) continue;
+
+      await patchItem(fresh.id, { status: 'uploading' });
+
+      let attempt: UploadAttempt;
+      try {
+        attempt = await uploadOne(fresh);
+      } catch (err) {
+        const message = err instanceof Error ? err.message : 'Upload failed';
+        attempt = { ok: false, error: message };
+      }
+      processed++;
+
+      if (attempt.ok) {
+        await patchItem(fresh.id, { status: 'done', lastError: undefined });
+        succeeded++;
+      } else {
+        const retries = fresh.retries + 1;
+        lastError = attempt.error;
+        await patchItem(fresh.id, {
+          status:    retries >= MAX_RETRIES ? 'failed' : 'pending',
+          retries,
+          lastError: attempt.error,
+        });
+        if (retries >= MAX_RETRIES) failed++;
+        else await sleep(RETRY_BASE_MS * 2 ** retries);
+      }
+
+      onProgress?.(processed, processed + pending.length - 1);
+    }
+  } finally {
+    processingLock = false;
+  }
+
+  return { succeeded, failed, lastError };
+}
+
 // ─── Upload one item ──────────────────────────────────────────────────────────
 
-async function uploadOne(item: UploadQueueItem): Promise<boolean> {
+async function uploadOne(item: UploadQueueItem): Promise<UploadAttempt> {
   try {
-    // 1. Read local file as base64
-    const base64 = await FileSystem.readAsStringAsync(item.localUri, {
-      encoding: FileSystem.EncodingType.Base64,
-    });
-    const binary = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) {
+      return { ok: false, error: 'Not signed in — sign in again and retry.' };
+    }
 
-    // 2. Upload to event-originals bucket
-    const { error: uploadError } = await supabase.storage
-      .from(ORIGINALS)
-      .upload(item.storagePath, binary, { contentType: 'image/jpeg', upsert: false });
+    const { bytes, contentType } = await withTimeout(
+      readUploadBytes(item.localUri),
+      READ_TIMEOUT_MS,
+      'Reading photo',
+    );
+
+    const { error: uploadError } = await withTimeout(
+      supabase.storage
+        .from(ORIGINALS)
+        .upload(item.storagePath, bytes, {
+          contentType,
+          upsert: true,
+        }),
+      UPLOAD_TIMEOUT_MS,
+      'Storage upload',
+    );
 
     if (uploadError) {
-      console.error('[UploadQueue] storage upload failed:', uploadError);
-      return false;
+      console.error('[UploadQueue] storage upload failed:', uploadError.message, uploadError);
+      if (uploadError.message?.includes('row-level security')) {
+        return {
+          ok: false,
+          error: 'Storage blocked by server policy. Apply migration 011 in Supabase SQL editor, then retry.',
+        };
+      }
+      return { ok: false, error: uploadError.message || 'Storage upload failed' };
     }
 
-    // 3. Invoke process-photo edge function.
-    //    It generates the thumbnail → uploads to event-previews → inserts event_photos row.
-    const { error: fnError } = await supabase.functions.invoke('process-photo', {
-      body: {
-        eventId:     item.eventId,
-        storagePath: item.storagePath,
-        filename:    item.filename ?? null,
-        source:      'manual',
-      },
-    });
+    const { data: fnData, error: fnError } = await withTimeout(
+      supabase.functions.invoke('process-photo', {
+        body: {
+          eventId:     item.eventId,
+          storagePath: item.storagePath,
+          filename:    item.filename ?? null,
+          source:      'manual',
+        },
+      }),
+      PROCESS_TIMEOUT_MS,
+      'Thumbnail processing',
+    );
 
     if (fnError) {
-      console.error('[UploadQueue] process-photo failed:', fnError);
-      // Non-fatal for the queue — the original is in storage; edge fn can be retried.
-      // Return true so we don't re-upload the original.
-      return true;
+      console.error('[UploadQueue] process-photo failed:', fnError, fnData);
+      const msg = extractFunctionError(fnData, fnError);
+      if (msg.includes('404') || msg.toLowerCase().includes('not found')) {
+        return {
+          ok: false,
+          error: 'process-photo edge function not deployed — check Supabase Edge Functions.',
+        };
+      }
+      if (msg.toLowerCase().includes('decode')) {
+        return {
+          ok: false,
+          error: 'Photo format not supported (try JPEG). Re-select photos and retry.',
+        };
+      }
+      return { ok: false, error: msg };
     }
 
-    return true;
+    const payload = fnData as { ok?: boolean; error?: string } | null;
+    if (payload?.error) {
+      console.error('[UploadQueue] process-photo error payload:', payload.error);
+      return { ok: false, error: payload.error };
+    }
+    if (!payload?.ok) {
+      console.error('[UploadQueue] process-photo bad response:', fnData);
+      return { ok: false, error: 'Thumbnail processing failed — try again.' };
+    }
+
+    return { ok: true };
   } catch (err) {
     console.error('[UploadQueue] uploadOne error:', err);
-    return false;
+    const message = err instanceof Error ? err.message : 'Upload failed';
+    return { ok: false, error: message };
   }
+}
+
+async function readUploadBytes(localUri: string): Promise<{ bytes: ArrayBuffer; contentType: string }> {
+  const ext = localUri.toLowerCase().includes('.png') ? 'png' : 'jpg';
+  const contentType = ext === 'png' ? 'image/png' : 'image/jpeg';
+
+  try {
+    const info = await FileSystem.getInfoAsync(localUri);
+    if (!info.exists) {
+      throw new Error('Local photo missing — re-select from camera roll.');
+    }
+  } catch (err) {
+    if (err instanceof Error && err.message.includes('re-select')) throw err;
+  }
+
+  // fetch() is faster than base64 for large camera-roll JPEGs copied to cache.
+  try {
+    const response = await fetch(localUri);
+    if (response.ok) {
+      const bytes = await response.arrayBuffer();
+      if (bytes.byteLength > 0) {
+        return {
+          bytes,
+          contentType: response.headers.get('content-type') || contentType,
+        };
+      }
+    }
+  } catch {
+    // fall through to FileSystem
+  }
+
+  try {
+    const base64 = await FileSystem.readAsStringAsync(localUri, {
+      encoding: FileSystem.EncodingType.Base64,
+    });
+    const binary = atob(base64);
+    const arr = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) arr[i] = binary.charCodeAt(i);
+    if (arr.byteLength === 0) throw new Error('Photo file is empty.');
+    return { bytes: arr.buffer, contentType };
+  } catch (fsErr) {
+    const msg = fsErr instanceof Error ? fsErr.message : 'Could not read local photo.';
+    throw new Error(msg);
+  }
+}
+
+function extractFunctionError(data: unknown, error: unknown): string {
+  if (data && typeof data === 'object' && 'error' in data) {
+    const msg = (data as { error?: string }).error;
+    if (typeof msg === 'string' && msg.length > 0) return msg;
+  }
+  if (error instanceof Error && error.message) return error.message;
+  return 'Thumbnail processing failed';
+}
+
+function withTimeout<T>(promise: PromiseLike<T>, ms: number, label: string): Promise<T> {
+  return Promise.race([
+    Promise.resolve(promise),
+    new Promise<T>((_, reject) => {
+      setTimeout(() => reject(new Error(`${label} timed out after ${Math.round(ms / 1000)}s`)), ms);
+    }),
+  ]);
 }
 
 function sleep(ms: number) { return new Promise(r => setTimeout(r, ms)); }

@@ -19,7 +19,10 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.alphavisualartists.app",
-      "buildNumber": "20",
+      "buildNumber": "24",
+      "associatedDomains": [
+        "applinks:alphavisualartists.com"
+      ],
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "Access photos to upload event images.",
         "NSPhotoLibraryAddUsageDescription": "Save your event photos to your library.",
@@ -48,6 +51,11 @@
           "action": "VIEW",
           "autoVerify": true,
           "data": [
+            {
+              "scheme": "https",
+              "host": "alphavisualartists.com",
+              "pathPrefix": "/r"
+            },
             {
               "scheme": "https",
               "host": "alphavisualartists.com",
@@ -86,6 +94,12 @@
         "expo-image-picker",
         {
           "photosPermission": "Access photos to upload event images."
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "color": "#0a0a0a"
         }
       ]
     ],

@@ -46,7 +46,11 @@ export function AppIntroVideo({ onFinish }: AppIntroVideoProps) {
         void finish();
       }
     });
+    const safetyTimer = setTimeout(() => {
+      void finish();
+    }, 15000);
     return () => {
+      clearTimeout(safetyTimer);
       endSub.remove();
       statusSub.remove();
     };

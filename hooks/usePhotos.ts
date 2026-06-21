@@ -13,7 +13,9 @@
  *   4. App polls / refreshes event_photos to see the new row
  */
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { AppState } from 'react-native';
+import * as FileSystem from 'expo-file-system/legacy';
 import * as ImagePicker from 'expo-image-picker';
 import { supabase } from '@/lib/supabase';
 import { UploadQueue } from '@/lib/uploadQueue';
@@ -28,10 +30,16 @@ interface UseEventPhotosReturn {
   refresh: () => Promise<void>;
 }
 
-export function useEventPhotos(eventId: string): UseEventPhotosReturn {
+export function useEventPhotos(
+  eventId: string,
+  options?: { realtime?: boolean; hasPendingUploads?: boolean },
+): UseEventPhotosReturn {
   const [photos,  setPhotos]  = useState<EventPhoto[]>([]);
   const [loading, setLoading] = useState(true);
   const [error,   setError]   = useState<string | null>(null);
+  const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const realtime = options?.realtime ?? true;
+  const hasPendingUploads = options?.hasPendingUploads ?? false;
 
   const refresh = useCallback(async () => {
     if (!eventId) return;
@@ -54,6 +62,68 @@ export function useEventPhotos(eventId: string): UseEventPhotosReturn {
   }, [eventId]);
 
   useEffect(() => { void refresh(); }, [refresh]);
+
+  useEffect(() => {
+    if (!eventId || !realtime) return;
+
+    const channel = supabase
+      .channel(`event-photos:${eventId}`)
+      .on(
+        'postgres_changes',
+        {
+          event:  'INSERT',
+          schema: 'public',
+          table:  'event_photos',
+          filter: `event_id=eq.${eventId}`,
+        },
+        (payload) => {
+          const row = payload.new as EventPhoto;
+          setPhotos(prev => {
+            if (prev.some(p => p.id === row.id)) return prev;
+            return [row, ...prev];
+          });
+        },
+      )
+      .on(
+        'postgres_changes',
+        {
+          event:  '*',
+          schema: 'public',
+          table:  'event_photos',
+          filter: `event_id=eq.${eventId}`,
+        },
+        () => { void refresh(); },
+      )
+      .subscribe();
+
+    const appSub = AppState.addEventListener('change', (state) => {
+      if (state === 'active') void refresh();
+    });
+
+    return () => {
+      void supabase.removeChannel(channel);
+      appSub.remove();
+    };
+  }, [eventId, realtime, refresh]);
+
+  // Poll only while uploads are processing — saves battery
+  useEffect(() => {
+    if (!hasPendingUploads) {
+      if (pollRef.current) {
+        clearInterval(pollRef.current);
+        pollRef.current = null;
+      }
+      return;
+    }
+    pollRef.current = setInterval(() => { void refresh(); }, 4000);
+    return () => {
+      if (pollRef.current) {
+        clearInterval(pollRef.current);
+        pollRef.current = null;
+      }
+    };
+  }, [hasPendingUploads, refresh]);
+
   return { photos, loading, error, refresh };
 }
 
@@ -79,26 +149,31 @@ export function useBatchPicker(
       const result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ['images'],
         allowsMultipleSelection: true,
-        quality: 1,
+        quality: 0.92,
         exif: false,
+        // iPhone HEIC → JPEG so process-photo can handle the file.
+        preferredAssetRepresentationMode:
+          ImagePicker.UIImagePickerPreferredAssetRepresentationMode.Compatible,
       });
 
       if (result.canceled || result.assets.length === 0) return 0;
 
-      const items: UploadQueueItem[] = result.assets.map(asset => {
-        const itemId     = randomUUID();
+      const items: UploadQueueItem[] = [];
+      for (const asset of result.assets) {
+        const itemId      = randomUUID();
         const storagePath = `${eventId}/${itemId}/original`;
-        return {
+        const localUri    = await persistPickerUri(asset.uri, itemId);
+        items.push({
           id:          itemId,
           eventId,
-          localUri:    asset.uri,
+          localUri,
           storagePath,
-          filename:    asset.fileName ?? null,
+          filename:    (asset.fileName ?? 'photo.jpg').replace(/\.heic$/i, '.jpg'),
           retries:     0,
           status:      'pending' as const,
           addedAt:     Date.now(),
-        };
-      });
+        });
+      }
 
       await UploadQueue.enqueue(items);
       onEnqueued();
@@ -115,6 +190,23 @@ export function useBatchPicker(
 }
 
 // ─── helpers ─────────────────────────────────────────────────────────────────
+
+/** Camera-roll URIs expire after app kill — copy into cache first. */
+async function persistPickerUri(uri: string, itemId: string): Promise<string> {
+  const cacheDir = FileSystem.cacheDirectory;
+  if (!cacheDir) return uri;
+
+  const ext = uri.toLowerCase().includes('.png') ? 'png' : 'jpg';
+  const dest  = `${cacheDir}ava-upload-${itemId}.${ext}`;
+
+  try {
+    await FileSystem.copyAsync({ from: uri, to: dest });
+    return dest;
+  } catch (err) {
+    console.warn('[useBatchPicker] cache copy failed, using picker uri:', err);
+    return uri;
+  }
+}
 
 function randomUUID(): string {
   if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {

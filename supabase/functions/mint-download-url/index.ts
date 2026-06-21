@@ -9,23 +9,26 @@
  * Response:     { signedUrl: string, expiresIn: number }
  *
  * Buckets:
- *   preview  → event-previews  (watermarked thumbnail)
- *   original → event-originals (full-resolution, free download in v1)
+ *   preview  → event-originals with Storage transform (width 400, never full-res)
+ *   original → event-originals full-resolution (explicit download only)
  */
 
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { createClient } from 'npm:@supabase/supabase-js@2';
 
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
 const SERVICE_KEY  = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 const ANON_KEY     = Deno.env.get('SUPABASE_ANON_KEY')!;
-const TTL          = 3600; // 1 hour
+const ORIGINALS    = 'event-originals';
+const PREVIEWS     = 'event-previews';
+const TTL          = 3600;
+
+const PREVIEW_TRANSFORM = { width: 400, quality: 60, resize: 'cover' as const };
 
 const admin = createClient(SUPABASE_URL, SERVICE_KEY, { auth: { persistSession: false } });
 
 Deno.serve(async (req: Request) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: cors() });
 
-  // ── Authenticate caller ──────────────────────────────────────────────────
   const auth = req.headers.get('Authorization');
   if (!auth) return err('Missing auth', 401);
 
@@ -42,7 +45,6 @@ Deno.serve(async (req: Request) => {
 
     if (!photoId) return err('Missing photoId', 400);
 
-    // ── Fetch photo with join to verify assignment ─────────────────────────
     const { data: photo } = await admin
       .from('event_photos')
       .select(`
@@ -61,41 +63,72 @@ Deno.serve(async (req: Request) => {
     const isPhotographer =
       (photo.events as { photographer_id: string }).photographer_id === user.id;
 
+    const { data: isOperator, error: opErr } = await userClient.rpc('is_event_operator');
+    if (opErr) console.warn('[mint-download-url] is_event_operator RPC:', opErr.message);
+
     const isAssignedAttendee = (photo.photo_assignments as Array<{
       attendees: { user_id: string | null; deleted_at: string | null };
     }>).some(
       a => a.attendees.user_id === user.id && a.attendees.deleted_at === null,
     );
 
-    if (!isPhotographer && !isAssignedAttendee) return err('Access denied', 403);
+    if (!isPhotographer && !isAssignedAttendee && isOperator !== true) {
+      return err('Access denied', 403);
+    }
 
-    // ── Determine bucket + path ───────────────────────────────────────────
-    const bucket = resolution === 'original' ? 'event-originals' : 'event-previews';
-    const path   = resolution === 'original'
-      ? (photo.storage_path as string)
-      : (photo.thumb_path   as string);
+    const storagePath = photo.storage_path as string;
+    const thumbPath   = photo.thumb_path as string;
 
-    const { data: signed, error: sErr } = await admin.storage
-      .from(bucket)
-      .createSignedUrl(path, TTL);
+    if (resolution === 'original') {
+      const plain = await admin.storage.from(ORIGINALS).createSignedUrl(storagePath, TTL);
+      if (plain.error || !plain.data?.signedUrl) {
+        return err('Could not generate signed URL', 500);
+      }
+      return json({ signedUrl: plain.data.signedUrl, expiresIn: TTL });
+    }
 
-    if (sErr || !signed) return err('Could not generate signed URL', 500);
-
-    return new Response(
-      JSON.stringify({ signedUrl: signed.signedUrl, expiresIn: TTL }),
-      { headers: { ...cors(), 'Content-Type': 'application/json' } },
+    // Preview: transformed original (never serve full-res for grid thumbnails)
+    const transformed = await admin.storage.from(ORIGINALS).createSignedUrl(
+      storagePath,
+      TTL,
+      { transform: PREVIEW_TRANSFORM },
     );
+    if (!transformed.error && transformed.data?.signedUrl) {
+      return json({ signedUrl: transformed.data.signedUrl, expiresIn: TTL });
+    }
+
+    // Legacy rows: thumb may live in event-previews from v1 process-photo
+    if (thumbPath && thumbPath !== storagePath) {
+      const legacy = await admin.storage.from(PREVIEWS).createSignedUrl(
+        thumbPath,
+        TTL,
+        { transform: PREVIEW_TRANSFORM },
+      );
+      if (!legacy.error && legacy.data?.signedUrl) {
+        return json({ signedUrl: legacy.data.signedUrl, expiresIn: TTL });
+      }
+    }
+
+    console.error('[mint-download-url] preview transform failed:', transformed.error?.message);
+    return err('Could not generate preview URL', 500);
   } catch (e) {
     console.error('[mint-download-url]', e);
     return err('Internal server error', 500);
   }
 });
 
+function json(body: Record<string, unknown>) {
+  return new Response(JSON.stringify(body), {
+    headers: { ...cors(), 'Content-Type': 'application/json' },
+  });
+}
+
 function err(m: string, s: number) {
   return new Response(JSON.stringify({ error: m }), {
     status: s, headers: { ...cors(), 'Content-Type': 'application/json' },
   });
 }
+
 function cors() {
   return {
     'Access-Control-Allow-Origin':  '*',

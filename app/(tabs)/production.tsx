@@ -1,13 +1,8 @@
 /**
  * Production tab — merges Shoot + Edit into one screen.
  *
- * Segments and their AsyncStorage keys (unchanged — no data migration):
- *   Pre-Prod  → "ava_shoot_pre_v1"  (from former Shoot tab)
- *   Day Of    → "ava_shoot_day_v1"  (from former Shoot tab)
- *   Post      → "ava_edit_v1"       (from former Edit tab)
- *
- * IMPORTANT: The storage keys are intentionally preserved so any
- * in-progress checklists users had on the old tabs survive intact.
+ * Checklists sync per project via useProjects (Supabase `projects.data` jsonb).
+ * Legacy AsyncStorage keys are migrated once into "My First Project" on login.
  *
  * Additive — notes.tsx and edit.tsx files are left in place as dead
  * routes. Only the tab entry is replaced in (tabs)/_layout.tsx.
@@ -27,29 +22,23 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useLocalSearchParams } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as Haptics from "expo-haptics";
 import { Ionicons } from "@expo/vector-icons";
 
 import { ReminderButton } from "@/components/ReminderButton";
+import { ProjectScopeBar } from "@/components/ProjectScopeBar";
 import { cancelNoteReminder } from "@/lib/notify";
+import { useProjects, type ProjectData } from "@/hooks/useProjects";
 
 type Segment = "pre" | "day" | "post";
 type Item    = { id: string; text: string; done: boolean };
 
-// ── Storage keys — DO NOT change these ───────────────────────────────────────
-const STORAGE: Record<Segment, string> = {
-  pre:  "ava_shoot_pre_v1",
-  day:  "ava_shoot_day_v1",
-  post: "ava_edit_v1",         // reads the former Edit tab data
-};
-
 const SEGMENTS: { key: Segment; label: string; subtitle: string }[] = [
   { key: "pre",  label: "Pre-Prod", subtitle: "Plan the shoot" },
   { key: "day",  label: "Day Of",   subtitle: "Roll cameras" },
-  { key: "post", label: "Post",     subtitle: "Log → cut → color → deliver" },
+  { key: "post", label: "Edit",     subtitle: "Log → cut → color → deliver" },
 ];
 
 // ── Seed data ─────────────────────────────────────────────────────────────────
@@ -102,10 +91,36 @@ const ADD_PLACEHOLDER: Record<Segment, string> = {
 
 const HIGHLIGHT_DURATION_MS = 3000;
 
+function seedItems(seg: Segment): Item[] {
+  return SEEDS[seg].map((text, i) => ({ id: `seed-${seg}-${i}`, text, done: false }));
+}
+
+function segmentItemsFromProject(data: ProjectData, seg: Segment): Item[] {
+  const key = seg === "pre" ? "shoot_pre" : seg === "day" ? "shoot_day" : "edit";
+  const items = data[key];
+  if (items.length > 0) return items;
+  return seedItems(seg);
+}
+
+function projectDataFromSegments(segments: Record<Segment, Item[]>): ProjectData {
+  return {
+    shoot_pre: segments.pre,
+    shoot_day: segments.day,
+    edit:      segments.post,
+  };
+}
+
 // ─────────────────────────────────────────────────────────────────────────────
 
 export default function ProductionScreen() {
   const insets = useSafeAreaInsets();
+  const {
+    activeProject,
+    projects,
+    loading: projectsLoading,
+    switchProject,
+    updateProjectData,
+  } = useProjects();
 
   // Deep-link params injected by notification tap
   const { phase: deepLinkPhase, highlightId } = useLocalSearchParams<{
@@ -119,39 +134,35 @@ export default function ProductionScreen() {
   const [draft, setDraft]           = useState("");
   const [activeHighlight, setActiveHighlight] = useState<string | null>(null);
   const inputRef = useRef<TextInput>(null);
+  const skipSaveRef = useRef(true);
 
   const dismissKeyboard = useCallback(() => {
     inputRef.current?.blur();
     Keyboard.dismiss();
   }, []);
 
-  // Load all three segments from storage on mount
+  // Load checklist for the active project (per-shoot — not one global list)
   useEffect(() => {
-    (async () => {
-      const next: Record<Segment, Item[]> = { pre: [], day: [], post: [] };
-      for (const seg of ["pre", "day", "post"] as Segment[]) {
-        try {
-          const raw = await AsyncStorage.getItem(STORAGE[seg]);
-          next[seg] = raw
-            ? (JSON.parse(raw) as Item[])
-            : SEEDS[seg].map((text, i) => ({ id: `seed-${seg}-${i}`, text, done: false }));
-        } catch {
-          next[seg] = [];
-        }
-      }
-      setData(next);
-      setLoaded({ pre: true, day: true, post: true });
-    })();
-  }, []);
-
-  // Persist on every change
-  useEffect(() => {
-    (Object.keys(loaded) as Segment[]).forEach(seg => {
-      if (loaded[seg]) {
-        AsyncStorage.setItem(STORAGE[seg], JSON.stringify(data[seg])).catch(() => {});
-      }
+    if (!activeProject) {
+      setLoaded({ pre: false, day: false, post: false });
+      return;
+    }
+    skipSaveRef.current = true;
+    setData({
+      pre:  segmentItemsFromProject(activeProject.data, "pre"),
+      day:  segmentItemsFromProject(activeProject.data, "day"),
+      post: segmentItemsFromProject(activeProject.data, "post"),
     });
-  }, [data, loaded]);
+    setLoaded({ pre: true, day: true, post: true });
+    skipSaveRef.current = false;
+  }, [activeProject?.id]);
+
+  // Persist checklist changes to the active project (cloud sync)
+  useEffect(() => {
+    if (!activeProject || skipSaveRef.current) return;
+    if (!loaded.pre) return;
+    void updateProjectData(activeProject.id, projectDataFromSegments(data));
+  }, [data, loaded, activeProject?.id, updateProjectData]);
 
   // Handle deep-link phase / highlight from notification tap
   useEffect(() => {
@@ -238,6 +249,19 @@ export default function ProductionScreen() {
             <Text style={styles.eyebrow}>AVA</Text>
             <Text style={styles.h1}>Production</Text>
             <Text style={styles.sub}>{activeSeg.subtitle}</Text>
+
+            <ProjectScopeBar
+              activeProject={activeProject}
+              projects={projects}
+              loading={projectsLoading}
+              onSwitch={(id) => { void switchProject(id); }}
+            />
+
+            {!activeProject && !projectsLoading ? (
+              <Text style={styles.noProjectHint}>
+                Create or select a project so each shoot keeps its own checklist.
+              </Text>
+            ) : null}
 
             {/* Segmented control */}
             <View style={styles.seg}>
@@ -383,6 +407,13 @@ const styles = StyleSheet.create({
   },
   h1:  { color: "#fff", fontSize: 32, fontWeight: "800", letterSpacing: -0.5 },
   sub: { color: "#888", fontSize: 13, marginTop: 4, marginBottom: 16 },
+  noProjectHint: {
+    color: "#fbbf24",
+    fontSize: 12,
+    lineHeight: 17,
+    marginTop: -8,
+    marginBottom: 4,
+  },
 
   seg: {
     flexDirection: "row",

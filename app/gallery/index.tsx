@@ -1,11 +1,10 @@
 /**
- * Attendee gallery screen.
- * Shows thumbnails (signed URLs from mint-download-url edge fn) for all photos
- * the attendee has been assigned. RLS enforces privacy at the DB layer.
+ * Attendee gallery — photos when ready, welcome screen when not.
  */
 
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
+  ActivityIndicator,
   Pressable,
   StyleSheet,
   Text,
@@ -16,7 +15,9 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import { brandColors, brandFonts } from '@/constants/theme';
 import { useAttendeeGallery } from '@/hooks/useAttendeeGallery';
+import { useAttendeeWelcome } from '@/hooks/useAttendeeWelcome';
 import { PhotoGrid } from '@/components/events/PhotoGrid';
+import { GalleryWelcome } from '@/components/gallery/GalleryWelcome';
 import { useAuth } from '@/contexts/AuthContext';
 import type { GalleryItem } from '@/hooks/useAttendeeGallery';
 
@@ -25,15 +26,37 @@ export default function GalleryScreen() {
   const insets  = useSafeAreaInsets();
   const { session } = useAuth();
   const { items, loading, error, refresh } = useAttendeeGallery();
+  const { welcome, loading: welcomeLoading, refresh: refreshWelcome } = useAttendeeWelcome();
+  const [refreshing, setRefreshing] = useState(false);
+
+  const handleRefresh = useCallback(async () => {
+    setRefreshing(true);
+    try {
+      await Promise.all([refresh(), refreshWelcome()]);
+    } finally {
+      setRefreshing(false);
+    }
+  }, [refresh, refreshWelcome]);
+
+  useEffect(() => {
+    if (loading || welcomeLoading || !welcome) return;
+    if (items.length === 0) return;
+    if (welcome.photoConsentAt) return;
+
+    router.replace({
+      pathname: '/photo-release',
+      params: { attendeeId: welcome.attendeeId, redirectTo: '/gallery' },
+    } as never);
+  }, [items.length, loading, welcome, welcomeLoading, router]);
 
   if (!session) {
     return (
       <View style={[styles.centered, { paddingTop: insets.top }]}>
-        <Ionicons name="images-outline" size={40} color={brandColors.mutedText} />
-        <Text style={styles.gateTitle}>Your Gallery</Text>
-        <Text style={styles.gateBody}>Sign in to view your event photos.</Text>
-        <Pressable style={styles.primaryBtn} onPress={() => router.push('/sign-in')}>
-          <Text style={styles.primaryBtnText}>Sign in</Text>
+        <Ionicons name="key-outline" size={40} color={brandColors.mutedText} />
+        <Text style={styles.gateTitle}>Enter your code</Text>
+        <Text style={styles.gateBody}>Go to Events and type the code from your photographer.</Text>
+        <Pressable style={styles.primaryBtn} onPress={() => router.replace('/(tabs)/events' as never)}>
+          <Text style={styles.primaryBtnText}>Go to Events</Text>
         </Pressable>
       </View>
     );
@@ -43,6 +66,8 @@ export default function GalleryScreen() {
     router.push(`/gallery/${item.photo.id}` as never);
   };
 
+  const showWelcome = !loading && !welcomeLoading && items.length === 0 && welcome != null;
+
   return (
     <View style={[styles.root, { paddingTop: insets.top }]}>
       <View style={styles.header}>
@@ -51,20 +76,42 @@ export default function GalleryScreen() {
           <Text style={styles.backText}>Back</Text>
         </Pressable>
         <Text style={styles.title}>My Gallery</Text>
-        <Text style={styles.subtitle}>{items.length} photo{items.length !== 1 ? 's' : ''}</Text>
+        <Text style={styles.subtitle}>
+          {showWelcome
+            ? welcome?.eventName ?? 'Your event'
+            : `${items.length} photo${items.length !== 1 ? 's' : ''}`}
+        </Text>
       </View>
 
       {error ? (
         <View style={styles.centered}>
           <Text style={styles.errorText}>{error}</Text>
-          <Pressable onPress={() => void refresh()} style={styles.retryBtn}>
+          <Pressable onPress={() => void handleRefresh()} style={styles.retryBtn}>
             <Text style={styles.retryText}>Retry</Text>
+          </Pressable>
+        </View>
+      ) : loading || welcomeLoading ? (
+        <View style={styles.centered}>
+          <ActivityIndicator color="#00BFFF" />
+        </View>
+      ) : showWelcome ? (
+        <GalleryWelcome
+          welcome={welcome}
+          onRefresh={() => void handleRefresh()}
+          refreshing={refreshing}
+        />
+      ) : items.length === 0 ? (
+        <View style={styles.centered}>
+          <Ionicons name="key-outline" size={40} color={brandColors.mutedText} />
+          <Text style={styles.gateBody}>Enter your event code on the Events tab first.</Text>
+          <Pressable style={styles.primaryBtn} onPress={() => router.replace('/(tabs)/events' as never)}>
+            <Text style={styles.primaryBtnText}>Enter code</Text>
           </Pressable>
         </View>
       ) : (
         <PhotoGrid
           items={items}
-          loading={loading}
+          loading={false}
           onPhotoPress={handlePhotoPress}
         />
       )}

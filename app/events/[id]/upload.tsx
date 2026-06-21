@@ -4,11 +4,10 @@
  * Background queue + retry handled by UploadQueue / useUploadQueue.
  */
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import {
   ActivityIndicator,
   FlatList,
-  Image,
   Pressable,
   StyleSheet,
   Text,
@@ -23,6 +22,7 @@ import { useEventPhotos, useBatchPicker } from '@/hooks/usePhotos';
 import { useUploadQueue } from '@/hooks/useUploadQueue';
 import { useOperatorGuard } from '@/hooks/useOperatorGuard';
 import { UploadProgressBar } from '@/components/events/UploadProgressBar';
+import { EventPhotoThumb } from '@/components/events/EventPhotoThumb';
 import type { EventPhoto } from '@/types/events';
 
 export default function UploadScreen() {
@@ -31,20 +31,33 @@ export default function UploadScreen() {
   const insets  = useSafeAreaInsets();
   const { isOperator, loading: guardLoading } = useOperatorGuard();
   const { event }  = useEvent(id ?? '');
-  const { photos, refresh } = useEventPhotos(id ?? '');
-
-  const { pending, uploading, process } = useUploadQueue();
-  const { pickAndEnqueue, picking }     = useBatchPicker(id ?? '', () => {
-    void process();
-    void refresh();
+  const { pending, failed, uploading, lastError, process, resetFailed, clearForEvent } =
+    useUploadQueue(id ?? '');
+  const { photos, refresh } = useEventPhotos(id ?? '', {
+    realtime: true,
+    hasPendingUploads: pending > 0 || uploading,
   });
 
-  // Poll for status changes while uploads are in flight
+  const refreshPhotos = useCallback(async () => {
+    await refresh();
+  }, [refresh]);
+
+  const { pickAndEnqueue, picking } = useBatchPicker(id ?? '', () => {
+    void process(id).then(() => refreshPhotos());
+  });
+
+  // Refresh grid when uploads finish
   useEffect(() => {
-    if (!uploading && pending === 0) return;
-    const timer = setInterval(() => void refresh(), 4000);
+    if (uploading) return;
+    void refreshPhotos();
+  }, [uploading, pending, failed, refreshPhotos]);
+
+  // Keep trying while items are still queued
+  useEffect(() => {
+    if (uploading || pending === 0) return;
+    const timer = setInterval(() => void process(id), 8000);
     return () => clearInterval(timer);
-  }, [uploading, pending, refresh]);
+  }, [uploading, pending, process, id]);
 
   if (guardLoading || !isOperator) {
     return (
@@ -55,9 +68,24 @@ export default function UploadScreen() {
   }
 
   const handlePick = async () => {
+    if (id && failed > 0) {
+      await clearForEvent(id);
+    }
     const count = await pickAndEnqueue();
     if (count === 0) return;
-    void refresh();
+    void process(id).then(() => refreshPhotos());
+  };
+
+  const handleRetry = async () => {
+    if (failed > 0) {
+      await resetFailed(id);
+    }
+    void process(id).then(() => refreshPhotos());
+  };
+
+  const handleClearQueue = async () => {
+    if (!id) return;
+    await clearForEvent(id);
   };
 
   return (
@@ -72,7 +100,25 @@ export default function UploadScreen() {
       </View>
 
       {/* Progress bar */}
-      <UploadProgressBar pending={pending} uploading={uploading} />
+      <UploadProgressBar
+        pending={pending}
+        failed={failed}
+        uploading={uploading}
+        lastError={lastError}
+        onRetry={handleRetry}
+      />
+
+      {pending > 0 && !uploading ? (
+        <Pressable style={styles.clearQueueBtn} onPress={() => void handleClearQueue()}>
+          <Text style={styles.clearQueueText}>Clear stuck queue</Text>
+        </Pressable>
+      ) : null}
+
+      {failed > 0 && !uploading ? (
+        <Pressable style={styles.clearQueueBtn} onPress={() => void handleClearQueue()}>
+          <Text style={styles.clearQueueText}>Clear failed queue</Text>
+        </Pressable>
+      ) : null}
 
       {/* Photo grid */}
       <FlatList
@@ -82,15 +128,27 @@ export default function UploadScreen() {
         columnWrapperStyle={styles.row}
         contentContainerStyle={[styles.grid, { paddingBottom: insets.bottom + 100 }]}
         renderItem={({ item }: { item: EventPhoto }) => (
-          <PhotoThumb photo={item} />
+          <View style={styles.cell}>
+            <EventPhotoThumb photo={item} showReadyDot />
+          </View>
         )}
         ListEmptyComponent={
           !picking ? (
             <View style={styles.emptyState}>
-              <Ionicons name="cloud-upload-outline" size={44} color={brandColors.mutedText} />
-              <Text style={styles.emptyTitle}>No photos yet</Text>
+              <Ionicons
+                name={pending > 0 || uploading ? 'cloud-upload-outline' : 'images-outline'}
+                size={44}
+                color={brandColors.mutedText}
+              />
+              <Text style={styles.emptyTitle}>
+                {pending > 0 || uploading
+                  ? `Processing ${pending} photo${pending !== 1 ? 's' : ''}…`
+                  : 'No photos yet'}
+              </Text>
               <Text style={styles.emptyBody}>
-                Tap the button below to pick photos from your camera roll.
+                {pending > 0 || uploading
+                  ? 'Thumbnails appear here as each photo finishes processing.'
+                  : 'Tap the button below to pick photos from your camera roll.'}
               </Text>
             </View>
           ) : null
@@ -120,18 +178,6 @@ export default function UploadScreen() {
   );
 }
 
-function PhotoThumb({ photo }: { photo: EventPhoto }) {
-  // All rows in event_photos are fully processed (inserted by process-photo edge fn)
-  return (
-    <View style={styles.cell}>
-      <View style={[styles.cellInner, styles.placeholderBg]}>
-        <Ionicons name="image-outline" size={20} color={brandColors.mutedText} />
-      </View>
-      <View style={styles.readyDot} />
-    </View>
-  );
-}
-
 const CELL = 120;
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: '#0a0a0a' },
@@ -146,21 +192,23 @@ const styles = StyleSheet.create({
     fontFamily: brandFonts.display, fontSize: 28,
     color: '#fff', textTransform: 'uppercase',
   },
+  clearQueueBtn: {
+    alignSelf: 'center',
+    marginBottom: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+  },
+  clearQueueText: {
+    fontFamily: brandFonts.bodyMedium,
+    fontSize: 13,
+    color: '#fbbf24',
+    textDecorationLine: 'underline',
+  },
   grid: { padding: 2, gap: 2 },
   row:  { gap: 2 },
   cell: {
     width: CELL, height: CELL,
     position: 'relative',
-  },
-  cellInner: {
-    width: '100%', height: '100%',
-    alignItems: 'center', justifyContent: 'center',
-  },
-  placeholderBg: { backgroundColor: '#111' },
-  readyDot: {
-    position: 'absolute', top: 6, right: 6,
-    width: 8, height: 8, borderRadius: 4,
-    backgroundColor: '#00d4ff',
   },
   emptyState: {
     alignItems: 'center', paddingVertical: 60,

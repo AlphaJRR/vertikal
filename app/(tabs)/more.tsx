@@ -163,25 +163,29 @@ export default function MoreScreen() {
           </Pressable>
         </View>
 
-        {/* ── PLAN ───────────────────────────────────────────────────── */}
-        <SectionTitle label="PLAN" />
-        <View style={s.card}>
-          <Row
-            label="Current Plan"
-            right={<Pill label="FREE" />}
-            showChevron={false}
-            showHairline={false}
-          />
-          <Row
-            label="AVA Pro"
-            right={<Pill label="Coming soon" dim />}
-            showChevron={false}
-          />
-          <Row
-            label="Restore Purchases"
-            onPress={restorePurchases}
-          />
-        </View>
+        {/* ── PLAN (hidden during free launch / App Review) ─────────── */}
+        {!FREE_LAUNCH ? (
+          <>
+            <SectionTitle label="PLAN" />
+            <View style={s.card}>
+              <Row
+                label="Current Plan"
+                right={<Pill label="FREE" />}
+                showChevron={false}
+                showHairline={false}
+              />
+              <Row
+                label="AVA Pro"
+                right={<Pill label="Subscribe in app" />}
+                showChevron={false}
+              />
+              <Row
+                label="Restore Purchases"
+                onPress={restorePurchases}
+              />
+            </View>
+          </>
+        ) : null}
 
         {/* ── PROJECTS & SYNC ────────────────────────────────────────── */}
         <SectionTitle label="PROJECTS & SYNC" />

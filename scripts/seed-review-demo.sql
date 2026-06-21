@@ -21,8 +21,8 @@ do $$
 declare
   operator_id uuid := '<PASTE-OPERATOR-USER-UUID-HERE>';
   attendee_id uuid := '<PASTE-ATTENDEE-USER-UUID-HERE>';
-  demo_event_id uuid := 'a0000000-demo-demo-demo-000000000001';
-  demo_attendee_row_id uuid := 'b0000000-demo-demo-demo-000000000001';
+  demo_event_id uuid := 'a0000000-de00-de00-de00-000000000001';
+  demo_attendee_row_id uuid := 'b0000000-de00-de00-de00-000000000001';
 begin
 
   -- ── 1. Grant operator status ──────────────────────────────────────────────
@@ -41,7 +41,7 @@ begin
   -- ── 3. Create the demo event ──────────────────────────────────────────────
   insert into public.events (
     id, photographer_id, name, event_date,
-    access_code, qr_token, event_type, status
+    access_code, qr_token, event_type, status, require_attendee_contact
   )
   values (
     demo_event_id,
@@ -51,9 +51,10 @@ begin
     'AVADEMO',
     'demo-qr-token-review-2026',
     'reunion',
-    'active'
+    'active',
+    true
   )
-  on conflict (id) do nothing;
+  on conflict (id) do update set require_attendee_contact = true;
 
   -- ── 4. Create the demo attendee row (linked to the attendee account) ──────
   --    redeem_code is forced to 'DEMO01' so the reviewer knows it.
@@ -61,7 +62,7 @@ begin
   insert into public.attendees (
     id, event_id, user_id,
     first_name, last_name, email,
-    redeem_code,
+    redeem_code, photos_purchased,
     photo_consent_at, terms_accepted_at,
     is_adult, marketing_opt_in
   )
@@ -72,6 +73,7 @@ begin
     'Demo', 'Reviewer',
     'reviewer.attendee@alphavisualartists.com',
     'DEMO01',
+    3,
     -- photo_consent_at intentionally NULL so the App Store reviewer
     -- sees the full per-event Photo Release screen when redeeming DEMO01.
     -- (terms_accepted_at covers the account-level ToS; photo consent is
@@ -107,7 +109,7 @@ end $$;
 -- =============================================================================
 -- select * from event_operators;
 -- select id, name, access_code, qr_token from events where name = 'AVA Demo Shoot';
--- select id, first_name, redeem_code, photo_consent_at, user_id from attendees where event_id = 'a0000000-demo-demo-demo-000000000001';
+-- select id, first_name, redeem_code, photo_consent_at, user_id from attendees where event_id = 'a0000000-de00-de00-de00-000000000001';
 
 -- =============================================================================
 -- RESET — run this after each test session to restore full demo state
@@ -123,5 +125,5 @@ end $$;
 --
 -- Also delete the photo_release consent_log entry written by the app during testing:
 -- DELETE FROM public.consent_log
--- WHERE attendee_id = 'b0000000-demo-demo-demo-000000000001'
+-- WHERE attendee_id = 'b0000000-de00-de00-de00-000000000001'
 --   AND consent_type = 'photo_release';

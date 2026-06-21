@@ -25,10 +25,13 @@ import { Ionicons } from '@expo/vector-icons';
 
 import {
   cancelNoteReminder,
+  ensureNotifPermission,
+  getNotificationAvailability,
   getPermissionStatus,
   getReminderForItem,
   scheduleNoteReminder,
 } from '@/lib/notify';
+import type { NotificationAvailability } from '@/lib/notify';
 import type { NotePhase } from '@/lib/notify';
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -114,6 +117,7 @@ export function ReminderButton({
   const [loading, setLoading]             = useState(true);
   const [modalVisible, setModalVisible]   = useState(false);
   const [permStatus, setPermStatus]       = useState<'granted' | 'denied' | 'undetermined'>('undetermined');
+  const [availability, setAvailability]   = useState<NotificationAvailability>('available');
   const [pastError, setPastError]         = useState(false);
   const [scheduling, setScheduling]       = useState(false);
 
@@ -144,7 +148,15 @@ export function ReminderButton({
   }, [reminderDate, pulseAnim]);
 
   const openPicker = useCallback(async () => {
-    const status = await getPermissionStatus();
+    const moduleStatus = await getNotificationAvailability();
+    setAvailability(moduleStatus);
+
+    let status = await getPermissionStatus();
+    if (moduleStatus === 'available' && status === 'undetermined') {
+      const granted = await ensureNotifPermission();
+      status = granted ? 'granted' : await getPermissionStatus();
+    }
+
     setPermStatus(status);
     setPastError(false);
     setModalVisible(true);
@@ -225,12 +237,20 @@ export function ReminderButton({
             <Text style={styles.sheetTitle} numberOfLines={2}>{itemText}</Text>
             <Text style={styles.sheetSubtitle}>Set a reminder</Text>
 
-            {permStatus === 'denied' ? (
+            {availability === 'unavailable' ? (
+              <View style={styles.deniedBox}>
+                <Ionicons name="notifications-off-outline" size={32} color="#555" />
+                <Text style={styles.deniedText}>
+                  Reminders are not available in this build. They will return in a future App Store update.
+                </Text>
+              </View>
+            ) : permStatus === 'denied' ? (
               // ── Permission denied state ──────────────────────────────
               <View style={styles.deniedBox}>
                 <Ionicons name="notifications-off-outline" size={32} color="#555" />
                 <Text style={styles.deniedText}>
-                  Notifications are disabled. Enable them in Settings to set reminders.
+                  Alert notifications are off for AVA. Tap Open Settings, then scroll to Notifications
+                  (not Siri or Suggestions) and turn on Allow Notifications.
                 </Text>
                 {Platform.OS !== 'web' && (
                   <Pressable

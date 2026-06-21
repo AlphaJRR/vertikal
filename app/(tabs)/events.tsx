@@ -27,6 +27,7 @@ import { supabase } from '@/lib/supabase';
 import { useMyEvents } from '@/hooks/useEvents';
 import { useIsOperator } from '@/hooks/useIsOperator';
 import { EventCard } from '@/components/events/EventCard';
+import { GuestEventsGate } from '@/components/events/GuestEventsGate';
 import { useAuth } from '@/contexts/AuthContext';
 import type { AVAEvent } from '@/types/events';
 
@@ -39,7 +40,7 @@ export default function EventsTab() {
   const { isOperator, loading }  = useIsOperator();
 
   // Render
-  if (!session) return <SignInCTA router={router} insets={insets} />;
+  if (!session) return <GuestEventsGate paddingTop={insets.top} paddingBottom={insets.bottom} />;
   if (loading)  return <NeutralSkeleton insets={insets} />;
   if (isOperator) return <OperatorHome router={router} insets={insets} />;
   return <AttendeeHome router={router} insets={insets} />;
@@ -129,6 +130,15 @@ function OperatorHome({ router, insets }: { router: ReturnType<typeof useRouter>
           ))}
         </View>
       )}
+
+      <Pressable
+        style={styles.quietCodeLink}
+        onPress={() => router.push('/redeem' as never)}
+        accessibilityRole="button"
+        accessibilityLabel="Have an event code"
+      >
+        <Text style={styles.quietCodeLinkText}>Have an event code?</Text>
+      </Pressable>
     </ScrollView>
   );
 }
@@ -239,29 +249,20 @@ function AttendeeHome({ router, insets }: { router: ReturnType<typeof useRouter>
           <Ionicons name="key-outline" size={40} color={brandColors.mutedText} />
           <Text style={styles.attendeeEmptyTitle}>No galleries yet</Text>
           <Text style={styles.attendeeEmptyBody}>
-            Enter the 6-character code from your photographer to unlock your event photos.
+            Enter your event code above to open your gallery — or ask your photographer if you don&apos;t have one yet.
           </Text>
         </View>
       )}
-    </ScrollView>
-  );
-}
 
-// ─── Not signed in ────────────────────────────────────────────────────────────
-
-function SignInCTA({ router, insets }: { router: ReturnType<typeof useRouter>; insets: ReturnType<typeof import('react-native-safe-area-context').useSafeAreaInsets> }) {
-  return (
-    <View style={[styles.centered, { paddingTop: insets.top + 40 }]}>
-      <Ionicons name="camera-outline" size={44} color={brandColors.mutedText} />
-      <Text style={styles.gateTitle}>Event Photo Delivery</Text>
-      <Text style={styles.gateBody}>
-        Photographers create events and deliver photos. Attendees redeem a code to view their gallery.
-        Sign in to get started.
-      </Text>
-      <Pressable style={styles.primaryBtn} onPress={() => router.push('/sign-in' as never)}>
-        <Text style={styles.primaryBtnText}>Sign in</Text>
+      <Pressable
+        style={styles.quietCodeLink}
+        onPress={() => router.push('/redeem' as never)}
+        accessibilityRole="button"
+        accessibilityLabel="Have an event code"
+      >
+        <Text style={styles.quietCodeLinkText}>Have an event code?</Text>
       </Pressable>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -369,13 +370,17 @@ const styles = StyleSheet.create({
   galleryCardName:  { fontFamily: brandFonts.bodyMedium, fontSize: 15, color: '#fff' },
   galleryCardSub:   { fontFamily: brandFonts.body, fontSize: 12, color: brandColors.mutedText, marginTop: 2 },
 
-  // Gate (not signed in)
-  gateTitle:{ fontFamily: brandFonts.display, fontSize: 24, color: '#fff', textTransform: 'uppercase', textAlign: 'center' },
-  gateBody: { fontFamily: brandFonts.body, fontSize: 14, lineHeight: 20, color: brandColors.subtleText, textAlign: 'center' },
-
   // Neutral skeleton
   skeletonHeader:{ paddingHorizontal: 16, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   skeletonTitle: { width: 160, height: 32, borderRadius: 6, backgroundColor: 'rgba(255,255,255,0.08)' },
   skeletonBadge: { width: 60,  height: 32, borderRadius: 6, backgroundColor: 'rgba(255,255,255,0.06)' },
   skeletonCard:  { marginHorizontal: 16, height: 72, borderRadius: 12, backgroundColor: 'rgba(255,255,255,0.06)' },
+
+  quietCodeLink: { alignItems: 'center', paddingVertical: 20, marginTop: 8 },
+  quietCodeLinkText: {
+    fontFamily: brandFonts.body,
+    fontSize: 13,
+    color: brandColors.mutedText,
+    textDecorationLine: 'underline',
+  },
 });

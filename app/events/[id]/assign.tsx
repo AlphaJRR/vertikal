@@ -8,8 +8,10 @@
 import React, { useCallback, useState } from 'react';
 import {
   ActivityIndicator,
+  Dimensions,
   FlatList,
   Pressable,
+  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -23,7 +25,7 @@ import { useEvent, useAttendees } from '@/hooks/useEvents';
 import { useEventPhotos } from '@/hooks/usePhotos';
 import { useOperatorGuard } from '@/hooks/useOperatorGuard';
 import { AssigneeSearch } from '@/components/events/AssigneeSearch';
-import { attendeeFullName } from '@/types/events';
+import { EventPhotoThumb } from '@/components/events/EventPhotoThumb';
 import type { EventPhoto, Attendee } from '@/types/events';
 
 type Step = 'selectPhoto' | 'assignAttendees';
@@ -35,20 +37,12 @@ export default function AssignScreen() {
 
   const { isOperator, loading: guardLoading } = useOperatorGuard();
   const { event }                             = useEvent(id ?? '');
-  const { photos, loading: photosLoading }    = useEventPhotos(id ?? '');
+  const { photos, loading: photosLoading }    = useEventPhotos(id ?? '', { realtime: true });
   const { attendees, loading: attLoading }    = useAttendees(id ?? '');
 
   const [step,          setStep]          = useState<Step>('selectPhoto');
   const [selectedPhoto, setSelectedPhoto] = useState<EventPhoto | null>(null);
   const [assignedIds,   setAssignedIds]   = useState<Set<string>>(new Set());
-
-  if (guardLoading || !isOperator) {
-    return (
-      <View style={[styles.root, { paddingTop: insets.top, alignItems: 'center', justifyContent: 'center' }]}>
-        <ActivityIndicator color="#00BFFF" />
-      </View>
-    );
-  }
 
   const loadAssignments = useCallback(async (photoId: string) => {
     const { data } = await supabase
@@ -57,12 +51,6 @@ export default function AssignScreen() {
       .eq('photo_id', photoId);
     if (data) setAssignedIds(new Set(data.map((r: { attendee_id: string }) => r.attendee_id)));
   }, []);
-
-  const selectPhoto = async (photo: EventPhoto) => {
-    setSelectedPhoto(photo);
-    setStep('assignAttendees');
-    await loadAssignments(photo.id);
-  };
 
   const toggleAttendee = useCallback(async (attendee: Attendee) => {
     if (!selectedPhoto) return;
@@ -84,6 +72,20 @@ export default function AssignScreen() {
     }
   }, [selectedPhoto, assignedIds]);
 
+  if (guardLoading || !isOperator) {
+    return (
+      <View style={[styles.root, { paddingTop: insets.top, alignItems: 'center', justifyContent: 'center' }]}>
+        <ActivityIndicator color="#00BFFF" />
+      </View>
+    );
+  }
+
+  const selectPhoto = async (photo: EventPhoto) => {
+    setSelectedPhoto(photo);
+    setStep('assignAttendees');
+    await loadAssignments(photo.id);
+  };
+
   const handleBack = () => {
     if (step === 'assignAttendees') { setStep('selectPhoto'); setSelectedPhoto(null); setAssignedIds(new Set()); }
     else router.back();
@@ -104,7 +106,9 @@ export default function AssignScreen() {
         <Text style={styles.subtitle}>
           {step === 'assignAttendees'
             ? 'Tap an attendee to grant or revoke access.'
-            : 'Tap a photo to choose who can see it.'}
+            : photos.length > 0
+              ? `${photos.length} photo${photos.length !== 1 ? 's' : ''} — tap one to assign.`
+              : 'Tap a photo to choose who can see it.'}
         </Text>
       </View>
 
@@ -125,9 +129,7 @@ export default function AssignScreen() {
             contentContainerStyle={styles.grid}
             renderItem={({ item }: { item: EventPhoto }) => (
               <Pressable style={styles.gridCell} onPress={() => void selectPhoto(item)}>
-                <View style={[styles.cellInner, styles.placeholder]}>
-                  <Ionicons name="image-outline" size={22} color={brandColors.mutedText} />
-                </View>
+                <EventPhotoThumb photo={item} />
               </Pressable>
             )}
           />
@@ -138,33 +140,38 @@ export default function AssignScreen() {
         attLoading ? (
           <View style={styles.centered}><ActivityIndicator color="#00BFFF" /></View>
         ) : (
-          <FlatList
-            data={[]}
-            renderItem={null}
-            ListHeaderComponent={
-              <View style={styles.assignContainer}>
-                <AssigneeSearch
-                  attendees={attendees}
-                  assigned={assignedIds}
-                  onToggle={a => void toggleAttendee(a)}
-                />
-                <View style={styles.countBadge}>
-                  <Ionicons name="people-outline" size={14} color="#00BFFF" />
-                  <Text style={styles.countText}>
-                    {assignedIds.size} attendee{assignedIds.size !== 1 ? 's' : ''} can see this photo
-                  </Text>
-                </View>
+          <ScrollView
+            keyboardShouldPersistTaps="handled"
+            contentContainerStyle={[styles.assignContainer, { paddingBottom: insets.bottom + 32 }]}
+          >
+            {selectedPhoto ? (
+              <View style={styles.selectedPhotoWrap}>
+                <EventPhotoThumb photo={selectedPhoto} style={styles.selectedPhoto} borderRadius={8} />
               </View>
-            }
-            contentContainerStyle={{ paddingBottom: insets.bottom + 32 }}
-          />
+            ) : null}
+            <AssigneeSearch
+              attendees={attendees}
+              assigned={assignedIds}
+              onToggle={a => void toggleAttendee(a)}
+            />
+            <View style={styles.countBadge}>
+              <Ionicons name="people-outline" size={14} color="#00BFFF" />
+              <Text style={styles.countText}>
+                {assignedIds.size} attendee{assignedIds.size !== 1 ? 's' : ''} can see this photo
+              </Text>
+            </View>
+          </ScrollView>
         )
       )}
     </View>
   );
 }
 
-const CELL = 120;
+const { width: SCREEN_W } = Dimensions.get('window');
+const GAP = 2;
+const NUM_COLS = 3;
+const CELL = Math.floor((SCREEN_W - GAP * (NUM_COLS + 1)) / NUM_COLS);
+
 const styles = StyleSheet.create({
   root:    { flex: 1, backgroundColor: '#0a0a0a' },
   header:  { paddingHorizontal: 24, paddingBottom: 16, gap: 6 },
@@ -177,9 +184,20 @@ const styles = StyleSheet.create({
   grid:    { padding: 2, gap: 2 },
   gridRow: { gap: 2 },
   gridCell:{ width: CELL, height: CELL },
-  cellInner:{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' },
-  placeholder:{ backgroundColor: '#111' },
   assignContainer:{ paddingHorizontal: 20, paddingTop: 8, gap: 16 },
+  selectedPhotoWrap: {
+    alignSelf: 'center',
+    width: 160,
+    height: 160,
+    borderRadius: 8,
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: 'rgba(0,191,255,0.35)',
+  },
+  selectedPhoto: {
+    width: 160,
+    height: 160,
+  },
   countBadge:{
     flexDirection: 'row', alignItems: 'center', gap: 8,
     backgroundColor: 'rgba(0,191,255,0.08)', borderRadius: 8,

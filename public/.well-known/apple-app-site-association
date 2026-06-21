@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "TAPP492WQA.com.alphavisualartists.app",
+        "paths": ["/r/*"]
+      }
+    ]
+  }
+}

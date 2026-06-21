@@ -16,6 +16,9 @@ https://www.vertikalapp.com/* https://vertikalapp.com/:splat 301!
 /demo /demo/index.html 200
 /demo/ /demo/index.html 200
 
+# Event photo redeem universal-link fallback — served by functions/r/[code].js
+# (AASA still maps /r/* to the native app when installed.)
+
 # Subdomain redirects (canonical routing)
 /creators/*   https://creators.vertikalapp.com/:splat   301
 /investors/*  https://investors.vertikalapp.com/:splat  301

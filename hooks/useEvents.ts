@@ -123,10 +123,11 @@ export function useEvent(eventId: string): UseEventReturn {
 // ─── useAttendees ─────────────────────────────────────────────────────────────
 
 export interface AddAttendeeInput {
-  first_name: string;
-  last_name:  string;
-  email:      string;
-  phone?:     string;
+  first_name:       string;
+  last_name:        string;
+  email?:           string;
+  phone?:           string;
+  photos_purchased: number;
 }
 
 interface UseAttendeesReturn {
@@ -171,11 +172,12 @@ export function useAttendees(eventId: string): UseAttendeesReturn {
       const { data, error: err } = await supabase
         .from('attendees')
         .insert({
-          event_id:   eventId,
-          first_name: input.first_name.trim(),
-          last_name:  input.last_name.trim(),
-          email:      input.email.trim().toLowerCase(),
-          phone:      input.phone?.trim() ?? null,
+          event_id:         eventId,
+          first_name:       input.first_name.trim(),
+          last_name:        input.last_name.trim(),
+          email:            input.email?.trim().toLowerCase() ?? null,
+          phone:            input.phone?.trim() ?? null,
+          photos_purchased: input.photos_purchased,
         })
         .select()
         .single();

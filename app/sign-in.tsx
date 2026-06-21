@@ -23,23 +23,24 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { useRouter, type Href } from "expo-router";
+import { useLocalSearchParams, useRouter, type Href } from "expo-router";
 import * as ExpoLinking from "expo-linking";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { brandColors, brandFonts } from "../constants/theme";
 import { enableDemoMode } from "../lib/demoMode";
 import { supabase } from "../lib/supabase";
+import { normalizeRedeemCode, stashRedeemCode } from "../lib/redeemDeepLink";
 import { seedDemoReviewDataIfNeeded } from "../utils/demoReviewSeed";
 
 // ── Screen states ──────────────────────────────────────────────────────────────
-// "create"  → OTP create-account flow (step 1: email, step 2: 6-digit code)
+// "create"  → OTP create-account flow
 // "signIn"  → password sign-in (default)
-// "otpIn"   → OTP sign-in (step 1: email, step 2: 6-digit code)
+// "otpIn"   → OTP sign-in
 type Screen = "create" | "signIn" | "otpIn";
-type OtpStep = "email" | "code";
 
 const MIN_PW = 8;
+const DEMO_PASSWORD = "AVAReview2026!";
 
 // ── App Review demo accounts ───────────────────────────────────────────────────
 const DEMO_ACCOUNTS = [
@@ -60,15 +61,23 @@ const DEMO_ACCOUNTS = [
 export default function SignInScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const { redirectTo, code: redirectCode } = useLocalSearchParams<{
+    redirectTo?: string;
+    code?: string | string[];
+  }>();
 
-  const [screen,  setScreen]  = useState<Screen>("signIn");
-  const [otpStep, setOtpStep] = useState<OtpStep>("email");
+  const postRedeem = redirectTo === "/redeem";
+  const pendingRedeemCode = normalizeRedeemCode(redirectCode);
+
+  const [screen, setScreen] = useState<Screen>("signIn");
+  const [codeSent, setCodeSent] = useState(false);
 
   const [email,    setEmail]    = useState("");
   const [password, setPassword] = useState("");
   const [otp,      setOtp]      = useState("");
 
   const [busy,  setBusy]  = useState(false);
+  const [pendingAction, setPendingAction] = useState<"send" | "verify" | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [info,  setInfo]  = useState<string | null>(null);
 
@@ -78,7 +87,7 @@ export default function SignInScreen() {
 
   const reset = (toScreen: Screen) => {
     setScreen(toScreen);
-    setOtpStep("email");
+    setCodeSent(false);
     setPassword("");
     setOtp("");
     setError(null);
@@ -89,8 +98,17 @@ export default function SignInScreen() {
   const finishAuth = async (isNew = false) => {
     await seedDemoReviewDataIfNeeded(normalizedEmail);
 
+    if (pendingRedeemCode) {
+      await stashRedeemCode(pendingRedeemCode);
+    }
+
+    const consentParams = postRedeem ? { redirectTo: "/redeem" } : undefined;
+
     if (isNew) {
-      router.replace("/consent" as Href);
+      router.replace({
+        pathname: "/consent",
+        params: consentParams,
+      } as Href);
       return;
     }
 
@@ -103,11 +121,22 @@ export default function SignInScreen() {
           .eq("id", user.id)
           .maybeSingle();
         if (!profile?.tos_accepted_at) {
-          router.replace("/consent" as Href);
+          router.replace({
+            pathname: "/consent",
+            params: consentParams,
+          } as Href);
           return;
         }
       }
     } catch { /* non-blocking — proceed on error */ }
+
+    if (postRedeem) {
+      router.replace({
+        pathname: "/redeem",
+        params: pendingRedeemCode ? { code: pendingRedeemCode } : undefined,
+      } as Href);
+      return;
+    }
 
     if (router.canGoBack()) router.back();
     else router.replace("/(tabs)" as Href);
@@ -150,6 +179,7 @@ export default function SignInScreen() {
     if (!normalizedEmail) { setError("Enter your email address."); return; }
 
     setBusy(true);
+    setPendingAction("send");
     setError(null);
     try {
       // Always use the custom scheme on native to ensure the link opens the app
@@ -167,11 +197,13 @@ export default function SignInScreen() {
         },
       });
       if (e) { setError(e.message); return; }
-      setOtpStep("code");
+      setCodeSent(true);
+      setInfo(`Code sent to ${normalizedEmail}. Enter the 6-digit code below, or tap the link in the email.`);
     } catch {
       setError("Could not send code. Please try again.");
     } finally {
       setBusy(false);
+      setPendingAction(null);
     }
   };
 
@@ -181,6 +213,7 @@ export default function SignInScreen() {
     if (token.length < 6) { setError("Enter the 6-digit code from your email."); return; }
 
     setBusy(true);
+    setPendingAction("verify");
     setError(null);
     try {
       const { data, error: e } = await supabase.auth.verifyOtp({
@@ -215,6 +248,7 @@ export default function SignInScreen() {
       setError("Verification failed. Please try again.");
     } finally {
       setBusy(false);
+      setPendingAction(null);
     }
   };
 
@@ -242,13 +276,9 @@ export default function SignInScreen() {
 
   const subtitle =
     screen === "create"
-      ? otpStep === "email"
-        ? "We'll email you a 6-digit code. No password needed — works instantly."
-        : `Email sent to ${normalizedEmail}. Enter the 6-digit code below — or just tap the link in the email. Both work.`
+      ? "Enter your email, tap Send code, then type the 6-digit code from your inbox."
       : screen === "otpIn"
-        ? otpStep === "email"
-          ? "We'll email you a one-time code."
-          : `Code sent to ${normalizedEmail}`
+        ? "Enter your email, tap Send code, then type the 6-digit code from your inbox."
         : "Sign in with your email and password.";
 
   return (
@@ -338,8 +368,12 @@ export default function SignInScreen() {
 
             {/* Switch to OTP sign-in */}
             <Pressable onPress={() => reset("otpIn")} style={styles.secondaryBtn} disabled={busy}>
-              <Text style={styles.secondaryBtnText}>Sign in with a code instead</Text>
+              <Text style={styles.secondaryBtnText}>Sign in with email code instead</Text>
             </Pressable>
+
+            <Text style={styles.hint}>
+              App Review demo accounts: expand the panel below and tap Pre-fill — then use the password shown there.
+            </Text>
 
             {/* Reviewer demo mode */}
             <Pressable
@@ -352,8 +386,8 @@ export default function SignInScreen() {
           </>
         )}
 
-        {/* ── OTP flow (create account OR OTP sign-in) ─────────────────── */}
-        {isOtpFlow && otpStep === "email" && (
+        {/* ── OTP flow (create account OR OTP sign-in) — email + code on one screen ─ */}
+        {isOtpFlow && (
           <>
             <Text style={styles.label}>Email</Text>
             <TextInput
@@ -370,16 +404,49 @@ export default function SignInScreen() {
               autoFocus
             />
 
+            <Text style={styles.label}>6-digit code</Text>
+            <Text style={styles.hint}>
+              {codeSent
+                ? `Check ${normalizedEmail || "your inbox"} for the code, or tap the sign-in link in that email.`
+                : "Tap Send code first — the field below is where you type the code from your email."}
+            </Text>
+            <TextInput
+              value={otp}
+              onChangeText={t => setOtp(t.replace(/\D/g, "").slice(0, 6))}
+              placeholder="000000"
+              placeholderTextColor={brandColors.mutedText}
+              keyboardType="number-pad"
+              textContentType="oneTimeCode"
+              autoComplete="one-time-code"
+              maxLength={6}
+              style={[styles.input, styles.otpInput]}
+              editable={!busy}
+            />
+
             <Pressable
               onPress={() => void handleSendCode()}
-              disabled={busy}
-              style={[styles.primaryBtn, busy && styles.btnDisabled]}
+              disabled={busy || !normalizedEmail}
+              style={[styles.primaryBtn, (busy || !normalizedEmail) && styles.btnDisabled]}
             >
-              {busy ? (
+              {pendingAction === "send" ? (
                 <ActivityIndicator color="#000" />
               ) : (
                 <Text style={styles.primaryBtnText}>
-                  {screen === "create" ? "Send code to create account" : "Send code"}
+                  {codeSent ? "Resend code" : screen === "create" ? "Send code to create account" : "Send code"}
+                </Text>
+              )}
+            </Pressable>
+
+            <Pressable
+              onPress={() => void handleVerifyCode()}
+              disabled={busy || otp.trim().length < 6}
+              style={[styles.verifyBtn, (busy || otp.trim().length < 6) && styles.btnDisabled]}
+            >
+              {pendingAction === "verify" ? (
+                <ActivityIndicator color="#00d4ff" />
+              ) : (
+                <Text style={styles.verifyBtnText}>
+                  {screen === "create" ? "Verify & create account" : "Verify & sign in"}
                 </Text>
               )}
             </Pressable>
@@ -387,49 +454,9 @@ export default function SignInScreen() {
             <Pressable onPress={() => reset("signIn")} style={styles.intentToggle} disabled={busy}>
               <Text style={styles.intentToggleText}>
                 {screen === "create"
-                  ? "Already have an account? Sign in"
+                  ? "Already have an account? Sign in with password"
                   : "Use password instead"}
               </Text>
-            </Pressable>
-          </>
-        )}
-
-        {/* ── OTP: enter code ──────────────────────────────────────────── */}
-        {isOtpFlow && otpStep === "code" && (
-          <>
-            <Text style={styles.label}>6-digit code</Text>
-            <TextInput
-              value={otp}
-              onChangeText={t => setOtp(t.replace(/\D/g, "").slice(0, 6))}
-              placeholder="000000"
-              placeholderTextColor={brandColors.mutedText}
-              keyboardType="number-pad"
-              maxLength={6}
-              style={[styles.input, styles.otpInput]}
-              editable={!busy}
-              autoFocus
-            />
-
-            <Pressable
-              onPress={() => void handleVerifyCode()}
-              disabled={busy}
-              style={[styles.primaryBtn, busy && styles.btnDisabled]}
-            >
-              {busy ? (
-                <ActivityIndicator color="#000" />
-              ) : (
-                <Text style={styles.primaryBtnText}>
-                  {screen === "create" ? "Verify & create account" : "Verify & sign in"}
-                </Text>
-              )}
-            </Pressable>
-
-            <Pressable
-              onPress={() => { setOtpStep("email"); setOtp(""); setError(null); }}
-              style={styles.secondaryBtn}
-              disabled={busy}
-            >
-              <Text style={styles.secondaryBtnText}>Resend to a different email</Text>
             </Pressable>
           </>
         )}
@@ -453,7 +480,9 @@ export default function SignInScreen() {
           <View style={demoStyles.panel}>
             <Text style={demoStyles.panelTitle}>App Review — Demo Credentials</Text>
             <Text style={demoStyles.panelSub}>
-              Password for both accounts: see App Review Information in App Store Connect.
+              Password for both demo accounts:{" "}
+              <Text style={demoStyles.codeBold}>{DEMO_PASSWORD}</Text>
+              {"\n"}Use Sign in with password (not email code) for the fastest review path.
             </Text>
 
             {DEMO_ACCOUNTS.map(account => (
@@ -462,10 +491,13 @@ export default function SignInScreen() {
                 style={demoStyles.accountRow}
                 onPress={() => {
                   setEmail(account.email);
+                  setPassword(DEMO_PASSWORD);
                   setScreen("signIn");
-                  setOtpStep("email");
+                  setCodeSent(false);
+                  setOtp("");
                   setShowDemo(false);
                   setError(null);
+                  setInfo("Demo account pre-filled — tap Sign in.");
                 }}
                 disabled={busy}
               >
@@ -566,6 +598,31 @@ const styles = StyleSheet.create({
     letterSpacing: 8,
     textAlign: "center",
     fontSize: 22,
+  },
+  hint: {
+    fontFamily: brandFonts.body,
+    fontSize: 12,
+    lineHeight: 17,
+    color: brandColors.mutedText,
+    marginBottom: 8,
+    marginTop: -8,
+  },
+  verifyBtn: {
+    borderWidth: 1,
+    borderColor: "rgba(0,212,255,0.45)",
+    borderRadius: 10,
+    paddingVertical: 16,
+    alignItems: "center",
+    justifyContent: "center",
+    minHeight: 52,
+    marginTop: 12,
+  },
+  verifyBtnText: {
+    color: "#00d4ff",
+    fontSize: 13,
+    fontWeight: "800",
+    letterSpacing: 0.5,
+    textTransform: "uppercase",
   },
   primaryBtn: {
     backgroundColor: "#00d4ff",

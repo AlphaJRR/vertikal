@@ -76,6 +76,18 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="edit"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="notes"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
         name="more"
         options={{
           title: "More",
