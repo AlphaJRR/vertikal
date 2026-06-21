@@ -3,11 +3,14 @@
 **Status:** 🟢 APPROVED (Joshua, June 2026)  
 **Owner:** LEDGER (CBO) · ATLAS (Analytics) · NOVA (Acquisition) · CROWN (Founding 50)  
 **Audience:** AI executive team — weekly board reports, Notion command center, ATLAS dashboard  
-**Canonical pricing source:** This document supersedes prior paywall sketches ($40/yr, $79/yr)
+
+> **Canonical source:** [`docs/AI_EXEC_REVENUE_OPERATING_MEMO.md`](./AI_EXEC_REVENUE_OPERATING_MEMO.md) — Joshua-approved pricing, product IDs, founding window, launch gates, and exec ownership. This document holds **targets and KPI tables** only; do not change pricing here.
 
 ---
 
-## Approved pricing (canonical)
+## Approved pricing
+
+*Aligned with operating memo — Phase 2 founding / Phase 3 standard.*
 
 | Phase | Window | Monthly | Annual | Product IDs | Notes |
 |-------|--------|---------|--------|-------------|-------|
@@ -163,6 +166,7 @@ Founding 50 subscribers **must** use product IDs `ava_pro_monthly` / `ava_pro_an
 
 ## Related docs
 
+- `docs/AI_EXEC_REVENUE_OPERATING_MEMO.md` — **canonical** pricing, launch rules, exec owners  
 - `docs/APP_STORE_IAP_CHECKLIST.md` — build 27 IAP checklist  
 - `docs/FINANCIAL_ASSUMPTIONS.md` — CLV/CAC; subscription section updated  
 - `docs/KPI_DASHBOARD_STRUCTURE.md` — funnel KPIs + AVA Pro section  
