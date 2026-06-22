@@ -20,7 +20,7 @@ import type { ToolkitMenuId } from "../components/toolkit/ToolkitNavigator";
  * Path A (App Review): full toolkit unlocked, no purchase/upsell UI.
  * Set false when AVA Pro IAP ships.
  */
-export const FREE_LAUNCH = true;
+export const FREE_LAUNCH = false;
 
 /** Two foundational lessons per tab — fixed allow-list; do not expand via curriculum slicing. */
 const FREE_LESSON_IDS_LIST = [
