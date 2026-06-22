@@ -10,10 +10,13 @@ export type { CustomerInfo, PurchasesOfferings, PurchasesPackage };
 /** RevenueCat entitlement identifier — maps to AVA Pro access. */
 export const REVENUECAT_ENTITLEMENT_PRO = "pro";
 
-/** Founding member product IDs (Phase 2). */
+/** Shown in UI; must match RevenueCat entitlement display name in dashboard. */
+export const ENTITLEMENT_DISPLAY_NAME = "ALPHA Creators Pro";
+
+/** Founding member product IDs (Phase 2) — must match App Store Connect + RevenueCat. */
 export const FOUNDING_PRODUCT_IDS = {
-  monthly: "ava_pro_monthly",
-  annual: "ava_pro_annual",
+  monthly: "AvaCreatorPro",
+  annual: "yearly",
 } as const;
 
 /** Standard pricing product IDs (Phase 3). */
@@ -164,6 +167,127 @@ export function getFoundingPackages(offerings: PurchasesOfferings): {
     monthly: findPackageByProductId(offerings, FOUNDING_PRODUCT_IDS.monthly),
     annual: findPackageByProductId(offerings, FOUNDING_PRODUCT_IDS.annual),
   };
+}
+
+/** Resolve monthly / yearly (annual) / lifetime from current offering (RevenueCat package types). */
+export function getOfferingPackagesByType(offerings: PurchasesOfferings): {
+  monthly: PurchasesPackage | null;
+  yearly: PurchasesPackage | null;
+  lifetime: PurchasesPackage | null;
+} {
+  const current = offerings.current;
+  if (!current) {
+    return { monthly: null, yearly: null, lifetime: null };
+  }
+
+  let monthly: PurchasesPackage | null = null;
+  let yearly: PurchasesPackage | null = null;
+  let lifetime: PurchasesPackage | null = null;
+
+  for (const pkg of current.availablePackages) {
+    const type = pkg.packageType;
+    if (type === "MONTHLY" && !monthly) monthly = pkg;
+    else if (type === "ANNUAL" && !yearly) yearly = pkg;
+    else if (type === "LIFETIME" && !lifetime) lifetime = pkg;
+  }
+
+  const founding = getFoundingPackages(offerings);
+  return {
+    monthly: monthly ?? founding.monthly,
+    yearly: yearly ?? founding.annual,
+    lifetime,
+  };
+}
+
+export type PaywallPresentationResult =
+  | "purchased"
+  | "restored"
+  | "cancelled"
+  | "not_presented"
+  | "error";
+
+type PurchasesUiModule = typeof import("react-native-purchases-ui");
+
+let purchasesUiModule: PurchasesUiModule | null = null;
+
+async function getPurchasesUiModule(): Promise<PurchasesUiModule | null> {
+  if (Platform.OS !== "ios" || !isPurchasesSupported()) return null;
+
+  if (purchasesUiModule) return purchasesUiModule;
+
+  try {
+    purchasesUiModule = await import("react-native-purchases-ui");
+    return purchasesUiModule;
+  } catch (error) {
+    console.error("[purchases] failed to load react-native-purchases-ui:", error);
+    return null;
+  }
+}
+
+function mapPaywallResult(
+  result: import("react-native-purchases-ui").PAYWALL_RESULT,
+  ui: PurchasesUiModule,
+): PaywallPresentationResult {
+  switch (result) {
+    case ui.PAYWALL_RESULT.PURCHASED:
+      return "purchased";
+    case ui.PAYWALL_RESULT.RESTORED:
+      return "restored";
+    case ui.PAYWALL_RESULT.CANCELLED:
+      return "cancelled";
+    case ui.PAYWALL_RESULT.NOT_PRESENTED:
+      return "not_presented";
+    case ui.PAYWALL_RESULT.ERROR:
+      return "error";
+    default: {
+      const _exhaustive: never = result;
+      return _exhaustive;
+    }
+  }
+}
+
+/** Present RevenueCat-hosted paywall (configure template in RevenueCat dashboard). */
+export async function presentRevenueCatPaywall(): Promise<PaywallPresentationResult> {
+  const ui = await getPurchasesUiModule();
+  if (!ui) return "not_presented";
+
+  try {
+    const result = await ui.default.presentPaywall();
+    return mapPaywallResult(result, ui);
+  } catch (error) {
+    console.error("[purchases] presentRevenueCatPaywall failed:", error);
+    return "error";
+  }
+}
+
+/** Present paywall only when `pro` entitlement is inactive. */
+export async function presentRevenueCatPaywallIfNeeded(): Promise<PaywallPresentationResult> {
+  const ui = await getPurchasesUiModule();
+  if (!ui) return "not_presented";
+
+  try {
+    const result = await ui.default.presentPaywallIfNeeded({
+      requiredEntitlementIdentifier: REVENUECAT_ENTITLEMENT_PRO,
+    });
+    return mapPaywallResult(result, ui);
+  } catch (error) {
+    console.error("[purchases] presentRevenueCatPaywallIfNeeded failed:", error);
+    return "error";
+  }
+}
+
+/** RevenueCat Customer Center — manage / cancel subscription in-app. */
+export async function presentCustomerCenter(): Promise<boolean> {
+  const ui = await getPurchasesUiModule();
+  if (!ui) return false;
+
+  try {
+    await ui.default.presentCustomerCenter();
+    return true;
+  } catch (error) {
+    console.error("[purchases] presentCustomerCenter failed:", error);
+    return false;
+  }
 }
 
 export function formatPackagePrice(pkg: PurchasesPackage | null): string | null {
