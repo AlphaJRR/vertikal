@@ -19,7 +19,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.alphavisualartists.app",
-      "buildNumber": "30",
+      "buildNumber": "32",
       "associatedDomains": [
         "applinks:alphavisualartists.com"
       ],
