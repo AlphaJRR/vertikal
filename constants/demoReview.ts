@@ -1,9 +1,6 @@
 /** App Review demo account — password set in Supabase dashboard only (never in source). */
 export const DEMO_REVIEW_EMAIL = "appreview@alphavisualartists.com";
 
-/** In-app reviewer bypass (Continue as Reviewer, demo panel) — local dev only, never App Store. */
-export const ENABLE_REVIEWER_DEMO = __DEV__;
-
 export const SHOOT_STORAGE_KEYS = {
   pre: "ava_shoot_pre_v1",
   day: "ava_shoot_day_v1",

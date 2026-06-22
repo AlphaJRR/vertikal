@@ -54,10 +54,16 @@ Per-event photo-release consent (will appear for the attendee):
 HOW TO ACCESS DEMO ACCOUNTS IN THE APP
 ================================================================================
 
-On the Sign In screen, enter the email and password from the credentials section
-above manually, then tap Sign in (password flow — not email code).
+On the Sign In screen:
+  1. Scroll to the bottom.
+  2. Tap "App Review demo accounts" — this expands a panel with both email addresses.
+  3. Tap "Pre-fill" next to either account to populate the email field.
+  4. Enter the password above (AVAReview2026!).
+  5. Tap Sign in.
 
-There is no in-app demo panel or password-free reviewer bypass in production builds.
+The existing "Continue as Reviewer" button (also on the Sign In screen) unlocks the
+Creator Toolkit features (lessons, calculators, etc.) without an account and remains
+available.
 
 
 ================================================================================
