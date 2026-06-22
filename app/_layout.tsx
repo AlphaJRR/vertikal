@@ -36,6 +36,19 @@ import { markAppIntroPlayed, shouldPlayAppIntro } from "@/utils/introVideoGate";
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
+function logUpdatesLaunchDiagnostics() {
+  if (Updates.isEmergencyLaunch) {
+    console.warn(
+      "EMERGENCY LAUNCH REASON:",
+      Updates.emergencyLaunchReason,
+    );
+  }
+  console.log("embedded launch?", Updates.isEmbeddedLaunch);
+  console.log("channel:", Updates.channel);
+  console.log("runtimeVersion:", Updates.runtimeVersion);
+  console.log("updateId:", Updates.updateId);
+}
+
 const queryClient = new QueryClient();
 const SITE_URL = "https://alphavisualartists.com";
 const SITE_HOSTS = new Set([
@@ -165,6 +178,10 @@ export default function RootLayout() {
   });
   const handledInitial = useRef(false);
   const [introGate, setIntroGate] = useState<"loading" | "show" | "skip">("loading");
+
+  useEffect(() => {
+    logUpdatesLaunchDiagnostics();
+  }, []);
 
   useEffect(() => {
     void hydrateDemoMode();
