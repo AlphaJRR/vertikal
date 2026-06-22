@@ -16,16 +16,13 @@ import { FREE_LAUNCH } from "../constants/proAccess";
 import { brandColors, brandFonts } from "../constants/theme";
 import { TOOLKIT_LESSON_COUNT } from "../data/toolkitCurriculumTypes";
 import { useAvaPro, type AvaProStatus } from "../hooks/useAvaPro";
-import {
-  formatPackagePrice,
-  getFoundingPackages,
-  getOfferings,
-  hasProEntitlement,
-  isUserCancelledPurchase,
-  purchasePackage,
-  restorePurchases,
-} from "../lib/purchases";
 import { ProLockBadge } from "./toolkit/ProLockBadge";
+
+type PurchasesApi = typeof import("../lib/purchases");
+
+async function loadPurchasesApi(): Promise<PurchasesApi> {
+  return import("../lib/purchases");
+}
 
 interface PaywallProps {
   /** Locked item name shown above the AVA Pro headline (e.g. lesson title). */
@@ -67,14 +64,15 @@ export function Paywall({
     setOfferingsLoading(true);
     setOfferingsError(null);
     try {
-      const offerings = await getOfferings();
+      const purchases = await loadPurchasesApi();
+      const offerings = await purchases.getOfferings();
       if (!offerings?.current) {
         setOfferingsError("Subscriptions are not available right now. Try again later.");
         setMonthlyPkg(null);
         setAnnualPkg(null);
         return;
       }
-      const founding = getFoundingPackages(offerings);
+      const founding = purchases.getFoundingPackages(offerings);
       setMonthlyPkg(founding.monthly);
       setAnnualPkg(founding.annual);
       if (!founding.monthly && !founding.annual) {
@@ -100,9 +98,10 @@ export function Paywall({
     }
 
     setPurchasingId(pkg.identifier);
+    const purchases = await loadPurchasesApi();
     try {
-      const info = await purchasePackage(pkg);
-      if (hasProEntitlement(info)) {
+      const info = await purchases.purchasePackage(pkg);
+      if (purchases.hasProEntitlement(info)) {
         refresh();
         Alert.alert("Welcome to AVA Pro", "Your subscription is active.");
       } else {
@@ -113,7 +112,7 @@ export function Paywall({
         refresh();
       }
     } catch (error) {
-      if (isUserCancelledPurchase(error)) return;
+      if (purchases.isUserCancelledPurchase(error)) return;
       console.error("[Paywall] purchase failed:", error);
       Alert.alert(
         "Purchase failed",
@@ -127,9 +126,10 @@ export function Paywall({
   const handleRestore = async () => {
     setRestoring(true);
     try {
-      const info = await restorePurchases();
+      const purchases = await loadPurchasesApi();
+      const info = await purchases.restorePurchases();
       refresh();
-      if (hasProEntitlement(info)) {
+      if (purchases.hasProEntitlement(info)) {
         Alert.alert("Restored", "Your AVA Pro subscription has been restored.");
       } else {
         Alert.alert(
@@ -167,10 +167,8 @@ export function Paywall({
     );
   }
 
-  const monthlyPrice =
-    formatPackagePrice(monthlyPkg) ?? "$9.99/month";
-  const annualPrice =
-    formatPackagePrice(annualPkg) ?? "$39.99/year";
+  const monthlyPrice = monthlyPkg?.product.priceString ?? "$9.99/month";
+  const annualPrice = annualPkg?.product.priceString ?? "$39.99/year";
   const busy = purchasingId != null || restoring;
 
   return (

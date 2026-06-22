@@ -1,24 +1,27 @@
 import { useEffect } from "react";
-import { FREE_LAUNCH } from "../constants/proAccess";
 import { useAuth } from "../contexts/AuthContext";
-import { initPurchases, logOutPurchases } from "../lib/purchases";
 
 /**
  * Initializes RevenueCat when a Supabase session exists.
- * No-op while FREE_LAUNCH is true (App Review / free period).
+ * Only mounted when FREE_LAUNCH is false (see app/_layout.tsx).
+ * Lazy-loads lib/purchases so pre-native builds never require react-native-purchases at boot.
  */
 export function PurchasesBootstrap() {
   const { user, loading } = useAuth();
 
   useEffect(() => {
-    if (FREE_LAUNCH || loading) return;
+    if (loading) return;
 
-    if (user?.id) {
-      void initPurchases(user.id);
-      return;
-    }
+    void (async () => {
+      const { initPurchases, logOutPurchases } = await import("../lib/purchases");
 
-    void logOutPurchases();
+      if (user?.id) {
+        await initPurchases(user.id);
+        return;
+      }
+
+      await logOutPurchases();
+    })();
   }, [user?.id, loading]);
 
   return null;

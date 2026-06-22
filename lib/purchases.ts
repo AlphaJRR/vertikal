@@ -1,11 +1,11 @@
 import { Platform } from "react-native";
-import Purchases, {
-  type CustomerInfo,
-  type PurchasesOfferings,
-  type PurchasesPackage,
-  LOG_LEVEL,
-  PURCHASES_ERROR_CODE,
+import type {
+  CustomerInfo,
+  PurchasesOfferings,
+  PurchasesPackage,
 } from "react-native-purchases";
+
+export type { CustomerInfo, PurchasesOfferings, PurchasesPackage };
 
 /** RevenueCat entitlement identifier — maps to AVA Pro access. */
 export const REVENUECAT_ENTITLEMENT_PRO = "pro";
@@ -22,7 +22,34 @@ export const STANDARD_PRODUCT_IDS = {
   annual: "ava_pro_annual_standard",
 } as const;
 
+/** RevenueCat PURCHASE_CANCELLED_ERROR — avoid static import of native module. */
+const PURCHASE_CANCELLED_ERROR_CODE = 1;
+
+type PurchasesModule = typeof import("react-native-purchases");
+
+let purchasesModule: PurchasesModule | null = null;
+let purchasesLoadPromise: Promise<PurchasesModule | null> | null = null;
 let configured = false;
+
+async function getPurchasesModule(): Promise<PurchasesModule | null> {
+  if (Platform.OS !== "ios") return null;
+
+  if (purchasesModule) return purchasesModule;
+
+  if (!purchasesLoadPromise) {
+    purchasesLoadPromise = import("react-native-purchases")
+      .then((mod) => {
+        purchasesModule = mod;
+        return mod;
+      })
+      .catch((error) => {
+        console.error("[purchases] failed to load react-native-purchases:", error);
+        return null;
+      });
+  }
+
+  return purchasesLoadPromise;
+}
 
 function getIosApiKey(): string | undefined {
   return process.env.EXPO_PUBLIC_REVENUECAT_IOS_API_KEY;
@@ -44,6 +71,12 @@ export async function initPurchases(userId?: string | null): Promise<void> {
     console.warn("[purchases] EXPO_PUBLIC_REVENUECAT_IOS_API_KEY not set");
     return;
   }
+
+  const mod = await getPurchasesModule();
+  if (!mod) return;
+
+  const Purchases = mod.default;
+  const { LOG_LEVEL } = mod;
 
   try {
     if (!configured) {
@@ -69,8 +102,11 @@ export async function initPurchases(userId?: string | null): Promise<void> {
 export async function logOutPurchases(): Promise<void> {
   if (!configured || Platform.OS !== "ios") return;
 
+  const mod = await getPurchasesModule();
+  if (!mod) return;
+
   try {
-    await Purchases.logOut();
+    await mod.default.logOut();
   } catch (error) {
     console.error("[purchases] logOutPurchases failed:", error);
   }
@@ -79,8 +115,11 @@ export async function logOutPurchases(): Promise<void> {
 export async function getOfferings(): Promise<PurchasesOfferings | null> {
   if (!isPurchasesSupported()) return null;
 
+  const mod = await getPurchasesModule();
+  if (!mod) return null;
+
   try {
-    return await Purchases.getOfferings();
+    return await mod.default.getOfferings();
   } catch (error) {
     console.error("[purchases] getOfferings failed:", error);
     return null;
@@ -90,8 +129,11 @@ export async function getOfferings(): Promise<PurchasesOfferings | null> {
 export async function getCustomerInfo(): Promise<CustomerInfo | null> {
   if (!isPurchasesSupported()) return null;
 
+  const mod = await getPurchasesModule();
+  if (!mod) return null;
+
   try {
-    return await Purchases.getCustomerInfo();
+    return await mod.default.getCustomerInfo();
   } catch (error) {
     console.error("[purchases] getCustomerInfo failed:", error);
     return null;
@@ -134,7 +176,7 @@ export function isUserCancelledPurchase(error: unknown): boolean {
     typeof error === "object" &&
     error != null &&
     "code" in error &&
-    error.code === PURCHASES_ERROR_CODE.PURCHASE_CANCELLED_ERROR
+    error.code === PURCHASE_CANCELLED_ERROR_CODE
   ) {
     return true;
   }
@@ -144,12 +186,22 @@ export function isUserCancelledPurchase(error: unknown): boolean {
 export async function purchasePackage(
   pkg: PurchasesPackage,
 ): Promise<CustomerInfo> {
-  const { customerInfo } = await Purchases.purchasePackage(pkg);
+  const mod = await getPurchasesModule();
+  if (!mod) {
+    throw new Error("Purchases module unavailable");
+  }
+
+  const { customerInfo } = await mod.default.purchasePackage(pkg);
   return customerInfo;
 }
 
 export async function restorePurchases(): Promise<CustomerInfo> {
-  return Purchases.restorePurchases();
+  const mod = await getPurchasesModule();
+  if (!mod) {
+    throw new Error("Purchases module unavailable");
+  }
+
+  return mod.default.restorePurchases();
 }
 
 export function addCustomerInfoListener(
@@ -159,13 +211,29 @@ export function addCustomerInfoListener(
     return () => {};
   }
 
-  try {
-    Purchases.addCustomerInfoUpdateListener(listener);
-    return () => {
-      Purchases.removeCustomerInfoUpdateListener(listener);
-    };
-  } catch (error) {
-    console.error("[purchases] addCustomerInfoListener failed:", error);
-    return () => {};
-  }
+  let removed = false;
+  let nativeRemove: (() => void) | undefined;
+
+  void getPurchasesModule()
+    .then((mod) => {
+      if (!mod || removed) return;
+
+      try {
+        const Purchases = mod.default;
+        Purchases.addCustomerInfoUpdateListener(listener);
+        nativeRemove = () => {
+          Purchases.removeCustomerInfoUpdateListener(listener);
+        };
+      } catch (error) {
+        console.error("[purchases] addCustomerInfoListener failed:", error);
+      }
+    })
+    .catch((error) => {
+      console.error("[purchases] addCustomerInfoListener load failed:", error);
+    });
+
+  return () => {
+    removed = true;
+    nativeRemove?.();
+  };
 }
