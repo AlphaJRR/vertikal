@@ -8,7 +8,8 @@
  *
  * Joshua — Supabase dashboard (mobile auth + profiles):
  * 1. Authentication → Email: enable Email provider; enable password sign-in.
- * 2. App Review demo: create user appreview@alphavisualartists.com with password in dashboard only.
+ * 2. App Review: provide demo credentials in App Store Connect review notes only (no in-app bypass).
+ *    Optional toolkit account appreview@alphavisualartists.com — password in dashboard; set subscription_tier = 'pro'.
  * 3. Authentication → Email Templates → OTP: optional for users who prefer email codes.
  * 4. Database → profiles: ensure table has `id` (uuid, FK auth.users), `subscription_tier` text default 'free'.
  * 5. SQL trigger on auth.users insert → insert profiles row (id, subscription_tier = 'free').
@@ -17,8 +18,8 @@
 import type { ToolkitMenuId } from "../components/toolkit/ToolkitNavigator";
 
 /**
- * Path A (App Review): full toolkit unlocked, no purchase/upsell UI.
- * Set false when AVA Pro IAP ships.
+ * Path A (launch): full toolkit unlocked for all signed-in users, no purchase/upsell UI.
+ * Set false when AVA Pro IAP ships. App Review uses manual sign-in — no in-app demo bypass.
  */
 export const FREE_LAUNCH = true;
 

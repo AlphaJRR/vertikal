@@ -1,14 +1,12 @@
 // lib/demoMode.ts
 // -----------------------------------------------------------------------------
-// Reviewer / Demo mode for Apple App Review (Guideline 2.1 / 2.1(a)).
-// Non-destructive. Zero new dependencies (uses React's useSyncExternalStore +
-// AsyncStorage, both already in the app). Does NOT touch Supabase auth.
-//
-// When demo mode is ON, useAvaPro() returns Pro, so EVERY existing gate
-// (Tools-tab locks, app/lesson/[id] guard, RateCalculator) unlocks in one place.
+// Local dev-only reviewer mode. Does NOT touch Supabase auth.
+// Gated by ENABLE_REVIEWER_DEMO (__DEV__) — never active in App Store builds.
+// When demo mode is ON in dev, useAvaPro() returns Pro for gate testing.
 // -----------------------------------------------------------------------------
 import { useSyncExternalStore } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ENABLE_REVIEWER_DEMO } from '../constants/demoReview';
 
 const STORAGE_KEY = 'ava_demo_mode_v1';
 
@@ -16,8 +14,19 @@ let isDemoModeFlag = false;
 const listeners = new Set<() => void>();
 const emit = () => listeners.forEach((l) => l());
 
-/** Call once on app start (e.g. in app/_layout.tsx) so demo mode survives relaunch. */
+/** Call once on app start (e.g. in app/_layout.tsx). Clears stale demo state on production builds. */
 export async function hydrateDemoMode(): Promise<void> {
+  if (!ENABLE_REVIEWER_DEMO) {
+    isDemoModeFlag = false;
+    emit();
+    try {
+      await AsyncStorage.removeItem(STORAGE_KEY);
+    } catch {
+      // ignore
+    }
+    return;
+  }
+
   try {
     const v = await AsyncStorage.getItem(STORAGE_KEY);
     if (v === 'true') {
@@ -29,8 +38,10 @@ export async function hydrateDemoMode(): Promise<void> {
   }
 }
 
-/** Turn on reviewer/demo mode. Persists so a reviewer stays in after backgrounding. */
+/** Turn on reviewer/demo mode. Dev builds only — no-op on App Store / TestFlight. */
 export async function enableDemoMode(): Promise<void> {
+  if (!ENABLE_REVIEWER_DEMO) return;
+
   isDemoModeFlag = true;
   emit();
   try {
@@ -53,7 +64,7 @@ export async function exitDemoMode(): Promise<void> {
 
 /** Non-hook read, for use inside useAvaPro or anywhere outside React render. */
 export function getDemoMode(): boolean {
-  return isDemoModeFlag;
+  return ENABLE_REVIEWER_DEMO && isDemoModeFlag;
 }
 
 function subscribe(cb: () => void): () => void {

@@ -2,13 +2,9 @@
  * Sign-in screen — email authentication for Alpha Creators.
  *
  * Account creation:  OTP only (6-digit code sent to email).
- *   — No confirmation-link email. No dependency on Supabase "Site URL".
- *   — Works correctly on first install with no Supabase URL config changes.
- *
  * Sign-in:  password OR OTP (user's choice).
  *
- * "Continue as Reviewer" button stays for the App Review demo mode (Creator Toolkit).
- * For full event-photo-delivery review, use the demo credentials panel at the bottom.
+ * App Review demo credentials are in App Store Connect review notes only — no in-app panel.
  */
 
 import React, { useState } from "react";
@@ -28,7 +24,6 @@ import * as ExpoLinking from "expo-linking";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { brandColors, brandFonts } from "../constants/theme";
-import { enableDemoMode } from "../lib/demoMode";
 import { needsAccountConsentScreen } from "../lib/accountConsent";
 import { supabase } from "../lib/supabase";
 import { normalizeRedeemCode, stashRedeemCode } from "../lib/redeemDeepLink";
@@ -39,23 +34,6 @@ import { seedDemoReviewDataIfNeeded } from "../utils/demoReviewSeed";
 // "signIn"  → password sign-in (default)
 // "otpIn"   → OTP sign-in
 type Screen = "create" | "signIn" | "otpIn";
-
-const MIN_PW = 8;
-const DEMO_PASSWORD = "AVAReview2026!";
-
-// ── App Review demo accounts ───────────────────────────────────────────────────
-const DEMO_ACCOUNTS = [
-  {
-    role:  "Operator (photographer)",
-    email: "reviewer@alphavisualartists.com",
-    note:  "Creates events, uploads photos, assigns galleries.",
-  },
-  {
-    role:  "Standard user (attendee)",
-    email: "reviewer.attendee@alphavisualartists.com",
-    note:  "Redeem code: DEMO01 → opens pre-assigned gallery.",
-  },
-] as const;
 
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -81,8 +59,6 @@ export default function SignInScreen() {
   const [pendingAction, setPendingAction] = useState<"send" | "verify" | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [info,  setInfo]  = useState<string | null>(null);
-
-  const [showDemo, setShowDemo] = useState(false);
 
   const normalizedEmail = email.trim().toLowerCase();
 
@@ -246,20 +222,6 @@ export default function SignInScreen() {
     }
   };
 
-  // ── Reviewer demo mode ────────────────────────────────────────────────────────
-  const handleReviewerDemo = async () => {
-    setBusy(true);
-    setError(null);
-    try {
-      await enableDemoMode();
-      router.replace("/(tabs)" as Href);
-    } catch {
-      setError("Could not start demo mode. Try again.");
-    } finally {
-      setBusy(false);
-    }
-  };
-
   // ─────────────────────────────────────────────────────────────────────────────
   // Render
   // ─────────────────────────────────────────────────────────────────────────────
@@ -364,19 +326,6 @@ export default function SignInScreen() {
             <Pressable onPress={() => reset("otpIn")} style={styles.secondaryBtn} disabled={busy}>
               <Text style={styles.secondaryBtnText}>Sign in with email code instead</Text>
             </Pressable>
-
-            <Text style={styles.hint}>
-              App Review demo accounts: expand the panel below and tap Pre-fill — then use the password shown there.
-            </Text>
-
-            {/* Reviewer demo mode */}
-            <Pressable
-              onPress={() => void handleReviewerDemo()}
-              disabled={busy}
-              style={[styles.reviewerBtn, busy && styles.btnDisabled]}
-            >
-              <Text style={styles.reviewerBtnText}>Continue as Reviewer</Text>
-            </Pressable>
           </>
         )}
 
@@ -453,68 +402,6 @@ export default function SignInScreen() {
               </Text>
             </Pressable>
           </>
-        )}
-
-        {/* ── App Review demo panel ─────────────────────────────────────── */}
-        <Pressable
-          onPress={() => setShowDemo(v => !v)}
-          style={demoStyles.toggle}
-          hitSlop={10}
-        >
-          <Ionicons name="information-circle-outline" size={15} color={brandColors.mutedText} />
-          <Text style={demoStyles.toggleText}>App Review demo accounts</Text>
-          <Ionicons
-            name={showDemo ? "chevron-up" : "chevron-down"}
-            size={13}
-            color={brandColors.mutedText}
-          />
-        </Pressable>
-
-        {showDemo && (
-          <View style={demoStyles.panel}>
-            <Text style={demoStyles.panelTitle}>App Review — Demo Credentials</Text>
-            <Text style={demoStyles.panelSub}>
-              Password for both demo accounts:{" "}
-              <Text style={demoStyles.codeBold}>{DEMO_PASSWORD}</Text>
-              {"\n"}Use Sign in with password (not email code) for the fastest review path.
-            </Text>
-
-            {DEMO_ACCOUNTS.map(account => (
-              <Pressable
-                key={account.email}
-                style={demoStyles.accountRow}
-                onPress={() => {
-                  setEmail(account.email);
-                  setPassword(DEMO_PASSWORD);
-                  setScreen("signIn");
-                  setCodeSent(false);
-                  setOtp("");
-                  setShowDemo(false);
-                  setError(null);
-                  setInfo("Demo account pre-filled — tap Sign in.");
-                }}
-                disabled={busy}
-              >
-                <View style={demoStyles.accountInfo}>
-                  <Text style={demoStyles.accountRole}>{account.role}</Text>
-                  <Text style={demoStyles.accountEmail}>{account.email}</Text>
-                  <Text style={demoStyles.accountNote}>{account.note}</Text>
-                </View>
-                <View style={demoStyles.prefillBtn}>
-                  <Text style={demoStyles.prefillBtnText}>Pre-fill</Text>
-                </View>
-              </Pressable>
-            ))}
-
-            <View style={demoStyles.codeRow}>
-              <Ionicons name="key-outline" size={14} color="#00BFFF" />
-              <Text style={demoStyles.codeText}>
-                Attendee gallery code:{" "}
-                <Text style={demoStyles.codeBold}>DEMO01</Text>
-                {"\n"}Enter this on the "Enter my code" screen after signing in as the attendee.
-              </Text>
-            </View>
-          </View>
         )}
       </ScrollView>
     </KeyboardAvoidingView>
@@ -659,20 +546,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     lineHeight: 20,
   },
-  reviewerBtn: {
-    marginTop: 16,
-    borderWidth: 1,
-    borderColor: "rgba(232,0,10,0.5)",
-    borderRadius: 10,
-    paddingVertical: 14,
-    alignItems: "center",
-  },
-  reviewerBtnText: {
-    fontFamily: brandFonts.bodyMedium,
-    fontSize: 14,
-    color: "#E8000A",
-    letterSpacing: 0.3,
-  },
   info: {
     fontFamily: brandFonts.body,
     fontSize: 13,
@@ -686,105 +559,5 @@ const styles = StyleSheet.create({
     color: brandColors.alphaRed,
     marginBottom: 16,
     lineHeight: 18,
-  },
-});
-
-const demoStyles = StyleSheet.create({
-  toggle: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 6,
-    marginTop: 32,
-    paddingVertical: 8,
-    opacity: 0.55,
-  },
-  toggleText: {
-    fontFamily: brandFonts.mono,
-    fontSize: 10,
-    letterSpacing: 1,
-    textTransform: "uppercase",
-    color: brandColors.mutedText,
-    flex: 1,
-  },
-  panel: {
-    backgroundColor: "rgba(255,255,255,0.04)",
-    borderWidth: 1,
-    borderColor: "rgba(255,255,255,0.1)",
-    borderRadius: 12,
-    padding: 16,
-    gap: 12,
-    marginTop: 4,
-  },
-  panelTitle: {
-    fontFamily: brandFonts.bodyMedium,
-    fontSize: 13,
-    color: "#fff",
-  },
-  panelSub: {
-    fontFamily: brandFonts.body,
-    fontSize: 11,
-    lineHeight: 16,
-    color: brandColors.mutedText,
-  },
-  accountRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
-    backgroundColor: "rgba(255,255,255,0.04)",
-    borderRadius: 8,
-    padding: 12,
-  },
-  accountInfo: { flex: 1, gap: 2 },
-  accountRole: {
-    fontFamily: brandFonts.mono,
-    fontSize: 9,
-    letterSpacing: 1,
-    textTransform: "uppercase",
-    color: "#00BFFF",
-  },
-  accountEmail: {
-    fontFamily: brandFonts.bodyMedium,
-    fontSize: 13,
-    color: "#fff",
-  },
-  accountNote: {
-    fontFamily: brandFonts.body,
-    fontSize: 11,
-    color: brandColors.mutedText,
-    lineHeight: 15,
-  },
-  prefillBtn: {
-    backgroundColor: "rgba(0,191,255,0.15)",
-    borderRadius: 6,
-    paddingVertical: 6,
-    paddingHorizontal: 10,
-  },
-  prefillBtnText: {
-    fontFamily: brandFonts.mono,
-    fontSize: 10,
-    letterSpacing: 0.5,
-    color: "#00BFFF",
-    textTransform: "uppercase",
-  },
-  codeRow: {
-    flexDirection: "row",
-    gap: 8,
-    alignItems: "flex-start",
-    backgroundColor: "rgba(0,191,255,0.06)",
-    borderRadius: 8,
-    padding: 10,
-  },
-  codeText: {
-    fontFamily: brandFonts.body,
-    fontSize: 12,
-    lineHeight: 18,
-    color: brandColors.subtleText,
-    flex: 1,
-  },
-  codeBold: {
-    fontFamily: brandFonts.mono,
-    fontSize: 13,
-    color: "#00BFFF",
-    letterSpacing: 2,
   },
 });

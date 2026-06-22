@@ -25,9 +25,9 @@ These are live accounts on the production Supabase backend with pre-seeded demo 
 
 ## How to Access Demo Accounts in the App
 
-On the **Sign In** screen, scroll to the bottom and tap **"App Review demo accounts"** — this expands a panel with both email addresses. Tap **"Pre-fill"** next to either account to populate the email field, then enter the password above and tap **Sign in**.
+On the **Sign In** screen, enter the email and password from the table above manually, then tap **Sign in** (password flow — not email code).
 
-The existing **"Continue as Reviewer"** button (also on the Sign In screen) unlocks the Creator Toolkit features (lessons, calculators, etc.) without an account and remains available.
+There is no in-app demo panel or password-free reviewer bypass in production builds.
 
 ---
 
