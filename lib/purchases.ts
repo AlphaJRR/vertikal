@@ -13,16 +13,10 @@ export const REVENUECAT_ENTITLEMENT_PRO = "pro";
 /** Shown in UI; must match RevenueCat entitlement display name in dashboard. */
 export const ENTITLEMENT_DISPLAY_NAME = "ALPHA Creators Pro";
 
-/** Founding member product IDs (Phase 2) — must match App Store Connect + RevenueCat. */
+/** AVA Pro product IDs — must match App Store Connect + RevenueCat. */
 export const FOUNDING_PRODUCT_IDS = {
   monthly: "AvaCreatorPro",
   annual: "yearly",
-} as const;
-
-/** Standard pricing product IDs (Phase 3). */
-export const STANDARD_PRODUCT_IDS = {
-  monthly: "ava_pro_monthly_standard",
-  annual: "ava_pro_annual_standard",
 } as const;
 
 /** RevenueCat PURCHASE_CANCELLED_ERROR — avoid static import of native module. */

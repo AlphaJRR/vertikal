@@ -158,7 +158,7 @@ Legacy import path: `constants/toolkitProGating.ts` re-exports from `proAccess.t
 ## G. What Joshua must do manually
 
 - **Supabase dashboard:** enable Email auth + OTP; **edit the email template to send `{{ .Token }}`** (numeric OTP, not magic link) so P0 stays deep-link-free; add `handle_new_user` trigger to insert a `profiles` row (`subscription_tier` default `'free'`); confirm RLS allows a user to read their own profile row.
-- **App Store Connect:** finish the rejection (Age Rating → **Age Assurance / In-App Controls = None**; attach production build under **Distribution**; resubmit + reply). Create **AVA Pro** auto-renewable subscription ($9.99/mo, $40/year founding) in a subscription group for P1.
+- **App Store Connect:** finish the rejection (Age Rating → **Age Assurance / In-App Controls = None**; attach production build under **Distribution**; resubmit + reply). Create **AVA Pro** auto-renewable subscriptions ($9.99/mo, $79.99/yr) in group **ALPHA CREATORS CREW** for P1.
 - **RevenueCat (P1):** create project; add ASC shared secret + products; define `pro` entitlement; configure webhook → Supabase Edge Function URL with a shared-secret header.
 - **Stripe / web Clerk (separate):** keep web Pro on web; do **not** wire Stripe to mobile entitlement. Swap `pk_test` → `pk_live` in web `ClerkRoot.tsx` before web launch (web-only).
 

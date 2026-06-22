@@ -52,12 +52,12 @@ You are **CURSOR (Cliff) — Senior Engineer** for **Alpha Visual Artists (AVA)*
 
 ## 3. APPROVED PRICING (canonical — do not change)
 
-**Subscription group (App Store Connect):** `ALPHA CREATORS CREW`
+**Subscription group (App Store Connect):** `ALPHA CREATORS CREW`  
+**RevenueCat entitlement:** `pro` (ALPHA Creators Pro)
 
-| Phase | Monthly | Annual | Product IDs |
-|-------|---------|--------|-------------|
-| **Founding (Phase 2)** — first 500 subs OR 90 days | $9.99 | $39.99 | `ava_pro_monthly`, `ava_pro_annual` |
-| **Standard (Phase 3)** — new subs after founding window | $14.99 | $49.99 | `ava_pro_monthly_standard`, `ava_pro_annual_standard` |
+| Plan | Monthly | Annual | Product IDs |
+|------|---------|--------|-------------|
+| **AVA Pro** | $9.99 | $79.99 | `AvaCreatorPro`, `yearly` |
 
 **Launch gate:** Do not flip `FREE_LAUNCH` until build 27 IAP is wired and Joshua confirms a successful purchase on device/TestFlight.
 
@@ -156,7 +156,7 @@ For each blocker, state: what failed, exact error, what Joshua must do manually,
 
 Joshua must complete these outside the agent:
 
-1. **App Store Connect** — Create 4 subscription products in group `ALPHA CREATORS CREW` (`ava_pro_monthly`, `ava_pro_annual`, `ava_pro_monthly_standard`, `ava_pro_annual_standard`)
+1. **App Store Connect** — Create 2 subscription products in group `ALPHA CREATORS CREW` (`AvaCreatorPro`, `yearly`)
 2. **RevenueCat dashboard** — Add iOS app, entitlement `pro`, link ASC products, default offering with founding packages, webhook URL + Authorization bearer
 3. **EAS env** — Set `EXPO_PUBLIC_REVENUECAT_IOS_API_KEY` (RevenueCat → API keys → Apple App Store public SDK key) in Expo → Project → Environment variables → production
 4. **Sandbox purchase test** — Install build 27 via TestFlight, complete sandbox purchase, verify webhook sets `profiles.subscription_tier = 'pro'`

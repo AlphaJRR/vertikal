@@ -85,7 +85,7 @@ This doc tracks Apple rejection reasons, code fixes in-repo, and what **Joshua m
 >
 > **Free tier (complete, usable product):** Users can browse the home experience and access **12 Creators Toolkit lessons** without creating an account or subscribing.
 >
-> **AVA Pro (subscription):** Additional lessons, cheat sheets, invoice builder, production checklists, rate-calculator Send Quote, and related pro tools require AVA Pro. Locked content displays clear Pro gates with subscription pricing ($40/year founding price or $9.99/month). Digital purchases are intended for in-app purchase through the App Store only (Guideline 3.1.1 compliant — no web checkout for digital content in the iOS app).
+> **AVA Pro (subscription):** Additional lessons, cheat sheets, invoice builder, production checklists, rate-calculator Send Quote, and related pro tools require AVA Pro. Locked content displays clear Pro gates with subscription pricing ($79.99/year or $9.99/month). Digital purchases are intended for in-app purchase through the App Store only (Guideline 3.1.1 compliant — no web checkout for digital content in the iOS app).
 >
 > **App Review access:** Tap **Continue as Reviewer** on the Sign in screen, or sign in with the demo account in Review Notes, to evaluate all Pro features without purchase.
 >

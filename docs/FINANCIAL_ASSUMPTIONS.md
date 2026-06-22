@@ -28,8 +28,7 @@
 - **3-Year CLV:** $2,880 (platform revenue) + $12,120 (network effects) = **$15,000**
 
 ### User Monetization (AVA Pro — approved June 2026)
-- **Founding (Phase 2):** $9.99/mo · $39.99/yr — first 500 subs OR 90 days
-- **Standard (Phase 3):** $14.99/mo · $49.99/yr
+- **AVA Pro:** $9.99/mo · $79.99/yr — product IDs `AvaCreatorPro`, `yearly`
 - **Free tier:** 12 lessons + rate calculator + invoice builder
 - **Month 1 gross MRR target:** $1,000 (see `docs/AI_EXEC_SALES_GOALS.md`)
 - **Net after Apple (15%):** ~85% of gross

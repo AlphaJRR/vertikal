@@ -63,12 +63,11 @@ AVA is the mobile home for visual storytellers: production checklists, rate calc
 
 **Subscription group:** ALPHA CREATORS CREW
 
-| Phase | Monthly | Annual | Product IDs |
-|-------|---------|--------|-------------|
-| **Founding (Phase 2)** | $9.99 | $39.99 | `ava_pro_monthly`, `ava_pro_annual` |
-| **Standard (Phase 3)** | $14.99 | $49.99 | `ava_pro_monthly_standard`, `ava_pro_annual_standard` |
+| Plan | Monthly | Annual | Product IDs |
+|------|---------|--------|-------------|
+| **AVA Pro** | $9.99 | $79.99 | `AvaCreatorPro`, `yearly` |
 
-**Founding window:** First 500 subscribers or 90 days — Founding 50 receive 7-day early access and are grandfathered at founding pricing.
+**Founding 50:** 7-day early access before public IAP launch.
 
 **Free tier:** 12 toolkit lessons, rate calculator, and invoice builder — no subscription required.
 

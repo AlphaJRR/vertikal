@@ -47,7 +47,7 @@ Cursor can **ship and fix the product**. Joshua must **sell, verify on device, a
 
 **Offer:** Full 108-lesson toolkit + quote export + pro checklists.
 
-**Pricing (approved):** $9.99/mo · $39.99/yr founding (Phase 2); $14.99/mo · $49.99/yr standard (Phase 3). See `docs/AI_EXEC_SALES_GOALS.md`.
+**Pricing (approved):** $9.99/mo · $79.99/yr. See `docs/AI_EXEC_SALES_GOALS.md`.
 
 **Joshua does:**
 - Decide: flip `FREE_LAUNCH = false` only when IAP + App Store build ready
@@ -59,7 +59,7 @@ Cursor can **ship and fix the product**. Joshua must **sell, verify on device, a
 - Wire `subscription_tier` webhook
 - Keep 12-lesson free tier intact
 
-**Proof metric:** 100 paying Pro users → ~$850–$1,000 gross MRR at founding mix ($9.99 / $39.99)
+**Proof metric:** 100 paying Pro users → ~$750–$900 gross MRR at launch mix ($9.99 / $79.99)
 
 ---
 

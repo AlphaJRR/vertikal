@@ -6,23 +6,15 @@ AVA Pro pricing is now canonical.
 
 ---
 
-## Phase 2 — Founding pricing
+## AVA Pro subscription (single tier)
 
 - **$9.99/month**
-- **$39.99/year**
-- **Product IDs:** `ava_pro_monthly`, `ava_pro_annual`
-- **Window:** first 500 paid subscribers or 90 days, whichever comes first
+- **$79.99/year**
+- **Product IDs:** `AvaCreatorPro` (monthly), `yearly` (annual)
+- **Subscription group:** **ALPHA CREATORS CREW** (App Store Connect)
+- **RevenueCat entitlement:** `pro` (display name: **ALPHA Creators Pro**)
 
-## Phase 3 — Standard pricing
-
-- **$14.99/month**
-- **$49.99/year**
-- **Product IDs:** `ava_pro_monthly_standard`, `ava_pro_annual_standard`
-- **Applies only to new subscribers** after the founding window closes
-
-## Subscription group
-
-**ALPHA CREATORS CREW** (App Store Connect)
+**Legacy (do not use for new ASC/RC setup):** `ava_pro_monthly`, `ava_pro_annual` — superseded June 2026.
 
 ---
 
@@ -34,7 +26,7 @@ Do not flip `FREE_LAUNCH` to false until Build 27 IAP is wired and Joshua confir
 
 ## Primary 90-day subscription goal
 
-Build the Founding subscriber base, prove free-to-paid conversion, validate lesson-gate monetization, and create a clean revenue dashboard that separates cash collected from recognized MRR.
+Build the subscriber base, prove free-to-paid conversion, validate lesson-gate monetization, and create a clean revenue dashboard that separates cash collected from recognized MRR.
 
 ---
 
@@ -45,8 +37,7 @@ Build the Founding subscriber base, prove free-to-paid conversion, validate less
 - Gross cash collected (App Store payouts vs. in-app gross)
 - Gross MRR and net MRR (after Apple fee)
 - ARR run-rate
-- Founding cap countdown (500 subs remaining)
-- Phase 3 timing alerts (90-day window, cap hit)
+- Annual vs monthly mix
 
 ### ATLAS — funnel analytics
 
@@ -78,7 +69,7 @@ Build the Founding subscriber base, prove free-to-paid conversion, validate less
 ### CURSOR — Build 27
 
 - Native IAP (RevenueCat / StoreKit)
-- Product IDs wired to founding + standard tiers
+- Product IDs wired to `AvaCreatorPro` + `yearly`
 - Restore reliability
 - **P0/P1 fixes only** — no new modules
 
@@ -102,5 +93,5 @@ Build the Founding subscriber base, prove free-to-paid conversion, validate less
 
 ---
 
-**Version:** 1.0 — Joshua-approved, June 2026  
-**Canonical for:** pricing, product IDs, founding window, launch gates, exec ownership
+**Version:** 1.1 — Joshua-approved, June 2026  
+**Canonical for:** pricing, product IDs, launch gates, exec ownership

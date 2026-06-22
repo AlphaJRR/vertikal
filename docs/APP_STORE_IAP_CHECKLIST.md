@@ -59,14 +59,14 @@ https://dyhmyvzgqonngzjueyoq.supabase.co/functions/v1/revenuecat-webhook
 
 Product IDs (subscription group **ALPHA CREATORS CREW**):
 
-| Product ID | Type | Price | Phase |
-|------------|------|-------|-------|
-| `ava_pro_monthly` | Auto-renewable | $9.99/mo | Founding (Phase 2) |
-| `ava_pro_annual` | Auto-renewable | $39.99/yr | Founding (Phase 2) |
-| `ava_pro_monthly_standard` | Auto-renewable | $14.99/mo | Standard (Phase 3) |
-| `ava_pro_annual_standard` | Auto-renewable | $49.99/yr | Standard (Phase 3) |
+| Product ID | Type | Price |
+|------------|------|-------|
+| `AvaCreatorPro` | Auto-renewable | $9.99/mo |
+| `yearly` | Auto-renewable | $79.99/yr |
 
-**Founding window:** First 500 subs OR 90 days. Founding 50 get 7-day early access; grandfathered at founding price forever.
+**Legacy (do not create):** `ava_pro_monthly`, `ava_pro_annual` — superseded June 2026.
+
+**Founding 50:** 7-day early access before public IAP launch.
 
 Canonical pricing & launch rules: `docs/AI_EXEC_REVENUE_OPERATING_MEMO.md`. Sales targets: `docs/AI_EXEC_SALES_GOALS.md`.
 
@@ -86,10 +86,8 @@ Canonical pricing & launch rules: `docs/AI_EXEC_REVENUE_OPERATING_MEMO.md`. Sale
 
 Create in **App Store Connect → Subscriptions** — group **`ALPHA CREATORS CREW`** (same product IDs as RevenueCat table).
 
-- [ ] `ava_pro_monthly` — $9.99/mo
-- [ ] `ava_pro_annual` — $39.99/yr
-- [ ] `ava_pro_monthly_standard` — $14.99/mo (Phase 3 — can add later)
-- [ ] `ava_pro_annual_standard` — $49.99/yr (Phase 3 — can add later)
+- [ ] `AvaCreatorPro` — $9.99/mo
+- [ ] `yearly` — $79.99/yr
 - [ ] Subscription localization + review screenshot
 - [ ] Sandbox tester account for purchase QA
 

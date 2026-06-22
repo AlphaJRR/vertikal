@@ -123,6 +123,33 @@ export function Paywall({
     }
   };
 
+  const handleRevenueCatPaywall = async () => {
+    if (!isSignedIn) {
+      router.push("/sign-in" as Href);
+      return;
+    }
+
+    try {
+      const purchases = await loadPurchasesApi();
+      const result = await purchases.presentRevenueCatPaywall();
+      if (result === "purchased" || result === "restored") {
+        refresh();
+        Alert.alert("Welcome to AVA Pro", "Your subscription is active.");
+      } else if (result === "error") {
+        Alert.alert(
+          "Could not open plans",
+          "Subscription options are not available right now. Try again later.",
+        );
+      }
+    } catch (error) {
+      console.error("[Paywall] handleRevenueCatPaywall failed:", error);
+      Alert.alert(
+        "Could not open plans",
+        "Subscription options are not available right now.",
+      );
+    }
+  };
+
   const handleRestore = async () => {
     setRestoring(true);
     try {
@@ -168,7 +195,7 @@ export function Paywall({
   }
 
   const monthlyPrice = monthlyPkg?.product.priceString ?? "$9.99/month";
-  const annualPrice = annualPkg?.product.priceString ?? "$39.99/year";
+  const annualPrice = annualPkg?.product.priceString ?? "$79.99/year";
   const busy = purchasingId != null || restoring;
 
   return (
@@ -190,9 +217,17 @@ export function Paywall({
         <Text style={styles.title}>AVA Pro</Text>
         <Text style={styles.body}>{subtitle}</Text>
 
+        <Pressable
+          onPress={() => void handleRevenueCatPaywall()}
+          disabled={busy}
+          style={[styles.rcPaywallBtn, busy && styles.btnDisabled]}
+        >
+          <Text style={styles.rcPaywallBtnText}>View subscription plans</Text>
+        </Pressable>
+
         <View style={styles.proCard}>
           <Text style={styles.priceHero}>{annualPrice}</Text>
-          <Text style={styles.priceHeroLabel}>Founding member price</Text>
+          <Text style={styles.priceHeroLabel}>Annual plan — best value</Text>
           <Text style={styles.priceSecondary}>or {monthlyPrice}</Text>
           <Text style={styles.iapNote}>
             AVA Pro is a subscription unlocked through the App Store. Digital
@@ -334,8 +369,24 @@ const styles = StyleSheet.create({
     lineHeight: 21,
     color: brandColors.subtleText,
     textAlign: "center",
-    marginBottom: 20,
+    marginBottom: 12,
     paddingHorizontal: 8,
+  },
+  rcPaywallBtn: {
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    marginBottom: 16,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "rgba(0, 191, 255, 0.45)",
+  },
+  rcPaywallBtnText: {
+    fontFamily: brandFonts.mono,
+    fontSize: 10,
+    letterSpacing: 1.2,
+    textTransform: "uppercase",
+    color: "#00BFFF",
+    fontWeight: "700",
   },
   proCard: {
     width: "100%",
