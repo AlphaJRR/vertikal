@@ -7,12 +7,23 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  useWindowDimensions,
   View,
 } from "react-native";
 import * as Haptics from "expo-haptics";
 import * as WebBrowser from "expo-web-browser";
 
 const SHOP_URL = "https://shop.alphavisualartists.com";
+
+/** Vertical crew looks — matches marketing `/apparel` stack (1024×1725 composite). */
+const APPAREL_STACK: ImageSourcePropType[] = [
+  require("../../assets/apparel/woman-alpha-hoodie.png"),
+  require("../../assets/apparel/boy-tan-tee.png"),
+  require("../../assets/apparel/boy-green-cap-collage.png"),
+];
+
+/** Composite aspect from marketing apparel stack (width / height). */
+const APPAREL_STACK_ASPECT = 1024 / 1725;
 
 type Product = {
   id: string;
@@ -86,6 +97,10 @@ const COLS = [
 ];
 
 export default function ShopScreen() {
+  const { width: screenWidth } = useWindowDimensions();
+  const stackWidth = Math.min(screenWidth - 32, 480);
+  const stackHeight = stackWidth / APPAREL_STACK_ASPECT;
+
   const open = (url: string) => {
     Haptics.selectionAsync().catch(() => {});
     WebBrowser.openBrowserAsync(url, {
@@ -129,6 +144,21 @@ export default function ShopScreen() {
             <Text style={styles.btnSecondaryTxt}>Browse all</Text>
           </Pressable>
         </View>
+      </View>
+
+      {/* APPAREL STACK — crew looks (replaces empty vertical placeholders) */}
+      <View style={[styles.apparelStack, { width: stackWidth, height: stackHeight }]}>
+        {APPAREL_STACK.map((src, index) => (
+          <Pressable
+            key={index}
+            onPress={() => open(SHOP_URL)}
+            style={styles.apparelPanel}
+            accessibilityRole="button"
+            accessibilityLabel="Shop Alpha Apparel crew collection"
+          >
+            <Image source={src} style={styles.apparelImg} resizeMode="cover" />
+          </Pressable>
+        ))}
       </View>
 
       {/* STATS */}
@@ -310,6 +340,26 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     letterSpacing: 0.5,
     textTransform: "uppercase",
+  },
+
+  // APPAREL STACK
+  apparelStack: {
+    alignSelf: "center",
+    marginBottom: 40,
+    borderRadius: 12,
+    overflow: "hidden",
+    borderWidth: 1,
+    borderColor: "#1a1a1a",
+    backgroundColor: "#111",
+  },
+  apparelPanel: {
+    flex: 1,
+    width: "100%",
+    overflow: "hidden",
+  },
+  apparelImg: {
+    width: "100%",
+    height: "100%",
   },
 
   // STATS

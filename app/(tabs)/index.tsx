@@ -15,6 +15,9 @@ import { Ionicons } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import * as WebBrowser from "expo-web-browser";
 import { useFocusEffect, useRouter, type Href } from "expo-router";
+import { BioSlideshow } from "../../components/home/BioSlideshow";
+import { JRInterviewVideos } from "../../components/home/JRInterviewVideos";
+import { MamaConnieVideo } from "../../components/home/MamaConnieVideo";
 import { ReelVideoCover } from "../../components/ReelVideoCover";
 import { VideoModal } from "../../components/VideoModal";
 import { ProductionTipsList } from "../../components/toolkit/ProductionTipsList";
@@ -399,6 +402,8 @@ export default function HomeScreen() {
           </View>
         </View>
 
+        <MamaConnieVideo />
+
         {/* RECENT WORK — now virtualized with FlatList */}
         <SectionHeader
           eyebrow="Latest"
@@ -448,6 +453,10 @@ export default function HomeScreen() {
             </View>
           ))}
         </View>
+
+        <BioSlideshow />
+
+        <JRInterviewVideos />
 
         {/* TIPS */}
         <SectionHeader eyebrow="Knowledge" title="Production Tips" />
