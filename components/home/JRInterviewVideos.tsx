@@ -26,6 +26,42 @@ type InterviewCardProps = {
 function InterviewCard({ interview, width }: InterviewCardProps) {
   const videoHeight = width / VIDEO_ASPECT;
   const [started, setStarted] = useState(false);
+
+  return (
+    <View style={[styles.card, { width }]}>
+      <View style={[styles.videoWrap, { height: videoHeight }]}>
+        {started ? (
+          <InterviewPlayer interview={interview} />
+        ) : (
+          <Pressable
+            onPress={() => setStarted(true)}
+            style={styles.playOverlay}
+            accessibilityRole="button"
+            accessibilityLabel={`Play ${interview.label}`}
+          >
+            <View style={styles.playBtn}>
+              <Ionicons name="play" size={28} color="#000" />
+            </View>
+            <Text style={styles.tapHint}>Tap to play</Text>
+          </Pressable>
+        )}
+      </View>
+      <View style={styles.labelRow}>
+        <Text style={styles.labelEyebrow}>{interview.eyebrow}</Text>
+        <Text style={styles.labelTitle} numberOfLines={2}>
+          {interview.label}
+        </Text>
+      </View>
+    </View>
+  );
+}
+
+type InterviewPlayerProps = {
+  interview: InterviewStream;
+};
+
+/** Native player mounts only after tap — avoids cold-start player stampede on Home. */
+function InterviewPlayer({ interview }: InterviewPlayerProps) {
   const [muted, setMuted] = useState(false);
 
   const source = interviewStreamSource(interview.streamId);
@@ -39,72 +75,46 @@ function InterviewCard({ interview, width }: InterviewCardProps) {
     player.muted = muted;
   }, [muted, player]);
 
+  useEffect(() => {
+    player.play();
+  }, [player]);
+
   useFocusEffect(
     useCallback(() => {
-      if (started) {
-        player.play();
-      }
+      player.play();
       return () => {
         player.pause();
       };
-    }, [player, started]),
+    }, [player]),
   );
-
-  const handlePlay = () => {
-    setStarted(true);
-    player.play();
-  };
 
   const toggleMute = () => {
     setMuted((current) => !current);
   };
 
   return (
-    <View style={[styles.card, { width }]}>
-      <View style={[styles.videoWrap, { height: videoHeight }]}>
-        <VideoView
-          player={player}
-          style={styles.video}
-          contentFit="contain"
-          nativeControls={started}
-          allowsPictureInPicture={false}
+    <>
+      <VideoView
+        player={player}
+        style={styles.video}
+        contentFit="contain"
+        nativeControls
+        allowsPictureInPicture={false}
+      />
+      <Pressable
+        onPress={toggleMute}
+        style={styles.unmuteBtn}
+        hitSlop={10}
+        accessibilityRole="button"
+        accessibilityLabel={muted ? "Unmute video" : "Mute video"}
+      >
+        <Ionicons
+          name={muted ? "volume-mute" : "volume-high"}
+          size={18}
+          color="#fff"
         />
-        {!started ? (
-          <Pressable
-            onPress={handlePlay}
-            style={styles.playOverlay}
-            accessibilityRole="button"
-            accessibilityLabel={`Play ${interview.label}`}
-          >
-            <View style={styles.playBtn}>
-              <Ionicons name="play" size={28} color="#000" />
-            </View>
-            <Text style={styles.tapHint}>Tap to play</Text>
-          </Pressable>
-        ) : null}
-        {started ? (
-          <Pressable
-            onPress={toggleMute}
-            style={styles.unmuteBtn}
-            hitSlop={10}
-            accessibilityRole="button"
-            accessibilityLabel={muted ? "Unmute video" : "Mute video"}
-          >
-            <Ionicons
-              name={muted ? "volume-mute" : "volume-high"}
-              size={18}
-              color="#fff"
-            />
-          </Pressable>
-        ) : null}
-      </View>
-      <View style={styles.labelRow}>
-        <Text style={styles.labelEyebrow}>{interview.eyebrow}</Text>
-        <Text style={styles.labelTitle} numberOfLines={2}>
-          {interview.label}
-        </Text>
-      </View>
-    </View>
+      </Pressable>
+    </>
   );
 }
 

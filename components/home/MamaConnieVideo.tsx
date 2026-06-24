@@ -11,9 +11,32 @@ import {
 
 const VIDEO_ASPECT = 16 / 9;
 
+/**
+ * Defer native VideoPlayer creation until after the Home shell paints.
+ * Creating Mama Connie + interview + reel players in one pass exceeded iOS limits.
+ */
 export function MamaConnieVideo() {
   const { width: screenWidth } = useWindowDimensions();
   const videoHeight = screenWidth / VIDEO_ASPECT;
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setReady(true));
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
+  if (!ready) {
+    return <View style={[styles.wrap, { height: videoHeight }]} />;
+  }
+
+  return <MamaConnieVideoPlayer videoHeight={videoHeight} />;
+}
+
+type MamaConnieVideoPlayerProps = {
+  videoHeight: number;
+};
+
+function MamaConnieVideoPlayer({ videoHeight }: MamaConnieVideoPlayerProps) {
   const [muted, setMuted] = useState(true);
 
   const source = cloudflareStreamHls(MAMA_CONNIE_HOME_STREAM_ID);
@@ -21,12 +44,15 @@ export function MamaConnieVideo() {
   const player = useVideoPlayer(source, (p) => {
     p.loop = true;
     p.muted = true;
-    p.play();
   });
 
   useEffect(() => {
     player.muted = muted;
   }, [muted, player]);
+
+  useEffect(() => {
+    player.play();
+  }, [player]);
 
   useFocusEffect(
     useCallback(() => {

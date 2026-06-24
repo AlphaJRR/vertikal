@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
-  FlatList,
   Image,
   NativeScrollEvent,
   NativeSyntheticEvent,
   Pressable,
+  ScrollView,
   StyleSheet,
   useWindowDimensions,
   View,
@@ -25,7 +25,7 @@ export function BioSlideshow() {
   const slideWidth = screenWidth - BIO_HOME_HORIZONTAL_PADDING * 2;
   const slideHeight = slideWidth / PORTRAIT_ASPECT;
 
-  const listRef = useRef<FlatList<BioSlide>>(null);
+  const scrollRef = useRef<ScrollView>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const resumeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -56,20 +56,24 @@ export function BioSlideshow() {
   }, [clearResumeTimer]);
 
   useEffect(() => {
-    if (paused || BIO_SLIDES.length <= 1) return;
+    if (paused || BIO_SLIDES.length <= 1 || slideWidth <= 0) return;
 
     const timer = setInterval(() => {
       const nextIndex = (activeIndex + 1) % BIO_SLIDES.length;
-      listRef.current?.scrollToIndex({ index: nextIndex, animated: true });
+      scrollRef.current?.scrollTo({
+        x: nextIndex * slideWidth,
+        animated: true,
+      });
       setActiveIndex(nextIndex);
     }, BIO_SLIDESHOW_INTERVAL_MS);
 
     return () => clearInterval(timer);
-  }, [activeIndex, paused]);
+  }, [activeIndex, paused, slideWidth]);
 
   const handleMomentumScrollEnd = (
     event: NativeSyntheticEvent<NativeScrollEvent>,
   ) => {
+    if (slideWidth <= 0) return;
     const index = Math.round(event.nativeEvent.contentOffset.x / slideWidth);
     const clamped = Math.max(0, Math.min(index, BIO_SLIDES.length - 1));
     setActiveIndex(clamped);
@@ -86,43 +90,62 @@ export function BioSlideshow() {
         },
       ]}
     >
-      <FlatList
-        ref={listRef}
-        data={BIO_SLIDES}
+      <ScrollView
+        ref={scrollRef}
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
+        nestedScrollEnabled
         style={{ width: slideWidth, height: slideHeight }}
-        keyExtractor={(_, index) => `bio-slide-${index}`}
-        getItemLayout={(_, index) => ({
-          length: slideWidth,
-          offset: slideWidth * index,
-          index,
-        })}
         onMomentumScrollEnd={handleMomentumScrollEnd}
-        renderItem={({ item }) => (
-          <Pressable
-            onPress={pauseAutoplay}
-            style={[
-              { width: slideWidth, height: slideHeight },
-              item.cutoutOnDark ? styles.cutoutSlide : null,
-            ]}
-            accessibilityRole="button"
-            accessibilityLabel="Pause bio slideshow"
-          >
-            <Image
-              source={item.source}
-              style={[
-                styles.slideImage,
-                item.cutoutOnDark ? styles.cutoutImage : null,
-              ]}
-              resizeMode={item.resizeMode ?? "contain"}
-              accessibilityIgnoresInvertColors
-            />
-          </Pressable>
-        )}
-      />
+      >
+        {BIO_SLIDES.map((item, index) => (
+          <BioSlideItem
+            key={`bio-slide-${index}`}
+            item={item}
+            slideWidth={slideWidth}
+            slideHeight={slideHeight}
+            onPause={pauseAutoplay}
+          />
+        ))}
+      </ScrollView>
     </View>
+  );
+}
+
+type BioSlideItemProps = {
+  item: BioSlide;
+  slideWidth: number;
+  slideHeight: number;
+  onPause: () => void;
+};
+
+function BioSlideItem({
+  item,
+  slideWidth,
+  slideHeight,
+  onPause,
+}: BioSlideItemProps) {
+  return (
+    <Pressable
+      onPress={onPause}
+      style={[
+        { width: slideWidth, height: slideHeight },
+        item.cutoutOnDark ? styles.cutoutSlide : null,
+      ]}
+      accessibilityRole="button"
+      accessibilityLabel="Pause bio slideshow"
+    >
+      <Image
+        source={item.source}
+        style={[
+          styles.slideImage,
+          item.cutoutOnDark ? styles.cutoutImage : null,
+        ]}
+        resizeMode={item.resizeMode ?? "contain"}
+        accessibilityIgnoresInvertColors
+      />
+    </Pressable>
   );
 }
 
