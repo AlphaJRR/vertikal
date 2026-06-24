@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { Component, useCallback, useEffect, useState, type ReactNode } from "react";
 import { Pressable, StyleSheet, Text, View, useWindowDimensions } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useFocusEffect } from "expo-router";
 import { useVideoPlayer, VideoView } from "expo-video";
 import {
+  CLOUDFLARE_STREAM_CUSTOMER,
   MAMA_CONNIE_HOME_LABEL,
   MAMA_CONNIE_HOME_STREAM_ID,
   cloudflareStreamHls,
@@ -11,31 +12,67 @@ import {
 
 const VIDEO_ASPECT = 16 / 9;
 
+const STREAM_UID_RE = /^[a-f0-9]{32}$/i;
+
+function homeStreamSourceValid(): boolean {
+  const uid = MAMA_CONNIE_HOME_STREAM_ID?.trim() ?? "";
+  return (
+    uid.length > 0 &&
+    STREAM_UID_RE.test(uid) &&
+    Boolean(CLOUDFLARE_STREAM_CUSTOMER?.trim())
+  );
+}
+
+
+type MamaConnieBoundaryState = { crashed: boolean };
+
 /**
- * Defer native VideoPlayer creation until after the Home shell paints.
- * Creating Mama Connie + interview + reel players in one pass exceeded iOS limits.
+ * Isolates Mama Connie from the root ErrorBoundary — returns null on player failure.
  */
+class MamaConnieBoundary extends Component<
+  { children: ReactNode },
+  MamaConnieBoundaryState
+> {
+  state: MamaConnieBoundaryState = { crashed: false };
+
+  static getDerivedStateFromError(): MamaConnieBoundaryState {
+    return { crashed: true };
+  }
+
+  componentDidCatch(error: Error, info: { componentStack: string }): void {
+    console.error(
+      "[MamaConnieVideo] player render failed:",
+      error.message,
+      error.stack,
+      info.componentStack,
+    );
+  }
+
+  render() {
+    if (this.state.crashed) return null;
+    return this.props.children;
+  }
+}
+
 export function MamaConnieVideo() {
   const { width: screenWidth } = useWindowDimensions();
   const videoHeight = screenWidth / VIDEO_ASPECT;
-  const [ready, setReady] = useState(false);
 
-  useEffect(() => {
-    const frame = requestAnimationFrame(() => setReady(true));
-    return () => cancelAnimationFrame(frame);
-  }, []);
-
-  if (!ready) {
-    return <View style={[styles.wrap, { height: videoHeight }]} />;
-  }
-
-  return <MamaConnieVideoPlayer videoHeight={videoHeight} />;
+  return (
+    <MamaConnieBoundary>
+      <MamaConnieVideoPlayer videoHeight={videoHeight} />
+    </MamaConnieBoundary>
+  );
 }
 
 type MamaConnieVideoPlayerProps = {
   videoHeight: number;
 };
 
+/**
+ * Matches FEATURED_REELS / ReelVideoCover: never call play() inside useVideoPlayer setup.
+ * Setup runs synchronously during render (expo-video useReleasingSharedObject factory).
+ */
 function MamaConnieVideoPlayer({ videoHeight }: MamaConnieVideoPlayerProps) {
   const [muted, setMuted] = useState(true);
 

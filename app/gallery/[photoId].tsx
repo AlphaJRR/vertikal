@@ -79,8 +79,8 @@ export default function PhotoDetailScreen() {
       }
       if (saved.reason === 'unavailable') {
         Alert.alert(
-          'Update required',
-          'Saving to Photos needs the next App Store build. You can still view your media here.',
+          'Save unavailable',
+          'Saving to Photos is not available on this device. You can still view your media here.',
         );
         return;
       }

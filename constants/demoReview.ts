@@ -1,4 +1,9 @@
-/** App Review demo account — password set in Supabase dashboard only (never in source). */
+/**
+ * App Review demo account — password set in Supabase dashboard only (never in source).
+ *
+ * Keep "Continue as Reviewer" + demo panel until the paid IAP build is submitted and
+ * App Store–approved; remove demo reviewer UI only after that (not before, not via early OTA).
+ */
 export const DEMO_REVIEW_EMAIL = "appreview@alphavisualartists.com";
 
 export const SHOOT_STORAGE_KEYS = {

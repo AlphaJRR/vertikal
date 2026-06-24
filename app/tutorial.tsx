@@ -75,9 +75,9 @@ export default function TutorialScreen() {
           ListEmptyComponent={
             <View style={s.emptyState}>
               <Ionicons name="videocam-outline" size={52} color={C.dim} />
-              <Text style={s.emptyText}>Tutorials coming soon</Text>
+              <Text style={s.emptyText}>No tutorials in this section yet</Text>
               <Text style={s.emptySubtext}>
-                AVA video guides will be available here.
+                Use Creator Training in the Toolkit for guided lessons.
               </Text>
             </View>
           }

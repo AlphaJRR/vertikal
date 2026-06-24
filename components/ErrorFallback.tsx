@@ -77,6 +77,23 @@ export function ErrorFallback({ error, resetError }: ErrorFallbackProps) {
           Please reload the app to continue.
         </Text>
 
+        {__DEV__ ? (
+          <ScrollView
+            style={styles.devErrorScroll}
+            contentContainerStyle={styles.devErrorContent}
+          >
+            <Text
+              style={[
+                styles.devErrorText,
+                { color: colors.foreground, fontFamily: monoFont },
+              ]}
+              selectable
+            >
+              {formatErrorDetails()}
+            </Text>
+          </ScrollView>
+        ) : null}
+
         <Pressable
           onPress={handleRestart}
           style={({ pressed }) => [
@@ -197,6 +214,19 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: "center",
     lineHeight: 24,
+  },
+  devErrorScroll: {
+    width: "100%",
+    maxHeight: 220,
+    marginTop: 8,
+  },
+  devErrorContent: {
+    paddingHorizontal: 4,
+  },
+  devErrorText: {
+    fontSize: 11,
+    lineHeight: 16,
+    textAlign: "left",
   },
   topButton: {
     position: "absolute",

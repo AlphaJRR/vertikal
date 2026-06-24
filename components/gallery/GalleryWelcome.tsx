@@ -44,8 +44,8 @@ export function GalleryWelcome({ welcome, onRefresh, refreshing }: GalleryWelcom
       const availability = await getNotificationAvailability();
       if (availability !== 'available') {
         Alert.alert(
-          'Alerts coming soon',
-          'Photo-ready alerts need the next App Store build. Pull down to refresh — your gallery updates automatically when photos land.',
+          'Notifications unavailable',
+          'Turn on notifications in Settings to get alerted when photos are ready. Pull down to refresh — your gallery updates automatically when photos land.',
         );
         setNotifySet(true);
         return;
