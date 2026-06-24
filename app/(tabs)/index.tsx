@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import {
   FlatList,
   Image,
@@ -19,8 +20,17 @@ import { ReelVideoCover } from "../../components/ReelVideoCover";
 import { VideoModal } from "../../components/VideoModal";
 import { ProductionTipsList } from "../../components/toolkit/ProductionTipsList";
 import { featuredTips } from "../../data/toolkitContent";
+import { HomePaywallModal } from "../../components/HomePaywallModal";
+import { HOME_PAYWALL_DELAY_MS } from "../../constants/paywall";
 import { useAuth } from "../../contexts/AuthContext";
+import { useAvaPro } from "../../hooks/useAvaPro";
 import { exitDemoMode, useDemoMode } from "../../lib/demoMode";
+import {
+  isHomePaywallInCooldown,
+  markHomePaywallDismissed,
+  markHomePaywallShownThisSession,
+  wasHomePaywallShownThisSession,
+} from "../../utils/homePaywallPrefs";
 
 const SITE_URL = "https://alphavisualartists.com";
 
@@ -212,9 +222,44 @@ const PHOTOS: Photo[] = [
 export default function HomeScreen() {
   const router = useRouter();
   const { user, signOut } = useAuth();
+  const { isPro, refresh } = useAvaPro();
   const isDemoMode = useDemoMode();
   const isSignedIn = Boolean(user);
   const userEmail = user?.email ?? null;
+  const [homePaywallVisible, setHomePaywallVisible] = useState(false);
+  const paywallTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      let cancelled = false;
+
+      const schedulePaywall = async () => {
+        if (isPro || isDemoMode || wasHomePaywallShownThisSession()) return;
+        if (await isHomePaywallInCooldown()) return;
+
+        paywallTimerRef.current = setTimeout(() => {
+          if (cancelled || isPro || wasHomePaywallShownThisSession()) return;
+          markHomePaywallShownThisSession();
+          setHomePaywallVisible(true);
+        }, HOME_PAYWALL_DELAY_MS);
+      };
+
+      void schedulePaywall();
+
+      return () => {
+        cancelled = true;
+        if (paywallTimerRef.current) {
+          clearTimeout(paywallTimerRef.current);
+          paywallTimerRef.current = null;
+        }
+      };
+    }, [isPro, isDemoMode]),
+  );
+
+  const dismissHomePaywall = () => {
+    setHomePaywallVisible(false);
+    void markHomePaywallDismissed();
+  };
 
   const handleExitDemoMode = () => {
     exitDemoMode().catch((error) => {
@@ -433,6 +478,13 @@ export default function HomeScreen() {
       <VideoModal
         source={activeVideo}
         onClose={() => setActiveVideo(null)}
+      />
+
+      <HomePaywallModal
+        visible={homePaywallVisible}
+        isSignedIn={isSignedIn}
+        onDismiss={dismissHomePaywall}
+        onActivated={refresh}
       />
     </>
   );

@@ -24,7 +24,10 @@ import {
   SkillLevel,
 } from "../../data/rateCalculatorData";
 import { rateCalculatorStyles as s } from "./rateCalculatorStyles";
+import { isRateCalculatorQuoteProLocked } from "../../constants/proAccess";
+import { useAvaPro } from "../../hooks/useAvaPro";
 import { useProjects } from "../../hooks/useProjects";
+import { showProUpgradeAlert } from "../../utils/showProUpgradeAlert";
 import { ProjectPickerModal } from "../projects/ProjectPickerModal";
 
 interface RateCalculatorProps {
@@ -39,6 +42,7 @@ interface QuoteLine {
 
 export function RateCalculator({ onBack }: RateCalculatorProps) {
   const insets = useSafeAreaInsets();
+  const { isPro, isSignedIn } = useAvaPro();
   const { projects, attachQuote } = useProjects();
   const [step, setStep] = useState(1);
   const [pickerOpen, setPickerOpen] = useState(false);
@@ -216,6 +220,10 @@ export function RateCalculator({ onBack }: RateCalculatorProps) {
   };
 
   const handleSendQuote = () => {
+    if (!isPro && isRateCalculatorQuoteProLocked()) {
+      showProUpgradeAlert(isSignedIn, "feature");
+      return;
+    }
     if (projects.length === 0) {
       void saveQuoteToProject();
       return;

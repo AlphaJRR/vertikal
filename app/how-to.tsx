@@ -35,7 +35,7 @@ const SECTIONS: { title: string; body: string }[] = [
     title: "Managing Projects",
     body:
       "Each project stores a separate set of checklists so you can track multiple " +
-      "shoots at once. Head to More → Your Projects to create, switch, or rename projects. " +
+      "shoots at once. Head to Account → Your Projects to create, switch, or rename projects. " +
       "Your active project is highlighted in red.",
   },
   {

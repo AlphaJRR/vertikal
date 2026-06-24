@@ -56,7 +56,7 @@ const FAQS: { q: string; a: string }[] = [
   {
     q: "How do I delete my account?",
     a:
-      "Go to More → Settings → Delete Account. " +
+      "Go to Account → Settings → Delete Account. " +
       "This permanently removes your account and all associated data. " +
       "This action cannot be undone.",
   },

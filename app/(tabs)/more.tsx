@@ -19,6 +19,8 @@ import { useAvaPro } from "../../hooks/useAvaPro";
 import { useProjects } from "../../hooks/useProjects";
 import { hasProEntitlement, restorePurchases } from "../../lib/purchases";
 
+import { presentAvaProPaywall } from "../../utils/presentAvaProPaywall";
+
 // TODO: Google + SIWA require native build — implement in next version
 // Needs: expo-apple-authentication, @react-native-google-signin/google-signin
 // JR to enable Apple Sign-In capability in Xcode + create Google OAuth client
@@ -106,7 +108,7 @@ function Row({ label, labelStyle, onPress, right, showChevron = true, showHairli
 
 // ─── Screen ───────────────────────────────────────────────────────────────────
 
-export default function MoreScreen() {
+export default function AccountScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const { user } = useAuth();
@@ -157,6 +159,40 @@ export default function MoreScreen() {
     }
   };
 
+  const handlePresentPaywall = async () => {
+    await presentAvaProPaywall({
+      isSignedIn: Boolean(user),
+      source: "account",
+      onActivated: refresh,
+    });
+  };
+
+  const handleManageSubscription = async () => {
+    if (Platform.OS !== "ios") {
+      Alert.alert("Manage subscription", "Subscription management is iOS only.");
+      return;
+    }
+
+    try {
+      const purchases = await import("../../lib/purchases");
+      const opened = await purchases.presentCustomerCenter();
+      if (!opened) {
+        Alert.alert(
+          "Manage subscription",
+          "Subscription management is not available right now.",
+        );
+        return;
+      }
+      refresh();
+    } catch (error) {
+      console.error("[MoreScreen] handleManageSubscription failed:", error);
+      Alert.alert(
+        "Manage subscription",
+        "Could not open subscription management.",
+      );
+    }
+  };
+
   return (
     <>
       <StatusBar style="light" />
@@ -165,7 +201,7 @@ export default function MoreScreen() {
         contentContainerStyle={{ paddingBottom: insets.bottom + 120 }}
         showsVerticalScrollIndicator={false}
       >
-        <Text style={s.pageTitle}>MORE</Text>
+        <Text style={s.pageTitle}>ACCOUNT</Text>
 
         {/* ── ACCOUNT ────────────────────────────────────────────────── */}
         <SectionTitle label="ACCOUNT" />
@@ -204,10 +240,17 @@ export default function MoreScreen() {
                 showHairline={false}
               />
               <Row
-                label="AVA Pro"
+                label={isPro ? "AVA Pro" : "Upgrade to Pro"}
                 right={<Pill label={isPro ? "Active" : "Subscribe in app"} dim={isPro} />}
-                showChevron={false}
+                onPress={isPro ? undefined : () => void handlePresentPaywall()}
+                showChevron={!isPro}
               />
+              {isPro ? (
+                <Row
+                  label="Manage Subscription"
+                  onPress={() => void handleManageSubscription()}
+                />
+              ) : null}
               <Row
                 label={restoring ? "Restoring…" : "Restore Purchases"}
                 onPress={restoring ? undefined : () => void handleRestorePurchases()}
@@ -254,7 +297,6 @@ export default function MoreScreen() {
           />
           <Row
             label="Tutorial"
-            right={<Pill label="Videos soon" dim />}
             onPress={() => router.push("/tutorial" as Href)}
           />
           <Row
