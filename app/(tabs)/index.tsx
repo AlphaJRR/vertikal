@@ -1,5 +1,4 @@
 import React, { useCallback, useRef, useState } from "react";
-import { useFocusEffect } from "@react-navigation/native";
 import {
   FlatList,
   Image,
@@ -15,7 +14,7 @@ import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import * as WebBrowser from "expo-web-browser";
-import { useRouter, type Href } from "expo-router";
+import { useFocusEffect, useRouter, type Href } from "expo-router";
 import { ReelVideoCover } from "../../components/ReelVideoCover";
 import { VideoModal } from "../../components/VideoModal";
 import { ProductionTipsList } from "../../components/toolkit/ProductionTipsList";
