@@ -27,6 +27,7 @@ import { HomePaywallModal } from "../../components/HomePaywallModal";
 import { HOME_PAYWALL_DELAY_MS } from "../../constants/paywall";
 import { useAuth } from "../../contexts/AuthContext";
 import { useAvaPro } from "../../hooks/useAvaPro";
+import { useDeferHomeVideos } from "../../hooks/useDeferHomeVideos";
 import { exitDemoMode, useDemoMode } from "../../lib/demoMode";
 import { FREE_LAUNCH } from "../../constants/proAccess";
 import {
@@ -227,6 +228,7 @@ export default function HomeScreen() {
   const router = useRouter();
   const { user, signOut } = useAuth();
   const { isPro, refresh } = useAvaPro();
+  const homeVideosReady = useDeferHomeVideos();
   const isDemoMode = useDemoMode();
   const isSignedIn = Boolean(user);
   const userEmail = user?.email ?? null;
@@ -322,7 +324,7 @@ export default function HomeScreen() {
         <>
           <ReelVideoCover
             source={r.video}
-            isVisible={visibleReelIds.has(r.id)} // NEW: gate playback
+            isVisible={homeVideosReady && visibleReelIds.has(r.id)}
           />
           <View style={styles.reelOverlay}>
             <View style={[styles.playBadge, styles.playBadgeVideo]}>
@@ -407,7 +409,7 @@ export default function HomeScreen() {
 
         <SectionErrorBoundary name="Mama Connie">
           <SectionHeader eyebrow="Featured Film" title="Mama Connie" />
-          <MamaConnieVideo />
+          <MamaConnieVideo ready={homeVideosReady} />
         </SectionErrorBoundary>
 
         <SectionErrorBoundary name="Bio">
@@ -416,7 +418,7 @@ export default function HomeScreen() {
         </SectionErrorBoundary>
 
         <SectionErrorBoundary name="JR Interviews">
-          <JRInterviewVideos />
+          <JRInterviewVideos ready={homeVideosReady} />
         </SectionErrorBoundary>
 
         <SectionErrorBoundary name="Recent Work">

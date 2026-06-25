@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { UpdateDebugLine } from "@/components/UpdateDebugLine";
 import { useColors } from "@/hooks/useColors";
 
 export type ErrorFallbackProps = {
@@ -114,6 +115,8 @@ export function ErrorFallback({ error, resetError }: ErrorFallbackProps) {
             Try Again
           </Text>
         </Pressable>
+
+        <UpdateDebugLine />
       </View>
 
       {__DEV__ ? (

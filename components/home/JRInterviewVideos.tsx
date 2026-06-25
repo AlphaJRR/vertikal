@@ -119,7 +119,12 @@ function InterviewPlayer({ interview }: InterviewPlayerProps) {
   );
 }
 
-export function JRInterviewVideos() {
+type JRInterviewVideosProps = {
+  /** When false, native players are not mounted (cold-start stability). */
+  ready?: boolean;
+};
+
+export function JRInterviewVideos({ ready = true }: JRInterviewVideosProps) {
   const { width: screenWidth } = useWindowDimensions();
   const horizontalPadding = 20;
   const gap = 12;
@@ -127,6 +132,7 @@ export function JRInterviewVideos() {
   const cardWidth = isTablet
     ? (screenWidth - horizontalPadding * 2 - gap) / 2
     : screenWidth - horizontalPadding * 2;
+  const videoHeight = cardWidth / VIDEO_ASPECT;
 
   return (
     <View style={styles.section}>
@@ -142,13 +148,29 @@ export function JRInterviewVideos() {
           },
         ]}
       >
-        {JR_INTERVIEW_STREAMS.map((interview) => (
-          <InterviewCard
-            key={interview.id}
-            interview={interview}
-            width={cardWidth}
-          />
-        ))}
+        {ready
+          ? JR_INTERVIEW_STREAMS.map((interview) => (
+              <InterviewCard
+                key={interview.id}
+                interview={interview}
+                width={cardWidth}
+              />
+            ))
+          : JR_INTERVIEW_STREAMS.map((interview) => (
+              <View key={interview.id} style={[styles.card, { width: cardWidth }]}>
+                <View style={[styles.videoWrap, styles.placeholderWrap, { height: videoHeight }]}>
+                  <View style={styles.playBtn}>
+                    <Ionicons name="play" size={28} color="#000" />
+                  </View>
+                </View>
+                <View style={styles.labelRow}>
+                  <Text style={styles.labelEyebrow}>{interview.eyebrow}</Text>
+                  <Text style={styles.labelTitle} numberOfLines={2}>
+                    {interview.label}
+                  </Text>
+                </View>
+              </View>
+            ))}
       </View>
     </View>
   );
@@ -189,6 +211,11 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "#0a0a0a",
     overflow: "hidden",
+  },
+  placeholderWrap: {
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#111",
   },
   video: {
     width: "100%",

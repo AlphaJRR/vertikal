@@ -71,9 +71,18 @@ function MamaConnieFallback() {
   );
 }
 
-export function MamaConnieVideo() {
+type MamaConnieVideoProps = {
+  /** When false, native player is not mounted (cold-start stability). */
+  ready?: boolean;
+};
+
+export function MamaConnieVideo({ ready = true }: MamaConnieVideoProps) {
   const { width: screenWidth } = useWindowDimensions();
   const videoHeight = screenWidth / VIDEO_ASPECT;
+
+  if (!ready || !homeStreamSourceValid()) {
+    return <MamaConnieFallback />;
+  }
 
   return (
     <MamaConnieBoundary>
