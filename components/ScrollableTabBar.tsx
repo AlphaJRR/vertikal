@@ -35,7 +35,7 @@ const TAB_ICONS: Record<string, IoniconName> = {
   events: "camera-outline",
   shop: "bag-outline",
   wallpapers: "images-outline",
-  more: "ellipsis-horizontal-circle-outline",
+  more: "person-circle-outline",
 };
 
 const TAB_LABELS: Record<string, string> = {
@@ -45,7 +45,7 @@ const TAB_LABELS: Record<string, string> = {
   events: "Events",
   shop: "Shop",
   wallpapers: "Walls",
-  more: "More",
+  more: "Account",
 };
 
 /** Only these routes appear in the tab bar — edit/notes live inside Production. */

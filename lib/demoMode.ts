@@ -11,6 +11,7 @@ import { useSyncExternalStore } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const STORAGE_KEY = 'ava_demo_mode_v1';
+const DEMO_MODE_ENABLED = false;
 
 let isDemoModeFlag = false;
 const listeners = new Set<() => void>();
@@ -18,6 +19,17 @@ const emit = () => listeners.forEach((l) => l());
 
 /** Call once on app start (e.g. in app/_layout.tsx) so demo mode survives relaunch. */
 export async function hydrateDemoMode(): Promise<void> {
+  if (!DEMO_MODE_ENABLED) {
+    isDemoModeFlag = false;
+    emit();
+    try {
+      await AsyncStorage.removeItem(STORAGE_KEY);
+    } catch {
+      // ignore – production launch always defaults demo mode off
+    }
+    return;
+  }
+
   try {
     const v = await AsyncStorage.getItem(STORAGE_KEY);
     if (v === 'true') {
@@ -31,6 +43,12 @@ export async function hydrateDemoMode(): Promise<void> {
 
 /** Turn on reviewer/demo mode. Persists so a reviewer stays in after backgrounding. */
 export async function enableDemoMode(): Promise<void> {
+  if (!DEMO_MODE_ENABLED) {
+    isDemoModeFlag = false;
+    emit();
+    return;
+  }
+
   isDemoModeFlag = true;
   emit();
   try {
@@ -53,6 +71,7 @@ export async function exitDemoMode(): Promise<void> {
 
 /** Non-hook read, for use inside useAvaPro or anywhere outside React render. */
 export function getDemoMode(): boolean {
+  if (!DEMO_MODE_ENABLED) return false;
   return isDemoModeFlag;
 }
 
