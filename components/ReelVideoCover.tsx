@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { StyleSheet, ViewStyle } from "react-native";
+import { StyleSheet, View, ViewStyle } from "react-native";
 import { useVideoPlayer, VideoView } from "expo-video";
-import { playWhenReady, safePause } from "../utils/safeVideoPlayer";
+import { playWhenReady } from "../utils/safeVideoPlayer";
 
 type Props = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -12,22 +12,31 @@ type Props = {
 
 /**
  * Muted, looping, autoplay video preview for a reel cover.
- * Playback is gated by `isVisible` so off-screen reels don't decode.
- * Defaults to playing if `isVisible` is omitted (back-compat).
+ * Native player mounts only when visible — avoids HLS decoder stampede on Home cold start.
  */
 export function ReelVideoCover({ source, style, isVisible = true }: Props) {
+  if (!isVisible) {
+    return <View style={[styles.cover, style]} />;
+  }
+
+  return <ReelVideoCoverPlayer source={source} style={style} />;
+}
+
+type PlayerProps = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  source: any;
+  style?: ViewStyle;
+};
+
+function ReelVideoCoverPlayer({ source, style }: PlayerProps) {
   const player = useVideoPlayer(source, (p) => {
     p.loop = true;
     p.muted = true;
   });
 
   useEffect(() => {
-    if (!isVisible) {
-      safePause(player);
-      return;
-    }
-    return playWhenReady(player, () => isVisible);
-  }, [isVisible, player]);
+    return playWhenReady(player, () => true);
+  }, [player]);
 
   return (
     <VideoView
