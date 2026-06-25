@@ -315,7 +315,7 @@ export default function HomeScreen() {
     setVisibleReelIds(visibleIds);
   };
 
-  // Reel card component (extracted for clarity)
+  // Stage 1: showInlineVideo=false when DISABLE_HOME_VIDEOS — Pressable still opens VideoModal on tap.
   const renderReelCard = ({ item: r }: { item: Reel }) => {
     const showInlineVideo =
       Boolean(r.video) && !DISABLE_HOME_VIDEOS && homeVideosReady;
@@ -439,7 +439,7 @@ export default function HomeScreen() {
         </SectionErrorBoundary>
 
         <SectionErrorBoundary name="JR Interviews">
-          <JRInterviewVideos ready={homeVideosReady} />
+          <JRInterviewVideos />
         </SectionErrorBoundary>
 
         <SectionErrorBoundary name="Recent Work">
