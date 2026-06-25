@@ -442,19 +442,21 @@ export default function HomeScreen() {
           <JRInterviewVideos />
         </SectionErrorBoundary>
 
-        <SectionErrorBoundary name="Recent Work">
+        <SectionErrorBoundary name="Featured Videos">
           <SectionHeader
-            eyebrow="Latest"
-            title="Recent Work"
+            eyebrow="Featured"
+            title="Featured Videos"
             action="See All"
             onAction={() => open(`${SITE_URL}/work`)}
           />
           <FlatList
             data={FEATURED_REELS}
             horizontal
+            nestedScrollEnabled
             scrollEnabled
             showsHorizontalScrollIndicator={false}
             keyExtractor={(item) => item.id}
+            style={styles.reelList}
             contentContainerStyle={styles.reelRow}
             renderItem={renderReelCard}
             onViewableItemsChanged={handleViewableItemsChanged}
@@ -464,18 +466,25 @@ export default function HomeScreen() {
             scrollEventThrottle={16}
             decelerationRate="fast"
           />
+        </SectionErrorBoundary>
+
+        <SectionErrorBoundary name="Recent Work">
+          <SectionHeader
+            eyebrow="Portfolio"
+            title="Recent Work"
+            action="See All"
+            onAction={() => open(`${SITE_URL}/work`)}
+          />
           <FlatList
             data={PHOTO_REELS}
             horizontal
+            nestedScrollEnabled
             scrollEnabled
             showsHorizontalScrollIndicator={false}
             keyExtractor={(item) => item.id}
-            contentContainerStyle={[styles.reelRow, styles.photoReelRow]}
+            style={styles.reelList}
+            contentContainerStyle={styles.reelRow}
             renderItem={renderReelCard}
-            onViewableItemsChanged={handleViewableItemsChanged}
-            viewabilityConfig={{
-              itemVisiblePercentThreshold: 50,
-            }}
             scrollEventThrottle={16}
             decelerationRate="fast"
           />
@@ -696,9 +705,9 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
   },
 
-  // REELS
-  reelRow: { paddingHorizontal: 20, gap: 12 },
-  photoReelRow: { paddingTop: 4, paddingBottom: 4 },
+  // REELS — one horizontal row per section (avoid stacked rows under one header)
+  reelList: { flexGrow: 0 },
+  reelRow: { paddingHorizontal: 20, gap: 12, paddingBottom: 4 },
   reelCard: {
     width: 220,
     marginRight: 12,
