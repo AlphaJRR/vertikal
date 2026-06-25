@@ -43,6 +43,11 @@ export function ErrorFallback({ error, resetError }: ErrorFallbackProps) {
     return details;
   };
 
+  const productionErrorHint =
+    error.message.length > 140
+      ? `${error.message.slice(0, 140)}…`
+      : error.message;
+
   const monoFont = Platform.select({
     ios: "Menlo",
     android: "monospace",
@@ -77,6 +82,19 @@ export function ErrorFallback({ error, resetError }: ErrorFallbackProps) {
         <Text style={[styles.message, { color: colors.mutedForeground }]}>
           Please reload the app to continue.
         </Text>
+
+        {productionErrorHint ? (
+          <Text
+            style={[
+              styles.productionError,
+              { color: colors.mutedForeground, fontFamily: monoFont },
+            ]}
+            numberOfLines={4}
+            selectable
+          >
+            {productionErrorHint}
+          </Text>
+        ) : null}
 
         {__DEV__ ? (
           <ScrollView
@@ -217,6 +235,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: "center",
     lineHeight: 24,
+  },
+  productionError: {
+    fontSize: 11,
+    textAlign: "center",
+    lineHeight: 16,
+    marginTop: 4,
+    paddingHorizontal: 8,
+    width: "100%",
   },
   devErrorScroll: {
     width: "100%",

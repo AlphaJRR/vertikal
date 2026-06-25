@@ -16,16 +16,33 @@ type Props = {
  * Fullscreen modal video player with explicit lifecycle management.
  * Calls player.pause() on close to prevent memory leaks and background playback.
  */
+/**
+ * Never call useVideoPlayer with null — expo-video constructs a native player during
+ * render and throws on Home mount when activeVideo is still null.
+ */
 export function VideoModal({ source, onClose }: Props) {
+  if (!source) {
+    return null;
+  }
+
+  return <VideoModalPlayer source={source} onClose={onClose} />;
+}
+
+type VideoModalPlayerProps = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  source: any;
+  onClose: () => void;
+};
+
+function VideoModalPlayer({ source, onClose }: VideoModalPlayerProps) {
   const insets = useSafeAreaInsets();
-  const player = useVideoPlayer(source ?? null, (p) => {
+  const player = useVideoPlayer(source, (p) => {
     p.loop = false;
   });
 
   useEffect(() => {
-    if (!source) return;
-    return playWhenReady(player, () => source != null);
-  }, [source, player]);
+    return playWhenReady(player, () => true);
+  }, [player]);
 
   const handleClose = () => {
     safePause(player);
@@ -34,7 +51,7 @@ export function VideoModal({ source, onClose }: Props) {
 
   return (
     <Modal
-      visible={!!source}
+      visible
       animationType="fade"
       transparent={false}
       onRequestClose={handleClose}
@@ -42,16 +59,14 @@ export function VideoModal({ source, onClose }: Props) {
     >
       <View style={styles.root}>
         <StatusBar style="light" />
-        {source && (
-          <VideoView
-            player={player}
-            style={styles.player}
-            contentFit="contain"
-            allowsFullscreen
-            allowsPictureInPicture
-            nativeControls
-          />
-        )}
+        <VideoView
+          player={player}
+          style={styles.player}
+          contentFit="contain"
+          allowsFullscreen
+          allowsPictureInPicture
+          nativeControls
+        />
         <Pressable
           onPress={handleClose}
           style={[styles.closeBtn, { top: insets.top + 12 }]}

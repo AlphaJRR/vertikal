@@ -24,6 +24,7 @@ import { VideoModal } from "../../components/VideoModal";
 import { ProductionTipsList } from "../../components/toolkit/ProductionTipsList";
 import { featuredTips } from "../../data/toolkitContent";
 import { HomePaywallModal } from "../../components/HomePaywallModal";
+import { DISABLE_HOME_VIDEOS } from "../../constants/homeVideos";
 import { HOME_PAYWALL_DELAY_MS } from "../../constants/paywall";
 import { useAuth } from "../../contexts/AuthContext";
 import { useAvaPro } from "../../hooks/useAvaPro";
@@ -228,7 +229,8 @@ export default function HomeScreen() {
   const router = useRouter();
   const { user, signOut } = useAuth();
   const { isPro, refresh } = useAvaPro();
-  const homeVideosReady = useDeferHomeVideos();
+  const deferredHomeVideosReady = useDeferHomeVideos();
+  const homeVideosReady = !DISABLE_HOME_VIDEOS && deferredHomeVideosReady;
   const isDemoMode = useDemoMode();
   const isSignedIn = Boolean(user);
   const userEmail = user?.email ?? null;
@@ -314,17 +316,21 @@ export default function HomeScreen() {
   };
 
   // Reel card component (extracted for clarity)
-  const renderReelCard = ({ item: r }: { item: Reel }) => (
+  const renderReelCard = ({ item: r }: { item: Reel }) => {
+    const showInlineVideo =
+      Boolean(r.video) && !DISABLE_HOME_VIDEOS && homeVideosReady;
+
+    return (
     <Pressable
       onPress={() => handleReel(r)}
       style={styles.reelCard}
       key={r.id}
     >
-      {r.video ? (
+      {showInlineVideo ? (
         <>
           <ReelVideoCover
             source={r.video}
-            isVisible={homeVideosReady && visibleReelIds.has(r.id)}
+            isVisible={visibleReelIds.has(r.id)}
           />
           <View style={styles.reelOverlay}>
             <View style={[styles.playBadge, styles.playBadgeVideo]}>
@@ -339,10 +345,24 @@ export default function HomeScreen() {
         <>
           <Image source={r.cover} style={styles.reelCover} />
           <View style={styles.reelOverlay}>
-            <View style={styles.playBadge}>
-              <Ionicons name="arrow-forward" size={24} color="#000" />
+            <View
+              style={[
+                styles.playBadge,
+                r.video ? styles.playBadgeVideo : null,
+              ]}
+            >
+              <Ionicons
+                name={r.video ? "play" : "arrow-forward"}
+                size={24}
+                color={r.video ? "#00d4ff" : "#000"}
+              />
             </View>
           </View>
+          {r.video ? (
+            <View style={styles.videoBadge}>
+              <Text style={styles.videoBadgeTxt}>VIDEO</Text>
+            </View>
+          ) : null}
         </>
       )}
       <View style={styles.reelMeta}>
@@ -350,7 +370,8 @@ export default function HomeScreen() {
         <Text style={styles.reelTitle}>{r.title}</Text>
       </View>
     </Pressable>
-  );
+    );
+  };
 
   return (
     <>
