@@ -15,6 +15,8 @@ import { Ionicons } from "@expo/vector-icons";
 import * as Haptics from "expo-haptics";
 import * as WebBrowser from "expo-web-browser";
 import { useFocusEffect, useRouter, type Href } from "expo-router";
+import { SectionErrorBoundary } from "../../components/SectionErrorBoundary";
+import { UpdateDebugLine } from "../../components/UpdateDebugLine";
 import { BioSlideshow } from "../../components/home/BioSlideshow";
 import { HomeUpgradeBanner } from "../../components/home/HomeUpgradeBanner";
 import { JRInterviewVideos } from "../../components/home/JRInterviewVideos";
@@ -358,10 +360,13 @@ export default function HomeScreen() {
         contentContainerStyle={{ paddingBottom: 40 }}
         showsVerticalScrollIndicator={false}
       >
+        <UpdateDebugLine />
+
         {isDemoMode ? (
           <View style={styles.demoBanner}>
             <Text style={styles.demoBannerText}>
-              Reviewer mode — all features unlocked
+              Reviewer mode — all features unlocked. Exit reviewer mode to see
+              subscription options.
             </Text>
             <Pressable onPress={handleExitDemoMode} style={styles.demoExitBtn}>
               <Text style={styles.demoExitBtnText}>Exit Reviewer Mode</Text>
@@ -411,74 +416,83 @@ export default function HomeScreen() {
           />
         ) : null}
 
-        <SectionHeader eyebrow="Featured Film" title="Mama Connie" />
-        <MamaConnieVideo />
+        <SectionErrorBoundary name="Mama Connie">
+          <SectionHeader eyebrow="Featured Film" title="Mama Connie" />
+          <MamaConnieVideo />
+        </SectionErrorBoundary>
 
-        <SectionHeader eyebrow="About JR" title="Bio" />
-        <BioSlideshow />
+        <SectionErrorBoundary name="Bio">
+          <SectionHeader eyebrow="About JR" title="Bio" />
+          <BioSlideshow />
+        </SectionErrorBoundary>
 
-        <JRInterviewVideos />
+        <SectionErrorBoundary name="JR Interviews">
+          <JRInterviewVideos />
+        </SectionErrorBoundary>
 
-        {/* RECENT WORK — now virtualized with FlatList */}
-        <SectionHeader
-          eyebrow="Latest"
-          title="Recent Work"
-          action="See All"
-          onAction={() => open(`${SITE_URL}/work`)}
-        />
-        <FlatList
-          data={FEATURED_REELS}
-          horizontal
-          scrollEnabled
-          showsHorizontalScrollIndicator={false}
-          keyExtractor={(item) => item.id}
-          contentContainerStyle={styles.reelRow}
-          renderItem={renderReelCard}
-          onViewableItemsChanged={handleViewableItemsChanged}
-          viewabilityConfig={{
-            itemVisiblePercentThreshold: 50,
-          }}
-          scrollEventThrottle={16}
-          decelerationRate="fast"
-        />
-        <FlatList
-          data={PHOTO_REELS}
-          horizontal
-          scrollEnabled
-          showsHorizontalScrollIndicator={false}
-          keyExtractor={(item) => item.id}
-          contentContainerStyle={[styles.reelRow, styles.photoReelRow]}
-          renderItem={renderReelCard}
-          onViewableItemsChanged={handleViewableItemsChanged}
-          viewabilityConfig={{
-            itemVisiblePercentThreshold: 50,
-          }}
-          scrollEventThrottle={16}
-          decelerationRate="fast"
-        />
+        <SectionErrorBoundary name="Recent Work">
+          <SectionHeader
+            eyebrow="Latest"
+            title="Recent Work"
+            action="See All"
+            onAction={() => open(`${SITE_URL}/work`)}
+          />
+          <FlatList
+            data={FEATURED_REELS}
+            horizontal
+            scrollEnabled
+            showsHorizontalScrollIndicator={false}
+            keyExtractor={(item) => item.id}
+            contentContainerStyle={styles.reelRow}
+            renderItem={renderReelCard}
+            onViewableItemsChanged={handleViewableItemsChanged}
+            viewabilityConfig={{
+              itemVisiblePercentThreshold: 50,
+            }}
+            scrollEventThrottle={16}
+            decelerationRate="fast"
+          />
+          <FlatList
+            data={PHOTO_REELS}
+            horizontal
+            scrollEnabled
+            showsHorizontalScrollIndicator={false}
+            keyExtractor={(item) => item.id}
+            contentContainerStyle={[styles.reelRow, styles.photoReelRow]}
+            renderItem={renderReelCard}
+            onViewableItemsChanged={handleViewableItemsChanged}
+            viewabilityConfig={{
+              itemVisiblePercentThreshold: 50,
+            }}
+            scrollEventThrottle={16}
+            decelerationRate="fast"
+          />
+        </SectionErrorBoundary>
 
-        {/* GALLERY */}
-        <SectionHeader eyebrow="Craft" title="Behind The Lens" />
-        <View style={styles.grid}>
-          {PHOTOS.map((p) => (
-            <View key={p.id} style={styles.gridItem}>
-              <Image source={p.src} style={styles.gridImg} />
-              <View style={styles.gridGradient} />
-              <Text style={styles.gridCaption}>{p.caption}</Text>
-            </View>
-          ))}
-        </View>
+        <SectionErrorBoundary name="Behind The Lens">
+          <SectionHeader eyebrow="Craft" title="Behind The Lens" />
+          <View style={styles.grid}>
+            {PHOTOS.map((p) => (
+              <View key={p.id} style={styles.gridItem}>
+                <Image source={p.src} style={styles.gridImg} />
+                <View style={styles.gridGradient} />
+                <Text style={styles.gridCaption}>{p.caption}</Text>
+              </View>
+            ))}
+          </View>
+        </SectionErrorBoundary>
 
-        {/* TIPS */}
-        <SectionHeader eyebrow="Knowledge" title="Production Tips" />
-        <ProductionTipsList
-          tips={featuredTips}
-          styles={styles}
-          onTipPress={(tip) => {
-            Haptics.selectionAsync().catch(() => {});
-            router.push(`/slide/${tip.slideId}` as Href);
-          }}
-        />
+        <SectionErrorBoundary name="Production Tips">
+          <SectionHeader eyebrow="Knowledge" title="Production Tips" />
+          <ProductionTipsList
+            tips={featuredTips}
+            styles={styles}
+            onTipPress={(tip) => {
+              Haptics.selectionAsync().catch(() => {});
+              router.push(`/slide/${tip.slideId}` as Href);
+            }}
+          />
+        </SectionErrorBoundary>
 
         {/* FOOTER CTA */}
         <View style={styles.footerCta}>

@@ -14,8 +14,10 @@ import { Ionicons } from "@expo/vector-icons";
 import { useRouter, type Href } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { FREE_LAUNCH } from "../../constants/proAccess";
+import { UpdateDebugLine } from "../../components/UpdateDebugLine";
 import { useAuth } from "../../contexts/AuthContext";
 import { useAvaPro } from "../../hooks/useAvaPro";
+import { exitDemoMode, useDemoMode } from "../../lib/demoMode";
 import { useProjects } from "../../hooks/useProjects";
 import { hasProEntitlement, restorePurchases } from "../../lib/purchases";
 
@@ -113,6 +115,7 @@ export default function AccountScreen() {
   const insets = useSafeAreaInsets();
   const { user } = useAuth();
   const { isPro, refresh } = useAvaPro();
+  const isDemoMode = useDemoMode();
   const { projects, syncStatus, lastSyncedAt } = useProjects();
   const [restoring, setRestoring] = useState(false);
 
@@ -159,6 +162,12 @@ export default function AccountScreen() {
     }
   };
 
+  const handleExitDemoMode = () => {
+    exitDemoMode().catch((error) => {
+      console.error("[MoreScreen] exitDemoMode failed:", error);
+    });
+  };
+
   const handlePresentPaywall = async () => {
     void presentAvaProPaywall({
       isSignedIn: Boolean(user),
@@ -202,6 +211,36 @@ export default function AccountScreen() {
         showsVerticalScrollIndicator={false}
       >
         <Text style={s.pageTitle}>ACCOUNT</Text>
+        <UpdateDebugLine />
+
+        {!FREE_LAUNCH && isDemoMode ? (
+          <View style={s.demoBanner}>
+            <Text style={s.demoBannerText}>
+              Reviewer mode hides subscription UI. Exit reviewer mode to upgrade.
+            </Text>
+            <Pressable onPress={handleExitDemoMode} style={s.demoExitBtn}>
+              <Text style={s.demoExitBtnText}>Exit Reviewer Mode</Text>
+            </Pressable>
+          </View>
+        ) : null}
+
+        {!FREE_LAUNCH && !isPro && !isDemoMode ? (
+          <Pressable
+            onPress={() => void handlePresentPaywall()}
+            style={({ pressed }) => [s.upgradeHeroBtn, pressed && s.upgradeHeroBtnPressed]}
+            accessibilityRole="button"
+            accessibilityLabel="Upgrade to AVA Pro"
+          >
+            <Ionicons name="diamond-outline" size={22} color="#000" />
+            <View style={s.upgradeHeroCopy}>
+              <Text style={s.upgradeHeroTitle}>Upgrade to AVA Pro</Text>
+              <Text style={s.upgradeHeroSubtitle}>
+                Full toolkit · cheat sheets · pro tools
+              </Text>
+            </View>
+            <Ionicons name="chevron-forward" size={20} color="#000" />
+          </Pressable>
+        ) : null}
 
         {/* ── ACCOUNT ────────────────────────────────────────────────── */}
         <SectionTitle label="ACCOUNT" />
@@ -347,6 +386,68 @@ const s = StyleSheet.create({
     letterSpacing: 4,
     marginTop: 16,
     marginBottom: 8,
+  },
+  demoBanner: {
+    marginHorizontal: 16,
+    marginTop: 12,
+    marginBottom: 4,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderRadius: 12,
+    backgroundColor: "rgba(0,212,255,0.1)",
+    borderWidth: 1,
+    borderColor: "rgba(0,212,255,0.35)",
+    gap: 10,
+  },
+  demoBannerText: {
+    color: C.text,
+    fontSize: 13,
+    fontWeight: "700",
+    lineHeight: 18,
+  },
+  demoExitBtn: {
+    alignSelf: "flex-start",
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 999,
+    borderWidth: 1,
+    borderColor: "rgba(232,0,10,0.5)",
+  },
+  demoExitBtnText: {
+    color: C.accent,
+    fontSize: 11,
+    fontWeight: "800",
+    letterSpacing: 0.5,
+    textTransform: "uppercase",
+  },
+  upgradeHeroBtn: {
+    marginHorizontal: 16,
+    marginTop: 16,
+    marginBottom: 4,
+    paddingHorizontal: 18,
+    paddingVertical: 16,
+    borderRadius: 16,
+    backgroundColor: "#00d4ff",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 14,
+  },
+  upgradeHeroBtnPressed: {
+    opacity: 0.9,
+  },
+  upgradeHeroCopy: {
+    flex: 1,
+  },
+  upgradeHeroTitle: {
+    color: "#000",
+    fontSize: 17,
+    fontWeight: "900",
+    marginBottom: 2,
+  },
+  upgradeHeroSubtitle: {
+    color: "rgba(0,0,0,0.65)",
+    fontSize: 12,
+    lineHeight: 16,
   },
   sectionTitle: {
     fontFamily: "DMMono_400Regular",

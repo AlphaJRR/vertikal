@@ -7,7 +7,7 @@
 export const HOME_PAYWALL_DELAY_MS = 75_000;
 
 /** Days to wait before showing the home upsell again after "Maybe later". */
-export const HOME_PAYWALL_DISMISS_COOLDOWN_DAYS = 7;
+export const HOME_PAYWALL_DISMISS_COOLDOWN_DAYS = 0;
 
 export const HOME_PAYWALL_DISMISS_COOLDOWN_MS =
   HOME_PAYWALL_DISMISS_COOLDOWN_DAYS * 24 * 60 * 60 * 1000;

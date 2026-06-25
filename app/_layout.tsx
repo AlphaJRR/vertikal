@@ -222,8 +222,12 @@ export default function RootLayout() {
 
         console.log("[EAS Update] downloading update…");
         await Updates.fetchUpdateAsync();
-        // Stage only — reloadAsync mid-session caused intro loops and blank screens.
-        console.log("[EAS Update] update staged for next cold start");
+        console.log("[EAS Update] update downloaded — reloading app");
+        try {
+          await Updates.reloadAsync();
+        } catch (reloadError) {
+          console.warn("[EAS Update] reloadAsync failed", reloadError);
+        }
       } catch (error) {
         console.warn("[EAS Update] check/fetch failed", error);
       }
