@@ -123,32 +123,6 @@ export function Paywall({
     }
   };
 
-  const handleRevenueCatPaywall = async () => {
-    if (!isSignedIn) {
-      return;
-    }
-
-    try {
-      const purchases = await loadPurchasesApi();
-      const result = await purchases.presentRevenueCatPaywall();
-      if (result === "purchased" || result === "restored") {
-        refresh();
-        Alert.alert("Welcome to AVA Pro", "Your subscription is active.");
-      } else if (result === "error") {
-        Alert.alert(
-          "Could not open plans",
-          "Subscription options are not available right now. Try again later.",
-        );
-      }
-    } catch (error) {
-      console.error("[Paywall] handleRevenueCatPaywall failed:", error);
-      Alert.alert(
-        "Could not open plans",
-        "Subscription options are not available right now.",
-      );
-    }
-  };
-
   const handleRestore = async () => {
     setRestoring(true);
     try {
@@ -216,16 +190,6 @@ export function Paywall({
         <Text style={styles.title}>AVA Pro</Text>
         <Text style={styles.body}>{subtitle}</Text>
 
-        {isSignedIn ? (
-          <Pressable
-            onPress={() => void handleRevenueCatPaywall()}
-            disabled={busy}
-            style={[styles.rcPaywallBtn, busy && styles.btnDisabled]}
-          >
-            <Text style={styles.rcPaywallBtnText}>View subscription plans</Text>
-          </Pressable>
-        ) : null}
-
         <View style={styles.proCard}>
           <Text style={styles.priceHero}>{annualPrice}</Text>
           <Text style={styles.priceHeroLabel}>Annual plan — best value</Text>
@@ -249,7 +213,7 @@ export function Paywall({
           </View>
         ) : null}
 
-        {!offeringsLoading && isSignedIn ? (
+        {!offeringsLoading && isSignedIn && (annualPkg || monthlyPkg) ? (
           <View style={styles.actions}>
             {annualPkg ? (
               <Pressable
@@ -283,6 +247,40 @@ export function Paywall({
               </Pressable>
             ) : null}
 
+            <Pressable
+              onPress={() => void handleRestore()}
+              disabled={busy}
+              style={styles.restoreBtn}
+            >
+              {restoring ? (
+                <ActivityIndicator color={brandColors.mutedText} />
+              ) : (
+                <Text style={styles.restoreText}>Restore Purchases</Text>
+              )}
+            </Pressable>
+          </View>
+        ) : null}
+
+        {!offeringsLoading && isSignedIn && !annualPkg && !monthlyPkg ? (
+          <View style={styles.actions}>
+            <Pressable
+              onPress={() => void loadOfferings()}
+              disabled={busy}
+              style={[styles.primaryBtn, busy && styles.btnDisabled]}
+            >
+              <Text style={styles.primaryBtnText}>
+                Subscribe — {annualPrice}
+              </Text>
+            </Pressable>
+            <Pressable
+              onPress={() => void loadOfferings()}
+              disabled={busy}
+              style={[styles.secondaryBtn, busy && styles.btnDisabled]}
+            >
+              <Text style={styles.secondaryBtnText}>
+                Subscribe — {monthlyPrice}
+              </Text>
+            </Pressable>
             <Pressable
               onPress={() => void handleRestore()}
               disabled={busy}

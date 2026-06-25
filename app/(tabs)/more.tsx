@@ -160,7 +160,7 @@ export default function AccountScreen() {
   };
 
   const handlePresentPaywall = async () => {
-    await presentAvaProPaywall({
+    void presentAvaProPaywall({
       isSignedIn: Boolean(user),
       source: "account",
       onActivated: refresh,
@@ -241,7 +241,7 @@ export default function AccountScreen() {
               />
               <Row
                 label={isPro ? "AVA Pro" : "Upgrade to Pro"}
-                right={<Pill label={isPro ? "Active" : "Subscribe in app"} dim={isPro} />}
+                right={<Pill label={isPro ? "Active" : "View plans"} dim={isPro} />}
                 onPress={isPro ? undefined : () => void handlePresentPaywall()}
                 showChevron={!isPro}
               />

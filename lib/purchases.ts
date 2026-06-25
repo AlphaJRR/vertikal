@@ -200,88 +200,19 @@ export type PaywallPresentationResult =
   | "not_presented"
   | "error";
 
-type PurchasesUiModule = typeof import("react-native-purchases-ui");
-
-let purchasesUiModule: PurchasesUiModule | null = null;
-
-async function getPurchasesUiModule(): Promise<PurchasesUiModule | null> {
-  if (Platform.OS !== "ios" || !isPurchasesSupported()) return null;
-
-  if (purchasesUiModule) return purchasesUiModule;
-
-  try {
-    purchasesUiModule = await import("react-native-purchases-ui");
-    return purchasesUiModule;
-  } catch (error) {
-    console.error("[purchases] failed to load react-native-purchases-ui:", error);
-    return null;
-  }
-}
-
-function mapPaywallResult(
-  result: import("react-native-purchases-ui").PAYWALL_RESULT,
-  ui: PurchasesUiModule,
-): PaywallPresentationResult {
-  switch (result) {
-    case ui.PAYWALL_RESULT.PURCHASED:
-      return "purchased";
-    case ui.PAYWALL_RESULT.RESTORED:
-      return "restored";
-    case ui.PAYWALL_RESULT.CANCELLED:
-      return "cancelled";
-    case ui.PAYWALL_RESULT.NOT_PRESENTED:
-      return "not_presented";
-    case ui.PAYWALL_RESULT.ERROR:
-      return "error";
-    default: {
-      const _exhaustive: never = result;
-      return _exhaustive;
-    }
-  }
-}
-
-/** Present RevenueCat-hosted paywall (configure template in RevenueCat dashboard). */
+/** Hosted RevenueCat Paywall UI is disabled because react-native-purchases-ui is not installed. */
 export async function presentRevenueCatPaywall(): Promise<PaywallPresentationResult> {
-  const ui = await getPurchasesUiModule();
-  if (!ui) return "not_presented";
-
-  try {
-    const result = await ui.default.presentPaywall();
-    return mapPaywallResult(result, ui);
-  } catch (error) {
-    console.error("[purchases] presentRevenueCatPaywall failed:", error);
-    return "error";
-  }
+  return "not_presented";
 }
 
 /** Present paywall only when `pro` entitlement is inactive. */
 export async function presentRevenueCatPaywallIfNeeded(): Promise<PaywallPresentationResult> {
-  const ui = await getPurchasesUiModule();
-  if (!ui) return "not_presented";
-
-  try {
-    const result = await ui.default.presentPaywallIfNeeded({
-      requiredEntitlementIdentifier: REVENUECAT_ENTITLEMENT_PRO,
-    });
-    return mapPaywallResult(result, ui);
-  } catch (error) {
-    console.error("[purchases] presentRevenueCatPaywallIfNeeded failed:", error);
-    return "error";
-  }
+  return "not_presented";
 }
 
 /** RevenueCat Customer Center — manage / cancel subscription in-app. */
 export async function presentCustomerCenter(): Promise<boolean> {
-  const ui = await getPurchasesUiModule();
-  if (!ui) return false;
-
-  try {
-    await ui.default.presentCustomerCenter();
-    return true;
-  } catch (error) {
-    console.error("[purchases] presentCustomerCenter failed:", error);
-    return false;
-  }
+  return false;
 }
 
 export function formatPackagePrice(pkg: PurchasesPackage | null): string | null {

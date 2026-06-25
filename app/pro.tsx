@@ -4,6 +4,7 @@ import { useRouter } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Paywall } from "../components/Paywall";
 import { FREE_LAUNCH } from "../constants/proAccess";
+import { useAuth } from "../contexts/AuthContext";
 import { useAvaPro } from "../hooks/useAvaPro";
 
 /**
@@ -14,12 +15,13 @@ import { useAvaPro } from "../hooks/useAvaPro";
 export default function ProScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
+  const { user } = useAuth();
   const { status, isSignedIn } = useAvaPro();
-  const [anonymousRcReady, setAnonymousRcReady] = useState(isSignedIn);
+  const [rcReady, setRcReady] = useState(false);
 
   useEffect(() => {
-    if (FREE_LAUNCH || isSignedIn) {
-      setAnonymousRcReady(true);
+    if (FREE_LAUNCH) {
+      setRcReady(true);
       return;
     }
 
@@ -27,12 +29,12 @@ export default function ProScreen() {
     void (async () => {
       try {
         const { initPurchases } = await import("../lib/purchases");
-        await initPurchases();
+        await initPurchases(user?.id ?? null);
       } catch (error) {
-        console.error("[ProScreen] anonymous initPurchases failed:", error);
+        console.error("[ProScreen] initPurchases failed:", error);
       } finally {
         if (!cancelled) {
-          setAnonymousRcReady(true);
+          setRcReady(true);
         }
       }
     })();
@@ -40,11 +42,11 @@ export default function ProScreen() {
     return () => {
       cancelled = true;
     };
-  }, [isSignedIn]);
+  }, [user?.id]);
 
   return (
     <View style={[styles.root, { paddingTop: insets.top }]}>
-      {anonymousRcReady ? (
+      {rcReady ? (
         <Paywall
           status={status}
           isSignedIn={isSignedIn}

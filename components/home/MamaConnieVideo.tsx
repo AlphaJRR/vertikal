@@ -50,9 +50,25 @@ class MamaConnieBoundary extends Component<
   }
 
   render() {
-    if (this.state.crashed) return null;
+    if (this.state.crashed) {
+      return <MamaConnieFallback />;
+    }
     return this.props.children;
   }
+}
+
+function MamaConnieFallback() {
+  const { width: screenWidth } = useWindowDimensions();
+  const videoHeight = screenWidth / VIDEO_ASPECT;
+
+  return (
+    <View style={[styles.wrap, styles.fallbackWrap, { height: videoHeight }]}>
+      <Ionicons name="videocam-outline" size={32} color="#00d4ff" />
+      <Text style={styles.fallbackEyebrow}>Featured Film</Text>
+      <Text style={styles.fallbackTitle}>{MAMA_CONNIE_HOME_LABEL}</Text>
+      <Text style={styles.fallbackHint}>Video unavailable — scroll for more content</Text>
+    </View>
+  );
 }
 
 export function MamaConnieVideo() {
@@ -182,5 +198,32 @@ const styles = StyleSheet.create({
     borderColor: "rgba(255,255,255,0.2)",
     alignItems: "center",
     justifyContent: "center",
+  },
+  fallbackWrap: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 24,
+    gap: 6,
+  },
+  fallbackEyebrow: {
+    color: "#00d4ff",
+    fontSize: 10,
+    fontWeight: "700",
+    letterSpacing: 2,
+    textTransform: "uppercase",
+    marginTop: 8,
+  },
+  fallbackTitle: {
+    color: "#fff",
+    fontSize: 15,
+    fontWeight: "800",
+    textAlign: "center",
+    lineHeight: 20,
+  },
+  fallbackHint: {
+    color: "rgba(255,255,255,0.45)",
+    fontSize: 11,
+    textAlign: "center",
+    marginTop: 4,
   },
 });

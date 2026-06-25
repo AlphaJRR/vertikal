@@ -13,7 +13,7 @@ export interface PresentAvaProPaywallOptions {
 /**
  * Single entry point for AVA Pro purchase flow.
  * Pre-auth: routes to /pro so users can browse plans and pricing.
- * Signed-in: presents RevenueCat hosted paywall (purchase enabled).
+ * Signed-in: routes to /pro where direct RevenueCat purchases are enabled.
  */
 export async function presentAvaProPaywall(
   options: PresentAvaProPaywallOptions,
@@ -25,28 +25,5 @@ export async function presentAvaProPaywall(
     return;
   }
 
-  if (!options.isSignedIn) {
-    router.push("/pro" as Href);
-    return;
-  }
-
-  try {
-    const purchases = await import("../lib/purchases");
-    const result = await purchases.presentRevenueCatPaywall();
-    if (result === "purchased" || result === "restored") {
-      options.onActivated?.();
-      Alert.alert("Welcome to AVA Pro", "Your subscription is active.");
-    } else if (result === "error") {
-      Alert.alert(
-        "Subscriptions unavailable",
-        "Could not load subscription options. Try again later.",
-      );
-    }
-  } catch (error) {
-    console.error("[presentAvaProPaywall] failed:", error);
-    Alert.alert(
-      "Subscriptions unavailable",
-      "Could not load subscription options.",
-    );
-  }
+  router.push("/pro" as Href);
 }

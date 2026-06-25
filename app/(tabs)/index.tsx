@@ -16,6 +16,7 @@ import * as Haptics from "expo-haptics";
 import * as WebBrowser from "expo-web-browser";
 import { useFocusEffect, useRouter, type Href } from "expo-router";
 import { BioSlideshow } from "../../components/home/BioSlideshow";
+import { HomeUpgradeBanner } from "../../components/home/HomeUpgradeBanner";
 import { JRInterviewVideos } from "../../components/home/JRInterviewVideos";
 import { MamaConnieVideo } from "../../components/home/MamaConnieVideo";
 import { ReelVideoCover } from "../../components/ReelVideoCover";
@@ -27,6 +28,7 @@ import { HOME_PAYWALL_DELAY_MS } from "../../constants/paywall";
 import { useAuth } from "../../contexts/AuthContext";
 import { useAvaPro } from "../../hooks/useAvaPro";
 import { exitDemoMode, useDemoMode } from "../../lib/demoMode";
+import { FREE_LAUNCH } from "../../constants/proAccess";
 import {
   isHomePaywallInCooldown,
   markHomePaywallDismissed,
@@ -402,7 +404,20 @@ export default function HomeScreen() {
           </View>
         </View>
 
+        {!FREE_LAUNCH && !isPro && !isDemoMode ? (
+          <HomeUpgradeBanner
+            isSignedIn={isSignedIn}
+            onActivated={refresh}
+          />
+        ) : null}
+
+        <SectionHeader eyebrow="Featured Film" title="Mama Connie" />
         <MamaConnieVideo />
+
+        <SectionHeader eyebrow="About JR" title="Bio" />
+        <BioSlideshow />
+
+        <JRInterviewVideos />
 
         {/* RECENT WORK — now virtualized with FlatList */}
         <SectionHeader
@@ -453,10 +468,6 @@ export default function HomeScreen() {
             </View>
           ))}
         </View>
-
-        <BioSlideshow />
-
-        <JRInterviewVideos />
 
         {/* TIPS */}
         <SectionHeader eyebrow="Knowledge" title="Production Tips" />

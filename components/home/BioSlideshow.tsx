@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { Component, useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import {
   Image,
   NativeScrollEvent,
@@ -6,6 +6,7 @@ import {
   Pressable,
   ScrollView,
   StyleSheet,
+  Text,
   useWindowDimensions,
   View,
 } from "react-native";
@@ -20,7 +21,55 @@ import {
 /** Portrait slide frame — matches 576×1024 bio assets (9:16). */
 const PORTRAIT_ASPECT = 9 / 16;
 
+type BioBoundaryState = { crashed: boolean };
+
+class BioSlideshowBoundary extends Component<
+  { children: ReactNode },
+  BioBoundaryState
+> {
+  state: BioBoundaryState = { crashed: false };
+
+  static getDerivedStateFromError(): BioBoundaryState {
+    return { crashed: true };
+  }
+
+  componentDidCatch(error: Error, info: { componentStack: string }): void {
+    console.error(
+      "[BioSlideshow] render failed:",
+      error.message,
+      error.stack,
+      info.componentStack,
+    );
+  }
+
+  render() {
+    if (this.state.crashed) {
+      return <BioSlideshowFallback />;
+    }
+    return this.props.children;
+  }
+}
+
+function BioSlideshowFallback() {
+  return (
+    <View style={styles.fallback}>
+      <Text style={styles.fallbackTitle}>About JR</Text>
+      <Text style={styles.fallbackBody}>
+        Bio slideshow could not load. Pull down to refresh or restart the app.
+      </Text>
+    </View>
+  );
+}
+
 export function BioSlideshow() {
+  return (
+    <BioSlideshowBoundary>
+      <BioSlideshowInner />
+    </BioSlideshowBoundary>
+  );
+}
+
+function BioSlideshowInner() {
   const { width: screenWidth } = useWindowDimensions();
   const slideWidth = screenWidth - BIO_HOME_HORIZONTAL_PADDING * 2;
   const slideHeight = slideWidth / PORTRAIT_ASPECT;
@@ -166,5 +215,25 @@ const styles = StyleSheet.create({
   },
   cutoutImage: {
     backgroundColor: "transparent",
+  },
+  fallback: {
+    marginHorizontal: BIO_HOME_HORIZONTAL_PADDING,
+    marginTop: 8,
+    padding: 20,
+    borderRadius: 12,
+    backgroundColor: "rgba(255,255,255,0.04)",
+    borderWidth: 1,
+    borderColor: "rgba(255,255,255,0.08)",
+  },
+  fallbackTitle: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "800",
+    marginBottom: 6,
+  },
+  fallbackBody: {
+    color: "rgba(255,255,255,0.55)",
+    fontSize: 13,
+    lineHeight: 18,
   },
 });
