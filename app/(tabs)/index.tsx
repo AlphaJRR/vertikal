@@ -16,9 +16,7 @@ import * as Haptics from "expo-haptics";
 import * as WebBrowser from "expo-web-browser";
 import { useFocusEffect, useRouter, type Href } from "expo-router";
 import { SectionErrorBoundary } from "../../components/SectionErrorBoundary";
-import { UpdateDebugLine } from "../../components/UpdateDebugLine";
 import { BioSlideshow } from "../../components/home/BioSlideshow";
-import { HomeUpgradeBanner } from "../../components/home/HomeUpgradeBanner";
 import { JRInterviewVideos } from "../../components/home/JRInterviewVideos";
 import { MamaConnieVideo } from "../../components/home/MamaConnieVideo";
 import { ReelVideoCover } from "../../components/ReelVideoCover";
@@ -360,8 +358,6 @@ export default function HomeScreen() {
         contentContainerStyle={{ paddingBottom: 40 }}
         showsVerticalScrollIndicator={false}
       >
-        <UpdateDebugLine />
-
         {isDemoMode ? (
           <View style={styles.demoBanner}>
             <Text style={styles.demoBannerText}>
@@ -408,13 +404,6 @@ export default function HomeScreen() {
             </Pressable>
           </View>
         </View>
-
-        {!FREE_LAUNCH && !isPro && !isDemoMode ? (
-          <HomeUpgradeBanner
-            isSignedIn={isSignedIn}
-            onActivated={refresh}
-          />
-        ) : null}
 
         <SectionErrorBoundary name="Mama Connie">
           <SectionHeader eyebrow="Featured Film" title="Mama Connie" />
