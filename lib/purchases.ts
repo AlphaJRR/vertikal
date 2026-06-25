@@ -112,6 +112,12 @@ export async function logOutPurchases(): Promise<void> {
 export async function getOfferings(): Promise<PurchasesOfferings | null> {
   if (!isPurchasesSupported()) return null;
 
+  if (!configured) {
+    console.warn("[purchases] getOfferings called before configure — running initPurchases");
+    await initPurchases(null);
+    if (!configured) return null;
+  }
+
   const mod = await getPurchasesModule();
   if (!mod) return null;
 

@@ -11,7 +11,7 @@
 
 ## Executive summary
 
-Launch night (Jun 24) exposed a chain of failures across **wrong-repo confusion**, **stale/mismatched OTA bundles**, **broken GitHub Actions OTA workflow**, **aggressive `reloadAsync`**, **Home video mount crashes**, **missing Supabase env in OTA bundles**, and **RevenueCat offerings fetch without SDK init**. Multiple manual OTAs shipped fixes faster than CI; the app stabilized after staging OTAs for next cold start, disabling inline Home HLS, guarding `VideoModal`/`useAvaPro`, and inlining Supabase env vars. **Paywall remained broken at end of night** with “Subscriptions are not available” — root cause: `getOfferings()` ran before `Purchases.configure()` on several entry points, compounded by OTA publishes that did not pass `--environment production` (env vars not inlined). Fix shipped in commit after this memo (`Paywall.tsx` init-before-fetch + CI workflow env flag).
+Launch night (Jun 24) exposed a chain of failures across **wrong-repo confusion**, **stale/mismatched OTA bundles**, **broken GitHub Actions OTA workflow**, **aggressive `reloadAsync`**, **Home video mount crashes**, **missing Supabase env in OTA bundles**, and **RevenueCat offerings fetch without SDK init**. Multiple manual OTAs shipped fixes faster than CI; the app stabilized after staging OTAs for next cold start, disabling inline Home HLS, guarding `VideoModal`/`useAvaPro`, and inlining Supabase env vars. **Paywall P0** — “Subscriptions are not available” — root cause: `getOfferings()` ran before `Purchases.configure()` on inline Paywall routes, compounded by OTA publishes that did not pass `--environment production` (RevenueCat/Supabase env vars not inlined). **Fix shipped** `11494ec` + OTA `8e04082b-7e51-4b39-bebf-bc873c9882fd` (`--environment production`).
 
 ---
 
@@ -176,7 +176,11 @@ Launch night (Jun 24) exposed a chain of failures across **wrong-repo confusion*
 
 **EAS production env (verified):** `EXPO_PUBLIC_REVENUECAT_IOS_API_KEY=appl_pyikmJgFOZZhtKfFClxRSJQYYrr` — present in EAS; must be inlined at OTA publish.
 
-**Code fix (post-memo commit):** `Paywall.loadOfferings()` calls `initPurchases(user?.id ?? null)` before `getOfferings()`; GHA workflow adds `--environment production`.
+**Code fix (shipped `11494ec`):**
+- `Paywall.loadOfferings()` calls `initPurchases(user?.id ?? null)` before `getOfferings()`; re-runs when `user?.id` changes.
+- GHA workflow `.github/workflows/eas-ota-update.yml` adds `--environment production`.
+
+**OTA (shipped):** `8e04082b-7e51-4b39-bebf-bc873c9882fd` — “P0 paywall: init RC before offerings + OTA env production” · runtime `1.30.2` · `--environment production`.
 
 **Not a code issue:** App Store Connect / RevenueCat offering must have default offering with `AvaCreatorPro` (monthly) and `yearly` (annual) attached to entitlement `pro`. Wrong mapping shows different error: “AVA Pro plans are not configured yet.”
 
@@ -241,7 +245,7 @@ Launch night (Jun 24) exposed a chain of failures across **wrong-repo confusion*
 | Autoplay | **Not enabled** — stage 2 pending device verification |
 | Supabase auth | Guarded; env inlined via manual OTAs |
 | OTA delivery | Staged for next cold start; no auto-reload |
-| Paywall | **Broken** at memo time — fix committed + OTA pending JR verification |
+| Paywall | **Fix shipped** (`11494ec` + OTA `8e04082b`) — pending JR device verification |
 | Native version | `1.30.2` · channel `production` · EAS project `39911e65-82a6-47ca-af2b-3769a15817df` |
 
 ---
@@ -249,6 +253,7 @@ Launch night (Jun 24) exposed a chain of failures across **wrong-repo confusion*
 ## Key commits (reference)
 
 ```
+11494ec fix(paywall): init RevenueCat before offerings fetch + incident memo
 106be24 fix(home): restore section order and separate featured videos
 a25f0e7 feat(home): stage-1 tap-to-play reels
 9ccc4cd fix(hotfix): guard supabase.auth when client null
@@ -281,12 +286,13 @@ e5c5149 feat(iap): enable paid launch — FREE_LAUNCH false
 | `f13baeb0-ac2e-45c0-800a-d7309c115226` | Account demo mode fix (1.30.2) |
 | `56ffe355-361a-47d5-be78-0597ae3cde14` | Tap-to-play stage 1 |
 | `a05a5138-ead6-4aa9-b96b-7bd6a0a9290f` | Featured vs portfolio split |
+| `8e04082b-7e51-4b39-bebf-bc873c9882fd` | **P0 paywall: init RC before offerings + env production** (`11494ec`) |
 
 ---
 
 ## Follow-up actions
 
-- [ ] JR device-verify paywall purchase flow after paywall init OTA
+- [ ] JR device-verify paywall purchase flow after OTA `8e04082b` (kill app → cold start)
 - [ ] Confirm RevenueCat default offering + ASC products synced
 - [ ] Stage 2: re-enable inline Home video after decoder budget verified
 - [ ] Remove `UpdateDebugLine` after stable fleet confirmed
