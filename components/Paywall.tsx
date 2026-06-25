@@ -14,6 +14,7 @@ import { Ionicons } from "@expo/vector-icons";
 import type { PurchasesPackage } from "react-native-purchases";
 import { FREE_LAUNCH } from "../constants/proAccess";
 import { brandColors, brandFonts } from "../constants/theme";
+import { useAuth } from "../contexts/AuthContext";
 import { TOOLKIT_LESSON_COUNT } from "../data/toolkitCurriculumTypes";
 import { useAvaPro, type AvaProStatus } from "../hooks/useAvaPro";
 import { ProLockBadge } from "./toolkit/ProLockBadge";
@@ -52,6 +53,7 @@ export function Paywall({
   onBack,
 }: PaywallProps) {
   const router = useRouter();
+  const { user } = useAuth();
   const { refresh } = useAvaPro();
   const [monthlyPkg, setMonthlyPkg] = useState<PurchasesPackage | null>(null);
   const [annualPkg, setAnnualPkg] = useState<PurchasesPackage | null>(null);
@@ -65,6 +67,7 @@ export function Paywall({
     setOfferingsError(null);
     try {
       const purchases = await loadPurchasesApi();
+      await purchases.initPurchases(user?.id ?? null);
       const offerings = await purchases.getOfferings();
       if (!offerings?.current) {
         setOfferingsError("Subscriptions are not available right now. Try again later.");
@@ -84,7 +87,7 @@ export function Paywall({
     } finally {
       setOfferingsLoading(false);
     }
-  }, []);
+  }, [user?.id]);
 
   useEffect(() => {
     if (FREE_LAUNCH) return;
