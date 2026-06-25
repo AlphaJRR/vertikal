@@ -24,7 +24,10 @@ import { VideoModal } from "../../components/VideoModal";
 import { ProductionTipsList } from "../../components/toolkit/ProductionTipsList";
 import { featuredTips } from "../../data/toolkitContent";
 import { HomePaywallModal } from "../../components/HomePaywallModal";
-import { DISABLE_HOME_VIDEOS } from "../../constants/homeVideos";
+import {
+  DISABLE_HOME_VIDEOS,
+  ENABLE_MAMA_CONNIE_HOME_VIDEO,
+} from "../../constants/homeVideos";
 import { HOME_PAYWALL_DELAY_MS } from "../../constants/paywall";
 import { useAuth } from "../../contexts/AuthContext";
 import { useAvaPro } from "../../hooks/useAvaPro";
@@ -54,6 +57,9 @@ const CLOUDFLARE_STREAM_CUSTOMER = "customer-fyh68ijrcuys7ag8.cloudflarestream.c
 const cloudflareHls = (uid: string) => ({
   uri: `https://${CLOUDFLARE_STREAM_CUSTOMER}/${uid}/manifest/video.m3u8`,
 });
+const cloudflareThumbnail = (uid: string, time = "1s") => ({
+  uri: `https://${CLOUDFLARE_STREAM_CUSTOMER}/${uid}/thumbnails/thumbnail.jpg?time=${time}`,
+});
 
 type Photo = {
   id: string;
@@ -70,7 +76,7 @@ const FEATURED_REELS: Reel[] = [
     id: "cf-9d3d0efed36b71e5f75c7b5e218809d7",
     title: "Argueably The Best 'Burgers'",
     tag: "Joshua Argue · Featured",
-    cover: require("../../assets/images/director-monitor.jpg"),
+    cover: cloudflareThumbnail("9d3d0efed36b71e5f75c7b5e218809d7"),
     url: `${SITE_URL}/work`,
     video: cloudflareHls("9d3d0efed36b71e5f75c7b5e218809d7"),
   },
@@ -79,7 +85,7 @@ const FEATURED_REELS: Reel[] = [
     id: "cf-29424a48ea60434f3feb6e6cfd12fff4",
     title: "DHC Live Featuring Kirk Franklin",
     tag: "Featured · Live",
-    cover: require("../../assets/images/creator-court.jpg"),
+    cover: cloudflareThumbnail("29424a48ea60434f3feb6e6cfd12fff4"),
     url: `${SITE_URL}/work`,
     video: cloudflareHls("29424a48ea60434f3feb6e6cfd12fff4"),
   },
@@ -88,7 +94,7 @@ const FEATURED_REELS: Reel[] = [
     id: "cf-c861d85f92202939bb33ebb87bb3a089",
     title: "CCHS Ground Breaking Ceremony",
     tag: "Featured · Ceremony",
-    cover: require("../../assets/images/portrait-dada.jpg"),
+    cover: cloudflareThumbnail("c861d85f92202939bb33ebb87bb3a089"),
     url: `${SITE_URL}/work`,
     video: cloudflareHls("c861d85f92202939bb33ebb87bb3a089"),
   },
@@ -97,7 +103,7 @@ const FEATURED_REELS: Reel[] = [
     id: "cf-793c5fad3fa152369bdaacf731049663",
     title: "Cadance Apartments & Condominiums",
     tag: "Featured · Real Estate",
-    cover: require("../../assets/images/peace-suit.jpg"),
+    cover: cloudflareThumbnail("793c5fad3fa152369bdaacf731049663"),
     url: `${SITE_URL}/work`,
     video: cloudflareHls("793c5fad3fa152369bdaacf731049663"),
   },
@@ -106,7 +112,7 @@ const FEATURED_REELS: Reel[] = [
     id: "cf-25d31f0e020a4759d7e1c2fa0d1945d3",
     title: "Winter Nights Chicago Lights",
     tag: "Featured · Chicago",
-    cover: require("../../assets/images/kids-plaid.jpg"),
+    cover: cloudflareThumbnail("25d31f0e020a4759d7e1c2fa0d1945d3"),
     url: `${SITE_URL}/work`,
     video: cloudflareHls("25d31f0e020a4759d7e1c2fa0d1945d3"),
   },
@@ -129,7 +135,7 @@ const PHOTO_REELS: Reel[] = [
   },
   {
     id: "r3",
-    title: "Louis Carr",
+    title: "Jay Ellis",
     tag: "Waymaker Chicago",
     cover: require("../../assets/images/event-jayellis.jpg"),
     url: `${SITE_URL}/work`,
@@ -231,6 +237,8 @@ export default function HomeScreen() {
   const { isPro, refresh } = useAvaPro();
   const deferredHomeVideosReady = useDeferHomeVideos();
   const homeVideosReady = !DISABLE_HOME_VIDEOS && deferredHomeVideosReady;
+  const mamaConnieReady =
+    ENABLE_MAMA_CONNIE_HOME_VIDEO && deferredHomeVideosReady;
   const isDemoMode = useDemoMode();
   const isSignedIn = Boolean(user);
   const userEmail = user?.email ?? null;
@@ -430,7 +438,7 @@ export default function HomeScreen() {
 
         <SectionErrorBoundary name="Mama Connie">
           <SectionHeader eyebrow="Featured Film" title="Mama Connie" />
-          <MamaConnieVideo ready={homeVideosReady} />
+          <MamaConnieVideo ready={mamaConnieReady} />
         </SectionErrorBoundary>
 
         <SectionErrorBoundary name="Bio">
