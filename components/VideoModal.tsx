@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Modal, Pressable, StyleSheet, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useVideoPlayer, VideoView } from "expo-video";
+import { playWhenReady, safePause } from "../utils/safeVideoPlayer";
 
 type Props = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -19,11 +20,15 @@ export function VideoModal({ source, onClose }: Props) {
   const insets = useSafeAreaInsets();
   const player = useVideoPlayer(source ?? null, (p) => {
     p.loop = false;
-    if (source) p.play();
   });
 
+  useEffect(() => {
+    if (!source) return;
+    return playWhenReady(player, () => source != null);
+  }, [source, player]);
+
   const handleClose = () => {
-    player.pause(); // EXPLICIT: stop playback on modal close
+    safePause(player);
     onClose();
   };
 

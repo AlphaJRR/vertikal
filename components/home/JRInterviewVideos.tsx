@@ -9,6 +9,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { useFocusEffect } from "expo-router";
 import { useVideoPlayer, VideoView } from "expo-video";
+import { playWhenReady, safePause, safePlay } from "../../utils/safeVideoPlayer";
 import {
   JR_INTERVIEW_STREAMS,
   type InterviewStream,
@@ -76,14 +77,14 @@ function InterviewPlayer({ interview }: InterviewPlayerProps) {
   }, [muted, player]);
 
   useEffect(() => {
-    player.play();
+    return playWhenReady(player, () => true);
   }, [player]);
 
   useFocusEffect(
     useCallback(() => {
-      player.play();
+      safePlay(player);
       return () => {
-        player.pause();
+        safePause(player);
       };
     }, [player]),
   );

@@ -125,7 +125,6 @@ export function Paywall({
 
   const handleRevenueCatPaywall = async () => {
     if (!isSignedIn) {
-      router.push("/sign-in" as Href);
       return;
     }
 
@@ -217,13 +216,15 @@ export function Paywall({
         <Text style={styles.title}>AVA Pro</Text>
         <Text style={styles.body}>{subtitle}</Text>
 
-        <Pressable
-          onPress={() => void handleRevenueCatPaywall()}
-          disabled={busy}
-          style={[styles.rcPaywallBtn, busy && styles.btnDisabled]}
-        >
-          <Text style={styles.rcPaywallBtnText}>View subscription plans</Text>
-        </Pressable>
+        {isSignedIn ? (
+          <Pressable
+            onPress={() => void handleRevenueCatPaywall()}
+            disabled={busy}
+            style={[styles.rcPaywallBtn, busy && styles.btnDisabled]}
+          >
+            <Text style={styles.rcPaywallBtnText}>View subscription plans</Text>
+          </Pressable>
+        ) : null}
 
         <View style={styles.proCard}>
           <Text style={styles.priceHero}>{annualPrice}</Text>

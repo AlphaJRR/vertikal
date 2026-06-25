@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { StyleSheet, ViewStyle } from "react-native";
 import { useVideoPlayer, VideoView } from "expo-video";
+import { playWhenReady, safePause } from "../utils/safeVideoPlayer";
 
 type Props = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -18,12 +19,14 @@ export function ReelVideoCover({ source, style, isVisible = true }: Props) {
   const player = useVideoPlayer(source, (p) => {
     p.loop = true;
     p.muted = true;
-    if (isVisible) p.play();
   });
 
   useEffect(() => {
-    if (isVisible) player.play();
-    else player.pause();
+    if (!isVisible) {
+      safePause(player);
+      return;
+    }
+    return playWhenReady(player, () => isVisible);
   }, [isVisible, player]);
 
   return (

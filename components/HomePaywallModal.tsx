@@ -69,7 +69,9 @@ export function HomePaywallModal({
           </View>
 
           <Pressable onPress={handleUpgrade} style={styles.primaryBtn}>
-            <Text style={styles.primaryBtnText}>Upgrade to Pro</Text>
+            <Text style={styles.primaryBtnText}>
+              {isSignedIn ? "Upgrade to Pro" : "See plans"}
+            </Text>
           </Pressable>
 
           <Pressable onPress={onDismiss} style={styles.secondaryBtn}>

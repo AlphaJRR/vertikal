@@ -138,6 +138,7 @@ function RootLayoutNav() {
       <Stack.Screen name="cheatsheet/[id]" options={{ headerShown: false }} />
       <Stack.Screen name="slide/[id]" options={{ headerShown: false }} />
       <Stack.Screen name="sign-in" options={{ headerShown: false }} />
+      <Stack.Screen name="pro" options={{ headerShown: false }} />
       {/* ── Event Photo Delivery MVP screens ──────────────────────── */}
       <Stack.Screen name="consent" options={{ headerShown: false }} />
       <Stack.Screen name="settings" options={{ headerShown: false }} />

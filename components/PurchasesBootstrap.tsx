@@ -14,13 +14,10 @@ export function PurchasesBootstrap() {
 
     void (async () => {
       const { initPurchases, logOutPurchases } = await import("../lib/purchases");
-
-      if (user?.id) {
-        await initPurchases(user.id);
-        return;
+      await initPurchases(user?.id ?? null);
+      if (!user?.id) {
+        await logOutPurchases();
       }
-
-      await logOutPurchases();
     })();
   }, [user?.id, loading]);
 

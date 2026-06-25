@@ -11,8 +11,9 @@ export interface PresentAvaProPaywallOptions {
 }
 
 /**
- * Single entry point for AVA Pro purchase flow — RevenueCat hosted paywall.
- * Used by home upsell modal, locked-content taps, and Account upgrade row.
+ * Single entry point for AVA Pro purchase flow.
+ * Pre-auth: routes to /pro so users can browse plans and pricing.
+ * Signed-in: presents RevenueCat hosted paywall (purchase enabled).
  */
 export async function presentAvaProPaywall(
   options: PresentAvaProPaywallOptions,
@@ -25,14 +26,7 @@ export async function presentAvaProPaywall(
   }
 
   if (!options.isSignedIn) {
-    Alert.alert(
-      "Sign in for AVA Pro",
-      "Create a free account, then subscribe through the App Store.",
-      [
-        { text: "Not now", style: "cancel" },
-        { text: "Sign In", onPress: () => router.push("/sign-in" as Href) },
-      ],
-    );
+    router.push("/pro" as Href);
     return;
   }
 
