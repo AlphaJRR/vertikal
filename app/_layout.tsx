@@ -303,6 +303,11 @@ export default function RootLayout() {
         const refreshToken = params.get("refresh_token");
         if (!accessToken || !refreshToken) return false;
 
+        if (!supabase?.auth) {
+          console.warn("[auth-callback] Supabase not configured");
+          return false;
+        }
+
         const { error } = await supabase.auth.setSession({
           access_token:  accessToken,
           refresh_token: refreshToken,

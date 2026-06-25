@@ -24,10 +24,15 @@ try {
   console.error('Failed to initialize Supabase client:', error);
 }
 
-// Export with fallback check
+// Export with fallback check — runtime may be null when env vars are missing.
 export const supabase = supabaseInstance as SupabaseClient;
 
+/** True when createClient succeeded and auth is available. */
+export function isSupabaseAvailable(): boolean {
+  return supabaseInstance != null && supabaseInstance.auth != null;
+}
+
 // Verify client is initialized
-if (!supabase || !supabase.auth) {
+if (!isSupabaseAvailable()) {
   console.warn('⚠️ Supabase client not properly initialized');
 }

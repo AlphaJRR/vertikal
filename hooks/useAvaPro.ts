@@ -98,6 +98,12 @@ export function useAvaPro() {
 
     void resolvePro();
 
+    if (!supabase?.auth) {
+      return () => {
+        cancelled = true;
+      };
+    }
+
     const { data: authListener } = supabase.auth.onAuthStateChange(() => {
       void resolvePro();
     });
