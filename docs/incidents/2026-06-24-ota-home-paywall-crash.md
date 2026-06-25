@@ -287,6 +287,7 @@ e5c5149 feat(iap): enable paid launch — FREE_LAUNCH false
 | `56ffe355-361a-47d5-be78-0597ae3cde14` | Tap-to-play stage 1 |
 | `a05a5138-ead6-4aa9-b96b-7bd6a0a9290f` | Featured vs portfolio split |
 | `8e04082b-7e51-4b39-bebf-bc873c9882fd` | **P0 paywall: init RC before offerings + env production** (`11494ec`) |
+| `37137deb-ea3e-4302-90ac-aec3375fc55e` | **P0 paywall: getOfferings auto-init RC** (`bf93ead`) |
 
 ---
 
