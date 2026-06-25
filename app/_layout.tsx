@@ -179,7 +179,15 @@ export default function RootLayout() {
     SpaceGrotesk_600SemiBold,
   });
   const handledInitial = useRef(false);
+  const appInteractiveAtRef = useRef<number | null>(null);
   const [introGate, setIntroGate] = useState<"loading" | "show" | "skip">("loading");
+
+  /** Earliest moment main shell is mounted (intro finished or skipped). */
+  useEffect(() => {
+    if (introGate === "skip" && appInteractiveAtRef.current === null) {
+      appInteractiveAtRef.current = Date.now();
+    }
+  }, [introGate]);
 
   useEffect(() => {
     logUpdatesLaunchDiagnostics();
@@ -196,12 +204,25 @@ export default function RootLayout() {
   }, []);
 
   useEffect(() => {
-    // Never check/reload OTA during the intro — reloadAsync was resetting users back to the logo.
+    // Never check OTA during intro — fetch/reload during cold start crashes iOS.
     if (__DEV__ || introGate !== "skip") return;
+
+    const OTA_MIN_MS_AFTER_INTERACTIVE = 10_000;
 
     async function fetchProductionUpdate() {
       if (!Updates.isEnabled) {
         console.log("[EAS Update] updates disabled for this build");
+        return;
+      }
+
+      const interactiveAt = appInteractiveAtRef.current ?? Date.now();
+      const elapsed = Date.now() - interactiveAt;
+      if (elapsed < OTA_MIN_MS_AFTER_INTERACTIVE) {
+        console.log(
+          "[EAS Update] deferring check — app interactive for",
+          elapsed,
+          "ms",
+        );
         return;
       }
 
@@ -222,20 +243,22 @@ export default function RootLayout() {
 
         console.log("[EAS Update] downloading update…");
         await Updates.fetchUpdateAsync();
-        console.log("[EAS Update] update downloaded — reloading app");
-        try {
-          await Updates.reloadAsync();
-        } catch (reloadError) {
-          console.warn("[EAS Update] reloadAsync failed", reloadError);
-        }
+        // Stage only — reloadAsync during/soon after cold start caused iOS crashes and intro loops.
+        console.log("[EAS Update] update staged for next cold start");
       } catch (error) {
         console.warn("[EAS Update] check/fetch failed", error);
       }
     }
 
+    const interactiveAt = appInteractiveAtRef.current ?? Date.now();
+    const delay = Math.max(
+      OTA_MIN_MS_AFTER_INTERACTIVE - (Date.now() - interactiveAt),
+      0,
+    );
+
     const timer = setTimeout(() => {
       void fetchProductionUpdate();
-    }, 3000);
+    }, delay);
 
     return () => clearTimeout(timer);
   }, [introGate]);

@@ -8,6 +8,7 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useVideoPlayer, VideoView } from "expo-video";
 import { markAppIntroPlayed } from "../utils/introVideoGate";
+import { playWhenReady } from "../utils/safeVideoPlayer";
 
 const INTRO_SOURCE = require("../assets/videos/ava-logo-intro.mp4");
 
@@ -33,8 +34,11 @@ export function AppIntroVideo({ onFinish }: AppIntroVideoProps) {
   const player = useVideoPlayer(INTRO_SOURCE, (p) => {
     p.loop = false;
     p.muted = false;
-    p.play();
   });
+
+  useEffect(() => {
+    return playWhenReady(player, () => true);
+  }, [player]);
 
   useEffect(() => {
     const endSub = player.addListener("playToEnd", () => {
