@@ -11,13 +11,15 @@ import {
 } from "react-native";
 import { useRouter, type Href } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import type { PurchasesPackage } from "react-native-purchases";
+import type { PurchasesPackage, PurchasesStoreProduct } from "react-native-purchases";
 import { FREE_LAUNCH } from "../constants/proAccess";
 import { brandColors, brandFonts } from "../constants/theme";
 import { useAuth } from "../contexts/AuthContext";
 import { TOOLKIT_LESSON_COUNT } from "../data/toolkitCurriculumTypes";
 import { useAvaPro, type AvaProStatus } from "../hooks/useAvaPro";
+import type { PaywallPlanError } from "../lib/purchases";
 import { ProLockBadge } from "./toolkit/ProLockBadge";
+import { UpdateDebugLine } from "./UpdateDebugLine";
 
 type PurchasesApi = typeof import("../lib/purchases");
 
@@ -45,6 +47,19 @@ const AUTO_RENEWAL_DISCLOSURE =
   "Your account will be charged for renewal within 24 hours prior to the end of the current period. " +
   "Manage and cancel subscriptions in your App Store account settings.";
 
+const OFFERINGS_RETRY_COUNT = 2;
+const OFFERINGS_RETRY_DELAY_MS = 1200;
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+}
+
+type PurchaseTarget =
+  | { kind: "package"; pkg: PurchasesPackage }
+  | { kind: "product"; product: PurchasesStoreProduct };
+
 export function Paywall({
   contextTitle,
   subtitle = DEFAULT_SUBTITLE,
@@ -57,8 +72,14 @@ export function Paywall({
   const { refresh } = useAvaPro();
   const [monthlyPkg, setMonthlyPkg] = useState<PurchasesPackage | null>(null);
   const [annualPkg, setAnnualPkg] = useState<PurchasesPackage | null>(null);
+  const [monthlyProduct, setMonthlyProduct] =
+    useState<PurchasesStoreProduct | null>(null);
+  const [annualProduct, setAnnualProduct] =
+    useState<PurchasesStoreProduct | null>(null);
   const [offeringsLoading, setOfferingsLoading] = useState(true);
-  const [offeringsError, setOfferingsError] = useState<string | null>(null);
+  const [offeringsError, setOfferingsError] = useState<PaywallPlanError | null>(
+    null,
+  );
   const [purchasingId, setPurchasingId] = useState<string | null>(null);
   const [restoring, setRestoring] = useState(false);
 
@@ -68,22 +89,42 @@ export function Paywall({
     try {
       const purchases = await loadPurchasesApi();
       await purchases.initPurchases(user?.id ?? null);
-      const offerings = await purchases.getOfferings();
-      if (!offerings?.current) {
-        setOfferingsError("Subscriptions are not available right now. Try again later.");
-        setMonthlyPkg(null);
-        setAnnualPkg(null);
-        return;
+
+      let lastResult: Awaited<ReturnType<typeof purchases.loadPaywallPlans>> | null =
+        null;
+
+      for (let attempt = 0; attempt <= OFFERINGS_RETRY_COUNT; attempt += 1) {
+        lastResult = await purchases.loadPaywallPlans();
+        const hasPlans =
+          lastResult.monthlyPkg ||
+          lastResult.annualPkg ||
+          lastResult.monthlyProduct ||
+          lastResult.annualProduct;
+        if (hasPlans) break;
+        if (!lastResult.error) break;
+        if (attempt < OFFERINGS_RETRY_COUNT) {
+          await sleep(OFFERINGS_RETRY_DELAY_MS);
+        }
       }
-      const founding = purchases.getFoundingPackages(offerings);
-      setMonthlyPkg(founding.monthly);
-      setAnnualPkg(founding.annual);
-      if (!founding.monthly && !founding.annual) {
-        setOfferingsError("AVA Pro plans are not configured yet.");
-      }
+
+      if (!lastResult) return;
+
+      setMonthlyPkg(lastResult.monthlyPkg);
+      setAnnualPkg(lastResult.annualPkg);
+      setMonthlyProduct(lastResult.monthlyProduct);
+      setAnnualProduct(lastResult.annualProduct);
+      setOfferingsError(lastResult.error);
     } catch (error) {
       console.error("[Paywall] loadOfferings failed:", error);
-      setOfferingsError("Could not load subscription options.");
+      setOfferingsError({
+        code: "offerings_fetch_failed",
+        message: "Could not load subscription options.",
+        detail: error instanceof Error ? error.message : String(error),
+      });
+      setMonthlyPkg(null);
+      setAnnualPkg(null);
+      setMonthlyProduct(null);
+      setAnnualProduct(null);
     } finally {
       setOfferingsLoading(false);
     }
@@ -94,16 +135,24 @@ export function Paywall({
     void loadOfferings();
   }, [loadOfferings]);
 
-  const handlePurchase = async (pkg: PurchasesPackage) => {
+  const handlePurchase = async (target: PurchaseTarget) => {
     if (!isSignedIn) {
       router.push("/sign-in" as Href);
       return;
     }
 
-    setPurchasingId(pkg.identifier);
+    const purchaseId =
+      target.kind === "package"
+        ? target.pkg.identifier
+        : target.product.identifier;
+    setPurchasingId(purchaseId);
     const purchases = await loadPurchasesApi();
     try {
-      const info = await purchases.purchasePackage(pkg);
+      await purchases.initPurchases(user?.id ?? null);
+      const info =
+        target.kind === "package"
+          ? await purchases.purchasePackage(target.pkg)
+          : await purchases.purchaseStoreProduct(target.product);
       if (purchases.hasProEntitlement(info)) {
         refresh();
         Alert.alert("Welcome to AVA Pro", "Your subscription is active.");
@@ -170,9 +219,26 @@ export function Paywall({
     );
   }
 
-  const monthlyPrice = monthlyPkg?.product.priceString ?? "$9.99/month";
-  const annualPrice = annualPkg?.product.priceString ?? "$79.99/year";
+  const monthlyPrice =
+    monthlyPkg?.product.priceString ??
+    monthlyProduct?.priceString ??
+    "$9.99/month";
+  const annualPrice =
+    annualPkg?.product.priceString ??
+    annualProduct?.priceString ??
+    "$79.99/year";
   const busy = purchasingId != null || restoring;
+  const annualTarget: PurchaseTarget | null = annualPkg
+    ? { kind: "package", pkg: annualPkg }
+    : annualProduct
+      ? { kind: "product", product: annualProduct }
+      : null;
+  const monthlyTarget: PurchaseTarget | null = monthlyPkg
+    ? { kind: "package", pkg: monthlyPkg }
+    : monthlyProduct
+      ? { kind: "product", product: monthlyProduct }
+      : null;
+  const hasPurchasablePlans = annualTarget != null || monthlyTarget != null;
 
   return (
     <ScrollView
@@ -209,22 +275,31 @@ export function Paywall({
 
         {offeringsError ? (
           <View style={styles.errorBox}>
-            <Text style={styles.errorText}>{offeringsError}</Text>
+            <Text style={styles.errorText}>{offeringsError.message}</Text>
+            <Text style={styles.errorCode}>{offeringsError.code}</Text>
+            {offeringsError.detail ? (
+              <Text style={styles.errorDetail} selectable>
+                {offeringsError.detail}
+              </Text>
+            ) : null}
             <Pressable onPress={() => void loadOfferings()} style={styles.retryBtn}>
               <Text style={styles.retryText}>Retry</Text>
             </Pressable>
           </View>
         ) : null}
 
-        {!offeringsLoading && isSignedIn && (annualPkg || monthlyPkg) ? (
+        {!offeringsLoading && isSignedIn && hasPurchasablePlans ? (
           <View style={styles.actions}>
-            {annualPkg ? (
+            {annualTarget ? (
               <Pressable
-                onPress={() => void handlePurchase(annualPkg)}
+                onPress={() => void handlePurchase(annualTarget)}
                 disabled={busy}
                 style={[styles.primaryBtn, busy && styles.btnDisabled]}
               >
-                {purchasingId === annualPkg.identifier ? (
+                {purchasingId ===
+                (annualTarget.kind === "package"
+                  ? annualTarget.pkg.identifier
+                  : annualTarget.product.identifier) ? (
                   <ActivityIndicator color="#000" />
                 ) : (
                   <Text style={styles.primaryBtnText}>
@@ -234,13 +309,16 @@ export function Paywall({
               </Pressable>
             ) : null}
 
-            {monthlyPkg ? (
+            {monthlyTarget ? (
               <Pressable
-                onPress={() => void handlePurchase(monthlyPkg)}
+                onPress={() => void handlePurchase(monthlyTarget)}
                 disabled={busy}
                 style={[styles.secondaryBtn, busy && styles.btnDisabled]}
               >
-                {purchasingId === monthlyPkg.identifier ? (
+                {purchasingId ===
+                (monthlyTarget.kind === "package"
+                  ? monthlyTarget.pkg.identifier
+                  : monthlyTarget.product.identifier) ? (
                   <ActivityIndicator color="#00BFFF" />
                 ) : (
                   <Text style={styles.secondaryBtnText}>
@@ -264,7 +342,7 @@ export function Paywall({
           </View>
         ) : null}
 
-        {!offeringsLoading && isSignedIn && !annualPkg && !monthlyPkg ? (
+        {!offeringsLoading && isSignedIn && !hasPurchasablePlans ? (
           <View style={styles.actions}>
             <Pressable
               onPress={() => void loadOfferings()}
@@ -324,6 +402,8 @@ export function Paywall({
             <Text style={styles.backLink}>← Back</Text>
           </Pressable>
         ) : null}
+
+        <UpdateDebugLine />
       </View>
     </ScrollView>
   );
@@ -441,6 +521,23 @@ const styles = StyleSheet.create({
     fontFamily: brandFonts.body,
     fontSize: 13,
     color: brandColors.alphaRed,
+    textAlign: "center",
+    marginBottom: 4,
+  },
+  errorCode: {
+    fontFamily: brandFonts.mono,
+    fontSize: 10,
+    letterSpacing: 0.8,
+    textTransform: "uppercase",
+    color: brandColors.mutedText,
+    textAlign: "center",
+    marginBottom: 4,
+  },
+  errorDetail: {
+    fontFamily: brandFonts.body,
+    fontSize: 10,
+    lineHeight: 14,
+    color: brandColors.mutedText,
     textAlign: "center",
     marginBottom: 8,
   },

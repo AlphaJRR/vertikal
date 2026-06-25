@@ -291,12 +291,39 @@ e5c5149 feat(iap): enable paid launch — FREE_LAUNCH false
 
 ---
 
+## Jun 25 follow-up — paywall still failing after `11494ec` / `bf93ead`
+
+**Symptom (JR screenshot):** Paywall shows static `$79.99/year` / `$9.99/month` prices **and** red error *“Subscriptions are not available right now. Try again later.”* Subscribe buttons visible but non-functional (only retried `loadOfferings`).
+
+**Root cause (code):**
+1. `Paywall.tsx` always renders **fallback price strings** even when offerings fail — screenshot looked “half working.”
+2. Error fires when `offerings.current` is `null` — even if `offerings.all["default"]` exists or StoreKit products are live.
+3. `getFoundingPackages()` only searched `offerings.current`, ignoring `offering.monthly` / `offering.annual` shortcuts and `offerings.all` fallback.
+4. When packages missing, static Subscribe buttons called `loadOfferings()` again — **never** `purchasePackage` / StoreKit.
+
+**Likely operator cause (if StoreKit fallback also fails):** RevenueCat dashboard has no **Current** offering set, or products `AvaCreatorPro` / `yearly` not imported from ASC.
+
+**Code fix (Jun 25):**
+- `lib/purchases.ts` — `resolveCurrentOffering()` (`current` → `default` → first non-empty `all`), `loadPaywallPlans()` with StoreKit `getProducts` fallback + `purchaseStoreProduct`, RC error code in logs/detail.
+- `components/Paywall.tsx` — real purchase via package **or** store product; retry offerings ×2; `UpdateDebugLine` on paywall; surface `error.code` + `detail` to JR.
+
+**JR RevenueCat dashboard checklist:**
+1. [app.revenuecat.com](https://app.revenuecat.com) → AVA project → **Products** → confirm `AvaCreatorPro` + `yearly` imported from App Store Connect (status **Ready**).
+2. **Entitlements** → `pro` → both products attached.
+3. **Offerings** → offering `default` (or any) with packages: **Monthly** → `AvaCreatorPro`, **Annual** → `yearly`.
+4. Set offering as **Current** (star icon) — fixes `offerings.current` null.
+5. **Apps** → iOS app bundle `com.alphavisualartists.app` linked; API key matches EAS `EXPO_PUBLIC_REVENUECAT_IOS_API_KEY`.
+
+**ASC checklist:** Subscription group `ALPHA CREATORS CREW` — `AvaCreatorPro` ($9.99/mo), `yearly` ($79.99/yr) — **Ready to Submit** or approved.
+
+---
+
 ## Follow-up actions
 
-- [ ] JR device-verify paywall purchase flow after OTA `8e04082b` (kill app → cold start)
-- [ ] Confirm RevenueCat default offering + ASC products synced
+- [ ] JR device-verify paywall purchase flow after Jun 25 OTA (kill app → cold start; confirm `UpdateDebugLine` bundle ID)
+- [ ] Confirm RevenueCat **Current** offering + ASC products synced (dashboard steps above)
 - [ ] Stage 2: re-enable inline Home video after decoder budget verified
-- [ ] Remove `UpdateDebugLine` after stable fleet confirmed
+- [ ] Remove `UpdateDebugLine` from Paywall after stable fleet confirmed
 - [ ] Document mandatory `eas update --environment production` in runbook
 
 ---
